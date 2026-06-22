@@ -31,15 +31,24 @@
     font-weight: normal;
     letter-spacing: 0.15em;
     color: #c45d3a;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0;
     line-height: 1;
+  }
+
+  .logo-sub {
+    font-size: clamp(0.8rem, 2vw, 1rem);
+    letter-spacing: 0.4em;
+    color: #c45d3a;
+    margin-top: 0.4rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.8;
   }
 
   .tagline {
     font-size: clamp(0.9rem, 2.5vw, 1.1rem);
     font-style: italic;
     color: #a89878;
-    margin-bottom: 3rem;
+    margin-bottom: 3.5rem;
     letter-spacing: 0.05em;
   }
 
@@ -117,12 +126,40 @@
     margin: 0 auto 3rem;
     opacity: 0.6;
   }
+
+  .inquiry {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .inquiry-text {
+    display: block;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: #a89878;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.08em;
+  }
+
+  .inquiry-link {
+    font-size: 0.8rem;
+    color: #c45d3a;
+    text-decoration: none;
+    border-bottom: 1px solid #5a3528;
+    letter-spacing: 0.05em;
+    transition: border-color 0.3s;
+  }
+
+  .inquiry-link:hover {
+    border-bottom-color: #c45d3a;
+  }
 </style>
 </head>
 <body>
 
 <div class="container">
   <div class="logo">VOLKANA</div>
+  <div class="logo-sub">DEV</div>
   <div class="tagline">think in voltage. code in blood.</div>
   <div class="divider"></div>
   <div class="coming-soon pulse">Coming Soon</div>
@@ -144,6 +181,12 @@
       <div class="time-label">Seconds</div>
     </div>
   </div>
+
+  <div class="inquiry">
+    <span class="inquiry-text">Strategic and investment inquiries</span>
+    <a href="mailto:volkana@volkana.dev" class="inquiry-link">volkana@volkana.dev</a>
+  </div>
+
   <div class="footer">
     <a href="https://github.com/VolkanaDEV">github.com/VolkanaDEV</a>
   </div>

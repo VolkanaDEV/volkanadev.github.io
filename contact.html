@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VolkanaDEV — Contact</title>
+<meta name="description" content="Contact VolkanaDEV for consumer, corporate, government, and general inquiries.">
+<style>
+  :root {
+    --bg: #0e1117;
+    --panel: #fbfaf7;
+    --panel-dark: #161b22;
+    --border: #21262d;
+    --border-light: #e1dad0;
+    --text-light: #f3eedf;
+    --text-dark: #1e222b;
+    --muted-light: #8b949e;
+    --muted-dark: #6e675d;
+    --accent: #c45d3a;
+    --accent-hover: #b04f2f;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text-light);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  nav {
+    border-bottom: 1px solid var(--border);
+    background: rgba(14, 17, 23, 0.85);
+    backdrop-filter: blur(12px);
+    position: sticky; top: 0; z-index: 100;
+  }
+  nav .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 0;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.15rem; color: var(--text-light); letter-spacing: -0.02em; }
+  .brand-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { color: var(--muted-light); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--text-light); }
+
+  .hero-mini {
+    text-align: center;
+    padding: 60px 20px 40px;
+    background: radial-gradient(circle at 50% 0%, rgba(196, 93, 58, 0.05), transparent 50%);
+  }
+  .hero-mini h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800; margin: 0 0 16px; color: var(--text-light); letter-spacing: -0.02em; }
+  .hero-mini p { color: var(--muted-light); font-size: 1.05rem; max-width: 760px; margin: 0 auto; }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    margin-bottom: 60px;
+  }
+  @media (min-width: 992px) {
+    .contact-grid { grid-template-columns: 1.62fr 1fr; }
+  }
+
+  .control-card {
+    background: var(--panel-dark);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 32px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  .control-card h3 {
+    font-size: 1.25rem; font-weight: 700; margin: 0 0 8px; color: #fff; letter-spacing: -0.01em;
+  }
+  .control-card .card-desc {
+    color: var(--muted-light); font-size: 0.92rem; margin: 0 0 24px;
+  }
+
+  .form-row { margin-bottom: 20px; }
+  .form-row label {
+    display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: var(--accent); margin-bottom: 8px;
+  }
+  input[type="text"], input[type="email"], select, textarea {
+    width: 100%; padding: 14px 16px; background: #0e1117;
+    border: 1px solid var(--border); border-radius: 10px; color: var(--text-light);
+    font-family: inherit; font-size: 0.95rem; box-sizing: border-box; transition: all 0.2s;
+  }
+  input[type="text"]:focus, input[type="email"]:focus, select:focus, textarea:focus {
+    outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(196, 93, 58, 0.15);
+  }
+
+  .inquiry-type-box {
+    background: rgba(196, 93, 58, 0.04);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 28px;
+  }
+  .inquiry-type-box label {
+    display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: var(--accent); margin-bottom: 10px;
+  }
+  .inquiry-type-box select {
+    width: 100%; padding: 14px 16px; background: #0e1117;
+    border: 1px solid var(--border); border-radius: 10px; color: var(--text-light);
+    font-family: inherit; font-size: 0.95rem; cursor: pointer; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23c45d3a' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+  }
+
+  .conditional-fields { display: none; }
+  .conditional-fields.active { display: block; }
+
+  .boundary-notice {
+    background: rgba(14, 17, 23, 0.5); border-left: 3px solid var(--accent);
+    padding: 20px; border-radius: 0 12px 12px 0; font-size: 0.95rem; line-height: 1.6;
+    margin-top: 20px;
+  }
+  .boundary-notice strong { color: #fff; display: block; margin-bottom: 4px; }
+
+  .manifest-metric {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 0.92rem;
+  }
+  .manifest-metric:last-of-type { border-bottom: none; }
+  .manifest-label { color: var(--muted-light); }
+  .manifest-value { font-weight: 600; color: var(--text-light); }
+  .manifest-value.active { color: var(--accent); }
+  .manifest-value.secure { color: var(--accent); }
+
+  .btn {
+    background: var(--accent); color: #fff; border: none; border-radius: 10px;
+    padding: 14px 28px; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: 0.15s;
+    text-decoration: none; display: inline-block; text-align: center; width: 100%;
+    box-shadow: 0 4px 12px rgba(196, 93, 58, 0.15); margin-top: 20px;
+  }
+  .btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+  footer {
+    text-align: center; padding: 40px 0;
+    color: var(--muted-light); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 40px;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+
+  <nav>
+    <div class="wrap">
+      <div class="nav-inner">
+        <div class="brand"><div class="brand-dot"></div>VolkanaDEV</div>
+        <div class="nav-links">
+          <a href="index.html">Welcome</a>
+          <a href="vana.html">Meet VANA</a>
+          <a href="benchmark.html">Benchmarks</a>
+          <a href="security.html">Safety &amp; Licenses</a>
+          <a href="contact.html" class="active">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero-mini">
+    <div class="wrap">
+      <h2>Contact VolkanaDEV</h2>
+      <p>Tell us who you are and what you need. Pick your category below and we will respond directly.</p>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="contact-grid">
+
+      <main>
+        <div class="control-card">
+          <h3>Get In Touch</h3>
+          <div class="card-desc">Select your category, fill in the relevant fields, and hit submit. Your email client will open with everything pre-filled to volkanadev@volkanadev.com.</div>
+
+          <div class="inquiry-type-box">
+            <label for="inquiryType">Who Are You?</label>
+            <select id="inquiryType" onchange="toggleFields()">
+              <option value="">Select your category...</option>
+              <option value="consumer">I am a public citizen or researcher and I want to use Sanguis for myself</option>
+              <option value="corporate">I am a corporate or retail business interested in deployment</option>
+              <option value="government">I am with the government and I need a special Cleave Contract</option>
+            </select>
+          </div>
+
+          <form id="contactForm" onsubmit="return buildEmail()">
+            <input type="hidden" id="isPublic" name="is_public" value="n">
+            <input type="hidden" id="isCorpo" name="is_corpo" value="n">
+            <input type="hidden" id="isGov" name="is_gov" value="n">
+
+            <!-- Consumer / Private Fields -->
+            <div id="consumer-fields" class="conditional-fields">
+              <div class="form-row">
+                <label for="consumerName">Your Name</label>
+                <input type="text" id="consumerName" placeholder="Your name">
+              </div>
+              <div class="form-row">
+                <label for="consumerEmail">Your Email</label>
+                <input type="email" id="consumerEmail" placeholder="you@example.com">
+              </div>
+              <div class="form-row">
+                <label for="consumerUse">What Do You Want To Do With Sanguis?</label>
+                <textarea id="consumerUse" rows="4" placeholder="Personal project, research, learning, hobby experiment..."></textarea>
+              </div>
+            </div>
+
+            <!-- Corporate / Retail Fields -->
+            <div id="corporate-fields" class="conditional-fields">
+              <div class="form-row">
+                <label for="corpName">Company Name</label>
+                <input type="text" id="corpName" placeholder="Company or retail brand name">
+              </div>
+              <div class="form-row">
+                <label for="corpRep">Contact Representative</label>
+                <input type="text" id="corpRep" placeholder="Name and title">
+              </div>
+              <div class="form-row">
+                <label for="corpEmail">Business Email</label>
+                <input type="email" id="corpEmail" placeholder="contact@company.com">
+              </div>
+              <div class="form-row">
+                <label for="corpUse">Deployment Description</label>
+                <textarea id="corpUse" rows="4" placeholder="What you want to deploy, where, and at what scale..."></textarea>
+              </div>
+            </div>
+
+            <!-- Government Fields -->
+            <div id="government-fields" class="conditional-fields">
+              <div class="form-row">
+                <label for="govEntity">Entity / Agency Name</label>
+                <input type="text" id="govEntity" placeholder="Government agency name">
+              </div>
+              <div class="form-row">
+                <label for="govRep">Authorized Representative</label>
+                <input type="text" id="govRep" placeholder="Name and title of signer">
+              </div>
+              <div class="form-row">
+                <label for="govAddress">Principal Place of Business</label>
+                <input type="text" id="govAddress" placeholder="Entity address">
+              </div>
+              <div class="form-row">
+                <label for="govEmail">Official Email Address</label>
+                <input type="email" id="govEmail" placeholder="official@agency.gov">
+              </div>
+              <div class="form-row">
+                <label for="govScope">Approved Scope of Use</label>
+                <textarea id="govScope" rows="4" placeholder="Describe the specific project, operational metrics, or hardware sizing requirements..."></textarea>
+              </div>
+              <div class="form-row">
+                <label for="govCarveout">VPL-1.0 Carve-Out Requirement</label>
+                <select id="govCarveout">
+                  <option value="standard-vpl">Standard VPL-1.0 (no carve-out needed)</option>
+                  <option value="custom-exemption">Requires Section 2 ethical restrictions override (Master Government Contract)</option>
+                </select>
+              </div>
+              <div class="boundary-notice">
+                <strong>Carve-Out Notice</strong>
+                Any request requiring a write-out of the public ethical restrictions in the VPL-1.0 is evaluated on a per-project basis and requires formal, separate contract execution. The Master Government Infrastructure Contract grants a private, perpetual, non-transferable, non-sublicensable license for the approved scope only.
+              </div>
+            </div>
+
+            <button type="submit" class="btn">Submit Request</button>
+          </form>
+        </div>
+      </main>
+
+      <aside>
+        <div class="control-card">
+          <h3>License Terms (Master Contract)</h3>
+          <div class="card-desc">Terms under the Master Government Infrastructure Contract.</div>
+          
+          <div class="manifest-metric">
+            <span class="manifest-label">License Type</span>
+            <span class="manifest-value">Private / Perpetual</span>
+          </div>
+          <div class="manifest-metric">
+            <span class="manifest-label">Sublicensing Rights</span>
+            <span class="manifest-value secure">Non-Sublicensable</span>
+          </div>
+          <div class="manifest-metric">
+            <span class="manifest-label">Transferability</span>
+            <span class="manifest-value secure">Non-Transferable</span>
+          </div>
+          <div class="manifest-metric">
+            <span class="manifest-label">Core Architecture</span>
+            <span class="manifest-value">Parallel Node Stack</span>
+          </div>
+        </div>
+
+        <div class="control-card">
+          <h3>Custody &amp; Data Isolation</h3>
+          <div class="card-desc">Under the Master Contract, the Licensee retains absolute custody.</div>
+          
+          <div class="manifest-metric">
+            <span class="manifest-label">Deployment Liability</span>
+            <span class="manifest-value active">100% Licensee Risk</span>
+          </div>
+          <div class="manifest-metric">
+            <span class="manifest-label">Licensor Data Access</span>
+            <span class="manifest-value secure">Zero Access</span>
+          </div>
+          <div class="manifest-metric">
+            <span class="manifest-label">Software Delivery</span>
+            <span class="manifest-value">Strictly "As-Is"</span>
+          </div>
+          <div class="manifest-metric">
+            <span class="manifest-label">Regulatory Burden</span>
+            <span class="manifest-value active">0% Licensor Exposure</span>
+          </div>
+          
+          <p style="color: var(--muted-light); font-size: 0.85rem; margin-top: 15px; line-height: 1.5;">
+            The Licensor has zero access to internal data payloads, simulation metrics, or operational inputs. The engine is delivered "as is". The company holds no regulatory or compliance risk regarding operations executed by the Licensee.
+          </p>
+        </div>
+
+        <div class="control-card">
+          <h3>Maintenance &amp; Oversight</h3>
+          <div class="card-desc">Security updates and administrative boundaries.</div>
+          
+          <div class="manifest-metric">
+            <span class="manifest-label">Administrative Control</span>
+            <span class="manifest-value secure">Solely Retained</span>
+          </div>
+          <div class="manifest-metric">
+            <span class="manifest-label">Low-Level Security Fixes</span>
+            <span class="manifest-value active">Mandatory Integration</span>
+          </div>
+          <div class="manifest-metric">
+            <span class="manifest-label">Operational Interruption</span>
+            <span class="manifest-value">0% (Kernel Bounded)</span>
+          </div>
+          
+          <p style="color: var(--muted-light); font-size: 0.85rem; margin-top: 15px; line-height: 1.5;">
+            Mandatory cryptographically signed security updates protect the hardware simulator stack. The Licensor's access is strictly limited to low-level system integrity and cannot access, alter, or interrupt the Licensee's high-level software application layers.
+          </p>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <footer>
+    <div style="margin-bottom: 8px;"><a href="terms.html" style="color: var(--accent); text-decoration: none;">Terms of Use</a> | <a href="privacy.html" style="color: var(--accent); text-decoration: none;">Privacy Policy</a></div>
+    Copyright &copy; 2026 VolkanaDEV Autonomous Systems, Inc.<br>
+    VolkanaDEV, Sanguis, and VANA are intellectual property of VolkanaDEV Autonomous Systems, Inc.<br>
+    Business and private inquiries: <a href="mailto:volkanadev@volkanadev.com">volkanadev@volkanadev.com</a>
+  </footer>
+
+  <script>
+    function toggleFields() {
+      var type = document.getElementById('inquiryType').value;
+      document.getElementById('consumer-fields').classList.remove('active');
+      document.getElementById('corporate-fields').classList.remove('active');
+      document.getElementById('government-fields').classList.remove('active');
+      if (type === 'consumer') document.getElementById('consumer-fields').classList.add('active');
+      if (type === 'corporate') document.getElementById('corporate-fields').classList.add('active');
+      if (type === 'government') document.getElementById('government-fields').classList.add('active');
+    }
+
+    function buildEmail() {
+      var type = document.getElementById('inquiryType').value;
+      if (!type) { alert('Please select a category first.'); return false; }
+
+      var isPublic = 'n', isCorpo = 'n', isGov = 'n';
+      var emailFrom = '';
+      var infoBox = '';
+      var extra = '';
+
+      if (type === 'consumer') {
+        isPublic = 'y';
+        emailFrom = document.getElementById('consumerEmail').value || 'not provided';
+        infoBox = document.getElementById('consumerUse').value || '';
+        extra = 'Name: ' + (document.getElementById('consumerName').value || 'not provided');
+      } else if (type === 'corporate') {
+        isCorpo = 'y';
+        emailFrom = document.getElementById('corpEmail').value || 'not provided';
+        infoBox = document.getElementById('corpUse').value || '';
+        extra = 'Company: ' + (document.getElementById('corpName').value || 'not provided') +
+                '\nRepresentative: ' + (document.getElementById('corpRep').value || 'not provided');
+      } else if (type === 'government') {
+        isGov = 'y';
+        emailFrom = document.getElementById('govEmail').value || 'not provided';
+        infoBox = document.getElementById('govScope').value || '';
+        extra = 'Entity: ' + (document.getElementById('govEntity').value || 'not provided') +
+                '\nRepresentative: ' + (document.getElementById('govRep').value || 'not provided') +
+                '\nAddress: ' + (document.getElementById('govAddress').value || 'not provided') +
+                '\nCarve-Out: ' + (document.getElementById('govCarveout').value || 'standard');
+      }
+
+      var subject = 'VolkanaDEV Contact: ' + type.toUpperCase();
+      var body = 'Email from: ' + emailFrom +
+                 '\nIs public: ' + isPublic +
+                 '\nIs corpo: ' + isCorpo +
+                 '\nIs gov: ' + isGov +
+                 '\n\nInfo:\n' + (infoBox || 'No additional info provided') +
+                 '\n\nExtra:\n' + extra;
+
+      var mailto = 'mailto:volkanadev@volkanadev.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      window.location.href = mailto;
+      return false;
+    }
+  </script>
+
+</body>
+</html>

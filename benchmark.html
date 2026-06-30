@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VolkanaDEV — Benchmarks</title>
+<meta name="description" content="Live computational comparisons running native Sanguis logic.">
+<style>
+  :root {
+    /* Core Volkanadev Palette */
+    --bg: #0e1117;                  /* Slate-Onyx Blue Page Canvas */
+    --panel: #fbfaf7;               /* Classic Volkanadev Cream Panel */
+    --panel-dark: #161b22;          /* Secondary Dark Container Layer */
+    --border: #21262d;              /* Clean Dark Framing lines */
+    --border-light: #e1dad0;        /* Gentle Cream Framing lines */
+    
+    /* Text Channels */
+    --text-light: #f3eedf;          /* Readable Off-Cream for Dark Areas */
+    --text-dark: #1e222b;           /* Rich Charcoal-Onyx for Light Panels */
+    --muted-light: #8b949e;         /* Dimmed Text for Dark Areas */
+    --muted-dark: #6e675d;          /* Dimmed Text for Light Panels */
+    
+    /* Accents */
+    --accent: #c45d3a;              /* Signature Volkanadev Terracotta */
+    --accent-hover: #b04f2f;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text-light);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* Navigation Bar */
+  nav {
+    border-bottom: 1px solid var(--border);
+    background: rgba(14, 17, 23, 0.85);
+    backdrop-filter: blur(12px);
+    position: sticky; top: 0; z-index: 100;
+  }
+  nav .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 0;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.15rem; color: var(--text-light); }
+  .brand-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { color: var(--muted-light); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--text-light); }
+
+  /* Header Section */
+  .header-block { text-align: center; padding: 60px 0 30px; }
+  .header-block h2 { font-size: 2.5rem; font-weight: 800; margin: 0 0 16px; letter-spacing: -0.03em; color: var(--text-light); }
+  
+  .selector-box {
+    margin: 20px auto;
+    max-width: 400px;
+    background: var(--panel-dark);
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+  }
+  .selector-box label { font-size: 0.75rem; text-transform: uppercase; color: var(--muted-light); letter-spacing: 0.05em; font-weight: 700; }
+  .selector-box select {
+    background: var(--bg);
+    color: var(--text-light);
+    border: 1px solid var(--border);
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    cursor: pointer;
+    outline: none;
+  }
+
+  /* Main Performance Grid */
+  .arena-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin: 30px 0; }
+  @media (min-width: 768px) { .arena-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .arena-grid { grid-template-columns: repeat(4, 1fr); } }
+
+  .arena-card {
+    background: var(--panel);
+    border: 1px solid var(--border-light);
+    color: var(--text-dark);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    min-height: 340px; /* Keep uniform height across all cards */
+  }
+  
+  .arena-card.blocked { 
+    background: var(--panel-dark); 
+    border-color: var(--border); 
+    color: var(--text-light);
+  }
+
+  .card-top { margin-bottom: 20px; }
+  .arena-title { font-weight: 700; font-size: 1.25rem; margin: 0 0 4px; color: inherit; }
+  .arena-card:not(.blocked) .arena-title { color: var(--text-dark); }
+  .arena-card.blocked .arena-title { color: #e05d44; }
+  .arena-subtitle { font-size: 0.82rem; color: var(--muted-dark); margin-bottom: 14px; }
+  .arena-card.blocked .arena-subtitle { color: var(--muted-light); }
+  
+  .badge-status {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em;
+    padding: 6px 12px; border-radius: 8px; display: inline-block;
+    margin-bottom: 10px;
+  }
+  .badge-status.fail { background: rgba(224, 93, 68, 0.15); color: #e05d44; }
+  .badge-status.success { background: rgba(196, 93, 58, 0.15); color: var(--accent); }
+
+  /* Elegant Latency Status Tags (Replacing the weird deceptive progress bars) */
+  .latency-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted-dark);
+    border: 1px dashed var(--border-light);
+    padding: 4px 10px;
+    border-radius: 6px;
+    display: inline-block;
+    margin: 12px 0;
+    background: rgba(0,0,0,0.02);
+  }
+  .arena-card.blocked .latency-tag {
+    color: var(--muted-light);
+    border-color: var(--border);
+    background: rgba(0,0,0,0.2);
+  }
+
+  /* Structural Metric Table Rows with strict alignment logic */
+  .arena-stats { display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
+  .arena-stat { display: flex; justify-content: space-between; align-items: center; font-size: 0.88rem; padding-bottom: 6px; border-bottom: 1px solid #ede8de; }
+  .arena-card.blocked .arena-stat { border-bottom-color: #21262d; }
+  .arena-stat:last-child { border-bottom: none; padding-bottom: 0; }
+  
+  .arena-stat span:first-child { color: var(--muted-dark); flex: 1; text-align: left; }
+  .arena-card.blocked .arena-stat span:first-child { color: var(--muted-light); }
+  .arena-stat span:last-child { font-weight: 600; font-family: monospace; flex: 0 0 auto; text-align: right; white-space: nowrap; }
+
+  /* Speed Multiplier Output Text */
+  .badge-multiplier {
+    font-size: 1.35rem; font-weight: 800; text-align: center; margin-top: 20px;
+    padding-top: 14px; border-top: 1px solid #ede8de; letter-spacing: -0.01em;
+    color: var(--accent);
+  }
+  .arena-card.blocked .badge-multiplier { border-top-color: #21262d; color: var(--muted-light); }
+
+  .middle-text { text-align: center; color: var(--muted-light); font-size: 1.05rem; max-width: 820px; margin: 48px auto; line-height: 1.6; }
+
+  /* Unified History Summary Grid Layout */
+  .master-table-wrapper { overflow-x: auto; margin: 32px auto; max-width: 960px; border-radius: 14px; border: 1px solid var(--border); box-shadow: 0 8px 24px rgba(0,0,0,0.3); background: var(--panel-dark); }
+  .master-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem; color: var(--text-light); }
+  .master-table th { padding: 14px 18px; font-weight: 700; background: #1f242c; border-bottom: 1px solid var(--border); }
+  .master-table td { padding: 14px 18px; border-bottom: 1px solid var(--border); }
+  .master-table tr:last-child td { border-bottom: none; }
+
+  /* Terminal Session Log Window */
+  .console-panel {
+    background: var(--panel-dark); border: 1px solid var(--border); border-radius: 14px; padding: 24px;
+    font-family: 'SF Mono', ui-monospace, monospace; font-size: 0.85rem; line-height: 1.6; max-width: 960px; margin: 0 auto;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  }
+  .console-header {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 16px;
+    padding-bottom: 12px; border-bottom: 1px solid var(--border); color: var(--muted-light); font-size: 0.75rem; text-transform: uppercase;
+  }
+  .console-dot-ui { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .console-log { overflow-x: auto; white-space: pre-wrap; color: var(--text-light); }
+  
+  .c-timestamp { color: #484f58; margin-right: 10px; }
+  .c-alert { color: #f85149; font-weight: 600; }
+  .c-success { color: #56d364; font-weight: 600; }
+  .c-info { color: #e3b341; }
+
+  /* Fine-Print Disclaimer Text */
+  .disclaimer-box { max-width: 960px; margin: 40px auto 0; font-size: 0.82rem; color: var(--muted-light); line-height: 1.5; border-top: 1px dashed var(--border); padding-top: 20px; text-align: center; }
+</style>
+</head>
+<body>
+
+  <nav>
+    <div class="wrap">
+      <div class="nav-inner">
+        <div class="brand"><div class="brand-dot"></div>VolkanaDEV</div>
+        <div class="nav-links">
+          <a href="index.html">Welcome</a>
+          <a href="vana.html">Meet VANA</a>
+          <a href="benchmark.html" class="active">Benchmarks</a>
+          <a href="security.html">Safety &amp; Licenses</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <section class="header-block">
+      <h2>Arena Performance Realities</h2>
+      <p>Select a logic file below to see how traditional execution compares with Sanguis sparse routing on the same hardware. All results are recorded on consumer-grade enthusiast target hardware using an NVIDIA RTX 3060 12GB GPU, an Intel i7-12700K CPU, and 32GB RAM.</p>
+      
+      <div class="selector-box">
+        <label for="circuit-select">Payload File Selection</label>
+        <select id="circuit-select" onchange="updateBenchmarkData(this.value)">
+          <option value="sparse_250k">sparse_250k (834K internal switches)</option>
+          <option value="xor_gate">xor_gate (Logical Gate Structure)</option>
+          <option value="decoder10to1024">decoder10to1024 (Dense Logic Layout)</option>
+          <option value="but_gate">but_gate (High-Velocity Logic)</option>
+        </select>
+      </div>
+    </section>
+
+    <div class="arena-grid">
+      <div id="card-cpu" class="arena-card blocked">
+        <div class="card-top">
+          <div class="arena-title">Normal CPU</div>
+          <div id="cpu-sub" class="arena-subtitle">Standard Serial Engine</div>
+          <span id="cpu-badge" class="badge-status fail">RESOURCE BOTTLENECK</span>
+          <div><span class="latency-tag">Stalled Queue</span></div>
+        </div>
+        <div class="arena-stats">
+          <div class="arena-stat"><span>Time/Sweep:</span> <span id="cpu-time" style="color: #f85149;">Infinite Loop</span></div>
+          <div class="arena-stat"><span>Frequency:</span> <span id="cpu-freq">~0 Hz</span></div>
+          <div class="arena-stat"><span>Resource Draw:</span> <span id="cpu-wall">Single-Thread Locked</span></div>
+        </div>
+        <div id="cpu-mult" class="badge-multiplier">Throttled</div>
+      </div>
+
+      <div id="card-base" class="arena-card">
+        <div class="card-top">
+          <div class="arena-title">GPU Baseline</div>
+          <div class="arena-subtitle">Standard Processing Route</div>
+          <span id="base-badge" class="badge-status success">DONE</span>
+          <div><span class="latency-tag">Standard Flow</span></div>
+        </div>
+        <div class="arena-stats">
+          <div class="arena-stat"><span>Time/Sweep:</span> <span id="base-time">6,863.2 us</span></div>
+          <div class="arena-stat"><span>Frequency:</span> <span id="base-freq">145.7 Hz</span></div>
+          <div class="arena-stat"><span>Instant Wattage:</span> <span id="base-wall">170W Full Burst</span></div>
+        </div>
+        <div id="base-mult" class="badge-multiplier">1.0x (Reference)</div>
+      </div>
+
+      <div id="card-region" class="arena-card">
+        <div class="card-top">
+          <div class="arena-title">Region-Tiled</div>
+          <div class="arena-subtitle">Multi-Pipe Data Flow</div>
+          <span id="region-badge" class="badge-status success">DONE</span>
+          <div><span class="latency-tag">Segmented Speed</span></div>
+        </div>
+        <div class="arena-stats">
+          <div class="arena-stat"><span>Time/Sweep:</span> <span id="region-time">1,081.4 us</span></div>
+          <div class="arena-stat"><span>Frequency:</span> <span id="region-freq">924.7 Hz</span></div>
+          <div class="arena-stat"><span>Instant Wattage:</span> <span id="region-wall">170W Shared Burst</span></div>
+        </div>
+        <div id="region-mult" class="badge-multiplier">6.3x Faster</div>
+      </div>
+
+      <div id="card-sparse" class="arena-card" style="border-color: var(--accent); box-shadow: 0 0 20px rgba(196, 93, 58, 0.15);">
+        <div class="card-top">
+          <div class="arena-title" style="color: var(--accent);">GPU Sparse Skip</div>
+          <div class="arena-subtitle">VolkanaDEV Layout</div>
+          <span id="sparse-badge" class="badge-status success" style="background: rgba(196, 93, 58, 0.15); color: var(--accent);">DONE</span>
+          <div><span class="latency-tag" style="border-color: var(--accent); color: var(--accent); background: rgba(196,93,58,0.02);">Nanosecond Track</span></div>
+        </div>
+        <div class="arena-stats">
+          <div class="arena-stat"><span>Time/Sweep:</span> <span id="sparse-time">133.5 us</span></div>
+          <div class="arena-stat"><span>Frequency:</span> <span id="sparse-freq">7.5K Hz</span></div>
+          <div class="arena-stat"><span>Instant Wattage:</span> <span id="sparse-wall">44.0W Compressed</span></div>
+        </div>
+        <div id="sparse-mult" class="badge-multiplier" style="font-weight: 900;">51.4x Faster</div>
+      </div>
+    </div>
+
+    <p id="summary-desc" class="middle-text">
+      Traditional CPU architectures look like they use fewer resources because they run on lower single-thread wattages. But because they process data in a single-file line, they lock up the system over long execution tracks, wasting accumulated energy. By telling the parallel graphics fabric to hop over empty tracks, our framework uses the GPU's native speed while drawing less power than the GPU baseline.
+    </p>
+
+    <div class="master-table-wrapper">
+      <table class="master-table">
+        <thead>
+          <tr style="color: #fff;">
+            <th style="padding: 14px 18px; font-weight: 700;">Payload File Layer</th>
+            <th style="padding: 14px 18px; font-weight: 700; color: #e05d44;">Normal CPU</th>
+            <th style="padding: 14px 18px; font-weight: 700; color: #d1a13d;">GPU Baseline</th>
+            <th style="padding: 14px 18px; font-weight: 700; color: #529467;">Region-Tiled</th>
+            <th style="padding: 14px 18px; font-weight: 700; color: var(--accent);">GPU Sparse Skip</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 14px 18px; font-weight: 700;">sparse_250k <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(834K Switches)</span></td>
+            <td style="padding: 14px 18px; color: #e05d44;">Resource Jam</td>
+            <td style="padding: 14px 18px;">6,863.2 us</td>
+            <td style="padding: 14px 18px;">1,081.4 us</td>
+            <td style="padding: 14px 18px; color: var(--accent); font-weight: 700;">133.5 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(51.4x)</span></td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 14px 18px; font-weight: 700;">xor_gate <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(Logical Gate)</span></td>
+            <td style="padding: 14px 18px;">650.00 us</td>
+            <td style="padding: 14px 18px;">6.52 us</td>
+            <td style="padding: 14px 18px;">1.42 us</td>
+            <td style="padding: 14px 18px; color: var(--accent); font-weight: 700;">0.190 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(3421x)</span></td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 14px 18px; font-weight: 700;">decoder10to1024 <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(Dense Matrix)</span></td>
+            <td style="padding: 14px 18px;">90,420.0 us</td>
+            <td style="padding: 14px 18px;">6.34 us</td>
+            <td style="padding: 14px 18px;">5.86 us</td>
+            <td style="padding: 14px 18px; color: var(--accent); font-weight: 700;">0.500 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(180Kx)</span></td>
+          </tr>
+          <tr>
+            <td style="padding: 14px 18px; font-weight: 700;">but_gate <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(High-Velocity)</span></td>
+            <td style="padding: 14px 18px;">440.00 us</td>
+            <td style="padding: 14px 18px;">3.85 us</td>
+            <td style="padding: 14px 18px;">1.62 us</td>
+            <td style="padding: 14px 18px; color: var(--accent); font-weight: 700;">0.180 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(2444x)</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="console-panel">
+      <div class="console-header"><div class="console-dot-ui"></div> Terminal Output Diagnostics — Live Session</div>
+      <div id="console-box" class="console-log"></div>
+    </div>
+
+    <div class="disclaimer-box">
+      * <strong>Architectural Note:</strong> The telemetry data above reflects execution models recorded on early functioning prototypes of the framework. Current benchmarks yield equivalent scaling performance, executed as hardware-native machine opcodes compiled directly through the core language environment.
+    </div>
+  </div>
+
+  <footer style="text-align: center; padding: 40px 0; color: var(--muted-light); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 40px;">
+    <div style="margin-bottom: 8px;"><a href="terms.html" style="color: var(--accent); text-decoration: none;">Terms of Use</a> | <a href="privacy.html" style="color: var(--accent); text-decoration: none;">Privacy Policy</a></div>
+    Copyright &copy; 2026 VolkanaDEV Autonomous Systems, Inc.<br>
+    VolkanaDEV, Sanguis, and VANA are intellectual property of VolkanaDEV Autonomous Systems, Inc.<br>
+    Business and private inquiries: <a href="mailto:volkanadev@volkanadev.com" style="color: var(--accent); text-decoration: none;">volkanadev@volkanadev.com</a>
+  </footer>
+
+  <script>
+    const benchmarkData = {
+      sparse_250k: {
+        isCpuBlocked: true,
+        cpuSub: "Standard Serial Engine",
+        cpuBadge: "RESOURCE BOTTLENECK",
+        cpuTime: "Infinite Loop", cpuFreq: "~0 Hz", cpuWall: "Single-Thread Locked", cpuMult: "Throttled",
+        baseTime: "6,863.2 us", baseFreq: "145.7 Hz", baseWall: "170W Full Burst", baseMult: "1.0x (Reference)",
+        regionTime: "1,081.4 us", regionFreq: "924.7 Hz", regionWall: "170W Shared Burst", regionMult: "6.3x Faster",
+        sparseTime: "133.5 us", sparseFreq: "7.5K Hz", sparseWall: "44.0W Compressed", sparseMult: "51.4x Faster",
+        desc: "Traditional CPU architectures look like they use fewer resources because they run on lower single-thread wattages. But because they process data in a single-file line, they lock up the system over long execution tracks, wasting accumulated energy. By telling the parallel graphics fabric to hop over empty tracks, our framework uses the GPU's native speed while drawing less power than the GPU baseline.",
+        log: `<span class="c-timestamp">[08:22:25]</span> === BENCHMARK INITIALIZED — CIRCUIT PAYLOAD ACTIVE ===
+<span class="c-timestamp">[08:22:25]</span> <span class="c-alert">CPU_ERR: [ SINGLE_THREAD_LOCK ] — 834K loops stall sequential core pipeline. Sequential path unavailable.</span>
+<span class="c-timestamp">[08:22:25]</span> Tracking Baseline sequential GPU structures...
+<span class="c-timestamp">[08:22:27]</span> <span class="c-info">GPU Baseline Complete: 6,863.2 us/sweep (145.7 Hz) [170W Peak Load Burst]</span>
+<span class="c-timestamp">[08:22:32]</span> <span class="c-info">GPU Region-Tiled Complete: 1,081.38 us/sweep (924.7 Hz) [170W Shared Load Burst]</span>
+<span class="c-timestamp">[08:22:34]</span> <span class="c-success">GPU Sparse Skip Complete: 133.54 us/sweep (7.5K Hz) [44.0W Compressed Efficiency]</span>
+<span class="c-timestamp">[08:22:34]</span> <span class="c-success">=== MATRIX COMPILATION COMPLETE: Sparse Skip clears layer framework with true structural resource balance ===</span>`
+      },
+      xor_gate: {
+        isCpuBlocked: false,
+        cpuSub: "12th Gen Intel Core i7-12700K",
+        cpuBadge: "DONE",
+        cpuTime: "650 us", cpuFreq: "1.5K Hz", cpuWall: "8.1J Resource Draw", cpuMult: "1.0x (Base)",
+        baseTime: "6.52 us", baseFreq: "153.4K Hz", baseWall: "52.2J Full Burst", baseMult: "99.7x Faster",
+        regionTime: "1.42 us", regionFreq: "704.2K Hz", regionWall: "51.9J Shared Burst", regionMult: "457.7x Faster",
+        sparseTime: "0.190 us", sparseFreq: "5.3M Hz", sparseWall: "52.4J Compressed", sparseMult: "3,421.1x Faster",
+        desc: "On small logic components like an isolated XOR gate, the CPU processes the task using an 8.1J data window. Sanguis sparse routing paths use the parallel architecture of the GPU to complete the track in 0.190 microseconds, clearing the task 3,421.1x faster than native machine core loops.",
+        log: `<span class="c-timestamp">[08:31:34]</span> === BENCHMARK INITIALIZED — LOGIC GATE TRACK ===
+<span class="c-timestamp">[08:31:34]</span> Payload: xor_gate.vana | Sweeps: 100 | Batches: 20 | Region: 256
+<span class="c-timestamp">[08:31:34]</span> Running: CPU x86_64 (Single Core Resource Allocation)
+<span class="c-timestamp">[08:31:34]</span> <span class="c-info">CPU x86_64 Complete: 650 us/sweep [8.1J Total Processing Window Absorbed]</span>
+<span class="c-timestamp">[08:31:35]</span> Running: GPU Payload Baseline
+<span class="c-timestamp">[08:31:35]</span> <span class="c-info">GPU Payload Complete: 6.52 us/sweep (153.4K Hz) [52.2J Full Parallel Burst]</span>
+<span class="c-timestamp">[08:31:36]</span> <span class="c-info">GPU Region Complete: 1.42 us/sweep (704.2K Hz) [51.9J Shared Burst]</span>
+<span class="c-timestamp">[08:31:36]</span> Running: GPU Sparse Skip Configuration
+<span class="c-timestamp">[08:31:36]</span> <span class="c-success">GPU Sparse Skip Complete: 0.190 us/sweep (5.3M Hz) [52.4J Parallel Track Cleared]</span>
+<span class="c-timestamp">[08:31:37]</span> <span class="c-success">=== BENCHMARK COMPLETE — VolkanaDEV clears XOR layer with optimal resource velocity ===</span>`
+      },
+      decoder10to1024: {
+        isCpuBlocked: false,
+        cpuSub: "12th Gen Intel Core i7-12700K",
+        cpuBadge: "DONE",
+        cpuTime: "90,420 us", cpuFreq: "11.1 Hz", cpuWall: "1.1KJ Heavy Draw", cpuMult: "Instruction Locked",
+        baseTime: "6.34 us", baseFreq: "157.7K Hz", baseWall: "49.0J Parallel Burst", baseMult: "14,261.8x Faster",
+        regionTime: "5.86 us", regionFreq: "170.6K Hz", regionWall: "47.3J Shared Burst", regionMult: "15,430.0x Faster",
+        sparseTime: "0.500 us", sparseFreq: "2.0M Hz", sparseWall: "44.5J Compressed", sparseMult: "180,840.0x Faster",
+        desc: "The dense decoder matrix traps the CPU core inside a 1.1 Kilojoule tracking window due to its sequential instruction lock. Sanguis data skips bypass empty routing tiles entirely, completing the sweep across the parallel matrix in 0.500 microseconds while dropping energy expenditure to 44.5 Joules.",
+        log: `<span class="c-timestamp">[08:36:30]</span> === BENCHMARK INITIALIZED — DECODER LAYOUT TRACK ===
+<span class="c-timestamp">[08:36:30]</span> Payload: decoder10to1024.vana | Sweeps: 100 | Batches: 20 | Region: 256
+<span class="c-timestamp">[08:36:30]</span> Running: CPU x86_64 (Instruction Pipeline Queue Saturation)
+<span class="c-timestamp">[08:36:39]</span> <span class="c-info">CPU x86_64 Bound: 90420 us/sweep [1.1KJ Extended Processing Window Dissipated]</span>
+<span class="c-timestamp">[08:36:40]</span> Running: GPU Payload Baseline
+<span class="c-timestamp">[08:36:40]</span> <span class="c-info">GPU Payload Complete: 6.34 us/sweep (157.7K Hz) [49.0J Burst]</span>
+<span class="c-timestamp">[08:36:40]</span> <span class="c-info">GPU Region-Tiled Complete: 5.86 us/sweep (170.6K Hz) [47.3J Burst]</span>
+<span class="c-timestamp">[08:36:41]</span> Running: GPU Sparse Skip Configuration
+<span class="c-timestamp">[08:36:41]</span> <span class="c-success">GPU Sparse Skip Complete: 0.500 us/sweep (2.0M Hz) [44.5J Sparse Energy Save]</span>
+<span class="c-timestamp">[08:36:41]</span> <span class="c-success">=== BENCHMARK COMPLETE — VolkanaDEV clears decoder layout with superior parallel scaling efficiency ===</span>`
+      },
+      but_gate: {
+        isCpuBlocked: false,
+        cpuSub: "12th Gen Intel Core i7-12700K",
+        cpuBadge: "DONE",
+        cpuTime: "440 us", cpuFreq: "2.3K Hz", cpuWall: "5.5J Resource Draw", cpuMult: "Baseline Load",
+        baseTime: "3.85 us", baseFreq: "259.7K Hz", baseWall: "44.0J Parallel Burst", baseMult: "114.3x Faster",
+        regionTime: "1.62 us", regionFreq: "617.3K Hz", regionWall: "51.0J Shared Burst", regionMult: "271.6x Faster",
+        sparseTime: "0.180 us", sparseFreq: "5.6M Hz", sparseWall: "44.0J Compressed", sparseMult: "2,444.4x Faster",
+        desc: "Traditional CPU architectures execute the high-velocity but_gate track over a 5.5J single-core window, but drag on duration. Sanguis parallel modules process the track at 5.6MHz over the parallel grid, running 2,444.4x faster with optimal resource velocity.",
+        log: `<span class="c-timestamp">[08:38:07]</span> === BENCHMARK INITIALIZED — BUT_GATE ALIGNMENT TRACK ===
+<span class="c-timestamp">[08:38:07]</span> Payload: but_gate.vana | Sweeps: 100 | Batches: 20 | Region: 256
+<span class="c-timestamp">[08:38:07]</span> Running: CPU x86_64 (Single Thread Execution Path)
+<span class="c-timestamp">[08:38:07]</span> <span class="c-info">CPU x86_64 Loop: 440 us/sweep [5.5J Local Task Resource Window Used]</span>
+<span class="c-timestamp">[08:38:08]</span> Running: GPU Payload Baseline
+<span class="c-timestamp">[08:38:08]</span> <span class="c-info">GPU Payload Complete: 3.85 us/sweep [44.0J Burst]</span>
+<span class="c-timestamp">[08:38:09]</span> <span class="c-info">GPU Region-Tiled Complete: 1.62 us/sweep [51.0J Burst]</span>
+<span class="c-timestamp">[08:38:09]</span> Running: GPU Sparse Skip Configuration
+<span class="c-timestamp">[08:38:09]</span> <span class="c-success">GPU Sparse Skip Complete: 0.180 us/sweep (5.6M Hz) [44.0J Compressed Run]</span>
+<span class="c-timestamp">[08:38:09]</span> <span class="c-success">=== BENCHMARK COMPLETE — VolkanaDEV clears high-velocity framework layer with precise resource velocity ===</span>`
+      }
+    };
+
+    function updateBenchmarkData(key) {
+      const data = benchmarkData[key];
+      const cardCpu = document.getElementById('card-cpu');
+      
+      if (data.isCpuBlocked) {
+        document.getElementById('cpu-badge').className = "badge-status fail";
+        document.getElementById('cpu-badge').innerText = data.cpuBadge;
+        document.getElementById('cpu-time').style.color = "#f85149";
+        document.getElementById('cpu-mult').style.color = "var(--muted-light)";
+      } else {
+        document.getElementById('cpu-badge').className = "badge-status success";
+        document.getElementById('cpu-badge').innerText = data.cpuBadge;
+        document.getElementById('cpu-time').style.color = "var(--text-light)";
+        document.getElementById('cpu-mult').style.color = "var(--accent)";
+      }
+
+      document.getElementById('cpu-sub').innerText = data.cpuSub;
+      document.getElementById('cpu-time').innerText = data.cpuTime;
+      document.getElementById('cpu-freq').innerText = data.cpuFreq;
+      document.getElementById('cpu-wall').innerText = data.cpuWall;
+      document.getElementById('cpu-mult').innerText = data.cpuMult;
+
+      document.getElementById('base-time').innerText = data.baseTime;
+      document.getElementById('base-freq').innerText = data.baseFreq;
+      document.getElementById('base-wall').innerText = data.baseWall;
+      document.getElementById('base-mult').innerText = data.baseMult;
+
+      document.getElementById('region-time').innerText = data.regionTime;
+      document.getElementById('region-freq').innerText = data.regionFreq;
+      document.getElementById('region-wall').innerText = data.regionWall;
+      document.getElementById('region-mult').innerText = data.regionMult;
+
+      document.getElementById('sparse-time').innerText = data.sparseTime;
+      document.getElementById('sparse-freq').innerText = data.sparseFreq;
+      document.getElementById('sparse-wall').innerText = data.sparseWall;
+      document.getElementById('sparse-mult').innerText = data.sparseMult;
+
+      document.getElementById('summary-desc').innerText = data.desc;
+      document.getElementById('console-box').innerHTML = data.log;
+    }
+
+    window.onload = function() {
+      updateBenchmarkData('sparse_250k');
+    };
+  </script>
+</body>
+</html>

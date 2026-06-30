@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VolkanaDEV — Safety, Trust &amp; Licensing</title>
+<style>
+  :root {
+    /* Core Volkanadev Palette */
+    --bg: #0e1117;                  /* Slate-Onyx Blue Page Canvas */
+    --panel: #fbfaf7;               /* Classic Volkanadev Cream Panel */
+    --panel-dark: #161b22;          /* Secondary Dark Container Layer */
+    --border: #21262d;              /* Clean Dark Framing lines */
+    --border-light: #e1dad0;        /* Gentle Cream Framing lines */
+    
+    --text-light: #f3eedf;          /* Readable Off-Cream for Dark Areas */
+    --text-dark: #1e222b;           /* Rich Charcoal-Onyx for Light Panels */
+    --muted-light: #8b949e;         /* Dimmed Text for Dark Areas */
+    --muted-dark: #6e675d;          /* Dimmed Text for Light Panels */
+    
+    --accent: #c45d3a;              /* Signature Volkanadev Terracotta */
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text-light);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* Navigation Bar */
+  nav {
+    border-bottom: 1px solid var(--border);
+    background: rgba(14, 17, 23, 0.85);
+    backdrop-filter: blur(12px);
+    position: sticky; top: 0; z-index: 100;
+  }
+  nav .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 0;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.15rem; color: var(--text-light); }
+  .brand-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { color: var(--muted-light); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
+  .nav-links a:hover, .nav-links a.active { color: var(--text-light); font-weight: 700; }
+
+  /* Header Section */
+  .header-block { text-align: center; padding: 80px 0 40px; }
+  .header-block h2 { font-size: 2.5rem; font-weight: 800; margin: 0 0 16px; color: var(--text-light); letter-spacing: -0.03em; }
+  .header-block p { color: var(--muted-light); font-size: 1.1rem; max-width: 720px; margin: 0 auto; }
+
+  /* Rules Highlights Grid */
+  .rules-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin: 40px 0; }
+  @media (min-width: 768px) { .rules-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .rule-card {
+    background: var(--panel);
+    border: 1px solid var(--border-light);
+    color: var(--text-dark);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  }
+  .rule-card h3 { margin: 0 0 12px; font-size: 1.3rem; font-weight: 800; color: var(--accent); letter-spacing: -0.01em; }
+  .rule-card p { margin: 0; font-size: 0.95rem; color: var(--muted-dark); }
+
+  /* Document Layout splitting */
+  .doc-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin: 48px auto;
+    max-width: 960px;
+  }
+  @media (min-width: 850px) {
+    .doc-layout { flex-direction: row; }
+    .doc-explanation { flex: 1; }
+    .doc-legal { flex: 1.2; }
+  }
+
+  .doc-explanation h4 { font-size: 1.4rem; color: #fff; margin: 0 0 16px; letter-spacing: -0.02em; }
+  .doc-explanation p { color: var(--muted-light); font-size: 1rem; margin-bottom: 20px; }
+
+  /* Legal Document Box */
+  .legal-scroll-box {
+    background: var(--panel-dark);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 32px;
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: var(--text-light);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  }
+  .legal-title { font-family: monospace; font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 4px; letter-spacing: 0.05em; }
+  .legal-subtitle { font-size: 0.8rem; color: var(--muted-light); margin-bottom: 24px; text-transform: uppercase; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+  .legal-text { font-size: 0.88rem; line-height: 1.7; color: #d0d7de; }
+  .legal-text h5 { font-size: 0.95rem; font-weight: 700; color: #fff; margin: 24px 0 8px; font-family: monospace; }
+  .legal-text ul { padding-left: 20px; margin: 8px 0; }
+  .legal-text li { margin-bottom: 8px; }
+
+  footer {
+    text-align: center; padding: 40px 0;
+    color: var(--muted-light); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 60px;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+
+  <nav>
+    <div class="wrap">
+      <div class="nav-inner">
+        <div class="brand"><div class="brand-dot"></div>VolkanaDEV</div>
+        <div class="nav-links">
+          <a href="index.html">Welcome</a>
+          <a href="vana.html">Meet VANA</a>
+          <a href="benchmark.html">Benchmarks</a>
+          <a href="security.html" class="active">Safety &amp; Licenses</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <section class="header-block">
+      <h2>Safeguarding the Innovation</h2>
+      <p>This technology is powerful. We built absolute rules to make sure it is used to help, never to hurt. These rules are not optional. They are enforced by license, by contract, and by code.</p>
+    </section>
+
+    <div class="rules-grid">
+      <div class="rule-card">
+        <h3>The Shared Code Promise</h3>
+        <p>You can read, test, and adapt our code freely. If you modify the engine and run it for users over a network, you must release your changes publicly. No secret monopolies.</p>
+      </div>
+      <div class="rule-card">
+        <h3>Strict Anti-Harm Rules</h3>
+        <p>Our license forbids this framework from being used for autonomous weapons, mass surveillance, facial recognition without consent, or tools designed to exploit people.</p>
+      </div>
+      <div class="rule-card">
+        <h3>Immediate Toxic Breach</h3>
+        <p>Break the anti-harm rules and your license terminates instantly. You assume all legal liability, lose all security updates, and are permanently locked out of VolkanaDEV networks.</p>
+      </div>
+    </div>
+
+    <div class="doc-layout">
+      
+      <div class="doc-explanation">
+        <h4>Our "Help, Not Hinder" Contract</h4>
+        <p>Computational power belongs in the hands of the individual creator. But technology this advanced, left unregulated, creates an environment where corporations or actors can abuse it.</p>
+        <p>That is why we created the VPL-1.0. It keeps our software open and inspectable for independent developers, students, and researchers, while installing a legal wall against weaponization or exploitation.</p>
+        <p>For government agencies and large entities that need to deploy outside the public ethical restrictions, we offer a separate contract: the Master Government Infrastructure Contract. It grants a private, perpetual, non-transferable, non-sublicensable license for a specific approved scope. It overrides Section 2 of the VPL-1.0 on a per-project basis. It requires formal contract execution. See the Contact page to request one.</p>
+        <p>The Master Contract includes four binding provisions: a carve-out that supersedes the public ethical restrictions in the context of autonomous defense systems, a system handoff that gives the Licensee absolute custody with zero Licensor data access, a maintenance clause requiring cryptographically signed security updates with no operational interference, and an indemnification clause delivering the engine "as is" with full Licensee liability. These are summarized in Section 5 of the license below.</p>
+      </div>
+
+      <div class="doc-legal">
+        <div class="legal-scroll-box">
+          <div class="legal-title">VOLKANADEV PUBLIC SOURCE-AVAILABLE LICENSE</div>
+          <div class="legal-subtitle">Version 1.0 (VPL-1.0) Copyright &copy; 2026</div>
+          
+          <div class="legal-text">
+            <p>Copyright (c) 2026, VolkanaDEV Autonomous Systems, Inc. All rights reserved.</p>
+            
+            <h5>1. PURPOSE & NETWORK OBLIGATION</h5>
+            <p>This software engine is published as source-available. Subject to the restrictions below, you may view, modify, and run this code. If you modify this software and make it available to remote users interacting with it over a network, you must make the complete, corresponding source code of your modified version publicly available under this same license.</p>
+            
+            <h5>2. ETHICAL USE & PROHIBITED ACTIVITIES</h5>
+            <p>Any permission granted under Section 1 is strictly conditioned upon absolute compliance with the following prohibitions. This software shall NOT be used, modified, integrated, or deployed for:</p>
+            <ul>
+              <li><strong>Autonomous Weaponry:</strong> Any system, vehicle, drone swarm, or hardware mechanism designed to autonomously select, target, or engage in kinetic force or weaponized payload deployment.</li>
+              <li><strong>Extreme Surveillance Systems:</strong> Any bulk data harvesting, facial recognition arrays, or network tracking infrastructure deployed to monitor populations without explicit, granular, individual consent.</li>
+              <li><strong>Harmful Private Gain:</strong> Any commercial deployment designed to generate personal profit through the intentional exploitation, deception, financial ruin, or physical harm of human beings.</li>
+            </ul>
+            
+            <h5>3. BREACH & TERMINATION</h5>
+            <p>Any use of this software in violation of Section 2 automatically terminates your license rights effective immediately. Upon termination, you maintain ownership of your provided VolkanaDEV software, hardware, firmware, or distributed products under the VolkanaDEV ecosystem or brand.</p>
+            <p>You assume all future legal and practical responsibility from VolkanaDEV, and assert any future implementations fall to you as sole owner in a legally binding admission implied upon breach of these terms.</p>
+            <p>Your rights to security updates and any future services rendered by VolkanaDEV are rendered null and void upon termination. You are prohibited from any future VolkanaDEV system networks going forward.</p>
+
+            <h5>4. GOVERNMENT CARVE-OUT (MASTER CONTRACT)</h5>
+            <p>Government agencies and large entities may request a Master Government Infrastructure Contract. This contract grants a private, perpetual, non-transferable, non-sublicensable license to deploy the VolkanaDEV compilation engine and parallel node hardware architecture for a specific approved scope of use.</p>
+            <p>This contract explicitly supersedes, overrides, and writes the Licensee out of the public ethical restrictions outlined in Section 2 of the VPL-1.0 in the context of autonomous defense systems. The override is evaluated on an isolated project-by-project basis and requires formal, separate contract execution.</p>
+            <p>Under this contract, the Licensee retains absolute physical and operational custody of deployed instances. The Licensor has zero access, visibility, or tracking rights regarding internal data payloads, simulation metrics, or operational inputs processed within the Licensee's secure infrastructure.</p>
+            <p>The Licensor retains sole administrative oversight of core architectural stability. The Licensee agrees to accept mandatory, cryptographically signed low-level security updates, compiler stability patches, and kernel bug fixes within a commercially reasonable timeframe. The Licensor cannot access, alter, or interrupt the Licensee's high-level software application layers.</p>
+            <p>The Licensee assumes full responsibility and liability for its specific deployments. The Licensor provides the software engine "as is" and makes no representations regarding compliance with specific military, defense, or municipal regulatory frameworks.</p>
+
+            <h5>5. MASTER CONTRACT PROVISIONS</h5>
+            <p>The following provisions are binding under the Master Government Infrastructure Contract and supplement Section 4 above:</p>
+            <ul>
+              <li><strong>5.1 Carve-Out:</strong> The Master Contract supersedes Section 2 of the VPL-1.0 for the approved scope only, in the context of autonomous defense systems. The Licensee is released from the public ethical restrictions for that specific deployment. All other deployments remain bound by the VPL-1.0 in full.</li>
+              <li><strong>5.2 System Handoff:</strong> The Licensor delivers the engine to the Licensee with absolute custody transfer. The Licensor retains zero access to internal data payloads, simulation metrics, operational inputs, or any data processed within the Licensee's infrastructure. No remote access, no telemetry, no backdoor. The boundary is absolute.</li>
+              <li><strong>5.3 Maintenance &amp; Security Updates:</strong> The Licensor provides mandatory, cryptographically signed low-level security updates, compiler stability patches, and kernel bug fixes. These updates protect core architectural integrity only. The Licensor cannot access, alter, or interrupt the Licensee's high-level software application layers. Operational interference is prohibited. The Licensee agrees to integrate updates within a commercially reasonable timeframe.</li>
+              <li><strong>5.4 Indemnification &amp; "As-Is" Delivery:</strong> The software engine is delivered strictly "as is." The Licensor makes no warranties regarding fitness for a particular purpose, merchantability, or compliance with specific regulatory frameworks. The Licensee assumes full and sole liability for all deployments, operations, and outcomes under the Master Contract. The Licensor holds zero regulatory or compliance exposure related to the Licensee's use of the engine.</li>
+            </ul>
+
+            <hr style="border: none; border-top: 1px dashed var(--border); margin: 32px 0;">
+
+            <h5 style="text-align: center;">BOILERPLATE NOTICE</h5>
+            <p>This license format, including the VPL-1.0 structure, the Acceptable Use Policy provisions in Section 2, the breach and termination mechanics in Section 3, the government carve-out framework in Section 4, and the Master Contract provisions in Section 5, may be adopted by any individual or organization distributing copies or derivative works of VolkanaDEV software, hardware, or documentation.</p>
+            <p>If you redistribute this software, you must include this license in full, including this boilerplate notice. You may substitute your entity name, copyright year, and product name where appropriate, but the structural provisions, ethical restrictions, and carve-out framework must remain intact. Removing or weakening the anti-harm provisions in Section 2 voids your right to distribute under this license.</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div style="margin-bottom: 8px;"><a href="terms.html" style="color: var(--accent); text-decoration: none;">Terms of Use</a> | <a href="privacy.html" style="color: var(--accent); text-decoration: none;">Privacy Policy</a></div>
+    Copyright &copy; 2026 VolkanaDEV Autonomous Systems, Inc.<br>
+    VolkanaDEV, Sanguis, and VANA are intellectual property of VolkanaDEV Autonomous Systems, Inc.<br>
+    Business and private inquiries: <a href="mailto:volkanadev@volkanadev.com">volkanadev@volkanadev.com</a>
+  </footer>
+
+</body>
+</html>

@@ -3,229 +3,277 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/png" href="favicon.png">
-<title>Volkana</title>
-<meta name="description" content="Volkana - think in voltage. code in blood.">
+<title>VolkanaDEV — Computers, Made Simple Again</title>
+<meta name="description" content="A new way to program anything, anywhere. Built to help, never to hurt.">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html, body {
-    height: 100%;
-    background: #000000;
-    color: #f5ead6;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-    overflow: hidden;
+  :root {
+    /* Core Volkanadev Palette */
+    --bg: #0e1117;                  /* Slate-Onyx Blue Page Canvas */
+    --panel: #fbfaf7;               /* Classic Volkanadev Cream Panel */
+    --panel-dark: #161b22;          /* Secondary Dark Container Layer */
+    --border: #21262d;              /* Clean Dark Framing lines */
+    --border-light: #e1dad0;        /* Gentle Cream Framing lines */
+    
+    /* Text Channels */
+    --text-light: #f3eedf;          /* Readable Off-Cream for Dark Areas */
+    --text-dark: #1e222b;           /* Rich Charcoal-Onyx for Light Panels */
+    --muted-light: #8b949e;         /* Dimmed Text for Dark Areas */
+    --muted-dark: #6e675d;          /* Dimmed Text for Light Panels */
+    
+    /* Accents */
+    --accent: #c45d3a;              /* Signature Volkanadev Terracotta */
+    --accent-hover: #b04f2f;
   }
 
-  .container {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text-light);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* Navigation Bar */
+  nav {
+    border-bottom: 1px solid var(--border);
+    background: rgba(14, 17, 23, 0.85);
+    backdrop-filter: blur(12px);
+    position: sticky; top: 0; z-index: 100;
+  }
+  nav .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 0;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.15rem; color: var(--text-light); letter-spacing: -0.02em; }
+  .brand-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { color: var(--muted-light); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--text-light); }
+
+  /* Hero Section */
+  .hero {
     text-align: center;
-    padding: 2rem;
+    padding: 90px 20px 60px;
+    background: radial-gradient(circle at 50% 0%, rgba(196, 93, 58, 0.08), transparent 60%);
   }
+  .hero h2 { font-size: clamp(1.8rem, 5.5vw, 2.8rem); font-weight: 800; margin: 0 0 20px; color: var(--text-light); letter-spacing: -0.03em; line-height: 1.2; }
+  .hero p { color: var(--muted-light); font-size: clamp(1.05rem, 2.5vw, 1.2rem); max-width: 780px; margin: 0 auto 32px; }
+  
+  /* Modern Countdown Timer Layout */
+  .timer-container {
+    display: flex; gap: 16px; justify-content: center; margin: 32px auto 40px; max-width: 500px;
+  }
+  .timer-block {
+    background: var(--panel-dark); border: 1px solid var(--border); padding: 14px 20px; border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2); min-width: 90px; text-align: center;
+  }
+  .timer-val { font-size: 2rem; font-weight: 800; color: var(--text-light); line-height: 1.1; font-family: monospace; }
+  .timer-lbl { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-light); margin-top: 6px; font-weight: 600; }
 
-  .logo {
-    font-size: clamp(2.5rem, 8vw, 5rem);
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    color: #c45d3a;
-    margin-bottom: 0;
-    line-height: 1;
+  .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  
+  .btn {
+    background: var(--accent); color: #fff; border: none; border-radius: 10px;
+    padding: 12px 24px; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: 0.15s;
+    text-decoration: none; display: inline-block; box-shadow: 0 2px 4px rgba(0,0,0,0.15);
   }
+  .btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
+  .btn.ghost { background: transparent; border: 1px solid var(--border); color: var(--text-light); box-shadow: none; }
+  .btn.ghost:hover { background: var(--panel-dark); }
 
-  .logo-sub {
-    font-size: clamp(0.7rem, 1.8vw, 0.9rem);
-    letter-spacing: 0.5em;
-    font-weight: 400;
-    color: #c45d3a;
-    margin-top: 0.5rem;
-    margin-bottom: 1.8rem;
-    opacity: 0.75;
+  /* Section Styles */
+  .section { padding: 80px 0; border-top: 1px solid var(--border); }
+  .section-label {
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 12px; text-align: center;
   }
+  .section h3 { font-size: clamp(1.6rem, 4vw, 2rem); margin: 0 0 24px; text-align: center; color: #fff; letter-spacing: -0.02em; }
+  .section p { color: var(--muted-light); margin: 0 auto 32px; font-size: 1.08rem; max-width: 780px; text-align: center; line-height: 1.65; }
 
-  .tagline {
-    font-size: clamp(0.85rem, 2.2vw, 1rem);
-    font-style: normal;
-    font-weight: 300;
-    color: #a89878;
-    margin-bottom: 3.5rem;
-    letter-spacing: 0.02em;
-  }
+  /* Carousel / Cards Layout */
+  .carousel { position: relative; overflow: hidden; margin-top: 40px; }
+  .carousel-track { display: flex; }
+  .carousel-page { flex: 0 0 100%; display: grid; grid-template-columns: 1fr; gap: 24px; padding: 4px; }
+  @media (min-width: 768px) { .carousel-page { grid-template-columns: repeat(3, 1fr); } }
 
-  .coming-soon {
-    font-size: clamp(0.75rem, 1.8vw, 0.9rem);
-    text-transform: uppercase;
-    letter-spacing: 0.35em;
-    font-weight: 400;
-    color: #f5ead6;
-    margin-bottom: 2.5rem;
-    opacity: 0.6;
+  .card {
+    background: var(--panel); border: 1px solid var(--border-light); color: var(--text-dark);
+    border-radius: 16px; padding: 32px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   }
+  .card h4 { margin: 0 0 12px; color: var(--accent); font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; }
+  .card p { margin: 0; color: var(--muted-dark); font-size: 0.98rem; line-height: 1.6; text-align: left; }
 
-  .countdown {
-    display: flex;
-    gap: clamp(1rem, 4vw, 3rem);
-    margin-bottom: 3rem;
+  /* Creator Note Component */
+  .note-wrapper { max-width: 780px; margin: 40px auto 0; }
+  .note-box { 
+    background: var(--panel-dark); border: 1px solid var(--border); border-radius: 16px; padding: 36px; 
+    box-shadow: 0 12px 32px rgba(0,0,0,0.3); text-align: center;
   }
+  .note-box h3 { color: #fff; font-size: 1.4rem; margin: 0 0 16px; letter-spacing: -0.01em; text-align: center; }
+  .note-box p { color: var(--text-light); font-size: 1rem; line-height: 1.7; margin-bottom: 20px; text-align: center; }
+  .note-box p:last-child { margin-bottom: 0; color: var(--accent); font-weight: 600; font-size: 0.95rem; }
 
-  .time-unit {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  footer {
+    text-align: center; padding: 40px 0;
+    color: var(--muted-light); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 40px;
   }
-
-  .time-value {
-    font-size: clamp(1.8rem, 6vw, 3.5rem);
-    font-weight: 300;
-    color: #c45d3a;
-    line-height: 1;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .time-label {
-    font-size: clamp(0.6rem, 1.3vw, 0.7rem);
-    text-transform: uppercase;
-    letter-spacing: 0.25em;
-    font-weight: 400;
-    color: #a89878;
-    margin-top: 0.5rem;
-  }
-
-  .footer {
-    position: absolute;
-    bottom: 1.5rem;
-    width: 100%;
-    text-align: center;
-    font-size: 0.7rem;
-    color: #5a5347;
-    letter-spacing: 0.1em;
-  }
-
-  .footer a {
-    color: #5a5347;
-    text-decoration: none;
-    border-bottom: 1px solid #3a3530;
-    transition: color 0.3s;
-  }
-
-  .footer a:hover {
-    color: #c45d3a;
-  }
-
-  .pulse {
-    animation: pulse 4s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 0.7; }
-    50% { opacity: 1; }
-  }
-
-  .divider {
-    width: 60px;
-    height: 1px;
-    background: #c45d3a;
-    margin: 0 auto 3rem;
-    opacity: 0.6;
-  }
-
-  .inquiry {
-    margin-bottom: 2rem;
-    text-align: center;
-  }
-
-  .inquiry-text {
-    display: block;
-    font-size: 0.85rem;
-    font-style: italic;
-    color: #a89878;
-    margin-bottom: 0.5rem;
-    letter-spacing: 0.08em;
-  }
-
-  .inquiry-link {
-    font-size: 0.8rem;
-    color: #c45d3a;
-    text-decoration: none;
-    border-bottom: 1px solid #5a3528;
-    letter-spacing: 0.05em;
-    transition: border-color 0.3s;
-  }
-
-  .inquiry-link:hover {
-    border-bottom-color: #c45d3a;
-  }
+  footer a { color: var(--accent); text-decoration: none; }
 </style>
 </head>
 <body>
 
-<div class="container">
-  <div class="logo">VOLKANA</div>
-  <div class="logo-sub">DEV</div>
-  <div class="tagline">A new way to program anything, anywhere.</div>
-  <div class="divider"></div>
-  <div class="coming-soon pulse">Coming Soon</div>
-  <div class="countdown" id="countdown">
-    <div class="time-unit">
-      <div class="time-value" id="days">--</div>
-      <div class="time-label">Days</div>
+  <nav>
+    <div class="wrap">
+      <div class="nav-inner">
+        <div class="brand"><div class="brand-dot"></div>VolkanaDEV</div>
+        <div class="nav-links">
+          <a href="index.html" class="active">Welcome</a>
+          <a href="vana.html">Meet VANA</a>
+          <a href="benchmark.html">Benchmarks</a>
+          <a href="security.html">Safety &amp; Licenses</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
     </div>
-    <div class="time-unit">
-      <div class="time-value" id="hours">--</div>
-      <div class="time-label">Hours</div>
-    </div>
-    <div class="time-unit">
-      <div class="time-value" id="minutes">--</div>
-      <div class="time-label">Minutes</div>
-    </div>
-    <div class="time-unit">
-      <div class="time-value" id="seconds">--</div>
-      <div class="time-label">Seconds</div>
-    </div>
+  </nav>
+
+  <div class="wrap">
+    <section class="hero">
+      <h2>Your CPU turns 55 soon. Ready to give it a rest?</h2>
+      <p>Your processor handles data one piece at a time through a single pipeline. Introducing VolkanaDEV and Sanguis. Sanguis is a code that routes data across many paths simultaneously using the GPU hardware you already own. The computation is real-time. The hardware is doing the work, not waiting to.</p>
+      
+      <div class="timer-container">
+        <div class="timer-block"><div class="timer-val" id="days">282</div><div class="timer-lbl">Days</div></div>
+        <div class="timer-block"><div class="timer-val" id="hours">06</div><div class="timer-lbl">Hours</div></div>
+        <div class="timer-block"><div class="timer-val" id="minutes">59</div><div class="timer-lbl">Mins</div></div>
+        <div class="timer-block"><div class="timer-val" id="seconds">55</div><div class="timer-lbl">Secs</div></div>
+      </div>
+
+      <p style="color: var(--muted-light); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin: 0 auto 32px; text-align: center; max-width: 500px;">Days until public source release</p>
+
+      <p style="color: var(--accent); font-size: clamp(1.3rem, 3vw, 1.6rem); font-weight: 700; margin: 0 auto 32px; text-align: center; max-width: 600px; letter-spacing: -0.01em;">Welcome to VolkanaDEV</p>
+
+      <div class="hero-actions">
+        <a href="benchmark.html" class="btn">View Benchmarks</a>
+        <a href="contact.html" class="btn ghost">Reach Out To Us</a>
+      </div>
+    </section>
   </div>
 
-  <div class="inquiry">
-    <span class="inquiry-text">Strategic and investment inquiries</span>
-    <a href="mailto:volkanadev@volkanadev.com" class="inquiry-link">volkanadev@volkanadev.com</a>
-  </div>
+  <section class="section">
+    <div class="wrap">
+      <div class="section-label">The Language and the Engine</div>
+      <h3>Introducing Sanguis</h3>
+      <p>Sanguis is a self-hosting programming language. Ten keywords: body, hold, when, but, emit, stream, to, route, through, repeat. No abstract math. No boilerplate. You structure programs out of bodies that hold state, fire when conditions are met, and emit to each other. It compiles to a .vana genome that a runtime executes. The compiler and interpreter are themselves written in Sanguis. The language builds itself.</p>
+      <p>This runs today. Sanguis compiles to standalone .exe binaries on normal Windows hardware. You do not need a server farm, a GPU cluster, or a cloud account. The parallel capabilities already inside your laptop are enough.</p>
+      
+      <div class="carousel">
+        <div class="carousel-track">
+          <div class="carousel-page">
+            <div class="card">
+              <h4>Structured Like Biology</h4>
+              <p>Programs are bodies. Each body holds its own state and connects to the next. No classes, no inheritance, no object hierarchies. Just bodies that breathe.</p>
+            </div>
+            <div class="card">
+              <h4>Unbounded Data Flow</h4>
+              <p>Data moves through the entire fabric at once. No single-file line. No bottleneck. The GPU sparse skip method hops over empty tracks and draws less power than the baseline.</p>
+            </div>
+            <div class="card">
+              <h4>Everyday Hardware Native</h4>
+              <p>You do not need a data center. Sanguis compiles to .exe binaries that run on the laptop you already own. The installer is 25 MB and needs nothing else installed.</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  <div class="footer">
-    <a href="https://github.com/VolkanaDEV">github.com/VolkanaDEV</a>
-  </div>
-</div>
+    </div>
+  </section>
 
-<script>
-  var target = new Date('2027-04-01T00:00:00').getTime();
+  <section class="section">
+    <div class="wrap">
+      <div class="section-label">The Engine</div>
+      <h3>What is a VANA?</h3>
+      <p>VANA stands for Voltage Activated Neural Architecture. The name describes the idea: computation activated through voltage pathways, structured like a neural system rather than a sequential pipeline. In practice, VANA is the runtime engine that executes Sanguis programs. When you write Sanguis code, the compiler produces a .vana file. VANA reads that file and runs it on real hardware.</p>
+      <p>The architecture matters because it changes what the hardware is doing. Instead of forcing data through a single processing line, VANA routes it across many paths simultaneously. It skips empty regions instead of processing them. It treats the silicon underneath as the computation itself, not a surface for interpretation. What that means in practice depends on what you build with it.</p>
+      <p>A new CPU core asks how to make the same thing faster. VANA asks what if the hardware did something different. Today the engine runs on CUDA cores and Vulkan compute pipelines. Tomorrow it can run on custom firmware on a dedicated board. Eventually it can run on a SoC where the language and the chip share the same structure. The hardware changes underneath. The language does not. VANA is not tied to any one silicon. It is the layer that adapts to whatever the hardware can do.</p>
+      
+      <div class="carousel">
+        <div class="carousel-track">
+          <div class="carousel-page">
+            <div class="card">
+              <h4>Sparse Skip Routing</h4>
+              <p>VANA maps data across the GPU and skips empty regions entirely. Instead of processing every cell in a grid, it jumps over the ones that hold nothing. Less power, less time, same result.</p>
+            </div>
+            <div class="card">
+              <h4>Hardware-Native Execution</h4>
+              <p>VANA does not emulate or interpret. It compiles .vana files into operations the hardware already understands. The GPU compute pipelines execute the work directly. No translation layer, no overhead.</p>
+            </div>
+            <div class="card">
+              <h4>From Code to Silicon</h4>
+              <p>The Sanguis-to-VANA pipeline targets consumer GPUs today. The same architecture scales to custom silicon. When the hardware changes, the engine adapts. The language stays the same.</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  function updateCountdown() {
-    var now = new Date().getTime();
-    var distance = target - now;
+      <div style="text-align: center; margin-top: 32px;">
+        <a href="vana.html" class="btn" style="display: inline-block; width: auto; padding: 12px 28px;">Meet VANA</a>
+      </div>
 
-    if (distance < 0) {
-      document.getElementById('days').textContent = '0';
-      document.getElementById('hours').textContent = '0';
-      document.getElementById('minutes').textContent = '0';
-      document.getElementById('seconds').textContent = '0';
-      return;
+    </div>
+  </section>
+
+  <section class="section" style="padding: 50px 0;">
+    <div class="wrap" style="max-width: 780px;">
+      <div class="section-label">Where to Next</div>
+      <h3 style="font-size: clamp(1.4rem, 3.5vw, 1.75rem);">Custom Silicon</h3>
+      <p style="color: var(--muted-light); font-size: 1rem; line-height: 1.65; text-align: center; margin: 0 auto 16px; max-width: 720px;">Today, VANA drives prototypes using the GPU hardware already on your desk. That is the starting point, not the destination. The end goal is custom silicon designed around the Sanguis architecture from the ground up. Chips where the language and the hardware share the same structure. No translation, no drivers, no abstraction layers between code and silicon. The computation becomes the chip itself.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="note-wrapper">
+        <div class="note-box">
+          <h3>Note From The Creator</h3>
+          <p>If you've made it this far and still want to give Volkana a chance, I don't have words to express how grateful and humbled I am. Without you, and the people who helped make Volkana a reality, my dream of a better future for all of us may be just that forever. A dream.</p>
+          <p>I hope you share that dream with me, and want it to come true. From the bottom of my heart. Thank you.</p>
+          <p>Thank you to everyone that believes in me, taught me, loved me, hated me, or helped me survive. I love you mom and dad.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div style="margin-bottom: 8px;"><a href="terms.html" style="color: var(--accent); text-decoration: none;">Terms of Use</a> | <a href="privacy.html" style="color: var(--accent); text-decoration: none;">Privacy Policy</a></div>
+    Copyright &copy; 2026 VolkanaDEV Autonomous Systems, Inc.<br>
+    VolkanaDEV, Sanguis, and VANA are intellectual property of VolkanaDEV Autonomous Systems, Inc.<br>
+    Business and private inquiries: <a href="mailto:volkanadev@volkanadev.com">volkanadev@volkanadev.com</a>
+  </footer>
+
+  <script>
+    // Countdown to April 1, 2028
+    var targetDate = new Date("2028-04-01T00:00:00").getTime();
+    
+    function updateTimer() {
+      var now = new Date().getTime(); 
+      var diff = targetDate - now;
+      if (diff <= 0) { clearInterval(timerInterval); return; }
+      var d = Math.floor(diff / (1000 * 60 * 60 * 24)); 
+      var h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); 
+      var m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)); 
+      var s = Math.floor((diff % (1000 * 60)) / 1000);
+      document.getElementById('days').innerText = d < 10 ? '0' + d : d; 
+      document.getElementById('hours').innerText = h < 10 ? '0' + h : h; 
+      document.getElementById('minutes').innerText = m < 10 ? '0' + m : m; 
+      document.getElementById('seconds').innerText = s < 10 ? '0' + s : s;
     }
-
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    document.getElementById('days').textContent = days;
-    document.getElementById('hours').textContent = hours;
-    document.getElementById('minutes').textContent = minutes;
-    document.getElementById('seconds').textContent = seconds;
-  }
-
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
-</script>
-
+    var timerInterval = setInterval(updateTimer, 1000); 
+    updateTimer();
+  </script>
 </body>
 </html>

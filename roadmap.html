@@ -321,28 +321,27 @@
 
       <h3><span class="label">Working Now</span>V2: The Foundation</h3>
       <span class="status-badge live">Live</span>
-      <p>V2 is the compiler and runtime that runs today. It compiles Sanguis code to standalone executables on normal Windows hardware. No server farm, no cloud account, no GPU cluster required. The installer is 25 MB and needs nothing else installed.</p>
+      <p>This is what runs today. You write Sanguis, it compiles, it makes a .exe, the .exe runs. On a normal laptop. No server, no cloud, nothing else installed. That is not a pitch. That is what happens when you type the command.</p>
       <ul class="feature-list">
-        <li><span class="check">&#10003;</span><span>Full pipeline: .sang source compiles to .sirc intermediate, then to native .exe binaries</span></li>
-        <li><span class="check">&#10003;</span><span>139 tests passing across the Rust bootstrapper and Sanguis toolchain</span></li>
-        <li><span class="check">&#10003;</span><span>Text processing builtins: read, write, extract, replace, concat, match, trim, crop, and more</span></li>
-        <li><span class="check">&#10003;</span><span>Standalone .exe output runs on any Windows machine with zero dependencies</span></li>
-        <li><span class="check">&#10003;</span><span>The Rust bootstrapper is scaffolding, not the language. It exists to build the self-hosting path, then retires.</span></li>
+        <li><span class="check">&#10003;</span><span>.sang source compiles to .sirc, then to a standalone .exe. The whole pipeline works.</span></li>
+        <li><span class="check">&#10003;</span><span>139 tests passing. Text builtins work: read, write, extract, replace, concat, match, trim, crop.</span></li>
+        <li><span class="check">&#10003;</span><span>The .exe runs on any Windows machine. Zero dependencies. 25 MB installer.</span></li>
+        <li><span class="check">&#10003;</span><span>The GPU benchmarks on the Benchmarks page are real numbers from this engine, on an RTX 3060 and an i7-12700K.</span></li>
+        <li><span class="check">&#10003;</span><span>The Rust bootstrapper is scaffolding. It exists to get the language standing on its own. Once it does, the Rust goes away.</span></li>
       </ul>
 
-      <h3><span class="label">Working Now</span>V3: The Prototype</h3>
+      <h3><span class="label">Prototype</span>V3: The New Language</h3>
       <span class="status-badge proto">Prototype</span>
-      <p>V3 is the new language. Seven keywords: body, hold, when, but, stream, to, route. No classes, no loops, no if/else. Programs are bodies that breathe. The V3 compiler and interpreter are written in V2 Sanguis, proving the self-hosting path is real.</p>
+      <p>V3 is where Sanguis becomes what it is supposed to be. Seven keywords: body, hold, when, but, stream, to, route. No classes. No loops. No if/else. Programs are bodies that hold state and breathe. But V3 is not done. It is a prototype that proves the idea works, not a finished toolchain you can build real software with yet.</p>
       <ul class="feature-list">
-        <li><span class="check">&#10003;</span><span>Full compile chain: .sang compiles to .vana genome, interpreter executes it (hello world, multi-emit, greeter all verified)</span></li>
-        <li><span class="check">&#10003;</span><span>Native compilation: .sang to .vana to .exe with no interpreter needed on the target machine (5/5 tests passing)</span></li>
-        <li><span class="check">&#10003;</span><span>GPU sparse skip routing benchmarks running on real consumer hardware (RTX 3060, i7-12700K, 32GB RAM)</span></li>
-        <li><span class="check">&#10003;</span><span>V3 compiler and interpreter are both written in V2 Sanguis. The language is building itself.</span></li>
-        <li><span class="check">&#10003;</span><span>.vana genome format is pipe-delimited text for debuggability. Binary format is the next step.</span></li>
+        <li><span class="check">&#10003;</span><span>The compile chain works for simple programs. .sang to .vana genome, interpreter runs it. Hello world, multi-emit, greeter. Small stuff, but it runs.</span></li>
+        <li><span class="check">&#10003;</span><span>Native compilation works too. .sang to .vana to .exe. 5 out of 5 test cases pass. No interpreter needed on the target machine.</span></li>
+        <li><span class="check">&#10003;</span><span>The V3 compiler and interpreter are written in V2 Sanguis, not V3. That is the self-hosting path, but we are not there yet. The language is not building itself today.</span></li>
+        <li><span class="check">&#10003;</span><span>The .vana genome is pipe-delimited text right now because it is easy to debug. Binary comes later.</span></li>
       </ul>
 
       <h3><span class="label">The Path Forward</span>What Comes Next</h3>
-      <p>The progression is not speculative. Each stage builds on the one before it. The compiler works. The GPU benchmarks are real. The language is self-hosting. What remains is engineering, not theory.</p>
+      <p>So here is where things stand. V2 works. V3 proves the language design works. The GPU benchmarks are real. What is left is making V3 stand on its own, then making the hardware real. That is engineering, not hope.</p>
 
       <div class="roadmap-chart">
         <div class="timeline-track">
@@ -350,16 +349,16 @@
             <div class="milestone-year">2026</div>
             <div class="milestone-dot"></div>
             <div class="milestone-card">
-              <strong>V2 + V3</strong>
-              Working compiler, native executables, GPU benchmarks, self-hosted toolchain prototype.
+              <strong>Where We Are</strong>
+              V2 compiles and runs. V3 prototype proves the design. GPU benchmarks on real hardware. The Rust bootstrapper is still holding things up.
             </div>
           </div>
           <div class="milestone current">
             <div class="milestone-year">2027</div>
             <div class="milestone-dot"></div>
             <div class="milestone-card">
-              <strong>Self-Hosting Complete</strong>
-              Binary .vana genome format, apoptosis (stalled body death), Rust bootstrapper retired. The language runs on its own.
+              <strong>Self-Hosting</strong>
+              V3 writes itself. The Rust bootstrapper retires. Binary .vana genome. Apoptosis, where stalled bodies die on their own. The language runs on its own terms.
             </div>
           </div>
           <div class="milestone future">
@@ -367,23 +366,23 @@
             <div class="milestone-dot"></div>
             <div class="milestone-card">
               <strong>First Prototype PCB</strong>
-              Custom firmware on a dedicated board. No GPU driver stack. The engine talks directly to silicon. The .vana file becomes firmware.
+              A dedicated board. No GPU driver stack, no operating system in the way. The engine talks to silicon directly. The .vana file becomes firmware.
             </div>
           </div>
           <div class="milestone future">
             <div class="milestone-year">2045</div>
             <div class="milestone-dot"></div>
             <div class="milestone-card">
-              <strong>SoC Native</strong>
-              System on Chip where the language and the hardware share the same structure. No translation layers. The computation is the chip.
+              <strong>SoC</strong>
+              A chip where the language and the hardware are the same thing. No translation layers. No drivers. The code is the silicon.
             </div>
           </div>
         </div>
       </div>
 
       <div class="goal-box">
-        <strong>The 2030 Target</strong>
-        <p>The first prototype PCB is the milestone that changes everything. Today VANA runs on consumer GPUs through Vulkan compute pipelines. The PCB replaces that abstraction with direct silicon. The language stays the same. The hardware underneath becomes the computation itself. Everything between 2026 and 2030 is the engineering path to make that real.</p>
+        <strong>What a future VANA could look like</strong>
+        <p>Right now VANA runs on a GPU through Vulkan. It works, but it is still going through someone else's pipes. The PCB is the first time VANA gets its own hardware. No driver stack. No operating system abstraction. Just the engine and the silicon. Same language. Same .vana file. Different world underneath. That is the 2030 goal, and everything between here and there is the work to get there.</p>
       </div>
 
     </div>

@@ -235,31 +235,13 @@
     font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
     letter-spacing: 0.08em; color: var(--accent); margin-bottom: 24px;
   }
-  .watt-bar-container {
-    display: flex; align-items: flex-end; gap: 16px;
-    height: 220px; padding: 0 8px;
+  .watt-svg { width: 100%; height: 300px; display: block; }
+  .watt-x-labels {
+    display: flex; justify-content: space-between;
+    padding: 10px 20px 0; font-size: 0.68rem; color: var(--muted-light); font-weight: 600;
+    gap: 8px;
   }
-  .watt-bar-col {
-    flex: 1; display: flex; flex-direction: column;
-    align-items: center; justify-content: flex-end; height: 100%;
-  }
-  .watt-bar-value {
-    font-size: 0.75rem; font-weight: 700; color: var(--text-light);
-    margin-bottom: 6px; white-space: nowrap;
-  }
-  .watt-bar {
-    width: 100%; max-width: 72px; border-radius: 6px 6px 0 0;
-    transition: height 0.6s ease; min-height: 4px;
-  }
-  .watt-bar.cpu { background: #e05d44; }
-  .watt-bar.base { background: #d1a13d; }
-  .watt-bar.region { background: #529467; }
-  .watt-bar.sparse { background: var(--accent); }
-  .watt-bar.blocked { background: rgba(224,93,68,0.12); border: 1px dashed #e05d44; }
-  .watt-bar-label {
-    font-size: 0.72rem; font-weight: 600; color: var(--muted-light);
-    margin-top: 10px; text-align: center; white-space: nowrap;
-  }
+  .watt-x-labels span { text-align: center; flex: 1; }
 
   /* Joule Usage Line Graph */
   .joule-chart {
@@ -332,10 +314,8 @@
     .speed-bar-label { flex: 0 0 90px; font-size: 0.72rem; }
     .speed-bar-fill { font-size: 0.68rem; }
     .watt-chart { padding: 18px 14px; }
-    .watt-bar-container { height: 160px; gap: 8px; }
-    .watt-bar { max-width: 50px; }
-    .watt-bar-value { font-size: 0.68rem; }
-    .watt-bar-label { font-size: 0.65rem; }
+    .watt-svg { height: 220px; }
+    .watt-x-labels { font-size: 0.6rem; padding: 6px 8px 0; gap: 4px; }
     .joule-chart { padding: 18px 14px; }
     .joule-svg { height: 220px; }
     .joule-x-labels { font-size: 0.6rem; padding: 6px 8px 0; gap: 4px; }
@@ -480,8 +460,9 @@
     </div>
 
     <div class="watt-chart">
-      <div class="watt-chart-title">Speed Multiplier — Times Faster (Lowest to Highest, Log Scale)</div>
-      <div class="watt-bar-container" id="watt-bar-container"></div>
+      <div class="watt-chart-title">Speed Multiplier — Times Faster (Log Scale, Lowest to Highest)</div>
+      <svg class="watt-svg" id="watt-svg" viewBox="0 0 700 300" preserveAspectRatio="none"></svg>
+      <div class="watt-x-labels" id="watt-x-labels"></div>
     </div>
 
     <div class="joule-chart">
@@ -767,32 +748,66 @@
         return a.value - b.value;
       });
 
+      var colors = {cpu: '#e05d44', base: '#d1a13d', region: '#529467', sparse: '#c45d3a'};
+
+      var W = 700, H = 300, padL = 80, padR = 40, padT = 30, padB = 30;
+      var chartW = W - padL - padR;
+      var chartH = H - padT - padB;
+
       var maxVal = 0;
       for (var i = 0; i < entries.length; i++) {
         if (!entries[i].blocked && entries[i].value > maxVal) maxVal = entries[i].value;
       }
-      var logMax = Math.log10(maxVal);
 
-      var html = '';
+      var logMax = Math.log10(maxVal);
+      var logMin = 0;
+      var logRange = logMax > 0 ? logMax : 1;
+
+      function yPos(val) {
+        var pct = (Math.log10(val) - logMin) / logRange;
+        return padT + chartH - pct * chartH;
+      }
+
+      var barW = chartW / entries.length;
+      var barInnerW = Math.min(60, barW * 0.5);
+
+      var svg = document.getElementById('watt-svg');
+      var parts = '';
+
+      var gridSteps = Math.ceil(logRange);
+      for (var g = 0; g <= gridSteps; g++) {
+        var gy = padT + chartH - (g / gridSteps) * chartH;
+        var gexp = Math.floor(logMin) + g;
+        var gval = Math.pow(10, gexp);
+        var glabel;
+        if (gval >= 1000000) glabel = (gval / 1000000) + 'Mx';
+        else if (gval >= 1000) glabel = (gval / 1000) + 'Kx';
+        else glabel = gval + 'x';
+
+        parts += '<line x1="' + padL + '" y1="' + gy + '" x2="' + (W - padR) + '" y2="' + gy + '" stroke="#21262d" stroke-width="1" stroke-dasharray="3,4"/>';
+        parts += '<text x="' + (padL - 12) + '" y="' + (gy + 4) + '" fill="#6e675d" font-size="12" text-anchor="end" font-family="sans-serif">' + glabel + '</text>';
+      }
+
       for (var i = 0; i < entries.length; i++) {
         var e = entries[i];
+        var cx = padL + barW * i + barW / 2;
+        var barX = cx - barInnerW / 2;
+
         if (e.blocked) {
-          html += '<div class="watt-bar-col">';
-          html += '<div class="watt-bar-value" style="color:#e05d44;">1.0x</div>';
-          html += '<div class="watt-bar ' + e.cls + ' blocked" style="height: 5%;"></div>';
-          html += '<div class="watt-bar-label">' + e.label + '</div>';
-          html += '</div>';
+          parts += '<rect x="' + barX + '" y="' + (padT + chartH - 12) + '" width="' + barInnerW + '" height="12" fill="rgba(224,93,68,0.12)" stroke="#e05d44" stroke-width="1" stroke-dasharray="3,2" rx="4"/>';
+          parts += '<text x="' + cx + '" y="' + (padT + chartH + 22) + '" fill="#e05d44" font-size="12" font-weight="700" text-anchor="middle" font-family="sans-serif">1.0x</text>';
         } else {
-          var pct = maxVal > 1 ? Math.max(8, (Math.log10(e.value) / logMax) * 85) : 50;
-          html += '<div class="watt-bar-col">';
-          html += '<div class="watt-bar-value">' + e.text + '</div>';
-          html += '<div class="watt-bar ' + e.cls + '" style="height: ' + pct + '%;"></div>';
-          html += '<div class="watt-bar-label">' + e.label + '</div>';
-          html += '</div>';
+          var by = yPos(e.value);
+          var bh = (padT + chartH) - by;
+          parts += '<rect x="' + barX + '" y="' + by + '" width="' + barInnerW + '" height="' + bh + '" fill="' + colors[e.cls] + '" rx="4"/>';
+          parts += '<text x="' + cx + '" y="' + (by - 10) + '" fill="' + colors[e.cls] + '" font-size="13" font-weight="700" text-anchor="middle" font-family="sans-serif">' + e.text + '</text>';
         }
       }
 
-      document.getElementById('watt-bar-container').innerHTML = html;
+      svg.innerHTML = parts;
+
+      var xLabels = document.getElementById('watt-x-labels');
+      xLabels.innerHTML = entries.map(function(e) { return '<span>' + e.label + '</span>'; }).join('');
     }
 
     function parseTimeSeconds(str) {

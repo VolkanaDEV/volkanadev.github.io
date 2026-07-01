@@ -225,6 +225,7 @@
       <h3><span class="label">How It Works</span>The Runtime Engine</h3>
       <p>When you write Sanguis code, the compiler produces a .vana file. This file is not an executable in the traditional sense. It is a structured description of how data should flow through the hardware. VANA reads that file and maps it directly onto the compute surface available.</p>
       <p>Today, that surface is the GPU. VANA uses Vulkan compute pipelines to route data across thousands of parallel cores simultaneously. It does not emulate a CPU on the GPU. It does not translate instructions. It treats the GPU as the processor and maps the computation to what the silicon can actually do.</p>
+      <p>This allows for programming speeds highly sought after for years via the GPU-as-processor principal seen implemented in Sanguis. It skips empty regions instead of processing them on multi-core arrarys that support paralell processing, such as CUDA by NVIDIA or Intel's Xe3 .</p>
       <p>The key mechanism is sparse skip routing. When data passes through a grid, most cells are empty. A traditional approach processes every cell. VANA skips the empty ones. It jumps over regions that hold nothing and only activates the paths that matter. Less power. Less time. Same result.</p>
 
       <div class="cards">
@@ -244,7 +245,8 @@
 
       <h3><span class="label">Beyond the GPU</span>Hardware Independence</h3>
       <p>A new CPU core asks how to make the same thing faster. VANA asks what if the hardware did something different. Today the engine runs on CUDA cores and Vulkan compute pipelines. Tomorrow it can run on custom firmware on a dedicated board. Eventually it can run on a SoC where the language and the chip share the same structure.</p>
-      <p>The hardware changes underneath. The language does not. VANA is not tied to any one silicon. It is the layer that adapts to whatever the hardware can do. You are not making the same thing faster. You are changing what the hardware is for.</p>
+      <p>The hardware may change underneath, but the language, and support for older hardware, does not. VANA is not tied to any preset configuration in silicon, firmware, or software. It is meant to serve as the bridge between Sanguis coding langauge and native hardware support for GPU-based compiled porgrams, until custom SoC allows full native integration.</p>
+      <p>You are not making the same thing faster. You are changing what the hardware is for.</p>
 
       <h3><span class="label">Where It Goes</span>Connectome Architectures</h3>
       <p>The long-term vision for VANA is not just a faster runtime. It is a fundamentally different way for hardware to compute. The architecture maps naturally to connectome-style systems, where computation flows through interconnected pathways the way signals flow through biological neural tissue.</p>

@@ -60,25 +60,25 @@
   .hero p { color: var(--muted-light); font-size: 1.05rem; max-width: 600px; margin: 0 auto; text-align: center; }
   .hero .company-line { color: var(--accent); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin: 0 0 12px; }
 
-  .section { padding: 50px 0; border-top: 1px solid var(--border); }
+  .section { padding: 50px 0; border-top: 1px solid var(--border); text-align: center; }
   .section h3 { font-size: 1.3rem; font-weight: 700; margin: 0 0 20px; color: #fff; letter-spacing: -0.02em; }
   .section .lead { color: var(--muted-light); font-size: 1rem; margin: 0 0 32px; max-width: 600px; }
 
-  .principles { max-width: 700px; }
-  .principle { display: flex; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+  .principles { max-width: 700px; margin: 0 auto; }
+  .principle { display: flex; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--border); text-align: left; }
   .principle:last-child { border-bottom: none; }
   .principle h4 { margin: 0; min-width: 220px; flex-shrink: 0; color: var(--accent); font-size: 0.95rem; font-weight: 700; }
   .principle p { margin: 0; color: var(--muted-light); font-size: 0.95rem; line-height: 1.6; }
 
-  .benefits { display: flex; flex-wrap: wrap; gap: 12px 40px; max-width: 900px; }
-  .benefit { width: 200px; padding: 0; }
+  .benefits { display: flex; flex-wrap: wrap; gap: 12px 40px; max-width: 900px; margin: 0 auto; }
+  .benefit { width: 200px; padding: 0; text-align: left; }
   .benefit h5 { margin: 0 0 4px; color: var(--text-light); font-size: 0.92rem; font-weight: 700; }
   .benefit p { margin: 0; color: var(--muted-light); font-size: 0.85rem; line-height: 1.5; }
 
-  .roles { max-width: 800px; }
+  .roles { max-width: 100%; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .role {
     background: var(--panel-dark); border: 1px solid var(--border); border-radius: 12px;
-    padding: 24px 28px; margin-bottom: 12px; transition: 0.15s;
+    padding: 24px 28px; margin: 0; transition: 0.15s; text-align: left;
   }
   .role:hover { border-color: var(--accent); }
   .role h4 { margin: 0 0 4px; color: var(--text-light); font-size: 1.05rem; font-weight: 700; }
@@ -96,23 +96,23 @@
   .btn.ghost { background: transparent; border: 1px solid var(--border); color: var(--text-light); }
   .btn.ghost:hover { background: var(--panel-dark); }
 
-  .process { max-width: 600px; }
-  .step { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .process { max-width: 600px; margin: 0 auto; }
+  .step { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--border); text-align: left; }
   .step:last-child { border-bottom: none; }
   .step-num { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; font-size: 0.82rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .step-content h5 { margin: 0 0 2px; color: var(--text-light); font-size: 0.95rem; font-weight: 700; }
   .step-content p { margin: 0; color: var(--muted-light); font-size: 0.88rem; line-height: 1.55; }
 
-  .open-call { max-width: 600px; }
+  .open-call { max-width: 600px; margin: 0 auto; }
   .open-call-box {
     background: var(--panel-dark); border: 1px solid var(--border); border-radius: 12px;
-    padding: 28px;
+    padding: 28px; text-align: left;
   }
   .open-call-box p { color: var(--muted-light); font-size: 0.95rem; margin: 0 0 16px; line-height: 1.6; }
   .open-call-box .btn { margin-top: 4px; }
 
-  .eoe { max-width: 600px; margin-top: 32px; }
-  .eoe p { font-size: 0.8rem; color: var(--muted-light); line-height: 1.7; margin: 0; }
+  .eoe { max-width: 600px; margin: 32px auto 0; }
+  .eoe p { font-size: 0.8rem; color: var(--muted-light); line-height: 1.7; margin: 0; text-align: left; }
 
   footer {
     text-align: center; padding: 40px 0;
@@ -140,6 +140,7 @@
     .principle h4 { min-width: auto; }
     .benefit { width: 100%; }
     .role { padding: 20px; }
+    .roles { grid-template-columns: 1fr; }
   }
 </style>
 </head>

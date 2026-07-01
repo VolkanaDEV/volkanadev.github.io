@@ -273,11 +273,13 @@
     font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
     letter-spacing: 0.08em; color: var(--accent); margin-bottom: 24px;
   }
-  .joule-svg { width: 100%; height: 240px; display: block; }
+  .joule-svg { width: 100%; height: 300px; display: block; }
   .joule-x-labels {
     display: flex; justify-content: space-between;
-    padding: 8px 30px 0; font-size: 0.72rem; color: var(--muted-light); font-weight: 600;
+    padding: 10px 20px 0; font-size: 0.68rem; color: var(--muted-light); font-weight: 600;
+    gap: 8px;
   }
+  .joule-x-labels span { text-align: center; flex: 1; }
   .joule-legend {
     display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;
     margin-top: 16px; font-size: 0.78rem; color: var(--muted-light);
@@ -335,8 +337,8 @@
     .watt-bar-value { font-size: 0.68rem; }
     .watt-bar-label { font-size: 0.65rem; }
     .joule-chart { padding: 18px 14px; }
-    .joule-svg { height: 180px; }
-    .joule-x-labels { font-size: 0.65rem; padding: 6px 12px 0; }
+    .joule-svg { height: 220px; }
+    .joule-x-labels { font-size: 0.6rem; padding: 6px 8px 0; gap: 4px; }
     .joule-legend { gap: 12px; font-size: 0.7rem; }
     .timer-val { font-size: 1.5rem; }
     .timer-block { padding: 10px 8px; }
@@ -484,7 +486,7 @@
 
     <div class="joule-chart">
       <div class="joule-chart-title">Joule Usage Per Sweep — Lower Is Better</div>
-      <svg class="joule-svg" id="joule-svg" viewBox="0 0 600 240" preserveAspectRatio="none"></svg>
+      <svg class="joule-svg" id="joule-svg" viewBox="0 0 700 300" preserveAspectRatio="none"></svg>
       <div class="joule-x-labels" id="joule-x-labels"></div>
       <div class="joule-legend">
         <div class="joule-legend-item"><div class="joule-legend-dot" style="background:#e05d44;"></div>Normal CPU</div>
@@ -837,7 +839,7 @@
       var minVal = Math.min.apply(null, valid.map(function(m) { return m.val; }));
       if (maxVal === minVal) maxVal = minVal + 1;
 
-      var W = 600, H = 240, padL = 50, padR = 30, padT = 20, padB = 20;
+      var W = 700, H = 300, padL = 80, padR = 40, padT = 30, padB = 30;
       var chartW = W - padL - padR;
       var chartH = H - padT - padB;
 
@@ -859,7 +861,7 @@
         var gy = padT + (chartH / gridSteps) * g;
         var gval = maxVal - ((maxVal - minVal) / gridSteps) * g;
         parts += '<line x1="' + padL + '" y1="' + gy + '" x2="' + (W - padR) + '" y2="' + gy + '" stroke="#21262d" stroke-width="1" stroke-dasharray="3,4"/>';
-        parts += '<text x="' + (padL - 6) + '" y="' + (gy + 4) + '" fill="#6e675d" font-size="11" text-anchor="end" font-family="monospace">' + gval.toFixed(1) + '</text>';
+        parts += '<text x="' + (padL - 12) + '" y="' + (gy + 4) + '" fill="#6e675d" font-size="12" text-anchor="end" font-family="sans-serif">' + gval.toFixed(1) + '</text>';
       }
 
       // Line connecting valid points
@@ -870,15 +872,15 @@
         var m = methods[i];
         var x = xPos(i);
         if (m.val === null) {
-          dots += '<circle cx="' + x + '" cy="' + (padT + chartH) + '" r="4" fill="none" stroke="' + m.color + '" stroke-width="1.5" stroke-dasharray="2,2"/>';
-          labels += '<text x="' + x + '" y="' + (padT + chartH + 16) + '" fill="#e05d44" font-size="10" text-anchor="middle" font-family="monospace">N/A</text>';
+          dots += '<circle cx="' + x + '" cy="' + (padT + chartH) + '" r="5" fill="none" stroke="' + m.color + '" stroke-width="1.5" stroke-dasharray="2,2"/>';
+          labels += '<text x="' + x + '" y="' + (padT + chartH + 18) + '" fill="#e05d44" font-size="11" text-anchor="middle" font-family="sans-serif">N/A</text>';
         } else {
           var y = yPos(m.val);
           if (linePts) linePts += ' ';
           linePts += x + ',' + y;
-          dots += '<circle cx="' + x + '" cy="' + y + '" r="5" fill="' + m.color + '"/>';
+          dots += '<circle cx="' + x + '" cy="' + y + '" r="6" fill="' + m.color + '"/>';
           var labelText = m.val >= 1000 ? (m.val / 1000).toFixed(1) + 'KJ' : m.val.toFixed(1) + 'J';
-          labels += '<text x="' + x + '" y="' + (y - 10) + '" fill="' + m.color + '" font-size="11" font-weight="700" text-anchor="middle" font-family="monospace">' + labelText + '</text>';
+          labels += '<text x="' + x + '" y="' + (y - 14) + '" fill="' + m.color + '" font-size="13" font-weight="700" text-anchor="middle" font-family="sans-serif">' + labelText + '</text>';
         }
       }
       if (linePts) {
@@ -890,7 +892,7 @@
 
       // X-axis labels
       var xLabels = document.getElementById('joule-x-labels');
-      xLabels.innerHTML = methods.map(function(m) { return m.label; }).join('');
+      xLabels.innerHTML = methods.map(function(m) { return '<span>' + m.label + '</span>'; }).join('');
     }
 
     window.onload = function() {

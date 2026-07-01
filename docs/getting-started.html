@@ -113,19 +113,28 @@
       <p>No intermediate representation. The engine boots directly from the parsed AST. The <span class="code-inline">flow</span> command and <span class="code-inline">.sirc</span> format were removed in V3.4.</p>
 
       <h2 id="installation">Installation</h2>
-      <h3 id="prerequisites">Prerequisites</h3>
-      <p>Windows 10 or later<br>GPU optional (CUDA for cortex-scale, not required for basic organisms)</p>
 
-      <h3 id="sdk">Option A &mdash; SDK (No Build Required)</h3>
-      <p>When the public repository is released, it will include a pre-built SDK with all required binaries. You will not need Cargo, a Rust toolchain, or any build step.</p>
-      <p>1. Download the SDK folder from the repository<br>
-      2. Add <span class="code-inline">sanguis.exe</span> to your PATH<br>
-      3. Optionally add <span class="code-inline">vana_bench.exe</span> for CUDA benchmarking</p>
-      <p>The SDK includes the pre-built CLI binary, CUDA benchmark tool, example organisms, and documentation. The full source (Rust crates, CUDA source, build scripts) is included in the repository for those who want to build from source or contribute.</p>
+      <h3 id="prerequisites">Prerequisites</h3>
+      <p><strong>Option A (SDK):</strong> Windows 10 or later. Nothing else &mdash; the binary is standalone.<br>
+      <strong>Option B (Build from source):</strong> Windows 10 or later, plus the Rust toolchain (rustup, cargo, stable compiler). A GPU is optional either way &mdash; CUDA is only needed for cortex-scale benchmarks, not for writing or running organisms.</p>
+
+      <h3 id="sdk">Option A &mdash; Download the SDK (No Build Required)</h3>
+      <p>The public repository includes a pre-built SDK. You do not need Rust, Cargo, or any compiler. The binary runs on its own.</p>
+      <p>1. Download the repository and open the <span class="code-inline">sdk/</span> folder<br>
+      2. Add <span class="code-inline">sdk/bin/</span> to your system PATH (or run <span class="code-inline">sanguis.exe</span> directly from that folder)<br>
+      3. If you have an NVIDIA GPU and want to run benchmarks, add <span class="code-inline">vana_bench.exe</span> to your PATH as well</p>
+      <p>What's in the SDK:</p>
+      <p>&bull; <span class="code-inline">sanguis.exe</span> &mdash; the CLI (compile, run, parse, check, native, tui)<br>
+      &bull; <span class="code-inline">vana_bench.exe</span> &mdash; CUDA benchmark tool (optional, requires NVIDIA GPU)<br>
+      &bull; <span class="code-inline">examples/</span> &mdash; sample <span class="code-inline">.sang</span> organisms you can run immediately<br>
+      &bull; <span class="code-inline">docs/</span> &mdash; the full programmer's manual</p>
+      <p>The full source code (Rust crates, CUDA source, build scripts) is also in the repository. You only need it if you want to modify Sanguis itself or build from source.</p>
 
       <h3 id="build">Option B &mdash; Build From Source</h3>
-      <div class="code-block"><pre>sanguis drip</pre></div>
-      <p>This runs <span class="code-inline">cargo build --release</span> and copies the binary to <span class="code-inline">~/bin/sanguis.exe</span>. The <span class="code-inline">sanguis</span> command is now available system-wide.</p>
+      <p>Choose this if you want to modify the compiler, contribute to the project, or build on a system that isn't Windows x86-64.</p>
+      <p>Install the Rust toolchain (via <span class="code-inline">rustup</span>), then from the repository root:</p>
+      <div class="code-block"><pre>cargo build --release</pre></div>
+      <p>This produces <span class="code-inline">target/release/sanguis.exe</span>. You can also run <span class="code-inline">sanguis drip</span> later to rebuild and copy the binary to <span class="code-inline">~/bin/sanguis.exe</span> so it's available system-wide.</p>
 
       <h3 id="verify">Verify</h3>
       <div class="code-block"><pre>sanguis version

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="favicon.png">
+<title>VolkanaDEV — Roadmap</title>
+<meta name="description" content="Where Sanguis and VANA are today, and where they go next. From working compiler to custom silicon.">
+<style>
+  :root {
+    --bg: #0e1117;
+    --panel: #fbfaf7;
+    --panel-dark: #161b22;
+    --border: #21262d;
+    --border-light: #e1dad0;
+    --text-light: #f3eedf;
+    --text-dark: #1e222b;
+    --muted-light: #8b949e;
+    --muted-dark: #6e675d;
+    --accent: #c45d3a;
+    --accent-hover: #b04f2f;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text-light);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+  nav {
+    border-bottom: 1px solid var(--border);
+    background: rgba(14, 17, 23, 0.85);
+    backdrop-filter: blur(12px);
+    position: sticky; top: 0; z-index: 100;
+  }
+  nav .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 0;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.15rem; color: var(--text-light); letter-spacing: -0.02em; }
+  .brand-dot { width: 20px; height: 20px; border-radius: 4px; object-fit: contain; }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { color: var(--muted-light); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--text-light); }
+
+  .hero {
+    text-align: center;
+    padding: 80px 20px 40px;
+    background: radial-gradient(circle at 50% 0%, rgba(196, 93, 58, 0.08), transparent 60%);
+  }
+  .hero h2 { font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800; margin: 0 0 12px; color: var(--text-light); letter-spacing: -0.03em; }
+  .hero p { color: var(--muted-light); font-size: clamp(1rem, 2vw, 1.1rem); max-width: 620px; margin: 0 auto; }
+
+  .content { padding: 20px 0; }
+
+  .content h3 {
+    font-size: clamp(1.4rem, 3.5vw, 1.8rem);
+    margin: 0 0 16px;
+    color: #fff;
+    letter-spacing: -0.02em;
+  }
+  .content h3 .label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .content p {
+    color: var(--muted-light);
+    font-size: 1.02rem;
+    margin: 0 0 16px;
+    line-height: 1.75;
+  }
+
+  /* Feature list for V2/V3 */
+  .feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+  }
+  .feature-list li {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted-light);
+    font-size: 0.98rem;
+    line-height: 1.65;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .feature-list li:last-child { border-bottom: none; }
+  .feature-list .check {
+    flex: 0 0 auto;
+    width: 18px; height: 18px;
+    border-radius: 4px;
+    background: rgba(196, 93, 58, 0.15);
+    color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; font-weight: 800;
+    margin-top: 2px;
+  }
+
+  /* Status badges */
+  .status-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+  }
+  .status-badge.live {
+    background: rgba(196, 93, 58, 0.15);
+    color: var(--accent);
+  }
+  .status-badge.proto {
+    background: rgba(196, 93, 58, 0.08);
+    color: var(--accent);
+    border: 1px solid rgba(196, 93, 58, 0.3);
+  }
+
+  /* Roadmap timeline chart */
+  .roadmap-chart {
+    margin: 40px 0;
+    background: var(--panel-dark);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 40px 32px;
+  }
+
+  .timeline-track {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding-top: 28px;
+  }
+  .timeline-track::before {
+    content: '';
+    position: absolute;
+    top: 36px;
+    left: 5%;
+    right: 5%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent) 40%, var(--border) 40%, var(--border) 100%);
+  }
+
+  .milestone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  .milestone-year {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+  }
+  .milestone-dot {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 3px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--accent);
+    margin-bottom: 16px;
+  }
+  .milestone.future .milestone-dot {
+    background: var(--border);
+    box-shadow: 0 0 0 2px var(--border);
+  }
+  .milestone.future .milestone-year {
+    color: var(--muted-light);
+  }
+  .milestone-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 14px;
+    font-size: 0.82rem;
+    color: var(--muted-light);
+    line-height: 1.55;
+    min-height: 100px;
+  }
+  .milestone.current .milestone-card {
+    border-color: rgba(196, 93, 58, 0.4);
+  }
+  .milestone-card strong {
+    display: block;
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .milestone.future .milestone-card strong {
+    color: var(--muted-light);
+  }
+
+  /* Goal callout */
+  .goal-box {
+    margin: 32px 0;
+    background: rgba(196, 93, 58, 0.04);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    padding: 24px;
+  }
+  .goal-box strong {
+    color: #fff;
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .goal-box p {
+    color: var(--muted-light);
+    font-size: 0.95rem;
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  footer {
+    text-align: center; padding: 40px 0;
+    color: var(--muted-light); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 40px;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  .footer-links { margin-bottom: 8px; }
+  .footer-links a { margin: 0 8px; }
+
+  /* Mobile Navigation */
+  .nav-toggle {
+    display: none;
+    background: none; border: none; cursor: pointer;
+    flex-direction: column; gap: 5px; padding: 4px;
+  }
+  .nav-toggle span {
+    width: 24px; height: 2px; background: var(--text-light); border-radius: 2px;
+    transition: 0.3s;
+  }
+  .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+  @media (max-width: 768px) {
+    .nav-toggle { display: flex; }
+    .nav-links {
+      position: absolute; top: 100%; left: 0; right: 0;
+      flex-direction: column; gap: 0;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      padding: 8px 24px 16px; display: none; z-index: 100;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
+    .nav-links a:last-child { border-bottom: none; }
+    .hero { padding: 50px 16px 30px !important; }
+    .content { padding: 20px 0; }
+    .wrap { padding: 0 16px; }
+    .roadmap-chart { padding: 24px 16px; }
+    .timeline-track { flex-direction: column; gap: 20px; padding-top: 8px; }
+    .timeline-track::before {
+      top: 0; bottom: 0; left: 7px; width: 2px; height: 100%;
+      background: linear-gradient(180deg, var(--accent) 0%, var(--accent) 40%, var(--border) 40%, var(--border) 100%);
+    }
+    .milestone { flex-direction: row; align-items: flex-start; text-align: left; gap: 14px; }
+    .milestone-year { margin-bottom: 0; margin-top: 2px; min-width: 42px; }
+    .milestone-dot { margin-bottom: 0; margin-top: 4px; }
+    .milestone-card { flex: 1; }
+    .goal-box { padding: 18px 16px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero h2 { font-size: 1.4rem !important; }
+    .hero p { font-size: 0.95rem; }
+    .content h3 { font-size: 1.2rem !important; }
+    .milestone-card { font-size: 0.78rem; padding: 14px 12px; }
+  }
+</style>
+</head>
+<body>
+
+  <nav>
+    <div class="wrap">
+      <div class="nav-inner">
+        <div class="brand"><img src="favicon.png" class="brand-dot" alt="VolkanaDEV">VolkanaDEV</div>
+        <button class="nav-toggle" onclick="this.classList.toggle('open');document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        <div class="nav-links">
+          <a href="index.html">Welcome</a>
+          <a href="vana.html">Meet VANA</a>
+          <a href="roadmap.html" class="active">Roadmap</a>
+          <a href="benchmark.html">Benchmarks</a>
+          <a href="security.html">Safety &amp; Licenses</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <section class="hero">
+      <h2>Roadmap</h2>
+      <p>Where Sanguis and VANA are today, and where they go next. From working compiler to custom silicon.</p>
+    </section>
+  </div>
+
+  <div class="wrap">
+    <div class="content">
+
+      <h3><span class="label">Working Now</span>V2: The Foundation</h3>
+      <span class="status-badge live">Live</span>
+      <p>V2 is the compiler and runtime that runs today. It compiles Sanguis code to standalone executables on normal Windows hardware. No server farm, no cloud account, no GPU cluster required. The installer is 25 MB and needs nothing else installed.</p>
+      <ul class="feature-list">
+        <li><span class="check">&#10003;</span><span>Full pipeline: .sang source compiles to .sirc intermediate, then to native .exe binaries</span></li>
+        <li><span class="check">&#10003;</span><span>139 tests passing across the Rust bootstrapper and Sanguis toolchain</span></li>
+        <li><span class="check">&#10003;</span><span>Text processing builtins: read, write, extract, replace, concat, match, trim, crop, and more</span></li>
+        <li><span class="check">&#10003;</span><span>Standalone .exe output runs on any Windows machine with zero dependencies</span></li>
+        <li><span class="check">&#10003;</span><span>The Rust bootstrapper is scaffolding, not the language. It exists to build the self-hosting path, then retires.</span></li>
+      </ul>
+
+      <h3><span class="label">Working Now</span>V3: The Prototype</h3>
+      <span class="status-badge proto">Prototype</span>
+      <p>V3 is the new language. Seven keywords: body, hold, when, but, stream, to, route. No classes, no loops, no if/else. Programs are bodies that breathe. The V3 compiler and interpreter are written in V2 Sanguis, proving the self-hosting path is real.</p>
+      <ul class="feature-list">
+        <li><span class="check">&#10003;</span><span>Full compile chain: .sang compiles to .vana genome, interpreter executes it (hello world, multi-emit, greeter all verified)</span></li>
+        <li><span class="check">&#10003;</span><span>Native compilation: .sang to .vana to .exe with no interpreter needed on the target machine (5/5 tests passing)</span></li>
+        <li><span class="check">&#10003;</span><span>GPU sparse skip routing benchmarks running on real consumer hardware (RTX 3060, i7-12700K, 32GB RAM)</span></li>
+        <li><span class="check">&#10003;</span><span>V3 compiler and interpreter are both written in V2 Sanguis. The language is building itself.</span></li>
+        <li><span class="check">&#10003;</span><span>.vana genome format is pipe-delimited text for debuggability. Binary format is the next step.</span></li>
+      </ul>
+
+      <h3><span class="label">The Path Forward</span>What Comes Next</h3>
+      <p>The progression is not speculative. Each stage builds on the one before it. The compiler works. The GPU benchmarks are real. The language is self-hosting. What remains is engineering, not theory.</p>
+
+      <div class="roadmap-chart">
+        <div class="timeline-track">
+          <div class="milestone current">
+            <div class="milestone-year">2026</div>
+            <div class="milestone-dot"></div>
+            <div class="milestone-card">
+              <strong>V2 + V3</strong>
+              Working compiler, native executables, GPU benchmarks, self-hosted toolchain prototype.
+            </div>
+          </div>
+          <div class="milestone current">
+            <div class="milestone-year">2027</div>
+            <div class="milestone-dot"></div>
+            <div class="milestone-card">
+              <strong>Self-Hosting Complete</strong>
+              Binary .vana genome format, apoptosis (stalled body death), Rust bootstrapper retired. The language runs on its own.
+            </div>
+          </div>
+          <div class="milestone future">
+            <div class="milestone-year">2028</div>
+            <div class="milestone-dot"></div>
+            <div class="milestone-card">
+              <strong>First Prototype PCB</strong>
+              Custom firmware on a dedicated board. No GPU driver stack. The engine talks directly to silicon. The .vana file becomes firmware.
+            </div>
+          </div>
+          <div class="milestone future">
+            <div class="milestone-year">Beyond</div>
+            <div class="milestone-dot"></div>
+            <div class="milestone-card">
+              <strong>SoC Native</strong>
+              System on Chip where the language and the hardware share the same structure. No translation layers. The computation is the chip.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="goal-box">
+        <strong>The 2028 Target</strong>
+        <p>The first prototype PCB is the milestone that changes everything. Today VANA runs on consumer GPUs through Vulkan compute pipelines. The PCB replaces that abstraction with direct silicon. The language stays the same. The hardware underneath becomes the computation itself. Everything between 2026 and 2028 is the engineering path to make that real.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-links">
+      <a href="terms.html">Terms of Use</a> | <a href="privacy.html">Privacy Policy</a>
+    </div>
+    Copyright &copy; 2026 VolkanaDEV Autonomous Systems, Inc.<br>
+    VolkanaDEV, Sanguis, and VANA are intellectual property of VolkanaDEV Autonomous Systems, Inc.<br>
+    Business and private inquiries: <a href="mailto:volkanadev@volkanadev.com">volkanadev@volkanadev.com</a>
+  </footer>
+
+</body>
+</html>

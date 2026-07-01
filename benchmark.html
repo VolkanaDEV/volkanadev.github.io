@@ -223,6 +223,44 @@
   .speed-bar-fill.sparse { background: var(--accent); }
   .speed-bar-fill.blocked { background: rgba(224, 93, 68, 0.2); border: 1px dashed #e05d44; color: #e05d44; }
 
+  /* Wattage Cost Vertical Bar Chart */
+  .watt-chart {
+    margin: 32px 0;
+    background: var(--panel-dark);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+  }
+  .watt-chart-title {
+    font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--accent); margin-bottom: 24px;
+  }
+  .watt-bar-container {
+    display: flex; align-items: flex-end; gap: 16px;
+    height: 220px; padding: 0 8px;
+  }
+  .watt-bar-col {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: flex-end; height: 100%;
+  }
+  .watt-bar-value {
+    font-size: 0.75rem; font-weight: 700; color: var(--text-light);
+    margin-bottom: 6px; white-space: nowrap;
+  }
+  .watt-bar {
+    width: 100%; max-width: 72px; border-radius: 6px 6px 0 0;
+    transition: height 0.6s ease; min-height: 4px;
+  }
+  .watt-bar.cpu { background: #e05d44; }
+  .watt-bar.base { background: #d1a13d; }
+  .watt-bar.region { background: #529467; }
+  .watt-bar.sparse { background: var(--accent); }
+  .watt-bar.blocked { background: rgba(224,93,68,0.12); border: 1px dashed #e05d44; }
+  .watt-bar-label {
+    font-size: 0.72rem; font-weight: 600; color: var(--muted-light);
+    margin-top: 10px; text-align: center; white-space: nowrap;
+  }
+
   /* Fine-Print Disclaimer Text */
   .disclaimer-box { max-width: 960px; margin: 40px auto 0; font-size: 0.82rem; color: var(--muted-light); line-height: 1.5; border-top: 1px dashed var(--border); padding-top: 20px; text-align: center; }
 
@@ -267,6 +305,11 @@
     .speed-chart { padding: 18px 14px; }
     .speed-bar-label { flex: 0 0 90px; font-size: 0.72rem; }
     .speed-bar-fill { font-size: 0.68rem; }
+    .watt-chart { padding: 18px 14px; }
+    .watt-bar-container { height: 160px; gap: 8px; }
+    .watt-bar { max-width: 50px; }
+    .watt-bar-value { font-size: 0.68rem; }
+    .watt-bar-label { font-size: 0.65rem; }
     .timer-val { font-size: 1.5rem; }
     .timer-block { padding: 10px 8px; }
     .timer-container { gap: 8px; }
@@ -404,6 +447,11 @@
         <div class="speed-bar-label">Normal CPU</div>
         <div class="speed-bar-track"><div id="bar-cpu" class="speed-bar-fill cpu blocked" style="width: 100%;">Infinite</div></div>
       </div>
+    </div>
+
+    <div class="watt-chart">
+      <div class="watt-chart-title">Instant Wattage — Energy Cost Per Sweep (Lowest to Highest)</div>
+      <div class="watt-bar-container" id="watt-bar-container"></div>
     </div>
 
     <p id="summary-desc" class="middle-text">
@@ -592,6 +640,8 @@
       document.getElementById('summary-desc').innerText = data.desc;
       document.getElementById('console-box').innerHTML = data.log;
 
+      updateWattChart(data);
+
       // Update speed bar chart
       var times = {
         cpu: data.isCpuBlocked ? null : parseFloat(data.cpuTime.replace(/[^0-9.]/g, '')),
@@ -637,6 +687,67 @@
       document.getElementById('bar-region').innerText = data.regionTime;
       document.getElementById('bar-sparse').style.width = sparseWidth + '%';
       document.getElementById('bar-sparse').innerText = data.sparseTime;
+    }
+
+    function parseWattage(str) {
+      if (!str) return null;
+      if (str.indexOf('Locked') !== -1 || str.indexOf('Single-Thread') !== -1) return null;
+      var m = str.match(/([\d.]+)\s*KJ/i);
+      if (m) return parseFloat(m[1]) * 1000;
+      m = str.match(/([\d.]+)\s*W/i);
+      if (m) return parseFloat(m[1]);
+      m = str.match(/([\d.]+)\s*J/i);
+      if (m) return parseFloat(m[1]);
+      return null;
+    }
+
+    function updateWattChart(data) {
+      var entries = [];
+      var cpuW = parseWattage(data.cpuWall);
+      var baseW = parseWattage(data.baseWall);
+      var regionW = parseWattage(data.regionWall);
+      var sparseW = parseWattage(data.sparseWall);
+
+      if (data.isCpuBlocked || cpuW === null) {
+        entries.push({label: 'Normal CPU', value: 0, text: 'N/A', cls: 'cpu', blocked: true});
+      } else {
+        entries.push({label: 'Normal CPU', value: cpuW, text: data.cpuWall.split(' ')[0], cls: 'cpu', blocked: false});
+      }
+      entries.push({label: 'GPU Baseline', value: baseW, text: data.baseWall.split(' ')[0], cls: 'base', blocked: false});
+      entries.push({label: 'Region-Tiled', value: regionW, text: data.regionWall.split(' ')[0], cls: 'region', blocked: false});
+      entries.push({label: 'GPU Sparse Skip', value: sparseW, text: data.sparseWall.split(' ')[0], cls: 'sparse', blocked: false});
+
+      entries.sort(function(a, b) {
+        if (a.blocked && !b.blocked) return 1;
+        if (!a.blocked && b.blocked) return -1;
+        return a.value - b.value;
+      });
+
+      var maxVal = 0;
+      for (var i = 0; i < entries.length; i++) {
+        if (!entries[i].blocked && entries[i].value > maxVal) maxVal = entries[i].value;
+      }
+
+      var html = '';
+      for (var i = 0; i < entries.length; i++) {
+        var e = entries[i];
+        if (e.blocked) {
+          html += '<div class="watt-bar-col">';
+          html += '<div class="watt-bar-value" style="color:#e05d44;">N/A</div>';
+          html += '<div class="watt-bar ' + e.cls + ' blocked" style="height: 5%;"></div>';
+          html += '<div class="watt-bar-label">' + e.label + '</div>';
+          html += '</div>';
+        } else {
+          var pct = Math.max(8, (e.value / maxVal) * 85);
+          html += '<div class="watt-bar-col">';
+          html += '<div class="watt-bar-value">' + e.text + '</div>';
+          html += '<div class="watt-bar ' + e.cls + '" style="height: ' + pct + '%;"></div>';
+          html += '<div class="watt-bar-label">' + e.label + '</div>';
+          html += '</div>';
+        }
+      }
+
+      document.getElementById('watt-bar-container').innerHTML = html;
     }
 
     window.onload = function() {

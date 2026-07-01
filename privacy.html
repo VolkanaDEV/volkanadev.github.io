@@ -43,6 +43,65 @@
   footer a { color: var(--accent); text-decoration: none; }
   .footer-links { margin-bottom: 8px; }
   .footer-links a { margin: 0 8px; }
+
+  /* Mobile Navigation */
+  .nav-toggle {
+    display: none;
+    background: none; border: none; cursor: pointer;
+    flex-direction: column; gap: 5px; padding: 4px;
+  }
+  .nav-toggle span {
+    width: 24px; height: 2px; background: var(--text-light); border-radius: 2px;
+    transition: 0.3s;
+  }
+  .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+  @media (max-width: 768px) {
+    .nav-toggle { display: flex; }
+    .nav-links {
+      position: absolute; top: 100%; left: 0; right: 0;
+      flex-direction: column; gap: 0;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      padding: 8px 24px 16px; display: none; z-index: 100;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
+    .nav-links a:last-child { border-bottom: none; }
+    .hero { padding: 50px 16px 30px !important; }
+    .section { padding: 50px 0 !important; }
+    .wrap { padding: 0 16px; }
+    .card { padding: 20px; }
+    .note-box { padding: 24px 20px; }
+    .legal-box { padding: 20px 16px; }
+    .form-box { padding: 20px 16px; }
+    .sidebar-box { padding: 16px; }
+    .console-panel { padding: 16px; font-size: 0.78rem; }
+    .toc { padding: 16px; }
+    .arena-card { min-height: auto; padding: 20px; }
+    .master-table { font-size: 0.78rem; }
+    .master-table th, .master-table td { padding: 10px 12px; }
+    .timer-val { font-size: 1.5rem; }
+    .timer-block { padding: 10px 8px; }
+    .timer-container { gap: 8px; }
+    .header-block { padding: 40px 0 20px; }
+    .header-block h2 { font-size: 1.5rem !important; }
+    .disclaimer-box { padding: 16px; font-size: 0.75rem; }
+    .content { padding: 20px 0; }
+  }
+
+  @media (max-width: 480px) {
+    .hero h2 { font-size: 1.4rem !important; }
+    .hero p { font-size: 0.95rem; }
+    .btn { padding: 10px 18px; font-size: 0.88rem; }
+    .content h3 { font-size: 1.2rem !important; }
+    .middle-text { font-size: 0.92rem; margin: 32px auto; }
+    .section h3 { font-size: 1.3rem !important; }
+    .timer-val { font-size: 1.3rem; }
+    .timer-lbl { font-size: 0.65rem; }
+  }
+
 </style>
 </head>
 <body>
@@ -51,6 +110,7 @@
     <div class="wrap" style="max-width: 1200px;">
       <div class="nav-inner">
         <div class="brand"><img src="favicon.png" class="brand-dot" alt="VolkanaDEV">VolkanaDEV</div>
+        <button class="nav-toggle" onclick="this.classList.toggle('open');document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu"><span></span><span></span><span></span></button>
         <div class="nav-links">
           <a href="index.html">Welcome</a>
           <a href="vana.html">Meet VANA</a>

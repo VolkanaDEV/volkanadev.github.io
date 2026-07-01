@@ -187,6 +187,42 @@
   .c-success { color: #56d364; font-weight: 600; }
   .c-info { color: #e3b341; }
 
+  /* Speed Comparison Bar Chart */
+  .speed-chart {
+    margin: 32px 0;
+    background: var(--panel-dark);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+  }
+  .speed-chart-title {
+    font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--accent); margin-bottom: 20px;
+  }
+  .speed-bar-row {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+  }
+  .speed-bar-row:last-child { margin-bottom: 0; }
+  .speed-bar-label {
+    flex: 0 0 130px; font-size: 0.82rem; font-weight: 600; color: var(--text-light);
+    text-align: right;
+  }
+  .speed-bar-track {
+    flex: 1; height: 26px; background: rgba(255,255,255,0.03);
+    border-radius: 6px; overflow: hidden; position: relative;
+  }
+  .speed-bar-fill {
+    height: 100%; border-radius: 6px;
+    transition: width 0.6s ease; display: flex; align-items: center;
+    justify-content: flex-end; padding-right: 10px;
+    font-size: 0.75rem; font-weight: 700; color: #fff; white-space: nowrap;
+  }
+  .speed-bar-fill.cpu { background: #e05d44; }
+  .speed-bar-fill.base { background: #d1a13d; }
+  .speed-bar-fill.region { background: #529467; }
+  .speed-bar-fill.sparse { background: var(--accent); }
+  .speed-bar-fill.blocked { background: rgba(224, 93, 68, 0.2); border: 1px dashed #e05d44; color: #e05d44; }
+
   /* Fine-Print Disclaimer Text */
   .disclaimer-box { max-width: 960px; margin: 40px auto 0; font-size: 0.82rem; color: var(--muted-light); line-height: 1.5; border-top: 1px dashed var(--border); padding-top: 20px; text-align: center; }
 
@@ -228,6 +264,9 @@
     .arena-card { min-height: auto; padding: 20px; }
     .master-table { font-size: 0.78rem; }
     .master-table th, .master-table td { padding: 10px 12px; }
+    .speed-chart { padding: 18px 14px; }
+    .speed-bar-label { flex: 0 0 90px; font-size: 0.72rem; }
+    .speed-bar-fill { font-size: 0.68rem; }
     .timer-val { font-size: 1.5rem; }
     .timer-block { padding: 10px 8px; }
     .timer-container { gap: 8px; }
@@ -344,6 +383,26 @@
           <div class="arena-stat"><span>Instant Wattage:</span> <span id="sparse-wall">44.0W Compressed</span></div>
         </div>
         <div id="sparse-mult" class="badge-multiplier" style="font-weight: 900;">51.4x Faster</div>
+      </div>
+    </div>
+
+    <div class="speed-chart">
+      <div class="speed-chart-title">Time Per Sweep — Visual Comparison (Log Scale)</div>
+      <div class="speed-bar-row">
+        <div class="speed-bar-label">Normal CPU</div>
+        <div class="speed-bar-track"><div id="bar-cpu" class="speed-bar-fill cpu blocked" style="width: 100%;">Infinite</div></div>
+      </div>
+      <div class="speed-bar-row">
+        <div class="speed-bar-label">GPU Baseline</div>
+        <div class="speed-bar-track"><div id="bar-base" class="speed-bar-fill base" style="width: 80%;">6,863.2 us</div></div>
+      </div>
+      <div class="speed-bar-row">
+        <div class="speed-bar-label">Region-Tiled</div>
+        <div class="speed-bar-track"><div id="bar-region" class="speed-bar-fill region" style="width: 60%;">1,081.4 us</div></div>
+      </div>
+      <div class="speed-bar-row">
+        <div class="speed-bar-label">GPU Sparse Skip</div>
+        <div class="speed-bar-track"><div id="bar-sparse" class="speed-bar-fill sparse" style="width: 40%;">133.5 us</div></div>
       </div>
     </div>
 
@@ -532,6 +591,52 @@
 
       document.getElementById('summary-desc').innerText = data.desc;
       document.getElementById('console-box').innerHTML = data.log;
+
+      // Update speed bar chart
+      var times = {
+        cpu: data.isCpuBlocked ? null : parseFloat(data.cpuTime.replace(/[^0-9.]/g, '')),
+        base: parseFloat(data.baseTime.replace(/[^0-9.]/g, '')),
+        region: parseFloat(data.regionTime.replace(/[^0-9.]/g, '')),
+        sparse: parseFloat(data.sparseTime.replace(/[^0-9.]/g, ''))
+      };
+
+      if (data.isCpuBlocked) {
+        document.getElementById('bar-cpu').className = 'speed-bar-fill cpu blocked';
+        document.getElementById('bar-cpu').style.width = '100%';
+        document.getElementById('bar-cpu').innerText = 'Infinite';
+      } else {
+        document.getElementById('bar-cpu').className = 'speed-bar-fill cpu';
+        var maxVal = times.cpu;
+        var minVal = times.sparse;
+        var logRange = Math.log10(maxVal / minVal);
+        var cpuWidth = 100;
+        var baseWidth = Math.max(8, ((Math.log10(times.base / minVal) / logRange) * 85) + 15);
+        var regionWidth = Math.max(6, ((Math.log10(times.region / minVal) / logRange) * 85) + 15);
+        var sparseWidth = 15;
+        document.getElementById('bar-cpu').style.width = cpuWidth + '%';
+        document.getElementById('bar-cpu').innerText = data.cpuTime;
+        document.getElementById('bar-base').style.width = baseWidth + '%';
+        document.getElementById('bar-base').innerText = data.baseTime;
+        document.getElementById('bar-region').style.width = regionWidth + '%';
+        document.getElementById('bar-region').innerText = data.regionTime;
+        document.getElementById('bar-sparse').style.width = sparseWidth + '%';
+        document.getElementById('bar-sparse').innerText = data.sparseTime;
+        return;
+      }
+
+      var maxVal = times.base;
+      var minVal = times.sparse;
+      var logRange = Math.log10(maxVal / minVal);
+      var baseWidth = 100;
+      var regionWidth = Math.max(12, ((Math.log10(times.region / minVal) / logRange) * 85) + 15);
+      var sparseWidth = 15;
+
+      document.getElementById('bar-base').style.width = baseWidth + '%';
+      document.getElementById('bar-base').innerText = data.baseTime;
+      document.getElementById('bar-region').style.width = regionWidth + '%';
+      document.getElementById('bar-region').innerText = data.regionTime;
+      document.getElementById('bar-sparse').style.width = sparseWidth + '%';
+      document.getElementById('bar-sparse').innerText = data.sparseTime;
     }
 
     window.onload = function() {

@@ -107,23 +107,29 @@
       <p>A <span class="code-inline">.sang</span> file is an organism's genome. When VANA reads it, the organism boots, the route starts ticking, and it lives.</p>
 
       <h3 id="the-pipeline">The Pipeline</h3>
-      <div class="code-block"><pre>.sang  &rarr;  [lexer]  &rarr;  [parser]  &rarr;  [codegen]  &rarr;  .sirc  &rarr;  [VANA engine]  &rarr;  life</pre></div>
+      <div class="code-block"><pre>.sang  &rarr;  [parse]  &rarr;  Genome (AST)  &rarr;  [VANA engine]  &rarr;  life</pre></div>
       <p><span class="code-inline">.sang</span> &mdash; Sanguis source (the genome, human-written)<br>
-      <span class="code-inline">.sirc</span> &mdash; SIRC (Sanguis Intermediate Representation Code) &mdash; the compiled netlist<br>
       <span class="code-inline">.exe</span> &mdash; Native Windows PE binary (via <span class="code-inline">sanguis native</span>)</p>
-      <p>The Rust bootstrapper (<span class="code-inline">sanguis.exe</span>) compiles <span class="code-inline">.sang</span> to <span class="code-inline">.sirc</span> and runs the VANA engine. The end goal: the bootstrapper is replaced by Sanguis code itself. The organism runs on its own terms.</p>
+      <p>No intermediate representation. The engine boots directly from the parsed AST. The <span class="code-inline">flow</span> command and <span class="code-inline">.sirc</span> format were removed in V3.4.</p>
 
       <h2 id="installation">Installation</h2>
       <h3 id="prerequisites">Prerequisites</h3>
-      <p>Windows 10 or later<br>Rust toolchain (for building the bootstrapper only)<br>GPU optional (CUDA for cortex-scale, not required for basic organisms)</p>
+      <p>Windows 10 or later<br>GPU optional (CUDA for cortex-scale, not required for basic organisms)</p>
 
-      <h3 id="build">Build</h3>
+      <h3 id="sdk">Option A &mdash; SDK (No Build Required)</h3>
+      <p>When the public repository is released, it will include a pre-built SDK with all required binaries. You will not need Cargo, a Rust toolchain, or any build step.</p>
+      <p>1. Download the SDK folder from the repository<br>
+      2. Add <span class="code-inline">sanguis.exe</span> to your PATH<br>
+      3. Optionally add <span class="code-inline">vana_bench.exe</span> for CUDA benchmarking</p>
+      <p>The SDK includes the pre-built CLI binary, CUDA benchmark tool, example organisms, and documentation. The full source (Rust crates, CUDA source, build scripts) is included in the repository for those who want to build from source or contribute.</p>
+
+      <h3 id="build">Option B &mdash; Build From Source</h3>
       <div class="code-block"><pre>sanguis drip</pre></div>
       <p>This runs <span class="code-inline">cargo build --release</span> and copies the binary to <span class="code-inline">~/bin/sanguis.exe</span>. The <span class="code-inline">sanguis</span> command is now available system-wide.</p>
 
       <h3 id="verify">Verify</h3>
       <div class="code-block"><pre>sanguis version
-# Output: sanguis V3.0 &mdash; programs are alive</pre></div>
+# Output: sanguis IT3 V3.4 &mdash; programs are alive</pre></div>
 
       <h2 id="your-first-organism">Your First Organism</h2>
       <p>Create a file called <span class="code-inline">hello.sang</span>:</p>
@@ -134,10 +140,7 @@
   }
 }</pre></div>
       <p>Compile and run:</p>
-      <div class="code-block"><pre>sanguis flow hello.sang
-# Output: &check; hello.sang to hello.sirc (N bytes)
-
-sanguis run hello.sang
+      <div class="code-block"><pre>sanguis run hello.sang
 # Output: Hello, world!</pre></div>
       <p>That's it. You grew an organism. It has one organ (Hello), one hold (greeting), one route (start), and one emit (print the greeting to screen). The route ticked once, the organism spoke, and you saw it.</p>
 
@@ -196,23 +199,17 @@ wire Brain.emit to Body.when_move</pre></div>
       <p>45 lines. It senses, thinks, remembers, and acts. The route breathes through it.</p>
 
       <h2 id="the-cli">The CLI</h2>
-      <div class="code-block"><pre>sanguis flow &lt;file.sang&gt;            Compile .sang to .sirc, write to file
-sanguis flow &lt;file.sang&gt; -o &lt;out&gt;   Compile to specific output path
-sanguis native &lt;file.sang&gt;          Compile .sang to native .exe (Windows PE)
-sanguis native &lt;file.sang&gt; -o &lt;out&gt; Compile to specific .exe path
-sanguis run &lt;file.sang&gt; [ticks]     Boot organism, run the route
-sanguis run &lt;file.sang&gt; --stdin     Read sensor data from stdin (one line per tick)
-sanguis run &lt;file.sang&gt; --quiet     Suppress boot messages
-sanguis parse &lt;file.sang&gt;           Parse .sang, print AST summary
-sanguis check &lt;file.sang&gt;           Check for errors (compile without writing)
-sanguis drip                         Rebuild the Rust bootstrapper
-sanguis version                      Print version</pre></div>
+      <div class="code-block"><pre>sanguis native &lt;file.sang&gt; [-o &lt;out&gt;]   Compile .sang to native .exe (Windows PE)
+sanguis run &lt;file.sang&gt; [ticks]         Boot organism, run the route
+sanguis run &lt;file.sang&gt; --stdin         Read sensor data from stdin (one line per tick)
+sanguis run &lt;file.sang&gt; --quiet         Suppress boot messages
+sanguis parse &lt;file.sang&gt;               Parse .sang, print AST summary
+sanguis check &lt;file.sang&gt;               Check for errors (parse without running)
+sanguis drip                             Rebuild the Rust bootstrapper
+sanguis version                          Print version</pre></div>
 
       <h3 id="examples">Examples</h3>
-      <div class="code-block"><pre># Compile a genome
-sanguis flow genome/minimal.sang
-
-# Run for 1000 ticks
+      <div class="code-block"><pre># Run an organism for 1000 ticks
 sanguis run genome/minimal.sang 1000
 
 # Feed sensor data from stdin (space or comma separated floats)
@@ -222,7 +219,7 @@ echo "0.5 0.3 0.1 0.8" | sanguis run genome/minimal.sang 1 --stdin
 sanguis native hello.sang
 # Produces hello.exe &mdash; no Rust runtime, no dependencies
 
-# Check syntax without writing output
+# Check syntax without running
 sanguis check genome/minimal.sang</pre></div>
 
       <div class="doc-nav-bottom">

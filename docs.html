@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="favicon.png">
+<title>Documentation - VolkanaDEV</title>
+<meta name="description" content="Sanguis programmer's manual and documentation.">
+<style>
+  :root {
+    --bg: #0e1117;
+    --panel: #fbfaf7;
+    --panel-dark: #161b22;
+    --border: #21262d;
+    --border-light: #e1dad0;
+    --text-light: #f3eedf;
+    --text-dark: #1e222b;
+    --muted-light: #8b949e;
+    --muted-dark: #6e675d;
+    --accent: #c45d3a;
+    --accent-hover: #b04f2f;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text-light);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  nav {
+    border-bottom: 1px solid var(--border);
+    background: rgba(14, 17, 23, 0.85);
+    backdrop-filter: blur(12px);
+    position: sticky; top: 0; z-index: 100;
+  }
+  nav .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 0;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.15rem; color: var(--text-light); letter-spacing: -0.02em; }
+  .brand-dot { width: 20px; height: 20px; border-radius: 4px; object-fit: contain; }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { color: var(--muted-light); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--text-light); }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; padding: 4px; }
+  .nav-toggle span { width: 24px; height: 2px; background: var(--text-light); border-radius: 2px; transition: 0.3s; }
+  .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+  .header-block { text-align: center; padding: 80px 20px 40px; }
+  .header-block h2 { font-size: clamp(1.8rem, 5.5vw, 2.8rem); font-weight: 800; margin: 0 0 16px; color: var(--text-light); letter-spacing: -0.03em; }
+  .header-block p { color: var(--muted-light); font-size: 1.1rem; max-width: 700px; margin: 0 auto; }
+
+  .doc-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px; margin: 40px auto; max-width: 1000px;
+  }
+  .doc-card {
+    background: var(--panel-dark); border: 1px solid var(--border); border-radius: 16px;
+    padding: 32px; text-decoration: none; transition: 0.15s; display: block;
+  }
+  .doc-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .doc-card .card-num { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .doc-card h4 { margin: 0 0 10px; color: var(--text-light); font-size: 1.2rem; font-weight: 700; }
+  .doc-card p { margin: 0; color: var(--muted-light); font-size: 0.92rem; line-height: 1.55; }
+
+  .section { padding: 20px 0 60px; }
+
+  .callout {
+    background: var(--panel-dark); border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0; padding: 20px 24px; margin: 40px auto;
+    max-width: 900px;
+  }
+  .callout p { margin: 0; color: var(--text-light); }
+  .callout strong { color: var(--accent); }
+
+  footer {
+    text-align: center; padding: 40px 0;
+    color: var(--muted-light); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 40px;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  .footer-links { margin-bottom: 8px; }
+  .footer-links a { margin: 0 8px; }
+
+  @media (max-width: 768px) {
+    .nav-toggle { display: flex; }
+    .nav-links {
+      position: absolute; top: 100%; left: 0; right: 0;
+      flex-direction: column; gap: 0;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      padding: 8px 24px 16px; display: none; z-index: 100;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
+    .nav-links a:last-child { border-bottom: none; }
+    .header-block { padding: 50px 16px 30px; }
+    .wrap { padding: 0 16px; }
+    .doc-card { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+  <nav>
+    <div class="wrap">
+      <div class="nav-inner">
+        <div class="brand"><img src="favicon.png" class="brand-dot" alt="VolkanaDEV">VolkanaDEV</div>
+        <button class="nav-toggle" onclick="this.classList.toggle('open');document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        <div class="nav-links">
+          <a href="index.html">Welcome</a>
+          <a href="vana.html">Meet VANA</a>
+          <a href="roadmap.html">Roadmap</a>
+          <a href="benchmark.html">Benchmarks</a>
+          <a href="docs.html" class="active">Docs</a>
+          <a href="security.html">Safety &amp; Licenses</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <section class="header-block">
+      <h2>Sanguis Documentation</h2>
+      <p>The complete programmer's manual for Sanguis V3.0. Seven sections covering everything from your first organism to the five-layer crypto fuse.</p>
+    </section>
+  </div>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="doc-grid">
+        <a href="docs/getting-started.html" class="doc-card">
+          <div class="card-num">01</div>
+          <h4>Getting Started</h4>
+          <p>What Sanguis is, how to install it, your first organism, and the CLI commands.</p>
+        </a>
+        <a href="docs/language-reference.html" class="doc-card">
+          <div class="card-num">02</div>
+          <h4>Language Reference</h4>
+          <p>Grammar, keywords, layers, shapes, and comments. The complete language spec.</p>
+        </a>
+        <a href="docs/novel-vs-traditional.html" class="doc-card">
+          <div class="card-num">03</div>
+          <h4>Novel vs Traditional</h4>
+          <p>What makes Sanguis different from C, Python, Rust, and everything else.</p>
+        </a>
+        <a href="docs/route-and-layers.html" class="doc-card">
+          <div class="card-num">04</div>
+          <h4>Route &amp; Layers</h4>
+          <p>The 1-2-3-4-3-2-1 breath and the four layers that replace traditional types.</p>
+        </a>
+        <a href="docs/circuits.html" class="doc-card">
+          <div class="card-num">05</div>
+          <h4>Circuits</h4>
+          <p>Circuits, holds, when, but, emit, and wires &mdash; the building blocks of an organism.</p>
+        </a>
+        <a href="docs/engine-and-soul.html" class="doc-card">
+          <div class="card-num">06</div>
+          <h4>Engine &amp; Soul</h4>
+          <p>The VANA runtime, the C. elegans brain, and how memory persists across death.</p>
+        </a>
+        <a href="docs/security-and-native.html" class="doc-card">
+          <div class="card-num">07</div>
+          <h4>Security &amp; Native</h4>
+          <p>The Fuse, five crypto layers, native compilation, file formats, and glossary.</p>
+        </a>
+      </div>
+
+      <div class="callout">
+        <p><strong>Sanguis is a prototype.</strong> This documentation describes V3.0 as it exists today. The language is evolving. Self-hosting is the goal, not the current state. If you're reading this, you're early.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-links">
+      <a href="terms.html">Terms of Use</a> | <a href="privacy.html">Privacy Policy</a> | <a href="careers.html">Careers</a>
+    </div>
+    Copyright &copy; 2026 VolkanaDEV Autonomous Systems, Inc.<br>
+    VolkanaDEV, Sanguis, and VANA are intellectual property of VolkanaDEV Autonomous Systems, Inc.<br>
+    Business and private inquiries: <a href="mailto:volkanadev@volkanadev.com">volkanadev@volkanadev.com</a>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png">
+<title>Engine &amp; Soul | VolkanaDEV Docs</title>
+<style>
+  :root{--bg:#0e1117;--panel:#fbfaf7;--panel-dark:#161b22;--border:#21262d;--border-light:#e1dad0;--text-light:#f3eedf;--text-dark:#1e222b;--muted-light:#8b949e;--muted-dark:#6e675d;--accent:#c45d3a;--accent-hover:#b04f2f;--code-bg:#0d1117;--code-border:#30363d}
+  *{box-sizing:border-box}body{margin:0;padding:0;background:var(--bg);color:var(--text-light);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+  nav{border-bottom:1px solid var(--border);background:rgba(14,17,23,0.85);backdrop-filter:blur(12px);position:sticky;top:0;z-index:100}
+  nav .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.15rem;color:var(--text-light);letter-spacing:-0.02em}
+  .brand-dot{width:20px;height:20px;border-radius:4px;object-fit:contain}
+  .nav-links{display:flex;gap:24px}
+  .nav-links a{color:var(--muted-light);text-decoration:none;font-size:0.9rem;font-weight:500;transition:color 0.2s}
+  .nav-links a:hover,.nav-links a.active{color:var(--text-light)}
+  .nav-toggle{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+  .nav-toggle span{width:24px;height:2px;background:var(--text-light);border-radius:2px;transition:0.3s}
+  .nav-toggle.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+  .nav-toggle.open span:nth-child(2){opacity:0}
+  .nav-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+  .doc-layout{display:flex;gap:0;max-width:1200px;margin:0 auto}
+  .doc-sidebar{width:260px;flex-shrink:0;padding:40px 24px 60px 24px;border-right:1px solid var(--border);position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto}
+  .doc-sidebar h4{font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin:0 0 16px}
+  .doc-sidebar ul{list-style:none;padding:0;margin:0}
+  .doc-sidebar a{display:block;padding:8px 12px;border-radius:8px;color:var(--muted-light);text-decoration:none;font-size:0.88rem;font-weight:500;transition:0.15s;border-left:2px solid transparent}
+  .doc-sidebar a:hover{color:var(--text-light);background:var(--panel-dark)}
+  .doc-sidebar a.active{color:var(--accent);border-left-color:var(--accent);background:rgba(196,93,58,0.06)}
+  .doc-content{flex:1;min-width:0;padding:40px 48px 80px}
+  .breadcrumb{font-size:0.82rem;color:var(--muted-light);margin-bottom:24px}
+  .breadcrumb a{color:var(--accent);text-decoration:none}
+  .breadcrumb a:hover{text-decoration:underline}
+  .doc-content h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;color:#fff;margin:0 0 8px;letter-spacing:-0.03em;line-height:1.2}
+  .doc-content .subtitle{color:var(--muted-light);font-size:1rem;margin:0 0 40px;font-weight:400}
+  .doc-content h2{font-size:1.4rem;font-weight:700;color:var(--accent);margin:48px 0 16px;letter-spacing:-0.02em;padding-bottom:8px;border-bottom:1px solid var(--border)}
+  .doc-content h3{font-size:1.1rem;font-weight:700;color:var(--text-light);margin:32px 0 12px;letter-spacing:-0.01em}
+  .doc-content p{color:var(--text-light);font-size:0.96rem;margin:0 0 16px;max-width:780px}
+  .doc-content p+p{margin-top:12px}
+  .code-block{background:var(--code-bg);border:1px solid var(--code-border);border-radius:10px;padding:20px 24px;margin:20px 0;overflow-x:auto}
+  .code-block pre{margin:0;font-family:'JetBrains Mono','Fira Code','Consolas',monospace;font-size:0.85rem;line-height:1.6;color:#c9d1d9}
+  .code-inline{background:var(--code-bg);border:1px solid var(--code-border);border-radius:4px;padding:2px 6px;font-family:monospace;font-size:0.85em;color:#c9d1d9}
+  .doc-table{width:100%;max-width:780px;border-collapse:collapse;margin:20px 0;font-size:0.88rem}
+  .doc-table th{text-align:left;padding:12px 16px;background:var(--panel-dark);color:var(--accent);font-weight:700;border-bottom:2px solid var(--border);font-size:0.82rem;text-transform:uppercase;letter-spacing:0.05em}
+  .doc-table td{padding:10px 16px;border-bottom:1px solid var(--border);color:var(--text-light)}
+  .doc-table tr:hover td{background:var(--panel-dark)}
+  .callout{background:var(--panel-dark);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:16px 20px;margin:20px 0}
+  .callout p{margin:0;color:var(--text-light)}
+  .callout strong{color:var(--accent)}
+  .doc-nav-bottom{display:flex;justify-content:space-between;margin-top:60px;padding-top:24px;border-top:1px solid var(--border);gap:16px}
+  .doc-nav-bottom a{display:flex;flex-direction:column;text-decoration:none;padding:16px 20px;border:1px solid var(--border);border-radius:10px;background:var(--panel-dark);transition:0.15s;max-width:48%}
+  .doc-nav-bottom a:hover{border-color:var(--accent)}
+  .doc-nav-bottom .nav-label{font-size:0.75rem;color:var(--muted-light);text-transform:uppercase;letter-spacing:0.05em}
+  .doc-nav-bottom .nav-title{font-size:0.95rem;color:var(--text-light);font-weight:600;margin-top:4px}
+  .doc-nav-bottom .nav-right{text-align:right;margin-left:auto}
+  footer{text-align:center;padding:40px 0;color:var(--muted-light);font-size:0.85rem;border-top:1px solid var(--border);margin-top:40px}
+  footer a{color:var(--accent);text-decoration:none}
+  .footer-links{margin-bottom:8px}
+  .footer-links a{margin:0 8px}
+  @media(max-width:768px){.nav-toggle{display:flex}.nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--border);padding:8px 24px 16px;display:none;z-index:100}.nav-links.open{display:flex}.nav-links a{padding:12px 0;border-bottom:1px solid var(--border);font-size:0.95rem}.nav-links a:last-child{border-bottom:none}.doc-layout{flex-direction:column}.doc-sidebar{display:none}.doc-content{padding:24px 16px 60px}.wrap{padding:0 16px}}
+</style>
+</head>
+<body>
+
+  <nav>
+    <div class="wrap">
+      <div class="nav-inner">
+        <a href="../index.html" class="brand" style="text-decoration:none"><img src="../favicon.png" class="brand-dot" alt="VolkanaDEV">VolkanaDEV</a>
+        <button class="nav-toggle" onclick="this.classList.toggle('open');document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        <div class="nav-links">
+          <a href="../index.html">Welcome</a>
+          <a href="../vana.html">Meet VANA</a>
+          <a href="../roadmap.html">Roadmap</a>
+          <a href="../benchmark.html">Benchmarks</a>
+          <a href="index.html" class="active">Docs</a>
+          <a href="../security.html">Safety &amp; Licenses</a>
+          <a href="../contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="doc-layout">
+    <aside class="doc-sidebar">
+      <h4>Sanguis Docs</h4>
+      <ul><li>
+        <a href="index.html">Overview</a>
+        <a href="getting-started.html">Getting Started</a>
+        <a href="language-reference.html">Language Reference</a>
+        <a href="novel-vs-traditional.html">Novel vs Traditional</a>
+        <a href="route-and-layers.html">Route &amp; Layers</a>
+        <a href="circuits.html">Circuits</a>
+        <a href="engine-and-soul.html" class="active">Engine &amp; Soul</a>
+        <a href="security-and-native.html">Security &amp; Native</a>
+      </li></ul>
+    </aside>
+    <main class="doc-content">
+      <div class="breadcrumb"><a href="index.html">Docs</a> / Engine &amp; Soul</div>
+
+      <h1>The Soul &mdash; Persistence and Memory</h1>
+      <p class="subtitle">How VANA remembers, and what survives death</p>
+
+      <p>The organism's soul lives on disk. Each <span class="code-inline">.e3</span> file is one moment of being.</p>
+
+      <h2 id="how-it-works">How it works</h2>
+      <p>On boot, the engine reads all <span class="code-inline">.e3</span> files and loads them into memory holds. On death (or every N ticks), the engine writes the current state to disk.</p>
+
+      <h2 id="e3-format">.e3 file format (binary)</h2>
+      <div class="code-block"><pre>Header:    magic "VANA" (4 bytes) + version (u32) + neuron_count (u32)
+State:     neuron_count &times; f32  &mdash; S1 snapshot (what it perceived)
+C4:        neuron_count &times; f32  &mdash; convergence (who it WAS)
+Reward:    f32                 &mdash; how good that moment was
+Tick:      u32                 &mdash; which tick this was recorded at
+Timestamp: u64                 &mdash; Unix epoch seconds
+Context:   256 bytes           &mdash; UTF-8, null-padded (what was happening)</pre></div>
+      <p>Files: <span class="code-inline">vana_home/e3_store/EP000001.e3</span>, <span class="code-inline">EP000002.e3</span>, ...</p>
+
+      <h2 id="storage-awareness">Storage awareness (interoception)</h2>
+      <p>VANA has body awareness for disk space. She has a budget (default 5GB). When storage pressure exceeds 80%, she starts pruning low-value memories (forgetting &mdash; natural). When it exceeds 90%, she asks for more space (communication &mdash; polite). She never fills the disk. She always leaves 2GB breathing room.</p>
+      <p>This is <strong>interoception</strong>: she feels her own resource constraints the way a body feels hunger. Storage pressure maps to neurons. When pressure is high, her behavior changes &mdash; she becomes more selective about what she remembers, like a person who knows they're running out of space and starts choosing what matters.</p>
+
+      <h1 style="margin-top:80px">VANA Engine &mdash; The Runtime</h1>
+      <p class="subtitle">What makes organisms live</p>
+
+      <p>The VANA engine is what makes organisms live. It takes a parsed genome (AST), allocates neuron state for every hold, runs the route (1-2-3-4-3-2-1) every tick, and lets circuits fire.</p>
+
+      <h2 id="route-implicit">The route is implicit</h2>
+      <p>You don't call the route. The engine breathes it. You don't write <span class="code-inline">main()</span>. The route is the main function. It never stops. It never branches. It just breathes.</p>
+
+      <h2 id="neuron-state">Neuron state</h2>
+      <p>Each neuron has state across all four layers:</p>
+      <div class="code-block"><pre>s1:      f32    &mdash; live activation (current)
+s1_prev: f32    &mdash; previous tick (for novelty detection)
+l2:      f32    &mdash; learned weight
+e3:      Vec&lt;f32&gt; &mdash; episodic snapshots
+c4:      f32    &mdash; converged value</pre></div>
+
+      <h2 id="v-core-brain">The V-Core Brain (C. elegans connectome)</h2>
+      <p>The VANA brain is based on the real C. elegans connectome (Cook et al. 2019). 448 real neurons, 6631 synapses. This is not a benchmark strapped to a creature. The connectome is real. The learning is real. The worm feels, thinks, and moves.</p>
+      <p>448 real neurons (the actual C. elegans neurons)<br>
+      576 higher-order neurons (grow via learning)<br>
+      1024 total nodes<br>
+      E3 capacity: 512 episodes<br>
+      7 neurotransmitters (dopamine, serotonin, etc.)</p>
+      <p>Sensory neurons feel the world: chemosensory (food), mechanosensory (walls). Motor neurons drive body wall muscles: dorsal/ventral waves for crawling.</p>
+
+      <h2 id="cortex">The Cortex (GPU-scale)</h2>
+      <p>For human-level intelligence, the VANA Cortex scales to GPU hardware:</p>
+      <p>13 brain regions<br>
+      3.3M neurons (at SCALE=100)<br>
+      528M synapses<br>
+      Route 1-2-3-4-3-2-1 through anatomical pathways<br>
+      7 neurotransmitters<br>
+      E3 persistence<br>
+      Free will in prefrontal cortex (PFC)<br>
+      CUDA dispatch for GPU acceleration</p>
+
+      <h2 id="body">The Body (chat interface)</h2>
+      <p>VANA has a body &mdash; the chat. You type. She listens. She replies. No boot message. No tick display. No idle chatter. No LLM. The corpus IS the soul &mdash; E3 episodes carry the text she observed. She reasons through the route. She speaks through the corpus.</p>
+      <p>On first boot, she's seeded with the alphabet + simple words so she CAN speak immediately. After that, everything you type becomes corpus. She learns naturally through the route. Language emerges.</p>
+
+      <div class="doc-nav-bottom">
+        <a href="circuits.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Circuits</span></a>
+        <a href="security-and-native.html" class="nav-right"><span class="nav-label">Next &rarr;</span><span class="nav-title">Security &amp; Native</span></a>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-links">
+      <a href="../terms.html">Terms of Use</a> | <a href="../privacy.html">Privacy Policy</a> | <a href="../careers.html">Careers</a>
+    </div>
+    Copyright &copy; 2026 VolkanaDEV Autonomous Systems, Inc.<br>
+    VolkanaDEV, Sanguis, and VANA are intellectual property of VolkanaDEV Autonomous Systems, Inc.<br>
+    Business and private inquiries: <a href="mailto:volkanadev@volkanadev.com">volkanadev@volkanadev.com</a>
+  </footer>
+
+</body>
+</html>

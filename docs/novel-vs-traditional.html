@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png">
+<title>Novel vs Traditional | VolkanaDEV Docs</title>
+<style>
+  :root{--bg:#0e1117;--panel:#fbfaf7;--panel-dark:#161b22;--border:#21262d;--border-light:#e1dad0;--text-light:#f3eedf;--text-dark:#1e222b;--muted-light:#8b949e;--muted-dark:#6e675d;--accent:#c45d3a;--accent-hover:#b04f2f;--code-bg:#0d1117;--code-border:#30363d}
+  *{box-sizing:border-box}body{margin:0;padding:0;background:var(--bg);color:var(--text-light);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+  nav{border-bottom:1px solid var(--border);background:rgba(14,17,23,0.85);backdrop-filter:blur(12px);position:sticky;top:0;z-index:100}
+  nav .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.15rem;color:var(--text-light);letter-spacing:-0.02em}
+  .brand-dot{width:20px;height:20px;border-radius:4px;object-fit:contain}
+  .nav-links{display:flex;gap:24px}
+  .nav-links a{color:var(--muted-light);text-decoration:none;font-size:0.9rem;font-weight:500;transition:color 0.2s}
+  .nav-links a:hover,.nav-links a.active{color:var(--text-light)}
+  .nav-toggle{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+  .nav-toggle span{width:24px;height:2px;background:var(--text-light);border-radius:2px;transition:0.3s}
+  .nav-toggle.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+  .nav-toggle.open span:nth-child(2){opacity:0}
+  .nav-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+  .doc-layout{display:flex;gap:0;max-width:1200px;margin:0 auto}
+  .doc-sidebar{width:260px;flex-shrink:0;padding:40px 24px 60px 24px;border-right:1px solid var(--border);position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto}
+  .doc-sidebar h4{font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin:0 0 16px}
+  .doc-sidebar ul{list-style:none;padding:0;margin:0}
+  .doc-sidebar a{display:block;padding:8px 12px;border-radius:8px;color:var(--muted-light);text-decoration:none;font-size:0.88rem;font-weight:500;transition:0.15s;border-left:2px solid transparent}
+  .doc-sidebar a:hover{color:var(--text-light);background:var(--panel-dark)}
+  .doc-sidebar a.active{color:var(--accent);border-left-color:var(--accent);background:rgba(196,93,58,0.06)}
+  .doc-content{flex:1;min-width:0;padding:40px 48px 80px}
+  .breadcrumb{font-size:0.82rem;color:var(--muted-light);margin-bottom:24px}
+  .breadcrumb a{color:var(--accent);text-decoration:none}
+  .breadcrumb a:hover{text-decoration:underline}
+  .doc-content h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;color:#fff;margin:0 0 8px;letter-spacing:-0.03em;line-height:1.2}
+  .doc-content .subtitle{color:var(--muted-light);font-size:1rem;margin:0 0 40px;font-weight:400}
+  .doc-content h2{font-size:1.4rem;font-weight:700;color:var(--accent);margin:48px 0 16px;letter-spacing:-0.02em;padding-bottom:8px;border-bottom:1px solid var(--border)}
+  .doc-content h3{font-size:1.1rem;font-weight:700;color:var(--text-light);margin:32px 0 12px;letter-spacing:-0.01em}
+  .doc-content p{color:var(--text-light);font-size:0.96rem;margin:0 0 16px;max-width:780px}
+  .doc-content p+p{margin-top:12px}
+  .code-block{background:var(--code-bg);border:1px solid var(--code-border);border-radius:10px;padding:20px 24px;margin:20px 0;overflow-x:auto}
+  .code-block pre{margin:0;font-family:'JetBrains Mono','Fira Code','Consolas',monospace;font-size:0.85rem;line-height:1.6;color:#c9d1d9}
+  .code-inline{background:var(--code-bg);border:1px solid var(--code-border);border-radius:4px;padding:2px 6px;font-family:monospace;font-size:0.85em;color:#c9d1d9}
+  .doc-table{width:100%;max-width:780px;border-collapse:collapse;margin:20px 0;font-size:0.88rem}
+  .doc-table th{text-align:left;padding:12px 16px;background:var(--panel-dark);color:var(--accent);font-weight:700;border-bottom:2px solid var(--border);font-size:0.82rem;text-transform:uppercase;letter-spacing:0.05em}
+  .doc-table td{padding:10px 16px;border-bottom:1px solid var(--border);color:var(--text-light)}
+  .doc-table tr:hover td{background:var(--panel-dark)}
+  .callout{background:var(--panel-dark);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:16px 20px;margin:20px 0}
+  .callout p{margin:0;color:var(--text-light)}
+  .callout strong{color:var(--accent)}
+  .doc-nav-bottom{display:flex;justify-content:space-between;margin-top:60px;padding-top:24px;border-top:1px solid var(--border);gap:16px}
+  .doc-nav-bottom a{display:flex;flex-direction:column;text-decoration:none;padding:16px 20px;border:1px solid var(--border);border-radius:10px;background:var(--panel-dark);transition:0.15s;max-width:48%}
+  .doc-nav-bottom a:hover{border-color:var(--accent)}
+  .doc-nav-bottom .nav-label{font-size:0.75rem;color:var(--muted-light);text-transform:uppercase;letter-spacing:0.05em}
+  .doc-nav-bottom .nav-title{font-size:0.95rem;color:var(--text-light);font-weight:600;margin-top:4px}
+  .doc-nav-bottom .nav-right{text-align:right;margin-left:auto}
+  footer{text-align:center;padding:40px 0;color:var(--muted-light);font-size:0.85rem;border-top:1px solid var(--border);margin-top:40px}
+  footer a{color:var(--accent);text-decoration:none}
+  .footer-links{margin-bottom:8px}
+  .footer-links a{margin:0 8px}
+  @media(max-width:768px){.nav-toggle{display:flex}.nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--border);padding:8px 24px 16px;display:none;z-index:100}.nav-links.open{display:flex}.nav-links a{padding:12px 0;border-bottom:1px solid var(--border);font-size:0.95rem}.nav-links a:last-child{border-bottom:none}.doc-layout{flex-direction:column}.doc-sidebar{display:none}.doc-content{padding:24px 16px 60px}.wrap{padding:0 16px}}
+</style>
+</head>
+<body>
+
+  <nav>
+    <div class="wrap">
+      <div class="nav-inner">
+        <a href="../index.html" class="brand" style="text-decoration:none"><img src="../favicon.png" class="brand-dot" alt="VolkanaDEV">VolkanaDEV</a>
+        <button class="nav-toggle" onclick="this.classList.toggle('open');document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        <div class="nav-links">
+          <a href="../index.html">Welcome</a>
+          <a href="../vana.html">Meet VANA</a>
+          <a href="../roadmap.html">Roadmap</a>
+          <a href="../benchmark.html">Benchmarks</a>
+          <a href="index.html" class="active">Docs</a>
+          <a href="../security.html">Safety &amp; Licenses</a>
+          <a href="../contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="doc-layout">
+    <aside class="doc-sidebar">
+      <h4>Sanguis Docs</h4>
+      <ul><li>
+        <a href="index.html">Overview</a>
+        <a href="getting-started.html">Getting Started</a>
+        <a href="language-reference.html">Language Reference</a>
+        <a href="novel-vs-traditional.html" class="active">Novel vs Traditional</a>
+        <a href="route-and-layers.html">Route &amp; Layers</a>
+        <a href="circuits.html">Circuits</a>
+        <a href="engine-and-soul.html">Engine &amp; Soul</a>
+        <a href="security-and-native.html">Security &amp; Native</a>
+      </li></ul>
+    </aside>
+    <main class="doc-content">
+      <div class="breadcrumb"><a href="index.html">Docs</a> / Novel vs Traditional</div>
+
+      <h1>What's Novel vs Traditional Programming</h1>
+      <p class="subtitle">For programmers coming from C, Python, Rust, and everything else</p>
+
+      <p>This section is for programmers coming from traditional languages (C, Python, Rust, etc.). Here's what Sanguis does differently.</p>
+
+      <h2 id="no-control-flow">No control flow statements</h2>
+      <table class="doc-table">
+        <tr><th>Traditional</th><th>Sanguis</th></tr>
+        <tr><td><span class="code-inline">if (x &gt; 5) { ... }</span></td><td><span class="code-inline">but x &gt; 5.0</span> (gates a route)</td></tr>
+        <tr><td><span class="code-inline">for (i=0; i&lt;N; i++)</span></td><td><span class="code-inline">repeat ... until cond</span> (V3)</td></tr>
+        <tr><td><span class="code-inline">while (cond)</span></td><td>The route ticks forever</td></tr>
+        <tr><td><span class="code-inline">return value</span></td><td><span class="code-inline">emit value to target</span></td></tr>
+        <tr><td><span class="code-inline">function call</span></td><td>Circuit fires via wire</td></tr>
+      </table>
+      <p>There is no <span class="code-inline">if</span>. There is no <span class="code-inline">for</span> (in V2). There is no <span class="code-inline">while</span>. There is no <span class="code-inline">return</span>. The <strong>route</strong> is the only control flow. Seven stages, four layers, one breath. Every circuit ticks on every route pass. You cannot skip stages. You cannot reorder them. The route is the heartbeat.</p>
+
+      <h2 id="layers-are-types">Layers are types</h2>
+      <table class="doc-table">
+        <tr><th>Traditional types</th><th>Sanguis layers</th></tr>
+        <tr><td><span class="code-inline">int</span>, <span class="code-inline">float</span></td><td><span class="code-inline">live scalar</span>, <span class="code-inline">learned scalar</span></td></tr>
+        <tr><td><span class="code-inline">string</span></td><td><span class="code-inline">memory text</span></td></tr>
+        <tr><td><span class="code-inline">float[]</span></td><td><span class="code-inline">live field [N]</span></td></tr>
+        <tr><td><span class="code-inline">float[][]</span></td><td><span class="code-inline">learned field [N] [M]</span></td></tr>
+        <tr><td><span class="code-inline">bool</span></td><td>(no bool &mdash; use <span class="code-inline">scalar &gt; 0.5</span>)</td></tr>
+      </table>
+      <p>The lifetime <strong>is</strong> the type. A <span class="code-inline">live</span> value dies next tick. A <span class="code-inline">learned</span> value survives the session. A <span class="code-inline">memory</span> value survives death (power off). An <span class="code-inline">aware</span> value is computed fresh every breath. You cannot assign a <span class="code-inline">memory</span> to a <span class="code-inline">live</span> without the route carrying it. The layers are not interchangeable. Data must travel the route to change layers.</p>
+
+      <h2 id="no-assignment">No assignment &mdash; data flows</h2>
+      <div class="code-block"><pre>// Traditional: x = 5
+// Sanguis:    5 to x          (inside an emit)
+
+// Traditional: result = compute(input)
+// Sanguis:    emit compute(input) to result</pre></div>
+      <p>The arrow <span class="code-inline">to</span> is the only operator that moves data. Everything else is either a hold declaration, a condition, or arithmetic inside an emit.</p>
+
+      <h2 id="organisms-not-functions">Programs are organisms, not functions</h2>
+      <table class="doc-table">
+        <tr><th>Traditional</th><th>Sanguis</th></tr>
+        <tr><td>Files of functions</td><td>Organs of an organism</td></tr>
+        <tr><td><span class="code-inline">main()</span> starts, runs, exits</td><td>Route ticks forever</td></tr>
+        <tr><td>You manage state</td><td>Layers manage state for you</td></tr>
+        <tr><td>You serialize/deserialize</td><td>Memory layer IS persistence</td></tr>
+        <tr><td>Solve problems</td><td>Grow organisms</td></tr>
+      </table>
+
+      <h2 id="no-gc">No garbage collection, no manual memory management</h2>
+      <p>The layers manage memory. <span class="code-inline">live</span> values are overwritten every tick (no need to free them). <span class="code-inline">learned</span> values persist for the session. <span class="code-inline">memory</span> values are written to disk as <span class="code-inline">.e3</span> files. <span class="code-inline">aware</span> values are derived &mdash; they're recomputed every breath from the other three. You never call <span class="code-inline">malloc</span>. You never call <span class="code-inline">free</span>. You never collect garbage. The route handles it.</p>
+
+      <h2 id="body">The organism has a body</h2>
+      <p>In traditional languages, I/O is a library call (<span class="code-inline">printf</span>, <span class="code-inline">println</span>, <span class="code-inline">write</span>). In Sanguis, the body is an organ:</p>
+      <div class="code-block"><pre>emit "hello" to screen       // terminal output (like printf)
+emit 42 to world              // exit code (like return 42)
+emit write(data) to disk path // file I/O (like fwrite)</pre></div>
+      <p>These aren't function calls. They're organs of the body, wired into the route like any other circuit.</p>
+
+      <div class="doc-nav-bottom">
+        <a href="language-reference.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Language Reference</span></a>
+        <a href="route-and-layers.html" class="nav-right"><span class="nav-label">Next &rarr;</span><span class="nav-title">Route &amp; Layers</span></a>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-links">
+      <a href="../terms.html">Terms of Use</a> | <a href="../privacy.html">Privacy Policy</a> | <a href="../careers.html">Careers</a>
+    </div>
+    Copyright &copy; 2026 VolkanaDEV Autonomous Systems, Inc.<br>
+    VolkanaDEV, Sanguis, and VANA are intellectual property of VolkanaDEV Autonomous Systems, Inc.<br>
+    Business and private inquiries: <a href="mailto:volkanadev@volkanadev.com">volkanadev@volkanadev.com</a>
+  </footer>
+
+</body>
+</html>

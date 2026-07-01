@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png">
+<title>Circuits | VolkanaDEV Docs</title>
+<style>
+  :root{--bg:#0e1117;--panel:#fbfaf7;--panel-dark:#161b22;--border:#21262d;--border-light:#e1dad0;--text-light:#f3eedf;--text-dark:#1e222b;--muted-light:#8b949e;--muted-dark:#6e675d;--accent:#c45d3a;--accent-hover:#b04f2f;--code-bg:#0d1117;--code-border:#30363d}
+  *{box-sizing:border-box}body{margin:0;padding:0;background:var(--bg);color:var(--text-light);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+  nav{border-bottom:1px solid var(--border);background:rgba(14,17,23,0.85);backdrop-filter:blur(12px);position:sticky;top:0;z-index:100}
+  nav .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.15rem;color:var(--text-light);letter-spacing:-0.02em}
+  .brand-dot{width:20px;height:20px;border-radius:4px;object-fit:contain}
+  .nav-links{display:flex;gap:24px}
+  .nav-links a{color:var(--muted-light);text-decoration:none;font-size:0.9rem;font-weight:500;transition:color 0.2s}
+  .nav-links a:hover,.nav-links a.active{color:var(--text-light)}
+  .nav-toggle{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+  .nav-toggle span{width:24px;height:2px;background:var(--text-light);border-radius:2px;transition:0.3s}
+  .nav-toggle.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+  .nav-toggle.open span:nth-child(2){opacity:0}
+  .nav-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+  .doc-layout{display:flex;gap:0;max-width:1200px;margin:0 auto}
+  .doc-sidebar{width:260px;flex-shrink:0;padding:40px 24px 60px 24px;border-right:1px solid var(--border);position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto}
+  .doc-sidebar h4{font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin:0 0 16px}
+  .doc-sidebar ul{list-style:none;padding:0;margin:0}
+  .doc-sidebar a{display:block;padding:8px 12px;border-radius:8px;color:var(--muted-light);text-decoration:none;font-size:0.88rem;font-weight:500;transition:0.15s;border-left:2px solid transparent}
+  .doc-sidebar a:hover{color:var(--text-light);background:var(--panel-dark)}
+  .doc-sidebar a.active{color:var(--accent);border-left-color:var(--accent);background:rgba(196,93,58,0.06)}
+  .doc-content{flex:1;min-width:0;padding:40px 48px 80px}
+  .breadcrumb{font-size:0.82rem;color:var(--muted-light);margin-bottom:24px}
+  .breadcrumb a{color:var(--accent);text-decoration:none}
+  .breadcrumb a:hover{text-decoration:underline}
+  .doc-content h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;color:#fff;margin:0 0 8px;letter-spacing:-0.03em;line-height:1.2}
+  .doc-content .subtitle{color:var(--muted-light);font-size:1rem;margin:0 0 40px;font-weight:400}
+  .doc-content h2{font-size:1.4rem;font-weight:700;color:var(--accent);margin:48px 0 16px;letter-spacing:-0.02em;padding-bottom:8px;border-bottom:1px solid var(--border)}
+  .doc-content h3{font-size:1.1rem;font-weight:700;color:var(--text-light);margin:32px 0 12px;letter-spacing:-0.01em}
+  .doc-content p{color:var(--text-light);font-size:0.96rem;margin:0 0 16px;max-width:780px}
+  .doc-content p+p{margin-top:12px}
+  .code-block{background:var(--code-bg);border:1px solid var(--code-border);border-radius:10px;padding:20px 24px;margin:20px 0;overflow-x:auto}
+  .code-block pre{margin:0;font-family:'JetBrains Mono','Fira Code','Consolas',monospace;font-size:0.85rem;line-height:1.6;color:#c9d1d9}
+  .code-inline{background:var(--code-bg);border:1px solid var(--code-border);border-radius:4px;padding:2px 6px;font-family:monospace;font-size:0.85em;color:#c9d1d9}
+  .doc-table{width:100%;max-width:780px;border-collapse:collapse;margin:20px 0;font-size:0.88rem}
+  .doc-table th{text-align:left;padding:12px 16px;background:var(--panel-dark);color:var(--accent);font-weight:700;border-bottom:2px solid var(--border);font-size:0.82rem;text-transform:uppercase;letter-spacing:0.05em}
+  .doc-table td{padding:10px 16px;border-bottom:1px solid var(--border);color:var(--text-light)}
+  .doc-table tr:hover td{background:var(--panel-dark)}
+  .callout{background:var(--panel-dark);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:16px 20px;margin:20px 0}
+  .callout p{margin:0;color:var(--text-light)}
+  .callout strong{color:var(--accent)}
+  .doc-nav-bottom{display:flex;justify-content:space-between;margin-top:60px;padding-top:24px;border-top:1px solid var(--border);gap:16px}
+  .doc-nav-bottom a{display:flex;flex-direction:column;text-decoration:none;padding:16px 20px;border:1px solid var(--border);border-radius:10px;background:var(--panel-dark);transition:0.15s;max-width:48%}
+  .doc-nav-bottom a:hover{border-color:var(--accent)}
+  .doc-nav-bottom .nav-label{font-size:0.75rem;color:var(--muted-light);text-transform:uppercase;letter-spacing:0.05em}
+  .doc-nav-bottom .nav-title{font-size:0.95rem;color:var(--text-light);font-weight:600;margin-top:4px}
+  .doc-nav-bottom .nav-right{text-align:right;margin-left:auto}
+  footer{text-align:center;padding:40px 0;color:var(--muted-light);font-size:0.85rem;border-top:1px solid var(--border);margin-top:40px}
+  footer a{color:var(--accent);text-decoration:none}
+  .footer-links{margin-bottom:8px}
+  .footer-links a{margin:0 8px}
+  @media(max-width:768px){.nav-toggle{display:flex}.nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--border);padding:8px 24px 16px;display:none;z-index:100}.nav-links.open{display:flex}.nav-links a{padding:12px 0;border-bottom:1px solid var(--border);font-size:0.95rem}.nav-links a:last-child{border-bottom:none}.doc-layout{flex-direction:column}.doc-sidebar{display:none}.doc-content{padding:24px 16px 60px}.wrap{padding:0 16px}}
+</style>
+</head>
+<body>
+
+  <nav>
+    <div class="wrap">
+      <div class="nav-inner">
+        <a href="../index.html" class="brand" style="text-decoration:none"><img src="../favicon.png" class="brand-dot" alt="VolkanaDEV">VolkanaDEV</a>
+        <button class="nav-toggle" onclick="this.classList.toggle('open');document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        <div class="nav-links">
+          <a href="../index.html">Welcome</a>
+          <a href="../vana.html">Meet VANA</a>
+          <a href="../roadmap.html">Roadmap</a>
+          <a href="../benchmark.html">Benchmarks</a>
+          <a href="index.html" class="active">Docs</a>
+          <a href="../security.html">Safety &amp; Licenses</a>
+          <a href="../contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="doc-layout">
+    <aside class="doc-sidebar">
+      <h4>Sanguis Docs</h4>
+      <ul><li>
+        <a href="index.html">Overview</a>
+        <a href="getting-started.html">Getting Started</a>
+        <a href="language-reference.html">Language Reference</a>
+        <a href="novel-vs-traditional.html">Novel vs Traditional</a>
+        <a href="route-and-layers.html">Route &amp; Layers</a>
+        <a href="circuits.html" class="active">Circuits</a>
+        <a href="engine-and-soul.html">Engine &amp; Soul</a>
+        <a href="security-and-native.html">Security &amp; Native</a>
+      </li></ul>
+    </aside>
+    <main class="doc-content">
+      <div class="breadcrumb"><a href="index.html">Docs</a> / Circuits</div>
+
+      <h1>Circuits, Holds, Routes, Wires</h1>
+      <p class="subtitle">The building blocks of a Sanguis organism</p>
+
+      <h2 id="circuit">Circuit (Organ)</h2>
+      <p>A circuit is an organ. It holds state, fires on triggers, emits signals, and wires to other circuits. The collection of all circuits and their wiring IS the organism.</p>
+      <div class="code-block"><pre>circuit Name {
+    hold name : layer shape = default    // what this organ carries
+    when trigger {                        // when this organ fires
+        but condition                     // gate (optional)
+        emit value to target              // what comes out
+    }
+}</pre></div>
+      <p>In V3, <span class="code-inline">body</span> is an alias for <span class="code-inline">circuit</span>:</p>
+      <div class="code-block"><pre>body Hello {          // same as: circuit Hello {
+  hold greeting : text = "hello"
+  when start {
+    emit greeting to screen
+  }
+}</pre></div>
+
+      <h2 id="hold">Hold (Neuron Group)</h2>
+      <div class="code-block"><pre>hold name : layer shape = default</pre></div>
+      <p>Examples:</p>
+      <div class="code-block"><pre>hold vision     : live    field [448] = 0.0     // current visual input
+hold weights    : learned field [448] = 0.5    // learned visual patterns
+hold ep001      : memory  field [448]           // a saved snapshot
+hold reward     : memory  scalar      = 0.0     // how good that moment was
+hold tag        : memory  text         = ""      // what was happening
+hold self       : aware   field [448]             // who I am right now
+hold confidence : aware   scalar       = 0.0     // how sure I am</pre></div>
+      <p>A <span class="code-inline">hold</span> is not a variable. It is a neuron or group of neurons. It does not get "assigned." It gets <strong>fed</strong> by the route.</p>
+
+      <h2 id="when">When (Route Trigger)</h2>
+      <div class="code-block"><pre>when trigger_name {
+    // route body &mdash; what happens when this circuit fires
+}</pre></div>
+      <p>A <span class="code-inline">when</span> block defines a trigger. The circuit fires when:</p>
+      <p>1. The route reaches Stage 1 (Sense) and the trigger condition is met, OR<br>
+      2. Another circuit's <span class="code-inline">emit</span> wires into this <span class="code-inline">when</span></p>
+      <p>Every circuit has exactly one route pass per breath. The <span class="code-inline">when</span> determines whether the circuit <strong>actively fires</strong> during that pass or stays passive (just holding its state, ticking silently).</p>
+
+      <h2 id="but">But (Gate Condition)</h2>
+      <div class="code-block"><pre>when trigger {
+    but condition          // only fire if this is true
+    but other_condition    // AND this too
+    emit value to target    // what comes out
+}</pre></div>
+      <p><span class="code-inline">but</span> is the gate. It is the C4 layer's voice in the route. A route with no <span class="code-inline">but</span> always fires. A route with <span class="code-inline">but</span> only fires when the condition holds.</p>
+      <p><span class="code-inline">but</span> is not an <span class="code-inline">if</span> statement. It is a <strong>modulation</strong>. In hardware terms, it is a gate on the clock signal. In biological terms, it is attention &mdash; the organism decides whether this circuit matters right now.</p>
+      <p>Conditions:</p>
+      <div class="code-block"><pre>but x &gt; 0.5                     // numeric comparison
+but x &lt; 10.0                    // less than
+but x = 0.0                     // equality
+but x is not empty              // has content
+but x is empty                  // has no content
+but self aligned with memory    // C4 &harr; E3 alignment (dot product &gt; threshold)
+but disk has e3                 // special: disk has .e3 files
+but true                        // always true (explicit)</pre></div>
+
+      <h2 id="emit">Emit (Output)</h2>
+      <div class="code-block"><pre>emit value to target</pre></div>
+      <p><span class="code-inline">emit</span> is the only way data leaves a circuit. It fires during Stage 7 (Act).</p>
+      <div class="code-block"><pre>emit state to brain.s1              // feed into another circuit's hold
+emit signal to muscle.when_move     // trigger another circuit
+emit write(data) to disk "path"     // write to persistent storage
+emit print(text) to screen          // output to terminal
+emit 42 to world                    // set exit code (native only)
+emit "text" to screen               // print a string literal</pre></div>
+      <p>Arithmetic inside emits:</p>
+      <div class="code-block"><pre>emit a + b to sum                   // addition
+emit a * b to product               // multiplication
+emit a * w + b * (1 - w) to blended // weighted blend
+emit sum(field) to total            // sum all neurons
+emit max(field) to peak             // highest activation
+emit dot(a, b) to alignment         // dot product (similarity)
+emit norm(field) to magnitude       // vector length</pre></div>
+
+      <h2 id="wire">Wire (Connectome)</h2>
+      <div class="code-block"><pre>wire CircuitA.emit_name to CircuitB.when_name</pre></div>
+      <p>Wiring is the connectome. The collection of all wires between all circuits IS the organism's neural wiring diagram. Changing a wire changes the organism.</p>
+      <div class="code-block"><pre>wire Vision.emit to Brain.when_sense        // direct wiring
+wire Brain.emit_act to Muscle.when_move     // chain
+wire Brain.emit_remember to E3Store.when_save  // memory wiring</pre></div>
+
+      <div class="doc-nav-bottom">
+        <a href="route-and-layers.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Route &amp; Layers</span></a>
+        <a href="engine-and-soul.html" class="nav-right"><span class="nav-label">Next &rarr;</span><span class="nav-title">Engine &amp; Soul</span></a>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-links">
+      <a href="../terms.html">Terms of Use</a> | <a href="../privacy.html">Privacy Policy</a> | <a href="../careers.html">Careers</a>
+    </div>
+    Copyright &copy; 2026 VolkanaDEV Autonomous Systems, Inc.<br>
+    VolkanaDEV, Sanguis, and VANA are intellectual property of VolkanaDEV Autonomous Systems, Inc.<br>
+    Business and private inquiries: <a href="mailto:volkanadev@volkanadev.com">volkanadev@volkanadev.com</a>
+  </footer>
+
+</body>
+</html>

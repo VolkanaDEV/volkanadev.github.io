@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png">
+<title>Getting Started | VolkanaDEV Docs</title>
+<style>
+  :root{--bg:#0e1117;--panel:#fbfaf7;--panel-dark:#161b22;--border:#21262d;--border-light:#e1dad0;--text-light:#f3eedf;--text-dark:#1e222b;--muted-light:#8b949e;--muted-dark:#6e675d;--accent:#c45d3a;--accent-hover:#b04f2f;--code-bg:#0d1117;--code-border:#30363d}
+  *{box-sizing:border-box}body{margin:0;padding:0;background:var(--bg);color:var(--text-light);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+  nav{border-bottom:1px solid var(--border);background:rgba(14,17,23,0.85);backdrop-filter:blur(12px);position:sticky;top:0;z-index:100}
+  nav .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.15rem;color:var(--text-light);letter-spacing:-0.02em}
+  .brand-dot{width:20px;height:20px;border-radius:4px;object-fit:contain}
+  .nav-links{display:flex;gap:24px}
+  .nav-links a{color:var(--muted-light);text-decoration:none;font-size:0.9rem;font-weight:500;transition:color 0.2s}
+  .nav-links a:hover,.nav-links a.active{color:var(--text-light)}
+  .nav-toggle{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+  .nav-toggle span{width:24px;height:2px;background:var(--text-light);border-radius:2px;transition:0.3s}
+  .nav-toggle.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+  .nav-toggle.open span:nth-child(2){opacity:0}
+  .nav-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+  .doc-layout{display:flex;gap:0;max-width:1200px;margin:0 auto}
+  .doc-sidebar{width:260px;flex-shrink:0;padding:40px 24px 60px 24px;border-right:1px solid var(--border);position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto}
+  .doc-sidebar h4{font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin:0 0 16px}
+  .doc-sidebar ul{list-style:none;padding:0;margin:0}
+  .doc-sidebar a{display:block;padding:8px 12px;border-radius:8px;color:var(--muted-light);text-decoration:none;font-size:0.88rem;font-weight:500;transition:0.15s;border-left:2px solid transparent}
+  .doc-sidebar a:hover{color:var(--text-light);background:var(--panel-dark)}
+  .doc-sidebar a.active{color:var(--accent);border-left-color:var(--accent);background:rgba(196,93,58,0.06)}
+  .doc-content{flex:1;min-width:0;padding:40px 48px 80px}
+  .breadcrumb{font-size:0.82rem;color:var(--muted-light);margin-bottom:24px}
+  .breadcrumb a{color:var(--accent);text-decoration:none}
+  .breadcrumb a:hover{text-decoration:underline}
+  .doc-content h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;color:#fff;margin:0 0 8px;letter-spacing:-0.03em;line-height:1.2}
+  .doc-content .subtitle{color:var(--muted-light);font-size:1rem;margin:0 0 40px;font-weight:400}
+  .doc-content h2{font-size:1.4rem;font-weight:700;color:var(--accent);margin:48px 0 16px;letter-spacing:-0.02em;padding-bottom:8px;border-bottom:1px solid var(--border)}
+  .doc-content h3{font-size:1.1rem;font-weight:700;color:var(--text-light);margin:32px 0 12px;letter-spacing:-0.01em}
+  .doc-content p{color:var(--text-light);font-size:0.96rem;margin:0 0 16px;max-width:780px}
+  .doc-content p+p{margin-top:12px}
+  .code-block{background:var(--code-bg);border:1px solid var(--code-border);border-radius:10px;padding:20px 24px;margin:20px 0;overflow-x:auto}
+  .code-block pre{margin:0;font-family:'JetBrains Mono','Fira Code','Consolas',monospace;font-size:0.85rem;line-height:1.6;color:#c9d1d9}
+  .code-inline{background:var(--code-bg);border:1px solid var(--code-border);border-radius:4px;padding:2px 6px;font-family:monospace;font-size:0.85em;color:#c9d1d9}
+  .doc-table{width:100%;max-width:780px;border-collapse:collapse;margin:20px 0;font-size:0.88rem}
+  .doc-table th{text-align:left;padding:12px 16px;background:var(--panel-dark);color:var(--accent);font-weight:700;border-bottom:2px solid var(--border);font-size:0.82rem;text-transform:uppercase;letter-spacing:0.05em}
+  .doc-table td{padding:10px 16px;border-bottom:1px solid var(--border);color:var(--text-light)}
+  .doc-table tr:hover td{background:var(--panel-dark)}
+  .callout{background:var(--panel-dark);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:16px 20px;margin:20px 0}
+  .callout p{margin:0;color:var(--text-light)}
+  .callout strong{color:var(--accent)}
+  .doc-nav-bottom{display:flex;justify-content:space-between;margin-top:60px;padding-top:24px;border-top:1px solid var(--border);gap:16px}
+  .doc-nav-bottom a{display:flex;flex-direction:column;text-decoration:none;padding:16px 20px;border:1px solid var(--border);border-radius:10px;background:var(--panel-dark);transition:0.15s;max-width:48%}
+  .doc-nav-bottom a:hover{border-color:var(--accent)}
+  .doc-nav-bottom .nav-label{font-size:0.75rem;color:var(--muted-light);text-transform:uppercase;letter-spacing:0.05em}
+  .doc-nav-bottom .nav-title{font-size:0.95rem;color:var(--text-light);font-weight:600;margin-top:4px}
+  .doc-nav-bottom .nav-right{text-align:right;margin-left:auto}
+  footer{text-align:center;padding:40px 0;color:var(--muted-light);font-size:0.85rem;border-top:1px solid var(--border);margin-top:40px}
+  footer a{color:var(--accent);text-decoration:none}
+  .footer-links{margin-bottom:8px}
+  .footer-links a{margin:0 8px}
+  @media(max-width:768px){.nav-toggle{display:flex}.nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--border);padding:8px 24px 16px;display:none;z-index:100}.nav-links.open{display:flex}.nav-links a{padding:12px 0;border-bottom:1px solid var(--border);font-size:0.95rem}.nav-links a:last-child{border-bottom:none}.doc-layout{flex-direction:column}.doc-sidebar{display:none}.doc-content{padding:24px 16px 60px}.wrap{padding:0 16px}}
+</style>
+</head>
+<body>
+
+  <nav>
+    <div class="wrap">
+      <div class="nav-inner">
+        <a href="../index.html" class="brand" style="text-decoration:none"><img src="../favicon.png" class="brand-dot" alt="VolkanaDEV">VolkanaDEV</a>
+        <button class="nav-toggle" onclick="this.classList.toggle('open');document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        <div class="nav-links">
+          <a href="../index.html">Welcome</a>
+          <a href="../vana.html">Meet VANA</a>
+          <a href="../roadmap.html">Roadmap</a>
+          <a href="../benchmark.html">Benchmarks</a>
+          <a href="index.html" class="active">Docs</a>
+          <a href="../security.html">Safety &amp; Licenses</a>
+          <a href="../contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="doc-layout">
+    <aside class="doc-sidebar">
+      <h4>Sanguis Docs</h4>
+      <ul><li>
+        <a href="index.html">Overview</a>
+        <a href="getting-started.html" class="active">Getting Started</a>
+        <a href="language-reference.html">Language Reference</a>
+        <a href="novel-vs-traditional.html">Novel vs Traditional</a>
+        <a href="route-and-layers.html">Route &amp; Layers</a>
+        <a href="circuits.html">Circuits</a>
+        <a href="engine-and-soul.html">Engine &amp; Soul</a>
+        <a href="security-and-native.html">Security &amp; Native</a>
+      </li></ul>
+    </aside>
+    <main class="doc-content">
+      <div class="breadcrumb"><a href="index.html">Docs</a> / Getting Started</div>
+
+      <h1>Getting Started</h1>
+      <p class="subtitle">What Sanguis is, how to install it, and your first organism</p>
+
+      <h2 id="what-sanguis-is">What Sanguis Is</h2>
+      <p>Sanguis is a genome language. You do not write instructions. You describe a living circuit &mdash; what it holds, when it fires, and how it wires to other circuits. The VANA engine reads that description, boots the organism, and the route starts ticking.</p>
+      <p><strong>You do not program in Sanguis. You grow organisms.</strong></p>
+      <p>A <span class="code-inline">.sang</span> file is an organism's genome. When VANA reads it, the organism boots, the route starts ticking, and it lives.</p>
+
+      <h3 id="the-pipeline">The Pipeline</h3>
+      <div class="code-block"><pre>.sang  &rarr;  [lexer]  &rarr;  [parser]  &rarr;  [codegen]  &rarr;  .sirc  &rarr;  [VANA engine]  &rarr;  life</pre></div>
+      <p><span class="code-inline">.sang</span> &mdash; Sanguis source (the genome, human-written)<br>
+      <span class="code-inline">.sirc</span> &mdash; SIRC (Sanguis Intermediate Representation Code) &mdash; the compiled netlist<br>
+      <span class="code-inline">.exe</span> &mdash; Native Windows PE binary (via <span class="code-inline">sanguis native</span>)</p>
+      <p>The Rust bootstrapper (<span class="code-inline">sanguis.exe</span>) compiles <span class="code-inline">.sang</span> to <span class="code-inline">.sirc</span> and runs the VANA engine. The end goal: the bootstrapper is replaced by Sanguis code itself. The organism runs on its own terms.</p>
+
+      <h2 id="installation">Installation</h2>
+      <h3 id="prerequisites">Prerequisites</h3>
+      <p>Windows 10 or later<br>Rust toolchain (for building the bootstrapper only)<br>GPU optional (CUDA for cortex-scale, not required for basic organisms)</p>
+
+      <h3 id="build">Build</h3>
+      <div class="code-block"><pre>sanguis drip</pre></div>
+      <p>This runs <span class="code-inline">cargo build --release</span> and copies the binary to <span class="code-inline">~/bin/sanguis.exe</span>. The <span class="code-inline">sanguis</span> command is now available system-wide.</p>
+
+      <h3 id="verify">Verify</h3>
+      <div class="code-block"><pre>sanguis version
+# Output: sanguis V3.0 &mdash; programs are alive</pre></div>
+
+      <h2 id="your-first-organism">Your First Organism</h2>
+      <p>Create a file called <span class="code-inline">hello.sang</span>:</p>
+      <div class="code-block"><pre>body Hello {
+  hold greeting : text = "Hello, world!"
+  when start {
+    emit greeting to screen
+  }
+}</pre></div>
+      <p>Compile and run:</p>
+      <div class="code-block"><pre>sanguis flow hello.sang
+# Output: &check; hello.sang to hello.sirc (N bytes)
+
+sanguis run hello.sang
+# Output: Hello, world!</pre></div>
+      <p>That's it. You grew an organism. It has one organ (Hello), one hold (greeting), one route (start), and one emit (print the greeting to screen). The route ticked once, the organism spoke, and you saw it.</p>
+
+      <h3 id="a-more-complete-organism">A more complete organism</h3>
+      <div class="code-block"><pre>// minimal.sang &mdash; the smallest living organism
+//
+// Three organs: Body senses, Brain thinks, Soul remembers.
+
+circuit Body {
+    hold sensors : live   field [16] = 0.0    // 16 sensory neurons
+    hold motors  : live   field [4]  = 0.0    // 4 motor neurons
+
+    when sense {
+        emit read_sensors() to sensors
+    }
+
+    when move {
+        but motors is not empty
+        emit actuate(motors) to world
+    }
+}
+
+circuit Brain {
+    hold s1      : live    field [16] = 0.0
+    hold l2      : learned field [16] [16] = 0.0
+    hold c4      : aware   field [16]
+    hold c4_conf : aware   scalar
+
+    when think {
+        but Body.sensors is not empty
+        emit Body.sensors to s1
+        emit s1 to motors
+    }
+}
+
+circuit Soul {
+    hold states : memory field [16] [64]
+    hold count  : learned scalar = 0
+
+    when save {
+        but Brain.c4_conf &lt; 0.8
+        emit write(Brain.s1, Brain.c4) to disk "vana_home/e3_store"
+        emit count += 1 to screen
+    }
+
+    when boot {
+        but disk has e3
+        emit read(all) to states
+    }
+}
+
+// Connectome &mdash; how the organs wire together
+wire Body.when_sense to Brain.when_think
+wire Brain.when_think to Soul.when_save
+wire Brain.emit to Body.when_move</pre></div>
+      <p>45 lines. It senses, thinks, remembers, and acts. The route breathes through it.</p>
+
+      <h2 id="the-cli">The CLI</h2>
+      <div class="code-block"><pre>sanguis flow &lt;file.sang&gt;            Compile .sang to .sirc, write to file
+sanguis flow &lt;file.sang&gt; -o &lt;out&gt;   Compile to specific output path
+sanguis native &lt;file.sang&gt;          Compile .sang to native .exe (Windows PE)
+sanguis native &lt;file.sang&gt; -o &lt;out&gt; Compile to specific .exe path
+sanguis run &lt;file.sang&gt; [ticks]     Boot organism, run the route
+sanguis run &lt;file.sang&gt; --stdin     Read sensor data from stdin (one line per tick)
+sanguis run &lt;file.sang&gt; --quiet     Suppress boot messages
+sanguis parse &lt;file.sang&gt;           Parse .sang, print AST summary
+sanguis check &lt;file.sang&gt;           Check for errors (compile without writing)
+sanguis drip                         Rebuild the Rust bootstrapper
+sanguis version                      Print version</pre></div>
+
+      <h3 id="examples">Examples</h3>
+      <div class="code-block"><pre># Compile a genome
+sanguis flow genome/minimal.sang
+
+# Run for 1000 ticks
+sanguis run genome/minimal.sang 1000
+
+# Feed sensor data from stdin (space or comma separated floats)
+echo "0.5 0.3 0.1 0.8" | sanguis run genome/minimal.sang 1 --stdin
+
+# Compile to a standalone .exe
+sanguis native hello.sang
+# Produces hello.exe &mdash; no Rust runtime, no dependencies
+
+# Check syntax without writing output
+sanguis check genome/minimal.sang</pre></div>
+
+      <div class="doc-nav-bottom">
+        <a href="index.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Overview</span></a>
+        <a href="language-reference.html" class="nav-right"><span class="nav-label">Next &rarr;</span><span class="nav-title">Language Reference</span></a>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-links">
+      <a href="../terms.html">Terms of Use</a> | <a href="../privacy.html">Privacy Policy</a> | <a href="../careers.html">Careers</a>
+    </div>
+    Copyright &copy; 2026 VolkanaDEV Autonomous Systems, Inc.<br>
+    VolkanaDEV, Sanguis, and VANA are intellectual property of VolkanaDEV Autonomous Systems, Inc.<br>
+    Business and private inquiries: <a href="mailto:volkanadev@volkanadev.com">volkanadev@volkanadev.com</a>
+  </footer>
+
+</body>
+</html>

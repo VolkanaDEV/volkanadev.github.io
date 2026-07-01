@@ -223,7 +223,7 @@
   .speed-bar-fill.sparse { background: var(--accent); }
   .speed-bar-fill.blocked { background: rgba(224, 93, 68, 0.2); border: 1px dashed #e05d44; color: #e05d44; }
 
-  /* Wattage Cost Vertical Bar Chart */
+  /* Frequency Vertical Bar Chart */
   .watt-chart {
     margin: 32px 0;
     background: var(--panel-dark);
@@ -450,7 +450,7 @@
     </div>
 
     <div class="watt-chart">
-      <div class="watt-chart-title">Instant Wattage — Energy Cost Per Sweep (Lowest to Highest)</div>
+      <div class="watt-chart-title">Sweep Frequency — Operations Per Second (Lowest to Highest)</div>
       <div class="watt-bar-container" id="watt-bar-container"></div>
     </div>
 
@@ -689,33 +689,39 @@
       document.getElementById('bar-sparse').innerText = data.sparseTime;
     }
 
-    function parseWattage(str) {
+    function parseFreq(str) {
       if (!str) return null;
-      if (str.indexOf('Locked') !== -1 || str.indexOf('Single-Thread') !== -1) return null;
-      var m = str.match(/([\d.]+)\s*KJ/i);
+      if (str.indexOf('~0') !== -1) return 0;
+      var m = str.match(/([\d.]+)\s*M/i);
+      if (m) return parseFloat(m[1]) * 1000000;
+      m = str.match(/([\d.]+)\s*K/i);
       if (m) return parseFloat(m[1]) * 1000;
-      m = str.match(/([\d.]+)\s*W/i);
+      m = str.match(/([\d.]+)/);
       if (m) return parseFloat(m[1]);
-      m = str.match(/([\d.]+)\s*J/i);
-      if (m) return parseFloat(m[1]);
-      return null;
+      return 0;
+    }
+
+    function fmtFreq(val) {
+      if (val >= 1000000) return (val / 1000000).toFixed(1) + 'M Hz';
+      if (val >= 1000) return (val / 1000).toFixed(1) + 'K Hz';
+      return val.toFixed(1) + ' Hz';
     }
 
     function updateWattChart(data) {
       var entries = [];
-      var cpuW = parseWattage(data.cpuWall);
-      var baseW = parseWattage(data.baseWall);
-      var regionW = parseWattage(data.regionWall);
-      var sparseW = parseWattage(data.sparseWall);
+      var cpuF = parseFreq(data.cpuFreq);
+      var baseF = parseFreq(data.baseFreq);
+      var regionF = parseFreq(data.regionFreq);
+      var sparseF = parseFreq(data.sparseFreq);
 
-      if (data.isCpuBlocked || cpuW === null) {
-        entries.push({label: 'Normal CPU', value: 0, text: 'N/A', cls: 'cpu', blocked: true});
+      if (data.isCpuBlocked || cpuF === 0) {
+        entries.push({label: 'Normal CPU', value: 0, text: '~0 Hz', cls: 'cpu', blocked: true});
       } else {
-        entries.push({label: 'Normal CPU', value: cpuW, text: data.cpuWall.split(' ')[0], cls: 'cpu', blocked: false});
+        entries.push({label: 'Normal CPU', value: cpuF, text: data.cpuFreq, cls: 'cpu', blocked: false});
       }
-      entries.push({label: 'GPU Baseline', value: baseW, text: data.baseWall.split(' ')[0], cls: 'base', blocked: false});
-      entries.push({label: 'Region-Tiled', value: regionW, text: data.regionWall.split(' ')[0], cls: 'region', blocked: false});
-      entries.push({label: 'GPU Sparse Skip', value: sparseW, text: data.sparseWall.split(' ')[0], cls: 'sparse', blocked: false});
+      entries.push({label: 'GPU Baseline', value: baseF, text: data.baseFreq, cls: 'base', blocked: false});
+      entries.push({label: 'Region-Tiled', value: regionF, text: data.regionFreq, cls: 'region', blocked: false});
+      entries.push({label: 'GPU Sparse Skip', value: sparseF, text: data.sparseFreq, cls: 'sparse', blocked: false});
 
       entries.sort(function(a, b) {
         if (a.blocked && !b.blocked) return 1;

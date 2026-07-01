@@ -478,7 +478,7 @@
     </div>
 
     <div class="watt-chart">
-      <div class="watt-chart-title">Sweep Frequency — Operations Per Second (Lowest to Highest)</div>
+      <div class="watt-chart-title">Speed Multiplier — Times Faster (Lowest to Highest, Log Scale)</div>
       <div class="watt-bar-container" id="watt-bar-container"></div>
     </div>
 
@@ -730,39 +730,34 @@
       document.getElementById('bar-sparse').innerText = data.sparseTime;
     }
 
-    function parseFreq(str) {
+    function parseMult(str) {
       if (!str) return null;
-      if (str.indexOf('~0') !== -1) return 0;
-      var m = str.match(/([\d.]+)\s*M/i);
-      if (m) return parseFloat(m[1]) * 1000000;
-      m = str.match(/([\d.]+)\s*K/i);
-      if (m) return parseFloat(m[1]) * 1000;
-      m = str.match(/([\d.]+)/);
-      if (m) return parseFloat(m[1]);
-      return 0;
+      if (str.indexOf('Throttled') !== -1 || str.indexOf('Locked') !== -1 || str.indexOf('Baseline Load') !== -1) return 1;
+      var m = str.match(/([\d,.]+)\s*x/i);
+      if (m) return parseFloat(m[1].replace(/,/g, ''));
+      return 1;
     }
 
-    function fmtFreq(val) {
-      if (val >= 1000000) return (val / 1000000).toFixed(1) + 'M Hz';
-      if (val >= 1000) return (val / 1000).toFixed(1) + 'K Hz';
-      return val.toFixed(1) + ' Hz';
+    function fmtMult(val) {
+      if (val >= 1000) return (val / 1000).toFixed(1) + 'Kx';
+      return val.toFixed(1) + 'x';
     }
 
     function updateWattChart(data) {
       var entries = [];
-      var cpuF = parseFreq(data.cpuFreq);
-      var baseF = parseFreq(data.baseFreq);
-      var regionF = parseFreq(data.regionFreq);
-      var sparseF = parseFreq(data.sparseFreq);
+      var cpuM = parseMult(data.cpuMult);
+      var baseM = parseMult(data.baseMult);
+      var regionM = parseMult(data.regionMult);
+      var sparseM = parseMult(data.sparseMult);
 
-      if (data.isCpuBlocked || cpuF === 0) {
-        entries.push({label: 'Normal CPU', value: 0, text: '~0 Hz', cls: 'cpu', blocked: true});
+      if (data.isCpuBlocked || cpuM === 1) {
+        entries.push({label: 'Normal CPU', value: 1, text: '1.0x', cls: 'cpu', blocked: data.isCpuBlocked});
       } else {
-        entries.push({label: 'Normal CPU', value: cpuF, text: data.cpuFreq, cls: 'cpu', blocked: false});
+        entries.push({label: 'Normal CPU', value: cpuM, text: data.cpuMult, cls: 'cpu', blocked: false});
       }
-      entries.push({label: 'GPU Baseline', value: baseF, text: data.baseFreq, cls: 'base', blocked: false});
-      entries.push({label: 'Region-Tiled', value: regionF, text: data.regionFreq, cls: 'region', blocked: false});
-      entries.push({label: 'GPU Sparse Skip', value: sparseF, text: data.sparseFreq, cls: 'sparse', blocked: false});
+      entries.push({label: 'GPU Baseline', value: baseM, text: data.baseMult, cls: 'base', blocked: false});
+      entries.push({label: 'Region-Tiled', value: regionM, text: data.regionMult, cls: 'region', blocked: false});
+      entries.push({label: 'GPU Sparse Skip', value: sparseM, text: data.sparseMult, cls: 'sparse', blocked: false});
 
       entries.sort(function(a, b) {
         if (a.blocked && !b.blocked) return 1;
@@ -774,18 +769,19 @@
       for (var i = 0; i < entries.length; i++) {
         if (!entries[i].blocked && entries[i].value > maxVal) maxVal = entries[i].value;
       }
+      var logMax = Math.log10(maxVal);
 
       var html = '';
       for (var i = 0; i < entries.length; i++) {
         var e = entries[i];
         if (e.blocked) {
           html += '<div class="watt-bar-col">';
-          html += '<div class="watt-bar-value" style="color:#e05d44;">N/A</div>';
+          html += '<div class="watt-bar-value" style="color:#e05d44;">1.0x</div>';
           html += '<div class="watt-bar ' + e.cls + ' blocked" style="height: 5%;"></div>';
           html += '<div class="watt-bar-label">' + e.label + '</div>';
           html += '</div>';
         } else {
-          var pct = Math.max(8, (e.value / maxVal) * 85);
+          var pct = maxVal > 1 ? Math.max(8, (Math.log10(e.value) / logMax) * 85) : 50;
           html += '<div class="watt-bar-col">';
           html += '<div class="watt-bar-value">' + e.text + '</div>';
           html += '<div class="watt-bar ' + e.cls + '" style="height: ' + pct + '%;"></div>';
@@ -797,24 +793,41 @@
       document.getElementById('watt-bar-container').innerHTML = html;
     }
 
-    function parseJoules(str) {
+    function parseTimeSeconds(str) {
       if (!str) return null;
-      if (str.indexOf('Locked') !== -1 || str.indexOf('Single-Thread') !== -1) return null;
-      var m = str.match(/([\d.]+)\s*KJ/i);
+      if (str.indexOf('Infinite') !== -1) return null;
+      var m = str.match(/([\d,.]+)\s*us/i);
+      if (m) return parseFloat(m[1].replace(/,/g, '')) / 1e6;
+      m = str.match(/([\d,.]+)\s*ms/i);
+      if (m) return parseFloat(m[1].replace(/,/g, '')) / 1e3;
+      m = str.match(/([\d,.]+)\s*s/i);
+      if (m) return parseFloat(m[1].replace(/,/g, ''));
+      return null;
+    }
+
+    function parseJoules(wallStr, timeStr) {
+      if (!wallStr) return null;
+      if (wallStr.indexOf('Locked') !== -1 || wallStr.indexOf('Single-Thread') !== -1) return null;
+      var m = wallStr.match(/([\d.]+)\s*KJ/i);
       if (m) return parseFloat(m[1]) * 1000;
-      m = str.match(/([\d.]+)\s*J/i);
+      m = wallStr.match(/([\d.]+)\s*J/i);
       if (m) return parseFloat(m[1]);
-      m = str.match(/([\d.]+)\s*W/i);
-      if (m) return parseFloat(m[1]);
+      m = wallStr.match(/([\d.]+)\s*W/i);
+      if (m) {
+        var watts = parseFloat(m[1]);
+        var secs = parseTimeSeconds(timeStr);
+        if (secs !== null && secs > 0) return watts * secs;
+        return watts;
+      }
       return null;
     }
 
     function updateJouleChart(data) {
       var methods = [
-        {label: 'Normal CPU', val: parseJoules(data.cpuWall), color: '#e05d44'},
-        {label: 'GPU Baseline', val: parseJoules(data.baseWall), color: '#d1a13d'},
-        {label: 'Region-Tiled', val: parseJoules(data.regionWall), color: '#529467'},
-        {label: 'GPU Sparse Skip', val: parseJoules(data.sparseWall), color: '#c45d3a'}
+        {label: 'Normal CPU', val: parseJoules(data.cpuWall, data.cpuTime), color: '#e05d44'},
+        {label: 'GPU Baseline', val: parseJoules(data.baseWall, data.baseTime), color: '#d1a13d'},
+        {label: 'Region-Tiled', val: parseJoules(data.regionWall, data.regionTime), color: '#529467'},
+        {label: 'GPU Sparse Skip', val: parseJoules(data.sparseWall, data.sparseTime), color: '#c45d3a'}
       ];
 
       var valid = methods.filter(function(m) { return m.val !== null; });

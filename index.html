@@ -62,11 +62,11 @@
     background: radial-gradient(circle at 50% 0%, rgba(196, 93, 58, 0.08), transparent 60%);
   }
   .hero h2 { font-size: clamp(1.8rem, 5.5vw, 2.8rem); font-weight: 800; margin: 0 0 20px; color: var(--text-light); letter-spacing: -0.03em; line-height: 1.2; }
-  .hero p { color: var(--muted-light); font-size: clamp(1.05rem, 2.5vw, 1.2rem); max-width: 780px; margin: 0 auto 32px; }
+  .hero p { color: var(--muted-light); font-size: clamp(1.05rem, 2.5vw, 1.2rem); max-width: 780px; margin: 0 auto 24px; text-align: center; }
   
   /* Modern Countdown Timer Layout */
   .timer-container {
-    display: flex; gap: 12px; justify-content: center; margin: 32px auto 40px; width: 100%; max-width: 440px;
+    display: flex; gap: 12px; justify-content: center; margin: 48px auto 40px; width: 100%; max-width: 440px;
   }
   .timer-block {
     flex: 1; background: var(--panel-dark); border: 1px solid var(--border); padding: 14px 12px; border-radius: 12px;
@@ -208,7 +208,9 @@
   <div class="wrap">
     <section class="hero">
       <h2>Your CPU turns 55 soon. Ready to give it a rest?</h2>
-      <p>Your processor handles data one piece at a time through a single pipeline, for over 50 years. Introducing VolkanaDEV and Sanguis. Sanguis is a code that routes data across many paths simultaneously using the GPU hardware you already own. The computation is done real-time. Your CPU can get ready for retirement, but your hardware won't have to.</p>
+      <p>Your processor handles data one piece at a time through a single pipeline, for over 50 years.</p>
+      <p>Introducing VolkanaDEV and Sanguis. Sanguis is a code that routes data across many paths simultaneously using the GPU hardware you already own. The computation is done real-time.</p>
+      <p>Your CPU can get ready for retirement, but your hardware won't have to.</p>
       
       <div class="timer-container">
         <div class="timer-block"><div class="timer-val" id="days">282</div><div class="timer-lbl">Days</div></div>

@@ -320,29 +320,19 @@
   <div class="wrap">
     <div class="content">
 
-      <h3><span class="label">Working Now</span>V2: The Foundation</h3>
+      <h3><span class="label">Working Now</span>V4: The Language</h3>
       <span class="status-badge live">Live</span>
-      <p>Originally built as a re-design of the original V1 source code that powered Marrow, our in-house terminal user interface. Ended up working better than intended. Previous concepts were able to compile working applications, such as a small simulated connectome playing a video game, written in Sanguis. While not quite what we wanted, it's more than ready today, and will continue to recieve steady improvements and updates alongside it's 3.0 counterpart.</p>
+      <p>Sanguis V4 is the complete language. 8 keywords. 2 types. 17 builtins. 3 operators. Programs are circuits of holds and routes that fire in parallel every tick. The runtime reads .sang files directly and executes them. The compiler is written in Sanguis and compiles Sanguis source to native x86-64 machine code. No external compiler, no assembler, no linker required.</p>
       <ul class="feature-list">
-        <li><span class="check">&#10003;</span><span>.sang source compiles to .sirc, then to a standalone .exe. The whole pipeline works.</span></li>
-        <li><span class="check">&#10003;</span><span>139 tests passing. Text builtins work: read, write, extract, replace, concat, match, trim, crop.</span></li>
-        <li><span class="check">&#10003;</span><span>The .exe runs on any Windows machine. Zero dependencies. 25 MB installer.</span></li>
-        <li><span class="check">&#10003;</span><span>The GPU benchmarks on the Benchmarks page are real numbers from this engine, on an RTX 3060 and an i7-12700K.</span></li>
-        <li><span class="check">&#10003;</span><span>The Rust bootstrapper is scaffolding. It exists to get the language standing on its own. Once it does, the Rust goes away.</span></li>
+        <li><span class="check">&#10003;</span><span>The runtime (vana_runner.exe) reads .sang files directly and executes them. 2.2 MB SDK, zero dependencies.</span></li>
+        <li><span class="check">&#10003;</span><span>The self-hosting compiler pipeline: .sang to .vana genome to PowerShell PE assembler to standalone .exe. 100% Sanguis.</span></li>
+        <li><span class="check">&#10003;</span><span>CUDA benchmarks prove 191.6x parallel speedup on consumer RTX 3060 hardware. Real numbers, real silicon.</span></li>
+        <li><span class="check">&#10003;</span><span>tcodes: x86-64 opcodes encoded as Sanguis tokens. x86-64 is a dialect of Sanguis. The instruction set expands as the compiler matures.</span></li>
+        <li><span class="check">&#10003;</span><span>The C runtime is scaffolding. It exists to get the language standing on its own. Once it does, the C goes away.</span></li>
       </ul>
 
-      <h3><span class="label">Prototype</span>V3: The New Language</h3>
-      <span class="status-badge proto">Prototype</span>
-      <p>V3 is our semi-functional current project. A totally self-encapsulated, portable, and modular deployment of Sanguis and for use in future VANA systems. This version represents the most recent version of the new edition of Sanguis. Previous iterations of concepts based in langauges such as zig, python, and rust, resulted in roughly 20 working protoypes. Broken into purpose, about 14 of them were connectome or neural network style neuromorphic systems, and the rest were a conversion into the Sanguis language. While not quite ready, Sanguis V3 represents our future vision for using Sanguis across any desired configuration, or VANA deployment</p>
-      <ul class="feature-list">
-        <li><span class="check">&#10003;</span><span>The compile chain works for simple programs. .sang to .vana genome, interpreter runs it. Hello world, multi-emit, greeter. Small stuff, but it runs.</span></li>
-        <li><span class="check">&#10003;</span><span>Native compilation works too. .sang to .vana to .exe. 5 out of 5 test cases pass. No interpreter needed on the target machine.</span></li>
-        <li><span class="check">&#10003;</span><span>The V3 compiler and interpreter are written in V2 Sanguis, not V3. That is the self-hosting path, but we are not there yet. The language is not building itself today.</span></li>
-        <li><span class="check">&#10003;</span><span>The .vana genome is pipe-delimited text right now because it is easy to debug. Binary comes later.</span></li>
-      </ul>
-
-      <h3><span class="label">The Path Forward</span>What Comes Next</h3>
-      <p>Moving forward to a complete Sanguis 3.0 platform will mark a major milestone in the VolkanaDEV ecosystem, and allow inital firmware deployments of custom hardware, such as custom design PCBs and small product prototypes. VolkanaDEV remains committed to evolving, like our code, to ensure every iteration lands on a solid foundation, with a backwards-forwards compatability mindset. The next step is our custom designed SoC, allowing native deployments of any configured framework while maintaining universal compatability with any Sanguis written langauge compiled for VANA arcitechture.</p>
+      <h3><span class="label">Where It Goes</span>What Comes Next</h3>
+      <p>The software side is done. V4 is the final version. The language is clean, self-hosting, and runs on consumer hardware today. What remains is silicon. VolkanaDEV remains committed to evolving, like our code, to ensure every iteration lands on a solid foundation, with a backwards-forwards compatability mindset. The next step is our custom designed SoC, allowing native deployments of any configured framework while maintaining universal compatability with any Sanguis written langauge compiled for VANA arcitechture.</p>
 
       <div class="roadmap-chart">
         <div class="timeline-track">
@@ -351,15 +341,15 @@
             <div class="milestone-dot"></div>
             <div class="milestone-card">
               <strong>Where We Are</strong>
-              V2 compiles and runs. V3 is semi-functional. GPU benchmarks on real hardware. The Rust bootstrapper is still holding things up.
+              V4 is complete. 8 keywords, self-hosting compiler, CUDA benchmarks at 191x. The C runtime is scaffolding until the language stands fully on its own.
             </div>
           </div>
           <div class="milestone future">
-            <div class="milestone-year">2028</div>
+            <div class="milestone-year">2027</div>
             <div class="milestone-dot"></div>
             <div class="milestone-card">
-              <strong>Sanguis 3.0 Complete</strong>
-              V3 writes itself. The Rust bootstrapper retires. Binary .vana genome. Apoptosis, where stalled bodies die on their own. The language runs on its own terms.
+              <strong>Public Release</strong>
+              Sanguis V4 ships. SDK, source code, and documentation go public. The world gets its hands on Sanguis for the first time.
             </div>
           </div>
           <div class="milestone future">
@@ -383,7 +373,7 @@
 
       <div class="goal-box">
         <strong>What a future VANA could look like</strong>
-        <p>Right now a simulated VANA runs on a GPU through Vulkan. It works, but it could work even better. The PCB is the first time VANA gets its own hardware. No driver stack. No operating system abstraction. Just the engine and the silicon. Same language. Same .vana file. Any different framework underneath. 2030 is an estimation, and while we are optimisitic, there is no telling what the future holds. Proper care and a siszeable budget allow Sanguis to become a household powerhouse, while leaving room for the friendly neighborhood programming languages in the same system today, compatible for tomorrow.</p>
+        <p>Right now VANA runs on a GPU through CUDA. It works, but it could work even better. The PCB is the first time VANA gets its own hardware. No driver stack. No operating system abstraction. Just the engine and the silicon. Same language. Same .sang file. Any different framework underneath. 2030 is an estimation, and while we are optimisitic, there is no telling what the future holds. Proper care and a siszeable budget allow Sanguis to become a household powerhouse, while leaving room for the friendly neighborhood programming languages in the same system today, compatible for tomorrow.</p>
       </div>
 
     </div>

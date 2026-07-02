@@ -88,148 +88,77 @@
         <a href="index.html">Overview</a>
         <a href="getting-started.html" class="active">Getting Started</a>
         <a href="language-reference.html">Language Reference</a>
-        <a href="novel-vs-traditional.html">Novel vs Traditional</a>
-        <a href="route-and-layers.html">Route &amp; Layers</a>
-        <a href="circuits.html">Circuits</a>
-        <a href="engine-and-soul.html">Engine &amp; Soul</a>
-        <a href="security-and-native.html">Security &amp; Native</a>
+        <a href="builtins.html">Builtins</a>
+        <a href="execution-model.html">Execution Model</a>
+        <a href="examples.html">Examples</a>
+        <a href="compiler-pipeline.html">Compiler Pipeline</a>
+        <a href="glossary.html">Glossary</a>
       </li></ul>
     </aside>
     <main class="doc-content">
       <div class="breadcrumb"><a href="index.html">Docs</a> / Getting Started</div>
 
       <h1>Getting Started</h1>
-      <p class="subtitle">What Sanguis is, how to install it, and your first organism</p>
+      <p class="subtitle">Run your first Sanguis V4 program</p>
 
-      <h2 id="what-sanguis-is">What Sanguis Is</h2>
-      <p>Sanguis is a genome language. You do not write instructions. You describe a living circuit &mdash; what it holds, when it fires, and how it wires to other circuits. The VANA engine reads that description, boots the organism, and the route starts ticking.</p>
-      <p><strong>You do not program in Sanguis. You grow organisms.</strong></p>
-      <p>A <span class="code-inline">.sang</span> file is an organism's genome. When VANA reads it, the organism boots, the route starts ticking, and it lives.</p>
+      <h2 id="prerequisites">Prerequisites</h2>
+      <p>Windows 10 or later. No external dependencies required. A CUDA-capable NVIDIA GPU is optional &mdash; the runtime runs on CPU by default, and GPU acceleration is used for parallel route execution at scale.</p>
 
-      <h3 id="the-pipeline">The Pipeline</h3>
-      <div class="code-block"><pre>.sang  &rarr;  [parse]  &rarr;  Genome (AST)  &rarr;  [VANA engine]  &rarr;  life</pre></div>
-      <p><span class="code-inline">.sang</span> &mdash; Sanguis source (the genome, human-written)<br>
-      <span class="code-inline">.exe</span> &mdash; Native Windows PE binary (via <span class="code-inline">sanguis native</span>)</p>
-      <p>No intermediate representation. The engine boots directly from the parsed AST. The <span class="code-inline">flow</span> command and <span class="code-inline">.sirc</span> format were removed in V3.4.</p>
+      <h2 id="runtime-binaries">Runtime Binaries</h2>
+      <p>The V4 SDK includes two executables. Both are <strong>command-line tools</strong> &mdash; do not double-click them. Run them from a terminal (Command Prompt, PowerShell, or Git Bash):</p>
+      <table class="doc-table">
+        <tr><th>Binary</th><th>Purpose</th><th>Usage</th></tr>
+        <tr><td><span class="code-inline">vana_runner.exe</span></td><td>V4 runtime &mdash; reads and executes <span class="code-inline">.sang</span> files directly</td><td><span class="code-inline">vana_runner.exe program.sang</span></td></tr>
+        <tr><td><span class="code-inline">vana_bench.exe</span></td><td>CUDA benchmark &mdash; measures GPU vs CPU route throughput (requires NVIDIA GPU)</td><td><span class="code-inline">vana_bench.exe</span></td></tr>
+      </table>
 
-      <h2 id="installation">Installation</h2>
+      <h2 id="running-a-program">Running a Program</h2>
+      <p>The V4 runtime (<span class="code-inline">vana_runner.exe</span>) reads <span class="code-inline">.sang</span> files directly and executes them:</p>
+      <div class="code-block"><pre>vana_runner.exe program.sang</pre></div>
+      <p>No compilation step required for execution. The runner parses the file, builds the route table, and ticks until a terminal condition is reached. Route execution is parallel by default &mdash; on GPU systems, VANA can dispatch routes across CUDA cores for large-scale parallelism.</p>
 
-      <h3 id="prerequisites">Prerequisites</h3>
-      <p><strong>Option A (SDK):</strong> Windows 10 or later. Nothing else &mdash; the binary is standalone.<br>
-      <strong>Option B (Build from source):</strong> Windows 10 or later, plus the Rust toolchain (rustup, cargo, stable compiler). A GPU is optional either way &mdash; CUDA is only needed for cortex-scale benchmarks, not for writing or running organisms.</p>
+      <h2 id="hello-world">Hello World</h2>
+      <p>Create <span class="code-inline">hello.sang</span>:</p>
+      <div class="code-block"><pre>circuit Hello {
+  hold state : memory scalar = 0.0
 
-      <h3 id="sdk">Option A &mdash; Download the SDK (No Build Required)</h3>
-      <p>The public repository includes a pre-built SDK. You do not need Rust, Cargo, or any compiler. The binary runs on its own.</p>
-      <p>1. Download the repository and open the <span class="code-inline">sdk/</span> folder<br>
-      2. Add <span class="code-inline">sdk/bin/</span> to your system PATH (or run <span class="code-inline">sanguis.exe</span> directly from that folder)<br>
-      3. If you have an NVIDIA GPU and want to run benchmarks, add <span class="code-inline">vana_bench.exe</span> to your PATH as well</p>
-      <p>What's in the SDK:</p>
-      <p>&bull; <span class="code-inline">sanguis.exe</span> &mdash; the CLI (compile, run, parse, check, native, tui)<br>
-      &bull; <span class="code-inline">vana_bench.exe</span> &mdash; CUDA benchmark tool (optional, requires NVIDIA GPU)<br>
-      &bull; <span class="code-inline">examples/</span> &mdash; sample <span class="code-inline">.sang</span> organisms you can run immediately<br>
-      &bull; <span class="code-inline">docs/</span> &mdash; the full programmer's manual</p>
-      <p>The full source code (Rust crates, CUDA source, build scripts) is also in the repository. You only need it if you want to modify Sanguis itself or build from source.</p>
-
-      <h3 id="build">Option B &mdash; Build From Source</h3>
-      <p>Choose this if you want to modify the compiler, contribute to the project, or build on a system that isn't Windows x86-64.</p>
-      <p>Install the Rust toolchain (via <span class="code-inline">rustup</span>), then from the repository root:</p>
-      <div class="code-block"><pre>cargo build --release</pre></div>
-      <p>This produces <span class="code-inline">target/release/sanguis.exe</span>. You can also run <span class="code-inline">sanguis drip</span> later to rebuild and copy the binary to <span class="code-inline">~/bin/sanguis.exe</span> so it's available system-wide.</p>
-
-      <h3 id="verify">Verify</h3>
-      <div class="code-block"><pre>sanguis version
-# Output: sanguis IT3 V3.4 &mdash; programs are alive</pre></div>
-
-      <h2 id="your-first-organism">Your First Organism</h2>
-      <p>Create a file called <span class="code-inline">hello.sang</span>:</p>
-      <div class="code-block"><pre>body Hello {
-  hold greeting : text = "Hello, world!"
   when start {
-    emit greeting to screen
+    but state = 0.0
+    emit "Hello, World!" to screen
+    emit "\n" to screen
+    emit 1.0 to state
   }
 }</pre></div>
-      <p>Compile and run:</p>
-      <div class="code-block"><pre>sanguis run hello.sang
-# Output: Hello, world!</pre></div>
-      <p>That's it. You grew an organism. It has one organ (Hello), one hold (greeting), one route (start), and one emit (print the greeting to screen). The route ticked once, the organism spoke, and you saw it.</p>
+      <p>Run it:</p>
+      <div class="code-block"><pre>vana_runner.exe hello.sang</pre></div>
+      <p>Output:</p>
+      <div class="code-block"><pre>Hello, World!</pre></div>
+      <p>The <span class="code-inline">start</span> route fires on tick 0 (when <span class="code-inline">state</span> is still <span class="code-inline">0.0</span>), prints the message, sets <span class="code-inline">state</span> to <span class="code-inline">1.0</span>, and never fires again because the condition <span class="code-inline">state = 0.0</span> no longer holds.</p>
 
-      <h3 id="a-more-complete-organism">A more complete organism</h3>
-      <div class="code-block"><pre>// minimal.sang &mdash; the smallest living organism
-//
-// Three organs: Body senses, Brain thinks, Soul remembers.
+      <h2 id="arithmetic">Arithmetic</h2>
+      <div class="code-block"><pre>circuit Add {
+  hold a : memory scalar = 0.0
+  hold b : memory scalar = 0.0
+  hold c : memory scalar = 0.0
+  hold state : memory scalar = 0.0
 
-circuit Body {
-    hold sensors : live   field [16] = 0.0    // 16 sensory neurons
-    hold motors  : live   field [4]  = 0.0    // 4 motor neurons
+  when start {
+    but state = 0.0
+    emit 1.0 to a
+    emit 2.0 to b
+    emit a + b to c
+    emit "1+2=" to screen
+    emit c to screen
+    emit "\n" to screen
+    emit 1.0 to state
+  }
+}</pre></div>
+      <p>Output:</p>
+      <div class="code-block"><pre>1+2=3.0000</pre></div>
 
-    when sense {
-        emit read_sensors() to sensors
-    }
-
-    when move {
-        but motors is not empty
-        emit actuate(motors) to world
-    }
-}
-
-circuit Brain {
-    hold s1      : live    field [16] = 0.0
-    hold l2      : learned field [16] [16] = 0.0
-    hold c4      : aware   field [16]
-    hold c4_conf : aware   scalar
-
-    when think {
-        but Body.sensors is not empty
-        emit Body.sensors to s1
-        emit s1 to motors
-    }
-}
-
-circuit Soul {
-    hold states : memory field [16] [64]
-    hold count  : learned scalar = 0
-
-    when save {
-        but Brain.c4_conf &lt; 0.8
-        emit write(Brain.s1, Brain.c4) to disk "vana_home/e3_store"
-        emit count += 1 to screen
-    }
-
-    when boot {
-        but disk has e3
-        emit read(all) to states
-    }
-}
-
-// Connectome &mdash; how the organs wire together
-wire Body.when_sense to Brain.when_think
-wire Brain.when_think to Soul.when_save
-wire Brain.emit to Body.when_move</pre></div>
-      <p>45 lines. It senses, thinks, remembers, and acts. The route breathes through it.</p>
-
-      <h2 id="the-cli">The CLI</h2>
-      <div class="code-block"><pre>sanguis native &lt;file.sang&gt; [-o &lt;out&gt;]   Compile .sang to native .exe (Windows PE)
-sanguis run &lt;file.sang&gt; [ticks]         Boot organism, run the route
-sanguis run &lt;file.sang&gt; --stdin         Read sensor data from stdin (one line per tick)
-sanguis run &lt;file.sang&gt; --quiet         Suppress boot messages
-sanguis parse &lt;file.sang&gt;               Parse .sang, print AST summary
-sanguis check &lt;file.sang&gt;               Check for errors (parse without running)
-sanguis drip                             Rebuild the Rust bootstrapper
-sanguis version                          Print version</pre></div>
-
-      <h3 id="examples">Examples</h3>
-      <div class="code-block"><pre># Run an organism for 1000 ticks
-sanguis run genome/minimal.sang 1000
-
-# Feed sensor data from stdin (space or comma separated floats)
-echo "0.5 0.3 0.1 0.8" | sanguis run genome/minimal.sang 1 --stdin
-
-# Compile to a standalone .exe
-sanguis native hello.sang
-# Produces hello.exe &mdash; no Rust runtime, no dependencies
-
-# Check syntax without running
-sanguis check genome/minimal.sang</pre></div>
+      <div class="callout">
+        <p><strong>Only <span class="code-inline">+</span> and <span class="code-inline">-</span> are supported.</strong> Arithmetic is evaluated left to right. Operands can be numbers, hold names, or builtin results.</p>
+      </div>
 
       <div class="doc-nav-bottom">
         <a href="index.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Overview</span></a>

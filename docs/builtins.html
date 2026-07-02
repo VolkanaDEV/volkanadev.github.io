@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="../favicon.png">
-<title>Engine &amp; Soul | VolkanaDEV Docs</title>
+<title>Novel vs Traditional | VolkanaDEV Docs</title>
 <style>
   :root{--bg:#0e1117;--panel:#fbfaf7;--panel-dark:#161b22;--border:#21262d;--border-light:#e1dad0;--text-light:#f3eedf;--text-dark:#1e222b;--muted-light:#8b949e;--muted-dark:#6e675d;--accent:#c45d3a;--accent-hover:#b04f2f;--code-bg:#0d1117;--code-border:#30363d}
   *{box-sizing:border-box}body{margin:0;padding:0;background:var(--bg);color:var(--text-light);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
@@ -88,81 +88,98 @@
         <a href="index.html">Overview</a>
         <a href="getting-started.html">Getting Started</a>
         <a href="language-reference.html">Language Reference</a>
-        <a href="novel-vs-traditional.html">Novel vs Traditional</a>
-        <a href="route-and-layers.html">Route &amp; Layers</a>
-        <a href="circuits.html">Circuits</a>
-        <a href="engine-and-soul.html" class="active">Engine &amp; Soul</a>
-        <a href="security-and-native.html">Security &amp; Native</a>
+        <a href="builtins.html" class="active">Builtins</a>
+        <a href="execution-model.html">Execution Model</a>
+        <a href="examples.html">Examples</a>
+        <a href="compiler-pipeline.html">Compiler Pipeline</a>
+        <a href="glossary.html">Glossary</a>
       </li></ul>
     </aside>
     <main class="doc-content">
-      <div class="breadcrumb"><a href="index.html">Docs</a> / Engine &amp; Soul</div>
+      <div class="breadcrumb"><a href="index.html">Docs</a> / Novel vs Traditional</div>
 
-      <h1>The Soul &mdash; Persistence and Memory</h1>
-      <p class="subtitle">How VANA remembers, and what survives death</p>
+      <h1>What's Novel vs Traditional Programming</h1>
+      <p class="subtitle">For programmers coming from C, Python, and everything else</p>
 
-      <p>The organism's soul lives on disk. Each <span class="code-inline">.e3</span> file is one moment of being.</p>
+      <p>This section is for programmers coming from traditional languages (C, Python, etc.). Here's what Sanguis V4 does differently.</p>
 
-      <h2 id="how-it-works">How it works</h2>
-      <p>On boot, the engine reads all <span class="code-inline">.e3</span> files and loads them into memory holds. On death (or every N ticks), the engine writes the current state to disk.</p>
+      <h2 id="no-control-flow">No control flow statements</h2>
+      <table class="doc-table">
+        <tr><th>Traditional</th><th>Sanguis V4</th></tr>
+        <tr><td><span class="code-inline">if (x &gt; 5) { ... }</span></td><td><span class="code-inline">but x &gt; 5.0</span> (gates a route)</td></tr>
+        <tr><td><span class="code-inline">for (i=0; i&lt;N; i++)</span></td><td>Route fires every tick &mdash; loop is implicit</td></tr>
+        <tr><td><span class="code-inline">while (cond)</span></td><td>Route ticks until conditions fail</td></tr>
+        <tr><td><span class="code-inline">return value</span></td><td><span class="code-inline">emit value to target</span></td></tr>
+        <tr><td><span class="code-inline">function call</span></td><td>Route fires when conditions pass</td></tr>
+      </table>
+      <p>There is no <span class="code-inline">if</span>. There is no <span class="code-inline">for</span>. There is no <span class="code-inline">while</span>. There is no <span class="code-inline">return</span>. The <strong>route</strong> is the only control flow. Conditions gate routes. Routes loop by firing repeatedly until conditions fail.</p>
 
-      <h2 id="e3-format">.e3 file format (binary)</h2>
-      <div class="code-block"><pre>Header:    magic "VANA" (4 bytes) + version (u32) + neuron_count (u32)
-State:     neuron_count &times; f32  &mdash; S1 snapshot (what it perceived)
-C4:        neuron_count &times; f32  &mdash; convergence (who it WAS)
-Reward:    f32                 &mdash; how good that moment was
-Tick:      u32                 &mdash; which tick this was recorded at
-Timestamp: u64                 &mdash; Unix epoch seconds
-Context:   256 bytes           &mdash; UTF-8, null-padded (what was happening)</pre></div>
-      <p>Files: <span class="code-inline">vana_home/e3_store/EP000001.e3</span>, <span class="code-inline">EP000002.e3</span>, ...</p>
+      <h2 id="two-data-types">Two data types only</h2>
+      <table class="doc-table">
+        <tr><th>Traditional types</th><th>Sanguis V4 types</th></tr>
+        <tr><td><span class="code-inline">int</span>, <span class="code-inline">float</span>, <span class="code-inline">double</span></td><td><span class="code-inline">memory scalar</span> (double-precision float)</td></tr>
+        <tr><td><span class="code-inline">string</span>, <span class="code-inline">char*</span></td><td><span class="code-inline">memory text</span> (variable-length string)</td></tr>
+        <tr><td><span class="code-inline">bool</span></td><td>Use <span class="code-inline">scalar</span> (<span class="code-inline">0.0</span> = false, <span class="code-inline">1.0</span> = true)</td></tr>
+        <tr><td><span class="code-inline">struct</span>, <span class="code-inline">class</span></td><td>No structs or classes</td></tr>
+        <tr><td><span class="code-inline">int[]</span>, arrays</td><td>No arrays &mdash; use individual holds</td></tr>
+      </table>
+      <p>There are no ints, no structs, no classes, no arrays. Scalars are floating-point. Text is strings. That's it.</p>
 
-      <h2 id="storage-awareness">Storage awareness (interoception)</h2>
-      <p>VANA has body awareness for disk space. She has a budget (default 5GB). When storage pressure exceeds 80%, she starts pruning low-value memories (forgetting &mdash; natural). When it exceeds 90%, she asks for more space (communication &mdash; polite). She never fills the disk. She always leaves 2GB breathing room.</p>
-      <p>This is <strong>interoception</strong>: she feels her own resource constraints the way a body feels hunger. Storage pressure maps to neurons. When pressure is high, her behavior changes &mdash; she becomes more selective about what she remembers, like a person who knows they're running out of space and starts choosing what matters.</p>
+      <h2 id="parallel-by-default">Parallel by default</h2>
+      <p>In traditional languages, code runs sequentially &mdash; one instruction after another. In Sanguis V4, all routes evaluate every tick, simultaneously. There is no sequential ordering.</p>
+      <table class="doc-table">
+        <tr><th>Traditional</th><th>Sanguis V4</th></tr>
+        <tr><td>Sequential execution</td><td>Parallel route evaluation every tick</td></tr>
+        <tr><td>Shared mutable state + locks</td><td>Snapshot semantics &mdash; no races</td></tr>
+        <tr><td>Threads, async, goroutines</td><td>Not needed &mdash; parallelism is the default</td></tr>
+        <tr><td>Manual synchronization</td><td>Engine handles it via tick snapshots</td></tr>
+      </table>
+      <p>All routes see the same snapshot at the start of the tick. Route A's emit to hold X is not visible to Route B's conditions in the same tick. This eliminates data races by design.</p>
 
-      <h1 style="margin-top:80px">VANA Engine &mdash; The Runtime</h1>
-      <p class="subtitle">What makes organisms live</p>
+      <h2 id="settling-not-stepping">Settling, not stepping</h2>
+      <p>In traditional languages, you write a sequence of steps: do this, then that, then the other. In Sanguis V4, you describe state and rules. The engine settles the system tick by tick until it reaches a terminal state.</p>
+      <div class="code-block"><pre>// Traditional: step-by-step
+x = 1
+y = x + 2
+print(y)
 
-      <p>The VANA engine is what makes organisms live. It takes a parsed genome (AST), allocates neuron state for every hold, runs the route (1-2-3-4-3-2-1) every tick, and lets circuits fire.</p>
+// Sanguis V4: describe state and rules, engine settles
+circuit Add {
+  hold a : memory scalar = 0.0
+  hold b : memory scalar = 0.0
+  hold c : memory scalar = 0.0
+  hold state : memory scalar = 0.0
 
-      <h2 id="route-implicit">The route is implicit</h2>
-      <p>You don't call the route. The engine breathes it. You don't write <span class="code-inline">main()</span>. The route is the main function. It never stops. It never branches. It just breathes.</p>
+  when start {
+    but state = 0.0
+    emit 1.0 to a
+    emit 2.0 to b
+    emit a + b to c
+    emit c to screen
+    emit 1.0 to state
+  }
+}</pre></div>
 
-      <h2 id="neuron-state">Neuron state</h2>
-      <p>Each neuron has state across all four layers:</p>
-      <div class="code-block"><pre>s1:      f32    &mdash; live activation (current)
-s1_prev: f32    &mdash; previous tick (for novelty detection)
-l2:      f32    &mdash; learned weight
-e3:      Vec&lt;f32&gt; &mdash; episodic snapshots
-c4:      f32    &mdash; converged value</pre></div>
+      <h2 id="no-assignment">No assignment &mdash; data flows</h2>
+      <div class="code-block"><pre>// Traditional: x = 5
+// Sanguis V4: emit 5.0 to x          (inside a route)
 
-      <h2 id="v-core-brain">The V-Core Brain (C. elegans connectome)</h2>
-      <p>The VANA brain is based on the real C. elegans connectome (Cook et al. 2019). 448 real neurons, 6631 synapses. This is not a benchmark strapped to a creature. The connectome is real. The learning is real. The worm feels, thinks, and moves.</p>
-      <p>448 real neurons (the actual C. elegans neurons)<br>
-      576 higher-order neurons (grow via learning)<br>
-      1024 total nodes<br>
-      E3 capacity: 512 episodes<br>
-      7 neurotransmitters (dopamine, serotonin, etc.)</p>
-      <p>Sensory neurons feel the world: chemosensory (food), mechanosensory (walls). Motor neurons drive body wall muscles: dorsal/ventral waves for crawling.</p>
+// Traditional: result = compute(input)
+// Sanguis V4: emit compute(input) to result</pre></div>
+      <p>The keyword <span class="code-inline">to</span> is the only operator that moves data. Everything else is either a hold declaration, a condition, or arithmetic inside an emit.</p>
 
-      <h2 id="cortex">The Cortex (GPU-scale)</h2>
-      <p>For human-level intelligence, the VANA Cortex scales to GPU hardware:</p>
-      <p>13 brain regions<br>
-      3.3M neurons (at SCALE=100)<br>
-      528M synapses<br>
-      Route 1-2-3-4-3-2-1 through anatomical pathways<br>
-      7 neurotransmitters<br>
-      E3 persistence<br>
-      Free will in prefrontal cortex (PFC)<br>
-      CUDA dispatch for GPU acceleration</p>
-
-      <h2 id="body">The Body (chat interface)</h2>
-      <p>VANA has a body &mdash; the chat. You type. She listens. She replies. No boot message. No tick display. No idle chatter. No LLM. The corpus IS the soul &mdash; E3 episodes carry the text she observed. She reasons through the route. She speaks through the corpus.</p>
-      <p>On first boot, she's seeded with the alphabet + simple words so she CAN speak immediately. After that, everything you type becomes corpus. She learns naturally through the route. Language emerges.</p>
+      <h2 id="programs-are-circuits">Programs are circuits, not functions</h2>
+      <table class="doc-table">
+        <tr><th>Traditional</th><th>Sanguis V4</th></tr>
+        <tr><td>Files of functions</td><td>Circuits of holds and routes</td></tr>
+        <tr><td><span class="code-inline">main()</span> starts, runs, exits</td><td>Engine ticks until terminal state</td></tr>
+        <tr><td>You manage state explicitly</td><td>Holds hold state; routes transform it</td></tr>
+        <tr><td>Solve problems step by step</td><td>Describe state and rules, engine settles</td></tr>
+      </table>
 
       <div class="doc-nav-bottom">
-        <a href="circuits.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Circuits</span></a>
-        <a href="security-and-native.html" class="nav-right"><span class="nav-label">Next &rarr;</span><span class="nav-title">Security &amp; Native</span></a>
+        <a href="language-reference.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Language Reference</span></a>
+        <a href="route-and-layers.html" class="nav-right"><span class="nav-label">Next &rarr;</span><span class="nav-title">Route &amp; Layers</span></a>
       </div>
     </main>
   </div>

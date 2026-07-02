@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="../favicon.png">
-<title>Circuits | VolkanaDEV Docs</title>
+<title>Engine &amp; Soul | VolkanaDEV Docs</title>
 <style>
   :root{--bg:#0e1117;--panel:#fbfaf7;--panel-dark:#161b22;--border:#21262d;--border-light:#e1dad0;--text-light:#f3eedf;--text-dark:#1e222b;--muted-light:#8b949e;--muted-dark:#6e675d;--accent:#c45d3a;--accent-hover:#b04f2f;--code-bg:#0d1117;--code-border:#30363d}
   *{box-sizing:border-box}body{margin:0;padding:0;background:var(--bg);color:var(--text-light);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
@@ -88,103 +88,84 @@
         <a href="index.html">Overview</a>
         <a href="getting-started.html">Getting Started</a>
         <a href="language-reference.html">Language Reference</a>
-        <a href="novel-vs-traditional.html">Novel vs Traditional</a>
-        <a href="route-and-layers.html">Route &amp; Layers</a>
-        <a href="circuits.html" class="active">Circuits</a>
-        <a href="engine-and-soul.html">Engine &amp; Soul</a>
-        <a href="security-and-native.html">Security &amp; Native</a>
+        <a href="builtins.html">Builtins</a>
+        <a href="execution-model.html">Execution Model</a>
+        <a href="examples.html">Examples</a>
+        <a href="compiler-pipeline.html" class="active">Compiler Pipeline</a>
+        <a href="glossary.html">Glossary</a>
       </li></ul>
     </aside>
     <main class="doc-content">
-      <div class="breadcrumb"><a href="index.html">Docs</a> / Circuits</div>
+      <div class="breadcrumb"><a href="index.html">Docs</a> / Engine &amp; Soul</div>
 
-      <h1>Circuits, Holds, Routes, Wires</h1>
-      <p class="subtitle">The building blocks of a Sanguis organism</p>
+      <h1>The VANA Engine &mdash; Runtime and Compiler</h1>
+      <p class="subtitle">How the V4 runtime works and the self-hosting compiler pipeline</p>
 
-      <h2 id="circuit">Circuit (Organ)</h2>
-      <p>A circuit is an organ. It holds state, fires on triggers, emits signals, and wires to other circuits. The collection of all circuits and their wiring IS the organism.</p>
-      <div class="code-block"><pre>circuit Name {
-    hold name : layer shape = default    // what this organ carries
-    when trigger {                        // when this organ fires
-        but condition                     // gate (optional)
-        emit value to target              // what comes out
-    }
-}</pre></div>
-      <p>In V3, <span class="code-inline">body</span> is an alias for <span class="code-inline">circuit</span>:</p>
-      <div class="code-block"><pre>body Hello {          // same as: circuit Hello {
-  hold greeting : text = "hello"
-  when start {
-    emit greeting to screen
-  }
-}</pre></div>
+      <h2 id="the-runtime">The VANA Runtime</h2>
+      <p>The VANA engine is what makes Sanguis programs run. It takes a parsed <span class="code-inline">.sang</span> file, builds the route table, and ticks until a terminal condition is reached.</p>
+      <p>You don't call the route. The engine ticks it. You don't write <span class="code-inline">main()</span>. The tick cycle is the main function. It evaluates all routes in parallel each tick, applies emits, and checks for termination.</p>
 
-      <h2 id="hold">Hold (Neuron Group)</h2>
-      <div class="code-block"><pre>hold name : layer shape = default</pre></div>
-      <p>Examples:</p>
-      <div class="code-block"><pre>hold vision     : live    field [448] = 0.0     // current visual input
-hold weights    : learned field [448] = 0.5    // learned visual patterns
-hold ep001      : memory  field [448]           // a saved snapshot
-hold reward     : memory  scalar      = 0.0     // how good that moment was
-hold tag        : memory  text         = ""      // what was happening
-hold self       : aware   field [448]             // who I am right now
-hold confidence : aware   scalar       = 0.0     // how sure I am</pre></div>
-      <p>A <span class="code-inline">hold</span> is not a variable. It is a neuron or group of neurons. It does not get "assigned." It gets <strong>fed</strong> by the route.</p>
+      <h3 id="tick-cycle">Tick Cycle</h3>
+      <p>Each tick:</p>
+      <p>1. <strong>Snapshot.</strong> All route conditions are evaluated against the current state of all holds.<br>
+      2. <strong>Fire.</strong> Routes whose conditions all pass are marked as firing.<br>
+      3. <strong>Execute.</strong> Each firing route executes its emits in order. Emits within a route are applied immediately.<br>
+      4. <strong>Advance.</strong> Through positions advance for routes that fired with a <span class="code-inline">through</span> clause.<br>
+      5. <strong>Check.</strong> If the <span class="code-inline">state</span> hold reaches <span class="code-inline">2.0</span> or the <span class="code-inline">done</span> hold reaches <span class="code-inline">1.0</span>, execution stops.</p>
 
-      <h2 id="when">When (Route Trigger)</h2>
-      <div class="code-block"><pre>when trigger_name {
-    // route body &mdash; what happens when this circuit fires
-}</pre></div>
-      <p>A <span class="code-inline">when</span> block defines a trigger. The circuit fires when:</p>
-      <p>1. The route reaches Stage 1 (Sense) and the trigger condition is met, OR<br>
-      2. Another circuit's <span class="code-inline">emit</span> wires into this <span class="code-inline">when</span></p>
-      <p>Every circuit has exactly one route pass per breath. The <span class="code-inline">when</span> determines whether the circuit <strong>actively fires</strong> during that pass or stays passive (just holding its state, ticking silently).</p>
+      <h3 id="parallel-semantics">Parallel Semantics</h3>
+      <p>All routes are evaluated against the same snapshot &mdash; the state at the start of the tick. Route A's emit to hold X is <strong>NOT</strong> visible to Route B's conditions in the same tick. Route A's emit to hold X <strong>IS</strong> visible to Route A's own subsequent emits in the same tick. Routes are parallel. Within a route, emits are sequential.</p>
 
-      <h2 id="but">But (Gate Condition)</h2>
-      <div class="code-block"><pre>when trigger {
-    but condition          // only fire if this is true
-    but other_condition    // AND this too
-    emit value to target    // what comes out
-}</pre></div>
-      <p><span class="code-inline">but</span> is the gate. It is the C4 layer's voice in the route. A route with no <span class="code-inline">but</span> always fires. A route with <span class="code-inline">but</span> only fires when the condition holds.</p>
-      <p><span class="code-inline">but</span> is not an <span class="code-inline">if</span> statement. It is a <strong>modulation</strong>. In hardware terms, it is a gate on the clock signal. In biological terms, it is attention &mdash; the organism decides whether this circuit matters right now.</p>
-      <p>Conditions:</p>
-      <div class="code-block"><pre>but x &gt; 0.5                     // numeric comparison
-but x &lt; 10.0                    // less than
-but x = 0.0                     // equality
-but x is not empty              // has content
-but x is empty                  // has no content
-but self aligned with memory    // C4 &harr; E3 alignment (dot product &gt; threshold)
-but disk has e3                 // special: disk has .e3 files
-but true                        // always true (explicit)</pre></div>
+      <h3 id="termination">Termination</h3>
+      <p>The engine stops when:</p>
+      <p>&bull; A hold named <span class="code-inline">state</span> reaches <span class="code-inline">2.0</span> or higher<br>
+      &bull; A hold named <span class="code-inline">done</span> reaches <span class="code-inline">1.0</span> or higher<br>
+      &bull; The maximum tick count is reached (default: 1,000,000)</p>
+      <p>The exit code is read from the <span class="code-inline">exit_code</span> hold (if set) or the <span class="code-inline">world</span> target.</p>
 
-      <h2 id="emit">Emit (Output)</h2>
-      <div class="code-block"><pre>emit value to target</pre></div>
-      <p><span class="code-inline">emit</span> is the only way data leaves a circuit. It fires during Stage 7 (Act).</p>
-      <div class="code-block"><pre>emit state to brain.s1              // feed into another circuit's hold
-emit signal to muscle.when_move     // trigger another circuit
-emit write(data) to disk "path"     // write to persistent storage
-emit print(text) to screen          // output to terminal
-emit 42 to world                    // set exit code (native only)
-emit "text" to screen               // print a string literal</pre></div>
-      <p>Arithmetic inside emits:</p>
-      <div class="code-block"><pre>emit a + b to sum                   // addition
-emit a * b to product               // multiplication
-emit a * w + b * (1 - w) to blended // weighted blend
-emit sum(field) to total            // sum all neurons
-emit max(field) to peak             // highest activation
-emit dot(a, b) to alignment         // dot product (similarity)
-emit norm(field) to magnitude       // vector length</pre></div>
+      <h3 id="gpu-acceleration">GPU Acceleration</h3>
+      <p>Route execution is parallel by default. On GPU systems, VANA can dispatch routes across CUDA cores for large-scale parallelism. The <span class="code-inline">vana_bench.exe</span> tool measures GPU vs CPU route throughput on NVIDIA hardware.</p>
 
-      <h2 id="wire">Wire (Connectome)</h2>
-      <div class="code-block"><pre>wire CircuitA.emit_name to CircuitB.when_name</pre></div>
-      <p>Wiring is the connectome. The collection of all wires between all circuits IS the organism's neural wiring diagram. Changing a wire changes the organism.</p>
-      <div class="code-block"><pre>wire Vision.emit to Brain.when_sense        // direct wiring
-wire Brain.emit_act to Muscle.when_move     // chain
-wire Brain.emit_remember to E3Store.when_save  // memory wiring</pre></div>
+      <h1 style="margin-top:80px">The Self-Hosting Compiler</h1>
+      <p class="subtitle">Sanguis V4 compiles itself to native x86-64 machine code</p>
+
+      <h2 id="self-hosting">Sanguis V4 is Self-Hosting</h2>
+      <p>The compiler is written in Sanguis and compiles Sanguis source to native x86-64 machine code. No external compiler, no assembler, no linker required.</p>
+
+      <h2 id="pipeline-stages">Pipeline Stages</h2>
+      <div class="code-block"><pre>.sang source &rarr; [phase1.sang] &rarr; .vana genome &rarr; [phase2.sang] &rarr; patch.ps1 &rarr; [PE assembler] &rarr; .exe</pre></div>
+      <p>1. <strong>Phase 1</strong> (<span class="code-inline">phase1.sang</span>): Reads <span class="code-inline">.sang</span> source, classifies each line (circuit, hold, when, but, emit, through, stream, route), and emits a pipe-delimited genome file (<span class="code-inline">.vana</span>).</p>
+      <p>2. <strong>Phase 2</strong> (<span class="code-inline">phase2.sang</span>): Reads the <span class="code-inline">.vana</span> genome, extracts holds, routes, and emits, and generates a PowerShell script (<span class="code-inline">patch.ps1</span>) that assembles a Windows PE binary.</p>
+      <p>3. <strong>PE Assembly</strong>: The PowerShell script encodes the program as x86-64 opcodes (tcodes), builds the PE headers, .text, .rdata, and .data sections, and writes a standalone <span class="code-inline">.exe</span>.</p>
+
+      <h2 id="tcodes">tcodes</h2>
+      <p>Tcodes are x86-64 opcodes encoded as Sanguis tokens. The PE template currently supports:</p>
+      <table class="doc-table">
+        <tr><th>Tcode</th><th>x86-64 Operation</th></tr>
+        <tr><td><span class="code-inline">sub_rsp</span></td><td>Allocate stack space</td></tr>
+        <tr><td><span class="code-inline">get_stdout</span></td><td>Get stdout handle</td></tr>
+        <tr><td><span class="code-inline">save_stdout</span></td><td>Store stdout handle</td></tr>
+        <tr><td><span class="code-inline">load_scalar</span></td><td>Load a scalar value</td></tr>
+        <tr><td><span class="code-inline">store_scalar</span></td><td>Store a scalar value</td></tr>
+        <tr><td><span class="code-inline">check_cond</span></td><td>Conditional jump (jle/jne/jge)</td></tr>
+        <tr><td><span class="code-inline">write_string</span></td><td>Write text to stdout</td></tr>
+        <tr><td><span class="code-inline">exit</span></td><td>ExitProcess</td></tr>
+      </table>
+      <p>tcodes are the dialect of x86-64 that Sanguis speaks. The instruction set expands as the compiler matures.</p>
+
+      <h2 id="running-the-compiler">Running the Compiler</h2>
+      <div class="code-block"><pre>vana_runner.exe phase1.sang    # produces output.vana
+vana_runner.exe phase2.sang    # produces patch.ps1
+powershell patch.ps1           # produces output.exe
+output.exe                     # runs the compiled program</pre></div>
+
+      <div class="callout">
+        <p><strong>100% Sanguis.</strong> When all V4 features compile natively, the compiler itself can be compiled to <span class="code-inline">.exe</span>, replacing <span class="code-inline">vana_runner.exe</span>. Zero external dependencies.</p>
+      </div>
 
       <div class="doc-nav-bottom">
-        <a href="route-and-layers.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Route &amp; Layers</span></a>
-        <a href="engine-and-soul.html" class="nav-right"><span class="nav-label">Next &rarr;</span><span class="nav-title">Engine &amp; Soul</span></a>
+        <a href="circuits.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Circuits</span></a>
+        <a href="security-and-native.html" class="nav-right"><span class="nav-label">Next &rarr;</span><span class="nav-title">Security &amp; Native</span></a>
       </div>
     </main>
   </div>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="../favicon.png">
-<title>Novel vs Traditional | VolkanaDEV Docs</title>
+<title>Circuits | VolkanaDEV Docs</title>
 <style>
   :root{--bg:#0e1117;--panel:#fbfaf7;--panel-dark:#161b22;--border:#21262d;--border-light:#e1dad0;--text-light:#f3eedf;--text-dark:#1e222b;--muted-light:#8b949e;--muted-dark:#6e675d;--accent:#c45d3a;--accent-hover:#b04f2f;--code-bg:#0d1117;--code-border:#30363d}
   *{box-sizing:border-box}body{margin:0;padding:0;background:var(--bg);color:var(--text-light);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
@@ -88,74 +88,91 @@
         <a href="index.html">Overview</a>
         <a href="getting-started.html">Getting Started</a>
         <a href="language-reference.html">Language Reference</a>
-        <a href="novel-vs-traditional.html" class="active">Novel vs Traditional</a>
-        <a href="route-and-layers.html">Route &amp; Layers</a>
-        <a href="circuits.html">Circuits</a>
-        <a href="engine-and-soul.html">Engine &amp; Soul</a>
-        <a href="security-and-native.html">Security &amp; Native</a>
+        <a href="builtins.html">Builtins</a>
+        <a href="execution-model.html">Execution Model</a>
+        <a href="examples.html" class="active">Examples</a>
+        <a href="compiler-pipeline.html">Compiler Pipeline</a>
+        <a href="glossary.html">Glossary</a>
       </li></ul>
     </aside>
     <main class="doc-content">
-      <div class="breadcrumb"><a href="index.html">Docs</a> / Novel vs Traditional</div>
+      <div class="breadcrumb"><a href="index.html">Docs</a> / Circuits</div>
 
-      <h1>What's Novel vs Traditional Programming</h1>
-      <p class="subtitle">For programmers coming from C, Python, Rust, and everything else</p>
+      <h1>Circuits, Holds, Routes, Emits</h1>
+      <p class="subtitle">The building blocks of a Sanguis V4 program</p>
 
-      <p>This section is for programmers coming from traditional languages (C, Python, Rust, etc.). Here's what Sanguis does differently.</p>
+      <h2 id="circuit">circuit</h2>
+      <p>A <span class="code-inline">circuit</span> is a body &mdash; a named scope containing holds and routes. A program is one or more circuits.</p>
+      <div class="code-block"><pre>circuit Name {
+  // holds and routes
+}</pre></div>
+      <p>All holds declared inside a circuit are globally accessible by name. Circuits are organizational scope, not isolation.</p>
 
-      <h2 id="no-control-flow">No control flow statements</h2>
+      <h2 id="hold">hold</h2>
+      <p>A <span class="code-inline">hold</span> is a named value. Every hold has a type:</p>
+      <div class="code-block"><pre>hold name : memory scalar = 0.0       // floating-point number
+hold name : memory text = "value"     // text string
+hold name : memory scalar              // defaults to 0.0
+hold name : memory text                // defaults to ""</pre></div>
+      <p>Scalars are stored as double-precision floating point. Text is stored as variable-length strings. There are no other types.</p>
+
+      <h2 id="when">when</h2>
+      <p>A <span class="code-inline">when</span> block defines a route. The route fires every tick if all its <span class="code-inline">but</span> conditions pass. If a route has no <span class="code-inline">but</span> conditions, it fires every tick.</p>
+      <div class="code-block"><pre>when trigger_name {
+  but condition
+  emit value to target
+}</pre></div>
+      <p>A route with no conditions always fires. A route with conditions fires only when all conditions are simultaneously true at the start of the tick.</p>
+
+      <h2 id="but">but</h2>
+      <p>A <span class="code-inline">but</span> condition gates a route. Multiple <span class="code-inline">but</span> conditions are ANDed &mdash; all must pass for the route to fire.</p>
+      <div class="code-block"><pre>when process {
+  but state &lt; 10.0
+  but active = 1.0
+  emit state + 1.0 to state
+}</pre></div>
+
+      <h2 id="emit">emit</h2>
+      <p><span class="code-inline">emit</span> sends a value to a target. Targets are hold names or built-in output channels:</p>
+      <div class="code-block"><pre>emit 42.0 to state          // write to a hold
+emit "text" to screen       // print to terminal
+emit 0.0 to world           // set exit code</pre></div>
+      <p>Multiple emits in a route execute in order within the route. Emits are applied immediately &mdash; subsequent emits in the same route see updated values.</p>
       <table class="doc-table">
-        <tr><th>Traditional</th><th>Sanguis</th></tr>
-        <tr><td><span class="code-inline">if (x &gt; 5) { ... }</span></td><td><span class="code-inline">but x &gt; 5.0</span> (gates a route)</td></tr>
-        <tr><td><span class="code-inline">for (i=0; i&lt;N; i++)</span></td><td><span class="code-inline">repeat ... until cond</span> (V3)</td></tr>
-        <tr><td><span class="code-inline">while (cond)</span></td><td>The route ticks forever</td></tr>
-        <tr><td><span class="code-inline">return value</span></td><td><span class="code-inline">emit value to target</span></td></tr>
-        <tr><td><span class="code-inline">function call</span></td><td>Circuit fires via wire</td></tr>
-      </table>
-      <p>There is no <span class="code-inline">if</span>. There is no <span class="code-inline">for</span> (in V2). There is no <span class="code-inline">while</span>. There is no <span class="code-inline">return</span>. The <strong>route</strong> is the only control flow. Seven stages, four layers, one breath. Every circuit ticks on every route pass. You cannot skip stages. You cannot reorder them. The route is the heartbeat.</p>
-
-      <h2 id="layers-are-types">Layers are types</h2>
-      <table class="doc-table">
-        <tr><th>Traditional types</th><th>Sanguis layers</th></tr>
-        <tr><td><span class="code-inline">int</span>, <span class="code-inline">float</span></td><td><span class="code-inline">live scalar</span>, <span class="code-inline">learned scalar</span></td></tr>
-        <tr><td><span class="code-inline">string</span></td><td><span class="code-inline">memory text</span></td></tr>
-        <tr><td><span class="code-inline">float[]</span></td><td><span class="code-inline">live field [N]</span></td></tr>
-        <tr><td><span class="code-inline">float[][]</span></td><td><span class="code-inline">learned field [N] [M]</span></td></tr>
-        <tr><td><span class="code-inline">bool</span></td><td>(no bool &mdash; use <span class="code-inline">scalar &gt; 0.5</span>)</td></tr>
-      </table>
-      <p>The lifetime <strong>is</strong> the type. A <span class="code-inline">live</span> value dies next tick. A <span class="code-inline">learned</span> value survives the session. A <span class="code-inline">memory</span> value survives death (power off). An <span class="code-inline">aware</span> value is computed fresh every breath. You cannot assign a <span class="code-inline">memory</span> to a <span class="code-inline">live</span> without the route carrying it. The layers are not interchangeable. Data must travel the route to change layers.</p>
-
-      <h2 id="no-assignment">No assignment &mdash; data flows</h2>
-      <div class="code-block"><pre>// Traditional: x = 5
-// Sanguis:    5 to x          (inside an emit)
-
-// Traditional: result = compute(input)
-// Sanguis:    emit compute(input) to result</pre></div>
-      <p>The arrow <span class="code-inline">to</span> is the only operator that moves data. Everything else is either a hold declaration, a condition, or arithmetic inside an emit.</p>
-
-      <h2 id="organisms-not-functions">Programs are organisms, not functions</h2>
-      <table class="doc-table">
-        <tr><th>Traditional</th><th>Sanguis</th></tr>
-        <tr><td>Files of functions</td><td>Organs of an organism</td></tr>
-        <tr><td><span class="code-inline">main()</span> starts, runs, exits</td><td>Route ticks forever</td></tr>
-        <tr><td>You manage state</td><td>Layers manage state for you</td></tr>
-        <tr><td>You serialize/deserialize</td><td>Memory layer IS persistence</td></tr>
-        <tr><td>Solve problems</td><td>Grow organisms</td></tr>
+        <tr><th>Target</th><th>Behavior</th></tr>
+        <tr><td><span class="code-inline">screen</span></td><td>Print the value to terminal output</td></tr>
+        <tr><td><span class="code-inline">world</span></td><td>Set the program exit code (integer)</td></tr>
+        <tr><td>Hold name</td><td>Write the value to the named hold</td></tr>
       </table>
 
-      <h2 id="no-gc">No garbage collection, no manual memory management</h2>
-      <p>The layers manage memory. <span class="code-inline">live</span> values are overwritten every tick (no need to free them). <span class="code-inline">learned</span> values persist for the session. <span class="code-inline">memory</span> values are written to disk as <span class="code-inline">.e3</span> files. <span class="code-inline">aware</span> values are derived &mdash; they're recomputed every breath from the other three. You never call <span class="code-inline">malloc</span>. You never call <span class="code-inline">free</span>. You never collect garbage. The route handles it.</p>
+      <h2 id="through">through</h2>
+      <p><span class="code-inline">through</span> iterates through a text hold, one character per tick. Each tick the route fires, the <span class="code-inline">char</span> hold is set to the next character in the text, and the position advances.</p>
+      <div class="code-block"><pre>circuit Reader {
+  hold src : memory text = "Hello"
+  hold state : memory scalar = 0.0
 
-      <h2 id="body">The organism has a body</h2>
-      <p>In traditional languages, I/O is a library call (<span class="code-inline">printf</span>, <span class="code-inline">println</span>, <span class="code-inline">write</span>). In Sanguis, the body is an organ:</p>
-      <div class="code-block"><pre>emit "hello" to screen       // terminal output (like printf)
-emit 42 to world              // exit code (like return 42)
-emit write(data) to disk path // file I/O (like fwrite)</pre></div>
-      <p>These aren't function calls. They're organs of the body, wired into the route like any other circuit.</p>
+  when scan {
+    but state = 0.0
+    through src
+    emit char to screen
+  }
+}</pre></div>
+      <p>This prints each character of <span class="code-inline">src</span> one per tick: <span class="code-inline">H</span>, <span class="code-inline">e</span>, <span class="code-inline">l</span>, <span class="code-inline">l</span>, <span class="code-inline">o</span>.</p>
+      <p>The <span class="code-inline">char</span> hold is automatically created and managed by the engine. The through position is internal to the route and advances each tick the route fires.</p>
+
+      <h2 id="stream">stream</h2>
+      <p><span class="code-inline">stream</span> outputs an entire text hold to the terminal in a single operation:</p>
+      <div class="code-block"><pre>stream genome</pre></div>
+      <p>This is equivalent to printing every character of the hold's text at once. Use <span class="code-inline">stream</span> for bulk output, <span class="code-inline">emit to screen</span> for individual values.</p>
+
+      <h2 id="route-keyword">route</h2>
+      <p><span class="code-inline">route</span> copies one hold's value to another:</p>
+      <div class="code-block"><pre>route src to dst</pre></div>
+      <p>If the source is a scalar hold, the destination receives the scalar value. If the source is a text hold, the destination receives the full text.</p>
 
       <div class="doc-nav-bottom">
-        <a href="language-reference.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Language Reference</span></a>
-        <a href="route-and-layers.html" class="nav-right"><span class="nav-label">Next &rarr;</span><span class="nav-title">Route &amp; Layers</span></a>
+        <a href="route-and-layers.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Route &amp; Layers</span></a>
+        <a href="engine-and-soul.html" class="nav-right"><span class="nav-label">Next &rarr;</span><span class="nav-title">Engine &amp; Soul</span></a>
       </div>
     </main>
   </div>

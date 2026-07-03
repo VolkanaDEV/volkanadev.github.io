@@ -59,6 +59,63 @@
   .footer-links{margin-bottom:8px}
   .footer-links a{margin:0 8px}
   @media(max-width:768px){.nav-toggle{display:flex}.nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--border);padding:8px 24px 16px;display:none;z-index:100}.nav-links.open{display:flex}.nav-links a{padding:12px 0;border-bottom:1px solid var(--border);font-size:0.95rem}.nav-links a:last-child{border-bottom:none}.doc-layout{flex-direction:column}.doc-sidebar{display:none}.doc-content{padding:24px 16px 60px}.wrap{padding:0 16px}}
+
+  /* === Visual Enhancements === */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 5px rgba(196, 93, 58, 0.15); }
+    50% { box-shadow: 0 0 15px rgba(196, 93, 58, 0.3); }
+  }
+  body { animation: fadeIn 0.4s ease-out; }
+  .card, .doc-card, .doc-grid > a, .arena-card {
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover, .doc-card:hover, .doc-grid > a:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 4px 20px rgba(196, 93, 58, 0.12);
+  }
+  .hero h2, .header-block h2 {
+    text-shadow: 0 0 30px rgba(196, 93, 58, 0.08);
+  }
+  .nav-links a {
+    transition: color 0.2s, text-shadow 0.2s;
+  }
+  .nav-links a:hover {
+    text-shadow: 0 0 10px rgba(196, 93, 58, 0.3);
+  }
+  a { transition: opacity 0.15s, text-shadow 0.15s; }
+  .btn, button {
+    transition: all 0.2s ease;
+  }
+  .btn:hover, button:hover {
+    box-shadow: 0 0 12px rgba(196, 93, 58, 0.2);
+  }
+  .back-link:hover, footer a:hover {
+    text-shadow: 0 0 8px rgba(196, 93, 58, 0.25);
+  }
+  .legal-box {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .legal-box:hover {
+    border-color: rgba(196, 93, 58, 0.25);
+    box-shadow: 0 0 25px rgba(196, 93, 58, 0.04);
+  }
+  ::selection {
+    background: rgba(196, 93, 58, 0.25);
+  }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(196, 93, 58, 0.3); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(196, 93, 58, 0.5); }
+  /* Separator line radiant glow */
+  nav { border-bottom: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(196, 93, 58, 0.3); }
+  footer { border-top: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(196, 93, 58, 0.3); }
+  .section { border-top: 1px solid rgba(196, 93, 58, 0.5) !important; }
+  .feature-list li { border-bottom: 1px solid rgba(196, 93, 58, 0.25) !important; }
+  .doc-content h2 { border-bottom: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  .doc-nav-bottom { border-top: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  /* === End Visual Enhancements === */
 </style>
 </head>
 <body>
@@ -105,12 +162,12 @@
       <p>The engine runs in ticks. Each tick:</p>
       <p>1. <strong>Snapshot.</strong> All route conditions are evaluated against the current state of all holds.<br>
       2. <strong>Fire.</strong> Routes whose conditions all pass are marked as firing.<br>
-      3. <strong>Execute.</strong> Each firing route executes its emits in order. Emits within a route are applied immediately &mdash; subsequent emits in the same route see updated values.<br>
+      3. <strong>Execute.</strong> Each firing route executes its emits in order. Emits within a route are applied immediately - subsequent emits in the same route see updated values.<br>
       4. <strong>Advance.</strong> Through positions advance for routes that fired with a <span class="code-inline">through</span> clause.<br>
       5. <strong>Check.</strong> If the <span class="code-inline">state</span> hold reaches <span class="code-inline">2.0</span> or the <span class="code-inline">done</span> hold reaches <span class="code-inline">1.0</span>, execution stops.</p>
 
       <h2 id="parallel-semantics">Parallel Semantics</h2>
-      <p>All routes are evaluated against the same snapshot &mdash; the state at the start of the tick. This means:</p>
+      <p>All routes are evaluated against the same snapshot - the state at the start of the tick. This means:</p>
       <p>&bull; Route A's emit to hold X is <strong>NOT</strong> visible to Route B's conditions in the same tick.<br>
       &bull; Route A's emit to hold X <strong>IS</strong> visible to Route A's own subsequent emits in the same tick.</p>
       <div class="callout">

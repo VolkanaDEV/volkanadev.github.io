@@ -100,10 +100,10 @@
   .section .vana-body { text-align: left; max-width: 780px; margin: 0 auto 20px; }
 
   /* Carousel / Cards Layout */
-  .carousel { position: relative; overflow: hidden; margin-top: 40px; }
-  .carousel-track { display: flex; }
-  .carousel-page { flex: 0 0 100%; display: grid; grid-template-columns: 1fr; gap: 24px; padding: 4px; }
-  @media (min-width: 768px) { .carousel-page { grid-template-columns: repeat(3, 1fr); } }
+  .carousel { position: relative; overflow: hidden; margin-top: 40px; max-width: 560px; margin-left: auto; margin-right: auto; }
+  .carousel-viewport { overflow: hidden; }
+  .carousel-track { display: flex; transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1); }
+  .carousel-slide { flex: 0 0 100%; padding: 4px; }
 
   .card {
     background: var(--panel); border: 1px solid var(--border-light); color: var(--text-dark);
@@ -111,6 +111,21 @@
   }
   .card h4 { margin: 0 0 12px; color: var(--accent); font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; }
   .card p { margin: 0; color: var(--muted-dark); font-size: 0.98rem; line-height: 1.6; text-align: left; }
+
+  /* Carousel controls */
+  .carousel-controls { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 20px; }
+  .carousel-arrow {
+    background: var(--panel-dark); border: 1px solid var(--border); color: var(--text-light);
+    width: 38px; height: 38px; border-radius: 50%; cursor: pointer; font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center; transition: 0.2s; line-height: 1;
+  }
+  .carousel-arrow:hover { background: var(--accent); border-color: var(--accent); }
+  .carousel-dots { display: flex; gap: 8px; }
+  .carousel-dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--border); cursor: pointer;
+    transition: 0.3s; border: none; padding: 0;
+  }
+  .carousel-dot.active { background: var(--accent); width: 24px; border-radius: 4px; }
 
   /* Creator Note Component */
   .note-wrapper { max-width: 780px; margin: 40px auto 0; }
@@ -186,6 +201,63 @@
     .timer-lbl { font-size: 0.65rem; }
   }
 
+
+  /* === Visual Enhancements === */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 5px rgba(196, 93, 58, 0.15); }
+    50% { box-shadow: 0 0 15px rgba(196, 93, 58, 0.3); }
+  }
+  body { animation: fadeIn 0.4s ease-out; }
+  .card, .doc-card, .doc-grid > a, .arena-card {
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover, .doc-card:hover, .doc-grid > a:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 4px 20px rgba(196, 93, 58, 0.12);
+  }
+  .hero h2, .header-block h2 {
+    text-shadow: 0 0 30px rgba(196, 93, 58, 0.08);
+  }
+  .nav-links a {
+    transition: color 0.2s, text-shadow 0.2s;
+  }
+  .nav-links a:hover {
+    text-shadow: 0 0 10px rgba(196, 93, 58, 0.3);
+  }
+  a { transition: opacity 0.15s, text-shadow 0.15s; }
+  .btn, button {
+    transition: all 0.2s ease;
+  }
+  .btn:hover, button:hover {
+    box-shadow: 0 0 12px rgba(196, 93, 58, 0.2);
+  }
+  .back-link:hover, footer a:hover {
+    text-shadow: 0 0 8px rgba(196, 93, 58, 0.25);
+  }
+  .legal-box {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .legal-box:hover {
+    border-color: rgba(196, 93, 58, 0.25);
+    box-shadow: 0 0 25px rgba(196, 93, 58, 0.04);
+  }
+  ::selection {
+    background: rgba(196, 93, 58, 0.25);
+  }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(196, 93, 58, 0.3); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(196, 93, 58, 0.5); }
+  /* Separator line radiant glow */
+  nav { border-bottom: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(196, 93, 58, 0.3); }
+  footer { border-top: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(196, 93, 58, 0.3); }
+  .section { border-top: 1px solid rgba(196, 93, 58, 0.5) !important; }
+  .feature-list li { border-bottom: 1px solid rgba(196, 93, 58, 0.25) !important; }
+  .doc-content h2 { border-bottom: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  .doc-nav-bottom { border-top: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  /* === End Visual Enhancements === */
 </style>
 </head>
 <body>
@@ -210,11 +282,9 @@
 
   <div class="wrap">
     <section class="hero">
-      <h2>Your CPU turns 55 soon. Ready to give it a rest?</h2>
-      <p style="font-size: clamp(0.95rem, 2.2vw, 1.1rem); max-width: 900px !important;">Your processor handles data one piece at a time through a single pipeline, for over 50 years.</p>
-      <p>Introducing Sanguis, by <span style="color: var(--accent);">VolkanaDEV</span>.</p>
-      <p>Sanguis is a code that routes data across many paths simultaneously using the GPU hardware you already own. The computation is done real-time.</p>
-      
+      <h2>Your CPU turns 82 soon. Ready to give it a rest?</h2>
+      <p>Sanguis routes data across many paths at once on the GPU you already own. Real-time, real hardware, real progress. Your laptop, home desktop, or data center can become the next step in technology.</p>
+
       <div class="timer-container">
         <div class="timer-block"><div class="timer-val" id="days">249</div><div class="timer-lbl">Days</div></div>
         <div class="timer-block"><div class="timer-val" id="hours">06</div><div class="timer-lbl">Hours</div></div>
@@ -224,15 +294,15 @@
 
       <p style="color: var(--muted-light); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin: 0 auto 32px; text-align: center; max-width: 500px;">until public source release</p>
 
-      <p style="color: var(--accent); font-size: clamp(1.3rem, 3vw, 1.6rem); font-weight: 700; margin: 0 auto 32px; text-align: center; max-width: 600px; letter-spacing: -0.01em;">Welcome to VolkanaDEV</p>
-
       <div class="hero-actions">
         <a href="benchmark.html" class="btn">View Benchmarks</a>
         <a href="roadmap.html" class="btn cream">View Our Roadmap</a>
         <a href="contact.html" class="btn ghost">Reach Out To Us</a>
       </div>
 
-      <p style="color: var(--muted-light); font-size: clamp(1.05rem, 2.5vw, 1.2rem); margin: 40px auto 0; text-align: center; max-width: 780px;">Your CPU can get ready for retirement, but your hardware won't have to.</p>
+      <p style="color: var(--accent); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin: 28px auto 0; text-align: center;">Welcome to VolkanaDEV</p>
+      <p style="color: var(--muted-light); font-size: 0.95rem; font-style: italic; margin: 12px auto 0; text-align: center; max-width: 600px;">Your CPU can finally retire, but your hardware won't have to.</p>
+
     </section>
   </div>
 
@@ -240,25 +310,35 @@
     <div class="wrap">
       <div class="section-label">The Language</div>
       <h3>Introducing Sanguis</h3>
-      <p>Sanguis is a self-hosting programming language. Using 8 keywords as the foundation, coding is as simple as doing. No abstract math. No boilerplate. No extreme syntax or hidden rules. You structure programs out of circuits that hold state, fire when conditions are met, and emit to each other. The runtime reads .sang files directly and executes them. The compiler is itself written in Sanguis to demonstrate portability at every level.</p>
-      <p>Today, Sanguis runs on normal Windows hardware. The SDK is 2.2 MB and needs nothing else installed. Support for linux and ubuntu based users will be released alongside the public sourcecode in the respective VolkanaDEV issued SanguisSDKs. Your data stays on your disk with no way to reach us. We provide the support, you create something real.</p>
+      <p>Sanguis is a self-hosting programming language built on 10 keywords. Instead of objects, you write "bodies", self-contained structures that hold their own state, fire when their conditions are met, and "emit" signals to each other through routes. No classes, no inheritance, no method calls. When you write Sanguis code, it gets transposed into a connectome that settles on the GPU in parallel, in real-time. The compiler itself is written in Sanguis, so the language will eventually host itself.</p>
       
-      <div class="carousel">
-        <div class="carousel-track">
-          <div class="carousel-page">
-            <div class="card">
-              <h4>Structured Like Biology</h4>
-              <p>Programs are circuits. Each circuit holds its own state and connects to the next. No classes, no inheritance, no object hierarchies. Just circuits that fire.</p>
+      <div class="carousel" id="carousel-1">
+        <div class="carousel-viewport">
+          <div class="carousel-track">
+            <div class="carousel-slide">
+              <div class="card">
+                <h4>Structured Like Biology</h4>
+                <p>In Sanguis, programs are built from "bodies", not objects. A body holds its own state and connects to other bodies through "routes", not method calls. When a body's condition is met, it fires and "emits" a signal down the route to the next body. This gives you the ability to write programs that behave like living tissue; each part responds to its neighbors on its own, in no particular order.</p>
+              </div>
             </div>
-            <div class="card">
-              <h4>Unbounded Data Flow</h4>
-              <p>Data moves through the entire fabric at once. No single-file line. No bottleneck. The GPU sparse skip method hops over empty tracks and draws less power than the baseline.</p>
+            <div class="carousel-slide">
+              <div class="card">
+                <h4>Unbounded Data Flow</h4>
+                <p>Data in Sanguis doesn't wait in a single-file line. When your code is transposed into a connectome, the GPU processes every route simultaneously. The sparse skip method "hops" over empty "regions", or groups of warps that hold nothing, rather than reading them as zero. This means your programs settle in real-time, and the GPU draws less power than it would processing the same data the old way.</p>
+              </div>
             </div>
-            <div class="card">
-              <h4>Everyday Hardware Native</h4>
-              <p>You do not need a data center. Sanguis runs on the laptop you already own. The SDK is 2.2 MB and needs nothing else installed.</p>
+            <div class="carousel-slide">
+              <div class="card">
+                <h4>Everyday Hardware Native</h4>
+                <p>You don't need a data center. Sanguis runs on the GPU you already own, the same one running your video games right now. The SDK is 2.2 MB, installs in seconds, and needs nothing else. Your CPU does some very light work to support it, and your current hardware doesn't have to change until you're ready.</p>
+              </div>
             </div>
           </div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-arrow" onclick="carouselMove('carousel-1', -1)" aria-label="Previous">&#8592;</button>
+          <div class="carousel-dots" id="dots-carousel-1"></div>
+          <button class="carousel-arrow" onclick="carouselMove('carousel-1', 1)" aria-label="Next">&#8594;</button>
         </div>
       </div>
 
@@ -269,26 +349,35 @@
     <div class="wrap">
       <div class="section-label">The Engine</div>
       <h3>What is a VANA?</h3>
-      <p class="vana-body">VANA stands for Voltage Activated Neural Architecture. The name describes the idea: computation activated through voltage pathways, structured like a neural system rather than a sequential pipeline.</p>
-      <p class="vana-body">In practice, VANA is the runtime engine that executes Sanguis programs. When you write Sanguis code, the runtime reads it directly. VANA maps the routes across the compute surface available, relaxing the requirements your CPU needs to execute complex real-time computing commands.</p>
-      <p class="vana-body">Instead of forcing data through a single processing line, or proposing a linear upgrade to hardware like a new CPU or RAM, VANA routes it across many paths simultaneously on existing GPU hardware. It treats the silicon as the platform itself, letting the CPU take a load off for once.</p>
+      <p class="vana-body">VANA stands for Voltage Activated Neural Architecture. It is the runtime engine that executes your Sanguis programs. Instead of forcing data through a single processing line, VANA routes it across many paths simultaneously on the GPU you already own. The organism lives on the GPU through what we call the "blood bridge", an async stream that keeps it running in real-time without stopping to sync with the CPU every tick. Your CPU does some very light work, and then gets out of the way.</p>
       
-      <div class="carousel">
-        <div class="carousel-track">
-          <div class="carousel-page">
-            <div class="card">
-              <h4>Sparse Skip Routing</h4>
-              <p>VANA maps data across the GPU and skips empty regions entirely. Instead of processing every cell in a grid, it jumps over the ones that hold nothing. Less power, less time, same result.</p>
+      <div class="carousel" id="carousel-2">
+        <div class="carousel-viewport">
+          <div class="carousel-track">
+            <div class="carousel-slide">
+              <div class="card">
+                <h4>The Settle</h4>
+                <p>When VANA runs your program, it doesn't step through instructions one at a time. It maps your code onto a "connectome", a web of neurons and the connections between them, and lets the whole thing "settle" on the GPU simultaneously. Each neuron holds a value. Each connection carries a signal. Gates fire when conditions are met. The graph relaxes toward a stable state, and that stable state IS your answer. There's no instruction pointer counting steps. The computation is the settling.</p>
+              </div>
             </div>
-            <div class="card">
-              <h4>Hardware-Native Execution</h4>
-              <p>VANA does not emulate or interpret. The runtime maps routes directly onto what the hardware can do. CUDA compute pipelines execute the work directly. No translation layer, no overhead.</p>
+            <div class="carousel-slide">
+              <div class="card">
+                <h4>Frequency As Machine Code</h4>
+                <p>Routes in VANA don't call functions. They fire "switches", binaric representations of electrical voltage timings, at preset frequencies. Two routes at a 2:1 ratio produce what musicians call an "octave". The GPU "reasons" from these signals by confirming they've converged while staying asynchronous. We call these frequencies "fcodes". They're VANA's machine code; same role as x86 instructions, but in the frequency domain.</p>
+              </div>
             </div>
-            <div class="card">
-              <h4>From Code to Silicon</h4>
-              <p>The Sanguis-to-VANA pipeline targets consumer GPUs today. The same architecture scales to custom silicon. When the hardware changes, the engine adapts. The language stays the same.</p>
+            <div class="carousel-slide">
+              <div class="card">
+                <h4>Co-Exists, Doesn't Compete</h4>
+                <p>VANA doesn't need exclusive access to your GPU. It runs alongside your operating system, your video games, your browser; everything you already do. The organism takes the GPU resources it needs and leaves the rest alone. When you're ready for dedicated hardware, the same code runs on custom silicon without changes. Your current setup doesn't have to change until you're ready.</p>
+              </div>
             </div>
           </div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-arrow" onclick="carouselMove('carousel-2', -1)" aria-label="Previous">&#8592;</button>
+          <div class="carousel-dots" id="dots-carousel-2"></div>
+          <button class="carousel-arrow" onclick="carouselMove('carousel-2', 1)" aria-label="Next">&#8594;</button>
         </div>
       </div>
 
@@ -338,6 +427,81 @@
     }
     var timerInterval = setInterval(updateTimer, 1000); 
     updateTimer();
+
+    // Carousel logic — one card at a time, auto-rotate, arrows + dots
+    var carouselStates = {};
+    function initCarousel(id) {
+      var c = document.getElementById(id);
+      if (!c) return;
+      var track = c.querySelector('.carousel-track');
+      var slides = c.querySelectorAll('.carousel-slide');
+      var dotsContainer = c.querySelector('.carousel-dots');
+      var count = slides.length;
+      carouselStates[id] = { track: track, count: count, current: 0, timer: null };
+
+      // Build dots
+      for (var i = 0; i < count; i++) {
+        (function(idx) {
+          var dot = document.createElement('button');
+          dot.className = 'carousel-dot' + (idx === 0 ? ' active' : '');
+          dot.setAttribute('aria-label', 'Slide ' + (idx + 1));
+          dot.onclick = function() { carouselGoTo(id, idx); };
+          dotsContainer.appendChild(dot);
+        })(i);
+      }
+
+      // Start auto-rotate
+      carouselAutoStart(id);
+    }
+
+    function carouselGoTo(id, idx) {
+      var s = carouselStates[id];
+      if (!s) return;
+      s.current = ((idx % s.count) + s.count) % s.count;
+      s.track.style.transform = 'translateX(-' + (s.current * 100) + '%)';
+      var dots = document.getElementById('dots-' + id).children;
+      for (var i = 0; i < dots.length; i++) {
+        dots[i].className = 'carousel-dot' + (i === s.current ? ' active' : '');
+      }
+      // Reset auto-rotate timer
+      carouselAutoStart(id);
+    }
+
+    function carouselMove(id, dir) {
+      var s = carouselStates[id];
+      if (!s) return;
+      carouselGoTo(id, s.current + dir);
+    }
+
+    function carouselAutoStart(id) {
+      var s = carouselStates[id];
+      if (!s) return;
+      if (s.timer) clearInterval(s.timer);
+      s.timer = setInterval(function() {
+        carouselGoTo(id, s.current + 1);
+      }, 120000);
+    }
+
+    // Touch swipe support for mobile
+    var touchStartX = {};
+    document.querySelectorAll('.carousel').forEach(function(c) {
+      var id = c.id;
+      c.addEventListener('touchstart', function(e) {
+        touchStartX[id] = e.touches[0].clientX;
+      }, { passive: true });
+      c.addEventListener('touchend', function(e) {
+        if (touchStartX[id] === undefined) return;
+        var dx = e.changedTouches[0].clientX - touchStartX[id];
+        if (Math.abs(dx) > 40) {
+          carouselMove(id, dx < 0 ? 1 : -1);
+        }
+        touchStartX[id] = undefined;
+      }, { passive: true });
+    });
+
+    // Initialize all carousels
+    initCarousel('carousel-1');
+    initCarousel('carousel-2');
   </script>
 </body>
 </html>

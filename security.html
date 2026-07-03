@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="favicon.png">
-<title>VolkanaDEV — Safety &amp; Licenses</title>
+<title>VolkanaDEV - Safety &amp; Licenses</title>
 <style>
   :root {
     --bg: #0e1117;
@@ -53,6 +53,7 @@
   }
   .hero h2 { font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800; margin: 0 0 12px; color: var(--text-light); letter-spacing: -0.03em; }
   .hero p { color: var(--muted-light); font-size: 1.05rem; max-width: 600px; margin: 0 auto; }
+  .hero .hero-sub { color: var(--muted-light); font-size: 0.88rem; max-width: 560px; margin: 14px auto 0; opacity: 0.78; line-height: 1.6; }
 
   .cards {
     display: grid;
@@ -109,6 +110,9 @@
   .legal-text h5 { font-size: 0.88rem; font-weight: 700; color: #fff; margin: 20px 0 6px; font-family: monospace; }
   .legal-text ul { padding-left: 18px; margin: 8px 0 12px; }
   .legal-text li { margin-bottom: 6px; }
+
+  .legal-text a, .hero a, .content a, .wrap > div a { color: var(--accent); text-decoration: none; }
+  .legal-text a:hover, .hero a:hover, .content a:hover, .wrap > div a:hover { opacity: 0.8; }
 
   footer {
     text-align: center; padding: 40px 0;
@@ -176,6 +180,63 @@
     .timer-lbl { font-size: 0.65rem; }
   }
 
+
+  /* === Visual Enhancements === */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 5px rgba(196, 93, 58, 0.15); }
+    50% { box-shadow: 0 0 15px rgba(196, 93, 58, 0.3); }
+  }
+  body { animation: fadeIn 0.4s ease-out; }
+  .card, .doc-card, .doc-grid > a, .arena-card {
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover, .doc-card:hover, .doc-grid > a:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 4px 20px rgba(196, 93, 58, 0.12);
+  }
+  .hero h2, .header-block h2 {
+    text-shadow: 0 0 30px rgba(196, 93, 58, 0.08);
+  }
+  .nav-links a {
+    transition: color 0.2s, text-shadow 0.2s;
+  }
+  .nav-links a:hover {
+    text-shadow: 0 0 10px rgba(196, 93, 58, 0.3);
+  }
+  a { transition: opacity 0.15s, text-shadow 0.15s; }
+  .btn, button {
+    transition: all 0.2s ease;
+  }
+  .btn:hover, button:hover {
+    box-shadow: 0 0 12px rgba(196, 93, 58, 0.2);
+  }
+  .back-link:hover, footer a:hover {
+    text-shadow: 0 0 8px rgba(196, 93, 58, 0.25);
+  }
+  .legal-box {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .legal-box:hover {
+    border-color: rgba(196, 93, 58, 0.25);
+    box-shadow: 0 0 25px rgba(196, 93, 58, 0.04);
+  }
+  ::selection {
+    background: rgba(196, 93, 58, 0.25);
+  }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(196, 93, 58, 0.3); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(196, 93, 58, 0.5); }
+  /* Separator line radiant glow */
+  nav { border-bottom: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(196, 93, 58, 0.3); }
+  footer { border-top: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(196, 93, 58, 0.3); }
+  .section { border-top: 1px solid rgba(196, 93, 58, 0.5) !important; }
+  .feature-list li { border-bottom: 1px solid rgba(196, 93, 58, 0.25) !important; }
+  .doc-content h2 { border-bottom: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  .doc-nav-bottom { border-top: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  /* === End Visual Enhancements === */
 </style>
 </head>
 <body>
@@ -201,7 +262,8 @@
   <div class="wrap">
     <section class="hero">
       <h2>Safety &amp; Licenses</h2>
-      <p>This technology is powerful. We built absolute rules to make sure it is used to help, never to hurt. These rules are not optional. They are enforced by license, by contract, and by code.</p>
+      <p>Progress belongs to all of us, and at VolkanaDEV, we built gentle, yet firm rules to make sure it is used to help, never to hurt. These rules are not optional, but they won't get in your way.</p>
+      <p class="hero-sub">VolkanaDEV remains committed to a healthy relationship with current technology, companies, or individuals, and ensures a smooth and careful transition to any future software or hardware.</p>
     </section>
 
     <div class="cards">
@@ -219,12 +281,19 @@
       </div>
     </div>
 
+    <div style="background: var(--panel-dark); border: 1px solid var(--accent); border-radius: 10px; padding: 20px 24px; margin: 24px 0;">
+      <p style="color: var(--text-light); font-size: 0.95rem; margin: 0; line-height: 1.7;">
+        <strong style="color: var(--accent);">Deploying anything publicly?</strong>
+        If you want to deploy, distribute, or make available any Sanguis or VANA based software, hardware, network, or any other VolkanaDEV technology for public or commercial use, you need a contract with us first. The VPL-1.0 lets you read, test, and adapt the code freely, but public deployment requires a separate deployment agreement with VolkanaDEV. Contact <a href="mailto:volkanadev@volkanadev.com">volkanadev@volkanadev.com</a> to get started.
+      </p>
+    </div>
+
     <div class="content">
       <h3><span class="label">The Framework</span>How the Rules Work</h3>
       <p>The ability to create with Sanguis belongs in the hands of the individual creator. But something this advanced needs careful supervision.</p>
       <p>That is why we created the VPL-1.0. It keeps our software open and inspectable for independent developers, students, and researchers, while installing a legal wall against weaponization or exploitation.</p>
       <p>For government agencies and large entities, we offer a separate contract under what is known as a "Cleave Clause": the VolkanaDEV Government Infrastructure Contract. It grants a private, perpetual, non-transferable, non-sublicensable license for a specific approved scope. It overrides Section 2 of the VPL-1.0 on a per-project basis for defense systems. It requires formal contract execution carefully negotiated with VolkanaDEV. See the Contact page to request one.</p>
-      <p>The Government Contract includes four binding provisions: a carve-out that supersedes the public or commerical restrictions in the context of autonomous defense systems, a packaged handoff that gives the Licensee absolute custody with zero Licensor data access, a maintenance clause requiring cryptographically signed security updates with no operational interference, and an indemnification clause delivering the engine "as is" with full Licensee liability. These are summarized in Section 5 of the license below.</p>
+      <p>The Government Contract includes four binding provisions: a carve-out that supersedes the public or commercial restrictions in the context of autonomous defense systems, a packaged handoff that gives the Licensee absolute custody with zero Licensor data access, a maintenance clause requiring cryptographically signed security updates with no operational interference, and an indemnification clause delivering the engine "as is" with full Licensee liability. These are summarized in Section 5 of the license below.</p>
     </div>
 
     <div class="legal-box">
@@ -237,61 +306,57 @@
         <p>This software engine is published as source-available. Subject to the restrictions below, you may view, modify, and run this code. If you modify this software and make it available to remote users interacting with it over a network, you must make the complete, corresponding source code of your modified version publicly available under this same license.</p>
 
         <h5>2. ETHICAL USE &amp; PROHIBITED ACTIVITIES</h5>
-        <p>Any permission granted under Section 1 is strictly conditioned upon absolute compliance with the following prohibitions. This software shall NOT be used, modified, integrated, or deployed for:</p>
-        <ul>
-          <li><strong>Autonomous Weaponry:</strong> Any system, vehicle, drone swarm, or hardware mechanism designed to autonomously select, target, or engage in kinetic force or weaponized payload deployment.</li>
-          <li><strong>Extreme Surveillance Systems:</strong> Any bulk data harvesting, facial recognition arrays, or network tracking infrastructure deployed to monitor populations without explicit, granular, individual consent.</li>
-          <li><strong>Harmful Private Gain:</strong> Any commercial deployment designed to generate personal profit through the intentional exploitation, deception, financial ruin, or physical harm of human beings.</li>
+        <p style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em;">Any permission granted under Section 1 is strictly conditioned upon absolute compliance with the following prohibitions. This software shall NOT be used, modified, integrated, or deployed for:</p>
+        <ul style="list-style: none; padding-left: 0;">
+          <li style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em; margin-bottom: 16px;"><strong>2.1 Initiation of Combat:</strong> This software must not be used to initiate combat, whether internally or with foreign countries, entities, private parties, or otherwise. "Combat" means the deployment of any weapon, firearm, explosive, conventional munition, nuclear missile, biological or chemical agent, improvised device, blunt instrument, blade, or any other physical or digital mechanism intended to project force against another party. This includes any system that autonomously selects, targets, or engages in kinetic action without direct and meaningful human authorization for each specific use of force. Defense systems that respond to incoming threats are permitted under a Government Infrastructure Contract (see Section 4). Offensive systems that initiate force are prohibited under all circumstances, under all license types, with no exceptions.</li>
+          <li style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em; margin-bottom: 16px;"><strong>2.2 Surveillance Systems:</strong> Any system supported by VolkanaDEV that is used to monitor, record, document, or circumvent protections for the purpose of information gathering, by any agency or entity, whether corporate, government, or otherwise. This includes bulk data harvesting, network tracking infrastructure, and population-level monitoring without explicit, granular, individual consent. Facial recognition scanners and similar identification technology may be used by law enforcement for legitimate identification purposes, but are not permitted to be used to spy on, track, or monitor individuals or populations without lawful authorization and individualized suspicion.</li>
+          <li style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em; margin-bottom: 16px;"><strong>2.3 Harm:</strong> Any physical or emotional means of causing injury to another organic or inorganic individual, regardless of their origination. "Organic individual" includes any living biological being, from a human being to any living organism. "Inorganic individual" includes any artificial system executing on VolkanaDEV hardware, any digital entity, any financial account or asset, and any data structure representing a person or entity. This prohibition covers intentional physical injury, emotional manipulation designed to cause psychological damage, financial ruin through deception or exploitation, and any deployment designed to generate personal profit through the intentional harm of any individual described above. It is one thing to create a system that behaves poorly. It is another to create a system that intends to kill, injure, or exploit. The former is a bug. The latter is a violation of this license.</li>
         </ul>
 
         <h5>3. BREACH &amp; TERMINATION</h5>
-        <p>Any use of this software in violation of Section 2 automatically terminates your license rights effective immediately. Upon termination, you maintain ownership of your provided VolkanaDEV software, hardware, firmware, or distributed products under the VolkanaDEV ecosystem or brand.</p>
-        <p>You assume all future legal and practical responsibility from VolkanaDEV, and assert any future implementations fall to you as sole owner in a legally binding admission implied upon breach of these terms.</p>
-        <p>Your rights to security updates and any future services rendered by VolkanaDEV are rendered null and void upon termination. You are prohibited from any future VolkanaDEV system networks going forward.</p>
+        <p style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em;">Any use of this software in violation of Section 2 automatically terminates your license rights effective immediately. Upon termination, you retain ownership of any VolkanaDEV software, hardware, firmware, or distributed products you have already obtained, but you are permanently cut off from all VolkanaDEV services, including security updates, technical support, and access to VolkanaDEV system networks.</p>
+        <p style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em;">You assume all future legal and practical responsibility from VolkanaDEV, and assert any future implementations fall to you as sole owner in a legally binding admission implied upon breach of these terms.</p>
+        <p style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em;">Your rights to security updates and any future services rendered by VolkanaDEV are rendered null and void upon termination. You are prohibited from any future VolkanaDEV system networks going forward.</p>
 
         <h5>4. GOVERNMENT CARVE-OUT (CLEAVE CLAUSE)</h5>
-        <p>Government agencies and large entities may request a VolkanaDEV Government Infrastructure Contract, issued under what is known as a "Cleave Clause." This contract grants a private, perpetual, non-transferable, non-sublicensable license to deploy the VolkanaDEV compilation engine and parallel node hardware architecture for a specific approved scope of use.</p>
-        <p>This contract explicitly supersedes, overrides, and writes the Licensee out of the public or commerical restrictions outlined in Section 2 of the VPL-1.0 in the context of autonomous defense systems. The override is evaluated on an isolated project-by-project basis and requires formal, separate contract execution carefully negotiated with VolkanaDEV.</p>
-        <p>Under this contract, the Licensee retains absolute physical and operational custody of deployed instances. The Licensor has zero access, visibility, or tracking rights regarding internal data payloads, simulation metrics, or operational inputs processed within the Licensee's secure infrastructure.</p>
-        <p>The Licensor retains sole administrative oversight of core architectural stability. The Licensee agrees to accept mandatory, cryptographically signed low-level security updates, compiler stability patches, and kernel bug fixes within a commercially reasonable timeframe. The Licensor cannot access, alter, or interrupt the Licensee's high-level software application layers.</p>
-        <p>The Licensee assumes full responsibility and liability for its specific deployments. The Licensor provides the software engine "as is" and makes no representations regarding compliance with specific military, defense, or municipal regulatory frameworks.</p>
-
-        <h5>5. GOVERNMENT CONTRACT PROVISIONS</h5>
-        <p>The following provisions are binding under the VolkanaDEV Government Infrastructure Contract and supplement Section 4 above:</p>
-        <ul>
-          <li><strong>5.1 Carve-Out:</strong> The Government Contract supersedes Section 2 of the VPL-1.0 for the approved scope only, in the context of autonomous defense systems. The Licensee is released from the public or commerical restrictions for that specific deployment. All other deployments remain bound by the VPL-1.0 in full.</li>
-          <li><strong>5.2 Packaged Handoff:</strong> The Licensor delivers the engine to the Licensee with absolute custody transfer. The Licensor retains zero access to internal data payloads, simulation metrics, operational inputs, or any data processed within the Licensee's infrastructure. No remote access, no telemetry, no backdoor. The boundary is absolute.</li>
-          <li><strong>5.3 Maintenance &amp; Security Updates:</strong> The Licensor provides mandatory, cryptographically signed low-level security updates, compiler stability patches, and kernel bug fixes. These updates protect core architectural integrity only. The Licensor cannot access, alter, or interrupt the Licensee's high-level software application layers. Operational interference is prohibited. The Licensee agrees to integrate updates within a commercially reasonable timeframe.</li>
-          <li><strong>5.4 Indemnification &amp; "As-Is" Delivery:</strong> The software engine is delivered strictly "as is." The Licensor makes no warranties regarding fitness for a particular purpose, merchantability, or compliance with specific regulatory frameworks. The Licensee assumes full and sole liability for all deployments, operations, and outcomes under the Government Contract. The Licensor holds zero regulatory or compliance exposure related to the Licensee's use of the engine.</li>
-        </ul>
+        <p>If you are a government agency or defense entity deploying this software for defense purposes, Section 2 does not apply to you if and only if you sign a separate, private VolkanaDEV Government Infrastructure Contract (the "Cleave Clause"). This contract grants a private, perpetual, non-transferable, non-sublicensable license to deploy the VolkanaDEV compilation engine and parallel node hardware architecture for a specific approved scope of use, evaluated on an isolated project-by-project basis.</p>
+        <p>The Cleave Clause includes full provisions for custody transfer, maintenance and patch management, liability and indemnification, breach and termination mechanics, and export control and ITAR compliance. To request a copy of the Cleave Clause Master Agreement, contact <a href="mailto:volkanadev@volkanadev.com">volkanadev@volkanadev.com</a> or <a href="cleave-clause.html">view the Cleave Clause information here</a>.</p>
 
         <hr style="border: none; border-top: 1px dashed var(--border); margin: 28px 0;">
 
-        <h5>6. DEFINITIONS</h5>
+        <h5>5. DEFINITIONS</h5>
         <p>"Licensor" means VolkanaDEV Autonomous Systems, Inc. "Licensee" means any individual or entity exercising rights under this license. "Software" means the VolkanaDEV compilation engine, VANA runtime, Sanguis compiler, associated source code, binaries, documentation, and hardware specifications. "Modification" means any alteration, addition, or derivative work of the Software. "Distribution" means making the Software or Modifications available to any third party by any means, including network access.</p>
+        <p>"Autonomous" means any system that is supported via a VANA as its execution platform on hardware. This includes any system where the VANA runtime, blood bridge, or connectome settle mechanism is the primary execution layer, whether running on consumer GPUs, custom silicon, or any future hardware platform.</p>
+        <p>"Defense Systems" means any mechanism, platform, or deployment intended to respond to, intercept, or neutralize incoming threats. This includes any weapon, firearm, explosive device, missile defense system, physical barrier, automated response mechanism, or any other tool or system designed to protect against external force. Defense systems are permitted only under a Government Infrastructure Contract (Section 4) and must not be used to initiate combat under any circumstances.</p>
+        <p>"Surveillance Systems" means any system supported by VolkanaDEV that is used to monitor, record, document, or circumvent protections for the purpose of information gathering, by any agency or entity, whether corporate, government, or otherwise. This includes bulk data harvesting, facial recognition arrays, network tracking infrastructure, and any population-level monitoring deployed without explicit, granular, individual consent. Facial recognition and similar identification technology may be used by law enforcement for legitimate identification purposes, but is not permitted to be used to spy on, track, or monitor individuals or populations without lawful authorization and individualized suspicion.</p>
+        <p>"Harm" means any physical or emotional means of causing injury to another organic or inorganic individual, regardless of their origination. "Organic individual" includes any living biological being, from a human being to any living organism. "Inorganic individual" includes any artificial system executing on VolkanaDEV hardware, any digital entity, any financial account or asset, and any data structure representing a person or entity. "Harm" covers intentional physical injury, emotional manipulation designed to cause psychological damage, financial ruin through deception or exploitation, and any deployment designed to generate personal profit through the intentional injury of any individual described above.</p>
 
-        <h5>7. ACCEPTANCE</h5>
-        <p>By viewing, downloading, installing, running, modifying, or distributing the Software, you (the Licensee) acknowledge that you have read this license, understand it, and agree to be bound by its terms. If you do not agree to these terms, you may not view, use, modify, or distribute the Software in any form.</p>
+        <h5>6. ACCEPTANCE</h5>
+        <p style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em;">By viewing, downloading, installing, running, modifying, or distributing the Software, you (the Licensee) acknowledge that you have read this license, understand it, and agree to be bound by its terms. If you do not agree to these terms, you may not view, use, modify, or distribute the Software in any form.</p>
+        <p style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em;">By adopting this license and/or distributing any platform, network, software, hardware, firmware, or any other implementation of VolkanaDEV Autonomous Systems, Inc, you agree to take on the form of the party identified in this license as "the Licensee," with all rights, restrictions, and obligations that role carries. VolkanaDEV Autonomous Systems, Inc assumes the form of "the Licensor," with all rights, duties, and obligations that role carries. Both parties are bound by this agreement in their respective roles.</p>
 
-        <h5>8. WARRANTY DISCLAIMER</h5>
+        <h5>7. WARRANTY DISCLAIMER</h5>
         <p>THE SOFTWARE IS PROVIDED "AS IS," WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. THE LICENSOR MAKES NO REPRESENTATIONS OR WARRANTIES THAT THE SOFTWARE WILL FUNCTION WITHOUT ERROR, MEET THE LICENSEE'S REQUIREMENTS, OR COMPLY WITH ANY SPECIFIC REGULATORY, MILITARY, DEFENSE, OR MUNICIPAL FRAMEWORK. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE SOFTWARE IS WITH THE LICENSEE. SHOULD THE SOFTWARE PROVE DEFECTIVE, THE LICENSEE (AND NOT THE LICENSOR) ASSUMES THE ENTIRE COST OF ALL NECESSARY SERVICING, REPAIR, OR CORRECTION.</p>
 
-        <h5>9. LIMITATION OF LIABILITY</h5>
+        <h5>8. LIMITATION OF LIABILITY</h5>
         <p>IN NO EVENT SHALL THE LICENSOR, ITS OFFICERS, DIRECTORS, EMPLOYEES, OR AFFILIATES BE LIABLE TO THE LICENSEE OR ANY THIRD PARTY FOR ANY INDIRECT, SPECIAL, INCIDENTAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, LOSS OF DATA, LOSS OF BUSINESS, OR COST OF SUBSTITUTE SERVICES, ARISING OUT OF OR IN CONNECTION WITH THIS LICENSE OR THE USE OR INABILITY TO USE THE SOFTWARE, WHETHER IN CONTRACT, TORT, OR OTHERWISE, EVEN IF THE LICENSOR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. THE LICENSOR'S TOTAL AGGREGATE LIABILITY UNDER THIS LICENSE SHALL NOT EXCEED THE AMOUNT, IF ANY, PAID BY THE LICENSEE TO THE LICENSOR FOR THE SOFTWARE IN THE TWELVE (12) MONTHS PRECEDING THE CLAIM, OR ONE U.S. DOLLAR ($1.00), WHICHEVER IS GREATER.</p>
 
-        <h5>10. GOVERNING LAW &amp; JURISDICTION</h5>
+        <h5>9. GOVERNING LAW &amp; JURISDICTION</h5>
         <p>This license shall be governed by and construed in accordance with the laws of the United States of America and the State in which the Licensor is incorporated, without regard to its conflict of law provisions. The parties irrevocably submit to the exclusive jurisdiction of the courts of that State for resolution of any dispute arising under or in connection with this license.</p>
 
-        <h5>11. SEVERABILITY &amp; NO WAIVER</h5>
+        <h5>10. SEVERABILITY &amp; NO WAIVER</h5>
         <p>If any provision of this license is held to be unenforceable or invalid by a court of competent jurisdiction, that provision shall be severed and the remaining provisions shall remain in full force and effect. The failure of the Licensor to enforce any provision of this license on any occasion shall not be deemed a waiver of that provision or the right to enforce it on any future occasion.</p>
 
-        <h5>12. ENTIRE AGREEMENT &amp; TRADEMARK NOTICE</h5>
+        <h5>11. ENTIRE AGREEMENT &amp; TRADEMARK NOTICE</h5>
         <p>This license constitutes the entire agreement between the Licensor and the Licensee with respect to the Software. It supersedes all prior or contemporaneous communications, representations, or agreements, whether oral or written. No amendment, modification, or waiver of any provision shall be effective unless made in writing and signed by an authorized representative of the Licensor.</p>
         <p>VolkanaDEV, Sanguis, VANA, and related marks are trademarks or intellectual property of VolkanaDEV Autonomous Systems, Inc. This license does not grant the Licensee any right, title, or interest in such marks beyond the limited right to use the Software as permitted herein. The Licensee may not use the Licensor's trademarks to endorse or promote products or services without prior written consent.</p>
 
-        <h5 style="text-align: center;">BOILERPLATE NOTICE</h5>
-        <p>This license format, including the VPL-1.0 structure, the Acceptable Use Policy provisions in Section 2, the breach and termination mechanics in Section 3, the government carve-out framework (Cleave Clause) in Section 4, the Government Contract provisions in Section 5, the definitions in Section 6, the acceptance mechanism in Section 7, the warranty disclaimer in Section 8, the limitation of liability in Section 9, the governing law in Section 10, the severability and no-waiver provisions in Section 11, and the entire agreement and trademark notice in Section 12, may be adopted by any individual or organization distributing copies or derivative works of VolkanaDEV software, hardware, or documentation.</p>
-        <p>If you redistribute this software, you must include this license in full, including this boilerplate notice. You may substitute your entity name, copyright year, and product name where appropriate, but the structural provisions, ethical restrictions, and carve-out framework must remain intact. Removing or weakening the anti-harm provisions in Section 2 voids your right to distribute under this license.</p>
+        <div style="border-top: 1px dashed #c45d3a; margin: 28px 0; height: 0;"></div>
+
+        <h5 style="text-align: center; font-size: 1.1rem; letter-spacing: 0.08em;">BOILERPLATE NOTICE</h5>
+        <p style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em;">THIS LICENSE FORMAT, INCLUDING THE VPL-1.0 STRUCTURE, THE ACCEPTABLE USE POLICY PROVISIONS IN SECTION 2, THE BREACH AND TERMINATION MECHANICS IN SECTION 3, THE GOVERNMENT CARVE-OUT FRAMEWORK (CLEAVE CLAUSE) IN SECTION 4, THE DEFINITIONS IN SECTION 5, THE ACCEPTANCE MECHANISM IN SECTION 6, THE WARRANTY DISCLAIMER IN SECTION 7, THE LIMITATION OF LIABILITY IN SECTION 8, THE GOVERNING LAW IN SECTION 9, THE SEVERABILITY AND NO-WAIVER PROVISIONS IN SECTION 10, AND THE ENTIRE AGREEMENT AND TRADEMARK NOTICE IN SECTION 11, MAY BE ADOPTED BY ANY INDIVIDUAL OR ORGANIZATION DISTRIBUTING COPIES OR DERIVATIVE WORKS OF VOLKANADEV SOFTWARE, HARDWARE, OR DOCUMENTATION.</p>
+        <p style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em;">IF YOU REDISTRIBUTE THIS SOFTWARE, YOU MUST INCLUDE THIS LICENSE IN FULL, INCLUDING THIS BOILERPLATE NOTICE. YOU MAY SUBSTITUTE YOUR ENTITY NAME, COPYRIGHT YEAR, AND PRODUCT NAME WHERE APPROPRIATE, BUT THE STRUCTURAL PROVISIONS, ETHICAL RESTRICTIONS, AND CARVE-OUT FRAMEWORK MUST REMAIN INTACT. REMOVING OR WEAKENING THE ANTI-HARM PROVISIONS IN SECTION 2 VOIDS YOUR RIGHT TO DISTRIBUTE UNDER THIS LICENSE.</p>
+        <p style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em;">BY SERVING A COPY OF THIS LICENCE WITH THIS BOILERPLATE INCLUDED, YOU AGREE VOLKANADEV AUTONOMOUS SYSTEMS, INC RETAINS ALL ORIGINAL RIGHTS AND LIABILITIES AS EXPRESSED IN THE ORIGINAL FORM OF THE VPL1.0 LICENSE ITSELF. ANY NON-AUTHORIZED CHANGES TO THIS LICENCE OR BOILERPLATE NOTICE EXPLICITLY REMOVE VOLKANADEV AUTONOMOUS SYSTEMS, INC AS LICENSOR AND, FURTHERMORE, YOU ALSO AGREE TO ASSUME FULL RESPONSIBILITY OF MAINTAINING LEGAL OR ALL OTHER FORMS OF RESPONSIBILITY, INDEPENDENT OF VOLKANADEV AUTONOMOUS SYSTEMS, INC. THIS NOTICE MUST BE INCLUDED WITH THE SERVED BOILERPLATE.</p>
       </div>
     </div>
 

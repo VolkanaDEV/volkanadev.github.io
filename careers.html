@@ -142,6 +142,63 @@
     .role { padding: 20px; }
     .roles { grid-template-columns: 1fr; }
   }
+
+  /* === Visual Enhancements === */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 5px rgba(196, 93, 58, 0.15); }
+    50% { box-shadow: 0 0 15px rgba(196, 93, 58, 0.3); }
+  }
+  body { animation: fadeIn 0.4s ease-out; }
+  .card, .doc-card, .doc-grid > a, .arena-card {
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover, .doc-card:hover, .doc-grid > a:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 4px 20px rgba(196, 93, 58, 0.12);
+  }
+  .hero h2, .header-block h2 {
+    text-shadow: 0 0 30px rgba(196, 93, 58, 0.08);
+  }
+  .nav-links a {
+    transition: color 0.2s, text-shadow 0.2s;
+  }
+  .nav-links a:hover {
+    text-shadow: 0 0 10px rgba(196, 93, 58, 0.3);
+  }
+  a { transition: opacity 0.15s, text-shadow 0.15s; }
+  .btn, button {
+    transition: all 0.2s ease;
+  }
+  .btn:hover, button:hover {
+    box-shadow: 0 0 12px rgba(196, 93, 58, 0.2);
+  }
+  .back-link:hover, footer a:hover {
+    text-shadow: 0 0 8px rgba(196, 93, 58, 0.25);
+  }
+  .legal-box {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .legal-box:hover {
+    border-color: rgba(196, 93, 58, 0.25);
+    box-shadow: 0 0 25px rgba(196, 93, 58, 0.04);
+  }
+  ::selection {
+    background: rgba(196, 93, 58, 0.25);
+  }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(196, 93, 58, 0.3); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(196, 93, 58, 0.5); }
+  /* Separator line radiant glow */
+  nav { border-bottom: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(196, 93, 58, 0.3); }
+  footer { border-top: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(196, 93, 58, 0.3); }
+  .section { border-top: 1px solid rgba(196, 93, 58, 0.5) !important; }
+  .feature-list li { border-bottom: 1px solid rgba(196, 93, 58, 0.25) !important; }
+  .doc-content h2 { border-bottom: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  .doc-nav-bottom { border-top: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  /* === End Visual Enhancements === */
 </style>
 </head>
 <body>
@@ -169,7 +226,7 @@
       <div class="company-line">VolkanaDEV Autonomous Systems, Inc.</div>
       <h2>Careers</h2>
       <p>We're building a programming language where programs are alive. If that's the kind of problem you want to work on, we want to talk.</p>
-      <p style="color: var(--muted-light); font-size: 0.85rem; margin-top: 20px;">VolkanaDEV is in the startup phase. Most roles start as contract positions with equity grants &mdash; no cash comp until we're funded. When funding comes through, roles convert to full-time W2 with salary and benefits. The Deployment Consultant role is paid at quote rates per engagement from day one.</p>
+      <p style="color: var(--muted-light); font-size: 0.85rem; margin-top: 20px;">VolkanaDEV is in the startup phase. Most roles start as contract positions with equity grants - no cash comp until we're funded. When funding comes through, roles convert to full-time W2 with salary and benefits. The Deployment Consultant role is paid at quote rates per engagement from day one.</p>
     </section>
   </div>
 
@@ -220,13 +277,13 @@
       <h3>Open roles</h3>
       <div class="roles">
         <div class="role">
-          <h4>Systems Engineer &mdash; Compiler &amp; Runtime</h4>
+          <h4>Systems Engineer - Compiler &amp; Runtime</h4>
           <div class="role-meta">Contract / Equity &middot; Remote &middot; C / Systems</div>
           <p>Work on the Sanguis compiler and VANA runtime. The long-term goal is replacing the C runtime scaffold with self-hosted Sanguis code.</p>
           <ul>
             <li>Experience building compilers, linkers, or language runtimes</li>
             <li>Strong C and systems programming background</li>
-            <li>Comfortable working without a roadmap &mdash; you'll help write it</li>
+            <li>Comfortable working without a roadmap - you'll help write it</li>
           </ul>
           <a href="mailto:volkanadev@volkanadev.com?subject=Application: Systems Engineer - Compiler & Runtime" class="btn">Apply</a>
         </div>
@@ -246,7 +303,7 @@
         <div class="role">
           <h4>Security &amp; Cryptography Engineer</h4>
           <div class="role-meta">Contract / Equity &middot; Remote &middot; Crypto / Systems Security</div>
-          <p>Work on the cryptographic security layer &mdash; five stacked crypto layers (SHA-256, HMAC-SHA3-256, AES-256-GCM, ChaCha20-Poly1305, Argon2id). Maintain, test, and extend the integrity verification system.</p>
+          <p>Work on the cryptographic security layer - five stacked crypto layers (SHA-256, HMAC-SHA3-256, AES-256-GCM, ChaCha20-Poly1305, Argon2id). Maintain, test, and extend the integrity verification system.</p>
           <ul>
             <li>Production crypto implementation experience</li>
             <li>Deep understanding of authenticated encryption and KDFs</li>
@@ -258,7 +315,7 @@
         <div class="role">
           <h4>Hardware / FPGA Engineer</h4>
           <div class="role-meta">Contract / Equity &middot; Remote (travel for prototyping) &middot; FPGA / PCB / SoC</div>
-          <p>The end goal is VANA on custom silicon. Design and prototype the hardware pathway &mdash; FPGA boards, custom PCBs, eventually SoC.</p>
+          <p>The end goal is VANA on custom silicon. Design and prototype the hardware pathway - FPGA boards, custom PCBs, eventually SoC.</p>
           <ul>
             <li>Custom PCB design from schematic to fabrication</li>
             <li>FPGA development (Verilog, VHDL, or HLS)</li>
@@ -354,7 +411,7 @@
         <div class="role">
           <h4>Researcher</h4>
           <div class="role-meta">Contract / Equity &middot; Remote &middot; Research</div>
-          <p>Explore the frontiers. Whether it's neural architectures, connectomics, novel compilation strategies, or cognitive models &mdash; if it could shape VANA's future, we want to know about it. Publish or perish doesn't apply here. We want results we can use.</p>
+          <p>Explore the frontiers. Whether it's neural architectures, connectomics, novel compilation strategies, or cognitive models - if it could shape VANA's future, we want to know about it. Publish or perish doesn't apply here. We want results we can use.</p>
           <ul>
             <li>Background in CS, neuroscience, cognitive science, or related field</li>
             <li>Ability to read and synthesize academic literature</li>
@@ -366,7 +423,7 @@
         <div class="role">
           <h4>Internal Floater</h4>
           <div class="role-meta">Contract / Equity &middot; Remote &middot; Generalist / Rotational</div>
-          <p>Not sure where you fit? Neither are we &mdash; and that's the point. You'll rotate across teams, pick up whatever's on fire, and get exposed to everything from compiler internals to PR. For people who learn fast and want their hand in everything.</p>
+          <p>Not sure where you fit? Neither are we - and that's the point. You'll rotate across teams, pick up whatever's on fire, and get exposed to everything from compiler internals to PR. For people who learn fast and want their hand in everything.</p>
           <ul>
             <li>Strong generalist who picks up new domains quickly</li>
             <li>Comfortable with ambiguity and shifting priorities</li>

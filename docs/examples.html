@@ -59,6 +59,63 @@
   .footer-links{margin-bottom:8px}
   .footer-links a{margin:0 8px}
   @media(max-width:768px){.nav-toggle{display:flex}.nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--border);padding:8px 24px 16px;display:none;z-index:100}.nav-links.open{display:flex}.nav-links a{padding:12px 0;border-bottom:1px solid var(--border);font-size:0.95rem}.nav-links a:last-child{border-bottom:none}.doc-layout{flex-direction:column}.doc-sidebar{display:none}.doc-content{padding:24px 16px 60px}.wrap{padding:0 16px}}
+
+  /* === Visual Enhancements === */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 5px rgba(196, 93, 58, 0.15); }
+    50% { box-shadow: 0 0 15px rgba(196, 93, 58, 0.3); }
+  }
+  body { animation: fadeIn 0.4s ease-out; }
+  .card, .doc-card, .doc-grid > a, .arena-card {
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover, .doc-card:hover, .doc-grid > a:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 4px 20px rgba(196, 93, 58, 0.12);
+  }
+  .hero h2, .header-block h2 {
+    text-shadow: 0 0 30px rgba(196, 93, 58, 0.08);
+  }
+  .nav-links a {
+    transition: color 0.2s, text-shadow 0.2s;
+  }
+  .nav-links a:hover {
+    text-shadow: 0 0 10px rgba(196, 93, 58, 0.3);
+  }
+  a { transition: opacity 0.15s, text-shadow 0.15s; }
+  .btn, button {
+    transition: all 0.2s ease;
+  }
+  .btn:hover, button:hover {
+    box-shadow: 0 0 12px rgba(196, 93, 58, 0.2);
+  }
+  .back-link:hover, footer a:hover {
+    text-shadow: 0 0 8px rgba(196, 93, 58, 0.25);
+  }
+  .legal-box {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .legal-box:hover {
+    border-color: rgba(196, 93, 58, 0.25);
+    box-shadow: 0 0 25px rgba(196, 93, 58, 0.04);
+  }
+  ::selection {
+    background: rgba(196, 93, 58, 0.25);
+  }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(196, 93, 58, 0.3); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(196, 93, 58, 0.5); }
+  /* Separator line radiant glow */
+  nav { border-bottom: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(196, 93, 58, 0.3); }
+  footer { border-top: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(196, 93, 58, 0.3); }
+  .section { border-top: 1px solid rgba(196, 93, 58, 0.5) !important; }
+  .feature-list li { border-bottom: 1px solid rgba(196, 93, 58, 0.25) !important; }
+  .doc-content h2 { border-bottom: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  .doc-nav-bottom { border-top: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  /* === End Visual Enhancements === */
 </style>
 </head>
 <body>
@@ -102,7 +159,7 @@
       <p class="subtitle">The building blocks of a Sanguis V4 program. Run with <span class="code-inline">vana_runner.exe</span>.</p>
 
       <h2 id="circuit">circuit</h2>
-      <p>A <span class="code-inline">circuit</span> is a body &mdash; a named scope containing holds and routes. A program is one or more circuits.</p>
+      <p>A <span class="code-inline">circuit</span> is a body - a named scope containing holds and routes. A program is one or more circuits.</p>
       <div class="code-block"><pre>circuit Name {
   // holds and routes
 }</pre></div>
@@ -125,7 +182,7 @@ hold name : memory text                // defaults to ""</pre></div>
       <p>A route with no conditions always fires. A route with conditions fires only when all conditions are simultaneously true at the start of the tick.</p>
 
       <h2 id="but">but</h2>
-      <p>A <span class="code-inline">but</span> condition gates a route. Multiple <span class="code-inline">but</span> conditions are ANDed &mdash; all must pass for the route to fire.</p>
+      <p>A <span class="code-inline">but</span> condition gates a route. Multiple <span class="code-inline">but</span> conditions are ANDed - all must pass for the route to fire.</p>
       <div class="code-block"><pre>when process {
   but state &lt; 10.0
   but active = 1.0
@@ -137,7 +194,7 @@ hold name : memory text                // defaults to ""</pre></div>
       <div class="code-block"><pre>emit 42.0 to state          // write to a hold
 emit "text" to screen       // print to terminal
 emit 0.0 to world           // set exit code</pre></div>
-      <p>Multiple emits in a route execute in order within the route. Emits are applied immediately &mdash; subsequent emits in the same route see updated values.</p>
+      <p>Multiple emits in a route execute in order within the route. Emits are applied immediately - subsequent emits in the same route see updated values.</p>
       <table class="doc-table">
         <tr><th>Target</th><th>Behavior</th></tr>
         <tr><td><span class="code-inline">screen</span></td><td>Print the value to terminal output</td></tr>
@@ -160,15 +217,16 @@ emit 0.0 to world           // set exit code</pre></div>
       <p>This prints each character of <span class="code-inline">src</span> one per tick: <span class="code-inline">H</span>, <span class="code-inline">e</span>, <span class="code-inline">l</span>, <span class="code-inline">l</span>, <span class="code-inline">o</span>.</p>
       <p>The <span class="code-inline">char</span> hold is automatically created and managed by the engine. The through position is internal to the route and advances each tick the route fires.</p>
 
-      <h2 id="stream">stream</h2>
-      <p><span class="code-inline">stream</span> outputs an entire text hold to the terminal in a single operation:</p>
-      <div class="code-block"><pre>stream genome</pre></div>
-      <p>This is equivalent to printing every character of the hold's text at once. Use <span class="code-inline">stream</span> for bulk output, <span class="code-inline">emit to screen</span> for individual values.</p>
+      <h2 id="memory">memory</h2>
+      <p><span class="code-inline">memory</span> is the layer type for holds. Every hold uses <span class="code-inline">memory</span> to declare that it persists its value across ticks:</p>
+      <div class="code-block"><pre>hold name : memory scalar = 0.0    // persistent scalar
+hold name : memory text = "value" // persistent text</pre></div>
+      <p>All holds in V4 are <span class="code-inline">memory</span> layer. The hold retains its value from tick to tick until a route emits a new value to it.</p>
 
-      <h2 id="route-keyword">route</h2>
-      <p><span class="code-inline">route</span> copies one hold's value to another:</p>
-      <div class="code-block"><pre>route src to dst</pre></div>
-      <p>If the source is a scalar hold, the destination receives the scalar value. If the source is a text hold, the destination receives the full text.</p>
+      <h2 id="wire">wire</h2>
+      <p><span class="code-inline">wire</span> connects a hold in one circuit to a hold in another, creating a connectome link:</p>
+      <div class="code-block"><pre>wire Body.sense to Brain.think</pre></div>
+      <p>Wires can be declared at the top level or inside a circuit. A wire routes data from the source hold to the target hold every tick. This is how circuits communicate: the organism is a network of circuits wired together.</p>
 
       <div class="doc-nav-bottom">
         <a href="execution-model.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Execution Model</span></a>

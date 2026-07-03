@@ -59,6 +59,63 @@
   .footer-links{margin-bottom:8px}
   .footer-links a{margin:0 8px}
   @media(max-width:768px){.nav-toggle{display:flex}.nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--border);padding:8px 24px 16px;display:none;z-index:100}.nav-links.open{display:flex}.nav-links a{padding:12px 0;border-bottom:1px solid var(--border);font-size:0.95rem}.nav-links a:last-child{border-bottom:none}.doc-layout{flex-direction:column}.doc-sidebar{display:none}.doc-content{padding:24px 16px 60px}.wrap{padding:0 16px}}
+
+  /* === Visual Enhancements === */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 5px rgba(196, 93, 58, 0.15); }
+    50% { box-shadow: 0 0 15px rgba(196, 93, 58, 0.3); }
+  }
+  body { animation: fadeIn 0.4s ease-out; }
+  .card, .doc-card, .doc-grid > a, .arena-card {
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover, .doc-card:hover, .doc-grid > a:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 4px 20px rgba(196, 93, 58, 0.12);
+  }
+  .hero h2, .header-block h2 {
+    text-shadow: 0 0 30px rgba(196, 93, 58, 0.08);
+  }
+  .nav-links a {
+    transition: color 0.2s, text-shadow 0.2s;
+  }
+  .nav-links a:hover {
+    text-shadow: 0 0 10px rgba(196, 93, 58, 0.3);
+  }
+  a { transition: opacity 0.15s, text-shadow 0.15s; }
+  .btn, button {
+    transition: all 0.2s ease;
+  }
+  .btn:hover, button:hover {
+    box-shadow: 0 0 12px rgba(196, 93, 58, 0.2);
+  }
+  .back-link:hover, footer a:hover {
+    text-shadow: 0 0 8px rgba(196, 93, 58, 0.25);
+  }
+  .legal-box {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .legal-box:hover {
+    border-color: rgba(196, 93, 58, 0.25);
+    box-shadow: 0 0 25px rgba(196, 93, 58, 0.04);
+  }
+  ::selection {
+    background: rgba(196, 93, 58, 0.25);
+  }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(196, 93, 58, 0.3); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(196, 93, 58, 0.5); }
+  /* Separator line radiant glow */
+  nav { border-bottom: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(196, 93, 58, 0.3); }
+  footer { border-top: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(196, 93, 58, 0.3); }
+  .section { border-top: 1px solid rgba(196, 93, 58, 0.5) !important; }
+  .feature-list li { border-bottom: 1px solid rgba(196, 93, 58, 0.25) !important; }
+  .doc-content h2 { border-bottom: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  .doc-nav-bottom { border-top: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  /* === End Visual Enhancements === */
 </style>
 </head>
 <body>
@@ -99,34 +156,33 @@
       <div class="breadcrumb"><a href="index.html">Docs</a> / Language Reference</div>
 
       <h1>Language Reference</h1>
-      <p class="subtitle">Eight keywords, grammar, condition operators, builtins, and comments. Programs run on <span class="code-inline">vana_runner.exe</span>.</p>
+      <p class="subtitle">Eight keywords: circuit, hold, memory, when, but, emit, through, wire. Grammar, condition operators, builtins, and comments.</p>
 
       <h2 id="keywords">Keywords</h2>
       <p>V4 has 8 keywords. No more, no less.</p>
       <table class="doc-table">
         <tr><th>Keyword</th><th>Purpose</th></tr>
-        <tr><td><span class="code-inline">circuit</span></td><td>Declare a body &mdash; a collection of holds and routes</td></tr>
+        <tr><td><span class="code-inline">circuit</span></td><td>Declare a body - a collection of holds and routes</td></tr>
         <tr><td><span class="code-inline">hold</span></td><td>Declare a named value (scalar or text)</td></tr>
+        <tr><td><span class="code-inline">memory</span></td><td>Declare the layer type of a hold (persistent state)</td></tr>
         <tr><td><span class="code-inline">when</span></td><td>Declare a route trigger</td></tr>
         <tr><td><span class="code-inline">but</span></td><td>Gate a route with a condition</td></tr>
         <tr><td><span class="code-inline">emit</span></td><td>Send a value to a target</td></tr>
         <tr><td><span class="code-inline">through</span></td><td>Iterate through text, one character per tick</td></tr>
-        <tr><td><span class="code-inline">stream</span></td><td>Output a hold's text to the terminal</td></tr>
-        <tr><td><span class="code-inline">route</span></td><td>Copy a hold's value to another hold</td></tr>
+        <tr><td><span class="code-inline">wire</span></td><td>Connect a hold in one circuit to a hold in another</td></tr>
       </table>
 
       <h2 id="grammar">Grammar</h2>
-      <div class="code-block"><pre>program     := circuit*
-circuit     := "circuit" IDENT "{" (hold | when)* "}"
+      <div class="code-block"><pre>program     := (circuit | wire)*
+circuit     := "circuit" IDENT "{" (hold | when | wire)* "}"
 hold        := "hold" IDENT ":" "memory" ("scalar" | "text") ("=" value)?
-when        := "when" IDENT "{" ("but" condition)* ("through" IDENT)? (emit | stream | route)* "}"
+when        := "when" IDENT "{" ("but" condition)* ("through" IDENT)? emit* "}"
+wire        := "wire" IDENT "." IDENT "to" IDENT "." IDENT
 condition   := IDENT ("<" | ">" | "=") (number | IDENT)
 emit        := "emit" expr "to" target
-stream      := "stream" IDENT
-route       := "route" IDENT "to" IDENT
-target      := IDENT | "screen" | "world"
+target      := IDENT | "screen" | "world" | "disk" string
 value       := number | string
-expr        := number | string | IDENT | IDENT ("+" | "-") expr | builtin "(" args ")"</pre></div>
+expr        := number | string | IDENT | IDENT ("+" | "-" | "*") expr | builtin "(" args ")"</pre></div>
 
       <h2 id="condition-operators">Condition Operators</h2>
       <p>V4 supports three comparison operators:</p>
@@ -149,14 +205,14 @@ but x = 0.0       // hold vs number (equality)</pre></div>
       <div class="code-block"><pre>emit a + b to sum        // addition
 emit a - b to diff       // subtraction
 emit pos + 1.0 to pos    // increment</pre></div>
-      <p>Only <span class="code-inline">+</span> and <span class="code-inline">-</span> are supported. Arithmetic is evaluated left to right. Operands can be numbers, hold names, or builtin results.</p>
+      <p>Only <span class="code-inline">+</span>, <span class="code-inline">-</span>, and <span class="code-inline">*</span> are supported. Arithmetic is evaluated left to right. Operands can be numbers, hold names, or builtin results.</p>
 
       <h2 id="comments">Comments</h2>
       <div class="code-block"><pre>// Comments start with // and run to end of line.</pre></div>
       <p>Comments are ignored by the parser. Use them freely.</p>
 
       <h2 id="builtins">Builtins</h2>
-      <p>V4 provides 17 builtins for string manipulation, file I/O, comparison, conversion, output, and native output:</p>
+      <p>V4 provides 18 builtins for string manipulation, file I/O, comparison, conversion, output, and native output:</p>
 
       <h3>String Builtins</h3>
       <table class="doc-table">

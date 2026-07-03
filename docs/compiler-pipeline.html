@@ -59,6 +59,63 @@
   .footer-links{margin-bottom:8px}
   .footer-links a{margin:0 8px}
   @media(max-width:768px){.nav-toggle{display:flex}.nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--border);padding:8px 24px 16px;display:none;z-index:100}.nav-links.open{display:flex}.nav-links a{padding:12px 0;border-bottom:1px solid var(--border);font-size:0.95rem}.nav-links a:last-child{border-bottom:none}.doc-layout{flex-direction:column}.doc-sidebar{display:none}.doc-content{padding:24px 16px 60px}.wrap{padding:0 16px}}
+
+  /* === Visual Enhancements === */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 5px rgba(196, 93, 58, 0.15); }
+    50% { box-shadow: 0 0 15px rgba(196, 93, 58, 0.3); }
+  }
+  body { animation: fadeIn 0.4s ease-out; }
+  .card, .doc-card, .doc-grid > a, .arena-card {
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover, .doc-card:hover, .doc-grid > a:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 4px 20px rgba(196, 93, 58, 0.12);
+  }
+  .hero h2, .header-block h2 {
+    text-shadow: 0 0 30px rgba(196, 93, 58, 0.08);
+  }
+  .nav-links a {
+    transition: color 0.2s, text-shadow 0.2s;
+  }
+  .nav-links a:hover {
+    text-shadow: 0 0 10px rgba(196, 93, 58, 0.3);
+  }
+  a { transition: opacity 0.15s, text-shadow 0.15s; }
+  .btn, button {
+    transition: all 0.2s ease;
+  }
+  .btn:hover, button:hover {
+    box-shadow: 0 0 12px rgba(196, 93, 58, 0.2);
+  }
+  .back-link:hover, footer a:hover {
+    text-shadow: 0 0 8px rgba(196, 93, 58, 0.25);
+  }
+  .legal-box {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .legal-box:hover {
+    border-color: rgba(196, 93, 58, 0.25);
+    box-shadow: 0 0 25px rgba(196, 93, 58, 0.04);
+  }
+  ::selection {
+    background: rgba(196, 93, 58, 0.25);
+  }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(196, 93, 58, 0.3); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(196, 93, 58, 0.5); }
+  /* Separator line radiant glow */
+  nav { border-bottom: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(196, 93, 58, 0.3); }
+  footer { border-top: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(196, 93, 58, 0.3); }
+  .section { border-top: 1px solid rgba(196, 93, 58, 0.5) !important; }
+  .feature-list li { border-bottom: 1px solid rgba(196, 93, 58, 0.25) !important; }
+  .doc-content h2 { border-bottom: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  .doc-nav-bottom { border-top: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  /* === End Visual Enhancements === */
 </style>
 </head>
 <body>
@@ -98,7 +155,7 @@
     <main class="doc-content">
       <div class="breadcrumb"><a href="index.html">Docs</a> / Engine &amp; Soul</div>
 
-      <h1>The VANA Engine &mdash; Runtime and Compiler</h1>
+      <h1>The VANA Engine - Runtime and Compiler</h1>
       <p class="subtitle">How the V4 runtime works and the self-hosting compiler pipeline</p>
 
       <h2 id="the-runtime">The VANA Runtime</h2>
@@ -114,7 +171,7 @@
       5. <strong>Check.</strong> If the <span class="code-inline">state</span> hold reaches <span class="code-inline">2.0</span> or the <span class="code-inline">done</span> hold reaches <span class="code-inline">1.0</span>, execution stops.</p>
 
       <h3 id="parallel-semantics">Parallel Semantics</h3>
-      <p>All routes are evaluated against the same snapshot &mdash; the state at the start of the tick. Route A's emit to hold X is <strong>NOT</strong> visible to Route B's conditions in the same tick. Route A's emit to hold X <strong>IS</strong> visible to Route A's own subsequent emits in the same tick. Routes are parallel. Within a route, emits are sequential.</p>
+      <p>All routes are evaluated against the same snapshot - the state at the start of the tick. Route A's emit to hold X is <strong>NOT</strong> visible to Route B's conditions in the same tick. Route A's emit to hold X <strong>IS</strong> visible to Route A's own subsequent emits in the same tick. Routes are parallel. Within a route, emits are sequential.</p>
 
       <h3 id="termination">Termination</h3>
       <p>The engine stops when:</p>
@@ -134,7 +191,7 @@
 
       <h2 id="pipeline-stages">Pipeline Stages</h2>
       <div class="code-block"><pre>.sang source &rarr; [phase1.sang] &rarr; .vana genome &rarr; [phase2.sang] &rarr; patch.ps1 &rarr; [PE assembler] &rarr; .exe</pre></div>
-      <p>1. <strong>Phase 1</strong> (<span class="code-inline">phase1.sang</span>): Reads <span class="code-inline">.sang</span> source, classifies each line (circuit, hold, when, but, emit, through, stream, route), and emits a pipe-delimited genome file (<span class="code-inline">.vana</span>).</p>
+      <p>1. <strong>Phase 1</strong> (<span class="code-inline">phase1.sang</span>): Reads <span class="code-inline">.sang</span> source, classifies each line (circuit, hold, when, but, emit, through, wire), and emits a pipe-delimited genome file (<span class="code-inline">.vana</span>).</p>
       <p>2. <strong>Phase 2</strong> (<span class="code-inline">phase2.sang</span>): Reads the <span class="code-inline">.vana</span> genome, extracts holds, routes, and emits, and generates a PowerShell script (<span class="code-inline">patch.ps1</span>) that assembles a Windows PE binary.</p>
       <p>3. <strong>PE Assembly</strong>: The PowerShell script encodes the program as x86-64 opcodes (tcodes), builds the PE headers, .text, .rdata, and .data sections, and writes a standalone <span class="code-inline">.exe</span>.</p>
 

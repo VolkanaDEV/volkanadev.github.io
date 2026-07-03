@@ -59,6 +59,63 @@
   .footer-links{margin-bottom:8px}
   .footer-links a{margin:0 8px}
   @media(max-width:768px){.nav-toggle{display:flex}.nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--border);padding:8px 24px 16px;display:none;z-index:100}.nav-links.open{display:flex}.nav-links a{padding:12px 0;border-bottom:1px solid var(--border);font-size:0.95rem}.nav-links a:last-child{border-bottom:none}.doc-layout{flex-direction:column}.doc-sidebar{display:none}.doc-content{padding:24px 16px 60px}.wrap{padding:0 16px}}
+
+  /* === Visual Enhancements === */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 5px rgba(196, 93, 58, 0.15); }
+    50% { box-shadow: 0 0 15px rgba(196, 93, 58, 0.3); }
+  }
+  body { animation: fadeIn 0.4s ease-out; }
+  .card, .doc-card, .doc-grid > a, .arena-card {
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover, .doc-card:hover, .doc-grid > a:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 4px 20px rgba(196, 93, 58, 0.12);
+  }
+  .hero h2, .header-block h2 {
+    text-shadow: 0 0 30px rgba(196, 93, 58, 0.08);
+  }
+  .nav-links a {
+    transition: color 0.2s, text-shadow 0.2s;
+  }
+  .nav-links a:hover {
+    text-shadow: 0 0 10px rgba(196, 93, 58, 0.3);
+  }
+  a { transition: opacity 0.15s, text-shadow 0.15s; }
+  .btn, button {
+    transition: all 0.2s ease;
+  }
+  .btn:hover, button:hover {
+    box-shadow: 0 0 12px rgba(196, 93, 58, 0.2);
+  }
+  .back-link:hover, footer a:hover {
+    text-shadow: 0 0 8px rgba(196, 93, 58, 0.25);
+  }
+  .legal-box {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .legal-box:hover {
+    border-color: rgba(196, 93, 58, 0.25);
+    box-shadow: 0 0 25px rgba(196, 93, 58, 0.04);
+  }
+  ::selection {
+    background: rgba(196, 93, 58, 0.25);
+  }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(196, 93, 58, 0.3); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(196, 93, 58, 0.5); }
+  /* Separator line radiant glow */
+  nav { border-bottom: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(196, 93, 58, 0.3); }
+  footer { border-top: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(196, 93, 58, 0.3); }
+  .section { border-top: 1px solid rgba(196, 93, 58, 0.5) !important; }
+  .feature-list li { border-bottom: 1px solid rgba(196, 93, 58, 0.25) !important; }
+  .doc-content h2 { border-bottom: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  .doc-nav-bottom { border-top: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  /* === End Visual Enhancements === */
 </style>
 </head>
 <body>
@@ -99,11 +156,11 @@
       <div class="breadcrumb"><a href="index.html">Docs</a> / Security &amp; Native</div>
 
       <h1>Native Compilation &amp; File Formats</h1>
-      <p class="subtitle">.sang to .exe &mdash; the self-hosting compiler pipeline and file formats</p>
+      <p class="subtitle">.sang to .exe - the self-hosting compiler pipeline and file formats</p>
 
       <h2 id="pipeline">Pipeline</h2>
       <div class="code-block"><pre>.sang source &rarr; [phase1.sang] &rarr; .vana genome &rarr; [phase2.sang] &rarr; patch.ps1 &rarr; [PE assembler] &rarr; .exe</pre></div>
-      <p>The <span class="code-inline">.exe</span> is fully standalone &mdash; no runtime dependencies, no external compiler, no assembler, no linker.</p>
+      <p>The <span class="code-inline">.exe</span> is fully standalone - no runtime dependencies, no external compiler, no assembler, no linker.</p>
 
       <h2 id="running-the-compiler">Running the Compiler</h2>
       <div class="code-block"><pre>vana_runner.exe phase1.sang    # produces output.vana
@@ -136,10 +193,10 @@ output.exe                     # runs the compiled program</pre></div>
       <h1 style="margin-top:80px">File Formats</h1>
       <p class="subtitle">Every file type in the Sanguis V4 ecosystem</p>
 
-      <h3 id="sang">.sang &mdash; Sanguis Source</h3>
+      <h3 id="sang">.sang - Sanguis Source</h3>
       <p>Human-written text file containing circuit declarations, holds, routes, conditions, and emits. Comments with <span class="code-inline">//</span>. This is the primary source format.</p>
 
-      <h3 id="vana">.vana &mdash; Genome Format</h3>
+      <h3 id="vana">.vana - Genome Format</h3>
       <p>Pipe-delimited text format produced by phase 1 of the compiler. Each line is a token:</p>
       <div class="code-block"><pre>VANA|v1
 BODY|name
@@ -152,7 +209,7 @@ STREAM|holdname
 ROUTE|src|tgt
 ENDBODY</pre></div>
 
-      <h3 id="exe">.exe &mdash; Native PE Binary</h3>
+      <h3 id="exe">.exe - Native PE Binary</h3>
       <p>Standalone Windows x86-64 executable. No runtime dependencies. Generated by the PE assembler from tcodes.</p>
 
       <h1 style="margin-top:80px">Glossary</h1>
@@ -160,13 +217,13 @@ ENDBODY</pre></div>
         <tr><th>Term</th><th>Meaning</th></tr>
         <tr><td>Sanguis</td><td>The language</td></tr>
         <tr><td>VANA</td><td>The engine/runtime (Voltage Activated Neural Architecture)</td></tr>
-        <tr><td>Circuit</td><td>A body &mdash; a named scope of holds and routes</td></tr>
+        <tr><td>Circuit</td><td>A body - a named scope of holds and routes</td></tr>
         <tr><td>Hold</td><td>A named value (scalar or text)</td></tr>
         <tr><td>Route</td><td>A triggered block that fires when conditions pass</td></tr>
-        <tr><td>Tick</td><td>One execution cycle &mdash; all routes evaluated in parallel</td></tr>
+        <tr><td>Tick</td><td>One execution cycle - all routes evaluated in parallel</td></tr>
         <tr><td>Emit</td><td>Send a value to a target (hold, screen, or world)</td></tr>
         <tr><td>Through</td><td>Iterate through text one character per tick</td></tr>
-        <tr><td>Stream</td><td>Output a text hold to the terminal</td></tr>
+        <tr><td>Wire</td><td>Connectome link between circuits</td></tr>
         <tr><td>Tcode</td><td>A Sanguis token mapping to an x86-64 opcode</td></tr>
         <tr><td>Genome</td><td>The <span class="code-inline">.vana</span> pipe-delimited intermediate format</td></tr>
         <tr><td>Phase 1</td><td>Source-to-genome compilation stage</td></tr>

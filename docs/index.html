@@ -64,6 +64,63 @@
   .footer-links{margin-bottom:8px}
   .footer-links a{margin:0 8px}
   @media(max-width:768px){.nav-toggle{display:flex}.nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--border);padding:8px 24px 16px;display:none;z-index:100}.nav-links.open{display:flex}.nav-links a{padding:12px 0;border-bottom:1px solid var(--border);font-size:0.95rem}.nav-links a:last-child{border-bottom:none}.doc-layout{flex-direction:column}.doc-sidebar{display:none}.doc-content{padding:24px 16px 60px}.wrap{padding:0 16px}}
+
+  /* === Visual Enhancements === */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 5px rgba(196, 93, 58, 0.15); }
+    50% { box-shadow: 0 0 15px rgba(196, 93, 58, 0.3); }
+  }
+  body { animation: fadeIn 0.4s ease-out; }
+  .card, .doc-card, .doc-grid > a, .arena-card {
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover, .doc-card:hover, .doc-grid > a:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 4px 20px rgba(196, 93, 58, 0.12);
+  }
+  .hero h2, .header-block h2 {
+    text-shadow: 0 0 30px rgba(196, 93, 58, 0.08);
+  }
+  .nav-links a {
+    transition: color 0.2s, text-shadow 0.2s;
+  }
+  .nav-links a:hover {
+    text-shadow: 0 0 10px rgba(196, 93, 58, 0.3);
+  }
+  a { transition: opacity 0.15s, text-shadow 0.15s; }
+  .btn, button {
+    transition: all 0.2s ease;
+  }
+  .btn:hover, button:hover {
+    box-shadow: 0 0 12px rgba(196, 93, 58, 0.2);
+  }
+  .back-link:hover, footer a:hover {
+    text-shadow: 0 0 8px rgba(196, 93, 58, 0.25);
+  }
+  .legal-box {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .legal-box:hover {
+    border-color: rgba(196, 93, 58, 0.25);
+    box-shadow: 0 0 25px rgba(196, 93, 58, 0.04);
+  }
+  ::selection {
+    background: rgba(196, 93, 58, 0.25);
+  }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(196, 93, 58, 0.3); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(196, 93, 58, 0.5); }
+  /* Separator line radiant glow */
+  nav { border-bottom: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(196, 93, 58, 0.3); }
+  footer { border-top: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(196, 93, 58, 0.3); }
+  .section { border-top: 1px solid rgba(196, 93, 58, 0.5) !important; }
+  .feature-list li { border-bottom: 1px solid rgba(196, 93, 58, 0.25) !important; }
+  .doc-content h2 { border-bottom: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  .doc-nav-bottom { border-top: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  /* === End Visual Enhancements === */
 </style>
 </head>
 <body>
@@ -104,14 +161,14 @@
       <div class="breadcrumb"><a href="index.html">Docs</a> / Overview</div>
 
       <h1>Sanguis Documentation</h1>
-      <p class="subtitle">Version 4 &mdash; Parallel-First Programming</p>
+      <p class="subtitle">Version 4 - Parallel-First Programming</p>
 
-      <p>Sanguis is a parallel-first programming language. Programs are not sequences of instructions &mdash; they are collections of routes that fire simultaneously, settle against conditions, and produce output. There is no <span class="code-inline">main()</span>, no call stack, no sequential execution.</p>
+      <p>Sanguis is a parallel-first programming language. Programs are not sequences of instructions - they are collections of routes that fire simultaneously, settle against conditions, and produce output. There is no <span class="code-inline">main()</span>, no call stack, no sequential execution.</p>
 
       <p>A Sanguis program describes:</p>
-      <p>&bull; <strong>Holds</strong> &mdash; named values (scalars or text)<br>
-      &bull; <strong>Routes</strong> &mdash; triggered blocks that check conditions and emit values<br>
-      &bull; <strong>Ticks</strong> &mdash; the engine advances one tick at a time, evaluating all routes in parallel</p>
+      <p>&bull; <strong>Holds</strong> - named values (scalars or text)<br>
+      &bull; <strong>Routes</strong> - triggered blocks that check conditions and emit values<br>
+      &bull; <strong>Ticks</strong> - the engine advances one tick at a time, evaluating all routes in parallel</p>
 
       <h2 id="design-principles">Design Principles</h2>
       <p>&bull; <strong>Parallel by default.</strong> All routes evaluate every tick. There is no sequential ordering.<br>
@@ -126,7 +183,7 @@
         </a>
         <a href="language-reference.html" class="doc-card">
           <h3>Language Reference</h3>
-          <p>Eight keywords, grammar, condition operators, comments, arithmetic, and builtins.</p>
+          <p>Eight keywords: circuit, hold, memory, when, but, emit, through, wire. Grammar, operators, builtins.</p>
         </a>
         <a href="builtins.html" class="doc-card">
           <h3>Builtins</h3>
@@ -138,7 +195,7 @@
         </a>
         <a href="examples.html" class="doc-card">
           <h3>Examples</h3>
-          <p>Circuits, holds, routes, conditions, emit, through, stream, and route &mdash; with examples.</p>
+          <p>Circuits, holds, routes, conditions, emit, through, stream, and route - with examples.</p>
         </a>
         <a href="compiler-pipeline.html" class="doc-card">
           <h3>Compiler Pipeline</h3>

@@ -59,6 +59,63 @@
   .footer-links{margin-bottom:8px}
   .footer-links a{margin:0 8px}
   @media(max-width:768px){.nav-toggle{display:flex}.nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--border);padding:8px 24px 16px;display:none;z-index:100}.nav-links.open{display:flex}.nav-links a{padding:12px 0;border-bottom:1px solid var(--border);font-size:0.95rem}.nav-links a:last-child{border-bottom:none}.doc-layout{flex-direction:column}.doc-sidebar{display:none}.doc-content{padding:24px 16px 60px}.wrap{padding:0 16px}}
+
+  /* === Visual Enhancements === */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 5px rgba(196, 93, 58, 0.15); }
+    50% { box-shadow: 0 0 15px rgba(196, 93, 58, 0.3); }
+  }
+  body { animation: fadeIn 0.4s ease-out; }
+  .card, .doc-card, .doc-grid > a, .arena-card {
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover, .doc-card:hover, .doc-grid > a:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 4px 20px rgba(196, 93, 58, 0.12);
+  }
+  .hero h2, .header-block h2 {
+    text-shadow: 0 0 30px rgba(196, 93, 58, 0.08);
+  }
+  .nav-links a {
+    transition: color 0.2s, text-shadow 0.2s;
+  }
+  .nav-links a:hover {
+    text-shadow: 0 0 10px rgba(196, 93, 58, 0.3);
+  }
+  a { transition: opacity 0.15s, text-shadow 0.15s; }
+  .btn, button {
+    transition: all 0.2s ease;
+  }
+  .btn:hover, button:hover {
+    box-shadow: 0 0 12px rgba(196, 93, 58, 0.2);
+  }
+  .back-link:hover, footer a:hover {
+    text-shadow: 0 0 8px rgba(196, 93, 58, 0.25);
+  }
+  .legal-box {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .legal-box:hover {
+    border-color: rgba(196, 93, 58, 0.25);
+    box-shadow: 0 0 25px rgba(196, 93, 58, 0.04);
+  }
+  ::selection {
+    background: rgba(196, 93, 58, 0.25);
+  }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(196, 93, 58, 0.3); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(196, 93, 58, 0.5); }
+  /* Separator line radiant glow */
+  nav { border-bottom: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(196, 93, 58, 0.3); }
+  footer { border-top: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(196, 93, 58, 0.3); }
+  .section { border-top: 1px solid rgba(196, 93, 58, 0.5) !important; }
+  .feature-list li { border-bottom: 1px solid rgba(196, 93, 58, 0.25) !important; }
+  .doc-content h2 { border-bottom: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  .doc-nav-bottom { border-top: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  /* === End Visual Enhancements === */
 </style>
 </head>
 <body>
@@ -107,7 +164,7 @@
       <table class="doc-table">
         <tr><th>Traditional</th><th>Sanguis V4</th></tr>
         <tr><td><span class="code-inline">if (x &gt; 5) { ... }</span></td><td><span class="code-inline">but x &gt; 5.0</span> (gates a route)</td></tr>
-        <tr><td><span class="code-inline">for (i=0; i&lt;N; i++)</span></td><td>Route fires every tick &mdash; loop is implicit</td></tr>
+        <tr><td><span class="code-inline">for (i=0; i&lt;N; i++)</span></td><td>Route fires every tick - loop is implicit</td></tr>
         <tr><td><span class="code-inline">while (cond)</span></td><td>Route ticks until conditions fail</td></tr>
         <tr><td><span class="code-inline">return value</span></td><td><span class="code-inline">emit value to target</span></td></tr>
         <tr><td><span class="code-inline">function call</span></td><td>Route fires when conditions pass</td></tr>
@@ -121,17 +178,17 @@
         <tr><td><span class="code-inline">string</span>, <span class="code-inline">char*</span></td><td><span class="code-inline">memory text</span> (variable-length string)</td></tr>
         <tr><td><span class="code-inline">bool</span></td><td>Use <span class="code-inline">scalar</span> (<span class="code-inline">0.0</span> = false, <span class="code-inline">1.0</span> = true)</td></tr>
         <tr><td><span class="code-inline">struct</span>, <span class="code-inline">class</span></td><td>No structs or classes</td></tr>
-        <tr><td><span class="code-inline">int[]</span>, arrays</td><td>No arrays &mdash; use individual holds</td></tr>
+        <tr><td><span class="code-inline">int[]</span>, arrays</td><td>No arrays - use individual holds</td></tr>
       </table>
       <p>There are no ints, no structs, no classes, no arrays. Scalars are floating-point. Text is strings. That's it.</p>
 
       <h2 id="parallel-by-default">Parallel by default</h2>
-      <p>In traditional languages, code runs sequentially &mdash; one instruction after another. In Sanguis V4, all routes evaluate every tick, simultaneously. There is no sequential ordering.</p>
+      <p>In traditional languages, code runs sequentially - one instruction after another. In Sanguis V4, all routes evaluate every tick, simultaneously. There is no sequential ordering.</p>
       <table class="doc-table">
         <tr><th>Traditional</th><th>Sanguis V4</th></tr>
         <tr><td>Sequential execution</td><td>Parallel route evaluation every tick</td></tr>
-        <tr><td>Shared mutable state + locks</td><td>Snapshot semantics &mdash; no races</td></tr>
-        <tr><td>Threads, async, goroutines</td><td>Not needed &mdash; parallelism is the default</td></tr>
+        <tr><td>Shared mutable state + locks</td><td>Snapshot semantics - no races</td></tr>
+        <tr><td>Threads, async, goroutines</td><td>Not needed - parallelism is the default</td></tr>
         <tr><td>Manual synchronization</td><td>Engine handles it via tick snapshots</td></tr>
       </table>
       <p>All routes see the same snapshot at the start of the tick. Route A's emit to hold X is not visible to Route B's conditions in the same tick. This eliminates data races by design.</p>
@@ -160,7 +217,7 @@ circuit Add {
   }
 }</pre></div>
 
-      <h2 id="no-assignment">No assignment &mdash; data flows</h2>
+      <h2 id="no-assignment">No assignment - data flows</h2>
       <div class="code-block"><pre>// Traditional: x = 5
 // Sanguis V4: emit 5.0 to x          (inside a route)
 

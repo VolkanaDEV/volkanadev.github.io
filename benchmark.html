@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="favicon.png">
-<title>VolkanaDEV — Benchmarks</title>
+<title>VolkanaDEV - Benchmarks</title>
 <meta name="description" content="Live computational comparisons running native Sanguis logic.">
 <style>
   :root {
@@ -340,6 +340,63 @@
     .timer-lbl { font-size: 0.65rem; }
   }
 
+
+  /* === Visual Enhancements === */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 5px rgba(196, 93, 58, 0.15); }
+    50% { box-shadow: 0 0 15px rgba(196, 93, 58, 0.3); }
+  }
+  body { animation: fadeIn 0.4s ease-out; }
+  .card, .doc-card, .doc-grid > a, .arena-card {
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover, .doc-card:hover, .doc-grid > a:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 4px 20px rgba(196, 93, 58, 0.12);
+  }
+  .hero h2, .header-block h2 {
+    text-shadow: 0 0 30px rgba(196, 93, 58, 0.08);
+  }
+  .nav-links a {
+    transition: color 0.2s, text-shadow 0.2s;
+  }
+  .nav-links a:hover {
+    text-shadow: 0 0 10px rgba(196, 93, 58, 0.3);
+  }
+  a { transition: opacity 0.15s, text-shadow 0.15s; }
+  .btn, button {
+    transition: all 0.2s ease;
+  }
+  .btn:hover, button:hover {
+    box-shadow: 0 0 12px rgba(196, 93, 58, 0.2);
+  }
+  .back-link:hover, footer a:hover {
+    text-shadow: 0 0 8px rgba(196, 93, 58, 0.25);
+  }
+  .legal-box {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .legal-box:hover {
+    border-color: rgba(196, 93, 58, 0.25);
+    box-shadow: 0 0 25px rgba(196, 93, 58, 0.04);
+  }
+  ::selection {
+    background: rgba(196, 93, 58, 0.25);
+  }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(196, 93, 58, 0.3); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(196, 93, 58, 0.5); }
+  /* Separator line radiant glow */
+  nav { border-bottom: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(196, 93, 58, 0.3); }
+  footer { border-top: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(196, 93, 58, 0.3); }
+  .section { border-top: 1px solid rgba(196, 93, 58, 0.5) !important; }
+  .feature-list li { border-bottom: 1px solid rgba(196, 93, 58, 0.25) !important; }
+  .doc-content h2 { border-bottom: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  .doc-nav-bottom { border-top: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  /* === End Visual Enhancements === */
 </style>
 </head>
 <body>
@@ -365,7 +422,7 @@
   <div class="wrap">
     <section class="header-block">
       <h2>Arena Performance Realities</h2>
-      <p>Select a logic file below to see how the VANA engine's sparse routing performs on real GPU silicon. All results are measured on an NVIDIA RTX 3060 (12GB VRAM) emulating the future VANA SoC architecture. Traditional CPUs cannot perform sparse parallel computation — the results below are from CUDA kernels running on the GPU, which stands in for the eventual custom XE3 hardware.</p>
+      <p>Select a logic file below to see how the VANA engine's sparse routing performs on real GPU silicon. All results are measured on an NVIDIA RTX 3060 (12GB VRAM) emulating the future VANA SoC architecture. Traditional CPUs cannot perform sparse parallel computation; the results below are from CUDA kernels running on the GPU, which stands in for the eventual custom XE3 hardware.</p>
       
       <div class="selector-box">
         <label for="circuit-select">Payload File Selection</label>
@@ -382,7 +439,7 @@
       <div id="card-cpu" class="arena-card blocked">
         <div class="card-top">
           <div class="arena-title">CPU (Emulated)</div>
-          <div id="cpu-sub" class="arena-subtitle">VANA Emulation — Not Native</div>
+          <div id="cpu-sub" class="arena-subtitle">VANA Emulation - Not Native</div>
           <span id="cpu-badge" class="badge-status fail">ARCHITECTURAL MISMATCH</span>
           <div><span class="latency-tag">Sequential Emulation</span></div>
         </div>
@@ -404,7 +461,7 @@
         <div class="arena-stats">
           <div class="arena-stat"><span>Time/Sweep:</span> <span id="base-time">7,290 us</span></div>
           <div class="arena-stat"><span>Frequency:</span> <span id="base-freq">137 Hz</span></div>
-          <div class="arena-stat"><span>GPU Utilization:</span> <span id="base-wall">99% — 2.3GB VRAM</span></div>
+          <div class="arena-stat"><span>GPU Utilization:</span> <span id="base-wall">99% - 2.3GB VRAM</span></div>
         </div>
         <div id="base-mult" class="badge-multiplier">12.6x Faster</div>
       </div>
@@ -419,7 +476,7 @@
         <div class="arena-stats">
           <div class="arena-stat"><span>Time/Sweep:</span> <span id="region-time">2,798 us</span></div>
           <div class="arena-stat"><span>Frequency:</span> <span id="region-freq">357 Hz</span></div>
-          <div class="arena-stat"><span>GPU Utilization:</span> <span id="region-wall">65% — 2.3GB VRAM</span></div>
+          <div class="arena-stat"><span>GPU Utilization:</span> <span id="region-wall">65% - 2.3GB VRAM</span></div>
         </div>
         <div id="region-mult" class="badge-multiplier">32.8x Faster</div>
       </div>
@@ -427,21 +484,21 @@
       <div id="card-sparse" class="arena-card" style="border-color: var(--accent); box-shadow: 0 0 20px rgba(196, 93, 58, 0.15);">
         <div class="card-top">
           <div class="arena-title" style="color: var(--accent);">GPU Sparse Skip</div>
-          <div class="arena-subtitle">VANA Sparse Routing — 1 Region Active</div>
+          <div class="arena-subtitle">VANA Sparse Routing - 1 Region Active</div>
           <span id="sparse-badge" class="badge-status success" style="background: rgba(196, 93, 58, 0.15); color: var(--accent);">DONE</span>
-          <div><span class="latency-tag" style="border-color: var(--accent); color: var(--accent); background: rgba(196,93,58,0.02);">Native GPU — Measured on RTX 3060</span></div>
+          <div><span class="latency-tag" style="border-color: var(--accent); color: var(--accent); background: rgba(196,93,58,0.02);">Native GPU - Measured on RTX 3060</span></div>
         </div>
         <div class="arena-stats">
           <div class="arena-stat"><span>Time/Sweep:</span> <span id="sparse-time">479 us</span></div>
           <div class="arena-stat"><span>Frequency:</span> <span id="sparse-freq">2.1K Hz</span></div>
-          <div class="arena-stat"><span>GPU Utilization:</span> <span id="sparse-wall">12% — 2.3GB VRAM</span></div>
+          <div class="arena-stat"><span>GPU Utilization:</span> <span id="sparse-wall">12% - 2.3GB VRAM</span></div>
         </div>
         <div id="sparse-mult" class="badge-multiplier" style="font-weight: 900;">191.6x Faster</div>
       </div>
     </div>
 
     <div class="speed-chart">
-      <div class="speed-chart-title">Time Per Sweep — GPU Tiers Compared (Log Scale)</div>
+      <div class="speed-chart-title">Time Per Sweep - GPU Tiers Compared (Log Scale)</div>
       <div class="speed-bar-row">
         <div class="speed-bar-label">GPU Sparse Skip</div>
         <div class="speed-bar-track"><div id="bar-sparse" class="speed-bar-fill sparse" style="width: 15%;">479 us</div></div>
@@ -467,7 +524,7 @@
     </div>
 
     <div class="joule-chart">
-      <div class="joule-chart-title">Joule Usage Per Sweep — Lower Is Better</div>
+      <div class="joule-chart-title">Joule Usage Per Sweep - Lower Is Better</div>
       <svg class="joule-svg" id="joule-svg" viewBox="0 0 700 300" preserveAspectRatio="none"></svg>
       <div class="joule-x-labels" id="joule-x-labels"></div>
       <div class="joule-legend">
@@ -479,7 +536,7 @@
     </div>
 
     <p id="summary-desc" class="middle-text">
-      The CPU cannot natively perform sparse parallel computation. To even attempt it, the i7-12700K had to emulate VANA's route-based architecture sequentially — processing 22.5 million connections one at a time, timing out after 60 seconds at 654 ticks. The GPU runs the same computation natively in parallel, hitting 99% utilization at 2.3GB VRAM. The VANA sparse routing advantage is real: 191.6x faster than CPU emulation, measured on consumer RTX 3060 silicon that stands in for the eventual custom XE3 SoC.
+      The CPU cannot natively perform sparse parallel computation. To even attempt it, the i7-12700K had to emulate VANA's route-based architecture sequentially; processing 22.5 million connections one at a time, timing out after 60 seconds at 654 ticks. The GPU runs the same computation natively in parallel, hitting 99% utilization at 2.3GB VRAM. The VANA sparse routing advantage is real: 191.6x faster than CPU emulation, measured on consumer RTX 3060 silicon that stands in for the eventual custom XE3 SoC.
     </p>
 
     <div class="master-table-wrapper">
@@ -527,12 +584,12 @@
     </div>
 
     <div class="console-panel">
-      <div class="console-header"><div class="console-dot-ui"></div> Terminal Output Diagnostics — Live Session</div>
+      <div class="console-header"><div class="console-dot-ui"></div> Terminal Output Diagnostics - Live Session</div>
       <div id="console-box" class="console-log"></div>
     </div>
 
     <div class="disclaimer-box">
-      * <strong>Architectural Note:</strong> All timing data is measured from real CUDA kernel runs on an NVIDIA RTX 3060 (12GB VRAM) using the VANA settle, novelty, and convergence kernels from vana_kernels.cu. The GPU emulates the future VANA SoC architecture — it is not the final hardware, but it runs the same computation natively in parallel. The CPU cannot perform sparse parallel computation natively. To produce a CPU baseline, the i7-12700K emulated VANA's route-based architecture sequentially, processing 22.5 million connections one at a time. The 250K-neuron payload timed out after 60 seconds at 654 ticks. GPU utilization was verified at 99% via nvidia-smi during dense runs. The benchmark tool (vana_bench.cu) compiles with nvcc and is available in the Sanguis distribution.
+      * <strong>Architectural Note:</strong> All timing data is measured from real CUDA kernel runs on an NVIDIA RTX 3060 (12GB VRAM) using the VANA settle, novelty, and convergence kernels from vana_kernels.cu. The GPU emulates the future VANA SoC architecture; it is not the final hardware, but it runs the same computation natively in parallel. The CPU cannot perform sparse parallel computation natively. To produce a CPU baseline, the i7-12700K emulated VANA's route-based architecture sequentially, processing 22.5 million connections one at a time. The 250K-neuron payload timed out after 60 seconds at 654 ticks. GPU utilization was verified at 99% via nvidia-smi during dense runs. The benchmark tool (vana_bench.cu) compiles with nvcc and is available in the Sanguis distribution.
     </div>
   </div>
 
@@ -547,72 +604,72 @@
     const benchmarkData = {
       sparse_250k: {
         isCpuBlocked: true,
-        cpuSub: "VANA Emulation — Not Native",
+        cpuSub: "VANA Emulation - Not Native",
         cpuBadge: "ARCHITECTURAL MISMATCH",
         cpuTime: "91,750 us", cpuFreq: "10.9 Hz", cpuWall: "Emulating on i7-12700K", cpuMult: "1.0x (Emulated)",
-        baseTime: "7,290 us", baseFreq: "137 Hz", baseWall: "99% — 2.3GB VRAM", baseMult: "12.6x Faster",
-        regionTime: "2,798 us", regionFreq: "357 Hz", regionWall: "65% — 2.3GB VRAM", regionMult: "32.8x Faster",
-        sparseTime: "479 us", sparseFreq: "2.1K Hz", sparseWall: "12% — 2.3GB VRAM", sparseMult: "191.6x Faster",
-        desc: "250K neurons, 22.5 million connections. The CPU emulated VANA's sparse architecture sequentially and timed out after 60 seconds at 654 ticks. The GPU ran the same computation natively in parallel — 99% utilization during dense, dropping to 12% during sparse skip because only 1 of 977 regions fires. That's the VANA advantage: the GPU does less work and finishes 191.6x faster.",
-        log: `<span class="c-timestamp">[live]</span> === VANA BENCHMARK — SPARSE_250K ===
+        baseTime: "7,290 us", baseFreq: "137 Hz", baseWall: "99% - 2.3GB VRAM", baseMult: "12.6x Faster",
+        regionTime: "2,798 us", regionFreq: "357 Hz", regionWall: "65% - 2.3GB VRAM", regionMult: "32.8x Faster",
+        sparseTime: "479 us", sparseFreq: "2.1K Hz", sparseWall: "12% - 2.3GB VRAM", sparseMult: "191.6x Faster",
+        desc: "250K neurons, 22.5 million connections. The CPU emulated VANA's sparse architecture sequentially and timed out after 60 seconds at 654 ticks. The GPU ran the same computation natively in parallel; 99% utilization during dense, dropping to 12% during sparse skip because only 1 of 977 regions fires. That's the VANA advantage: the GPU does less work and finishes 191.6x faster.",
+        log: `<span class="c-timestamp">[live]</span> === VANA BENCHMARK - SPARSE_250K ===
 <span class="c-timestamp">[live]</span> Neurons: 250,000 | Connections: 22,500,000 | Regions: 977
 <span class="c-timestamp">[live]</span> Hardware: NVIDIA RTX 3060 (12GB) emulating future VANA SoC
-<span class="c-timestamp">[live]</span> <span class="c-alert">CPU_EMULATION: i7-12700K emulating VANA sequentially — 22.5M connections one at a time</span>
+<span class="c-timestamp">[live]</span> <span class="c-alert">CPU_EMULATION: i7-12700K emulating VANA sequentially - 22.5M connections one at a time</span>
 <span class="c-timestamp">[live]</span> <span class="c-alert">CPU_TIMEOUT: 60s limit reached at 654 ticks (91,750 us/tick, 10.9 Hz)</span>
-<span class="c-timestamp">[live]</span> <span class="c-success">GPU_DENSE: 7,290 us/tick (137 Hz) — 99% GPU utilization verified via nvidia-smi</span>
-<span class="c-timestamp">[live]</span> <span class="c-success">GPU_REGION: 2,798 us/tick (357 Hz) — 65% of 977 regions active</span>
-<span class="c-timestamp">[live]</span> <span class="c-success">GPU_SPARSE: 479 us/tick (2.1K Hz) — 1 region active, 976 skipped — 191.6x faster than CPU</span>`
+<span class="c-timestamp">[live]</span> <span class="c-success">GPU_DENSE: 7,290 us/tick (137 Hz) - 99% GPU utilization verified via nvidia-smi</span>
+<span class="c-timestamp">[live]</span> <span class="c-success">GPU_REGION: 2,798 us/tick (357 Hz) - 65% of 977 regions active</span>
+<span class="c-timestamp">[live]</span> <span class="c-success">GPU_SPARSE: 479 us/tick (2.1K Hz) - 1 region active, 976 skipped - 191.6x faster than CPU</span>`
       },
       neural_50k: {
         isCpuBlocked: false,
-        cpuSub: "VANA Emulation — Not Native",
+        cpuSub: "VANA Emulation - Not Native",
         cpuBadge: "DONE",
         cpuTime: "8,859 us", cpuFreq: "113 Hz", cpuWall: "Emulating on i7-12700K", cpuMult: "1.0x (Emulated)",
-        baseTime: "1,413 us", baseFreq: "708 Hz", baseWall: "85% — 1.1GB VRAM", baseMult: "6.3x Faster",
-        regionTime: "594 us", regionFreq: "1.7K Hz", regionWall: "55% — 1.1GB VRAM", regionMult: "14.9x Faster",
-        sparseTime: "116 us", sparseFreq: "8.6K Hz", sparseWall: "10% — 1.1GB VRAM", sparseMult: "76.4x Faster",
-        desc: "50K neurons, 4.5 million connections. The CPU emulation managed to complete all 1000 ticks but took 8.9 seconds. The GPU sparse skip finished in 116 microseconds per tick — 76.4x faster. The sparse advantage scales with neuron count: at 50K the GPU only needs 1 of 196 regions active.",
-        log: `<span class="c-timestamp">[live]</span> === VANA BENCHMARK — NEURAL_50K ===
+        baseTime: "1,413 us", baseFreq: "708 Hz", baseWall: "85% - 1.1GB VRAM", baseMult: "6.3x Faster",
+        regionTime: "594 us", regionFreq: "1.7K Hz", regionWall: "55% - 1.1GB VRAM", regionMult: "14.9x Faster",
+        sparseTime: "116 us", sparseFreq: "8.6K Hz", sparseWall: "10% - 1.1GB VRAM", sparseMult: "76.4x Faster",
+        desc: "50K neurons, 4.5 million connections. The CPU emulation managed to complete all 1000 ticks but took 8.9 seconds. The GPU sparse skip finished in 116 microseconds per tick; 76.4x faster. The sparse advantage scales with neuron count: at 50K the GPU only needs 1 of 196 regions active.",
+        log: `<span class="c-timestamp">[live]</span> === VANA BENCHMARK - NEURAL_50K ===
 <span class="c-timestamp">[live]</span> Neurons: 50,000 | Connections: 4,500,000 | Regions: 196
 <span class="c-timestamp">[live]</span> Hardware: NVIDIA RTX 3060 (12GB) emulating future VANA SoC
-<span class="c-timestamp">[live]</span> <span class="c-info">CPU_EMULATION: 8,859 us/tick (113 Hz) — completed but 8.9s total</span>
-<span class="c-timestamp">[live]</span> <span class="c-success">GPU_DENSE: 1,413 us/tick (708 Hz) — 85% GPU utilization</span>
-<span class="c-timestamp">[live]</span> <span class="c-success">GPU_REGION: 594 us/tick (1.7K Hz) — 65% of 196 regions active</span>
-<span class="c-timestamp">[live]</span> <span class="c-success">GPU_SPARSE: 116 us/tick (8.6K Hz) — 1 region active, 195 skipped — 76.4x faster</span>`
+<span class="c-timestamp">[live]</span> <span class="c-info">CPU_EMULATION: 8,859 us/tick (113 Hz) - completed but 8.9s total</span>
+<span class="c-timestamp">[live]</span> <span class="c-success">GPU_DENSE: 1,413 us/tick (708 Hz) - 85% GPU utilization</span>
+<span class="c-timestamp">[live]</span> <span class="c-success">GPU_REGION: 594 us/tick (1.7K Hz) - 65% of 196 regions active</span>
+<span class="c-timestamp">[live]</span> <span class="c-success">GPU_SPARSE: 116 us/tick (8.6K Hz) - 1 region active, 195 skipped - 76.4x faster</span>`
       },
       neural_10k: {
         isCpuBlocked: false,
-        cpuSub: "VANA Emulation — Not Native",
+        cpuSub: "VANA Emulation - Not Native",
         cpuBadge: "DONE",
         cpuTime: "1,664 us", cpuFreq: "601 Hz", cpuWall: "Emulating on i7-12700K", cpuMult: "1.0x (Emulated)",
-        baseTime: "279 us", baseFreq: "3.6K Hz", baseWall: "40% — 700MB VRAM", baseMult: "6.0x Faster",
-        regionTime: "127 us", regionFreq: "7.9K Hz", regionWall: "30% — 700MB VRAM", regionMult: "13.1x Faster",
-        sparseTime: "86 us", sparseFreq: "11.6K Hz", sparseWall: "8% — 700MB VRAM", sparseMult: "19.3x Faster",
+        baseTime: "279 us", baseFreq: "3.6K Hz", baseWall: "40% - 700MB VRAM", baseMult: "6.0x Faster",
+        regionTime: "127 us", regionFreq: "7.9K Hz", regionWall: "30% - 700MB VRAM", regionMult: "13.1x Faster",
+        sparseTime: "86 us", sparseFreq: "11.6K Hz", sparseWall: "8% - 700MB VRAM", sparseMult: "19.3x Faster",
         desc: "10K neurons, 900K connections. At this scale the CPU emulation completes in 1.7 seconds but the GPU sparse skip runs at 11.6K Hz. The GPU kernel launch overhead (~50us) starts to dominate at small scales, but sparse routing still wins by 19.3x.",
-        log: `<span class="c-timestamp">[live]</span> === VANA BENCHMARK — NEURAL_10K ===
+        log: `<span class="c-timestamp">[live]</span> === VANA BENCHMARK - NEURAL_10K ===
 <span class="c-timestamp">[live]</span> Neurons: 10,000 | Connections: 900,000 | Regions: 40
 <span class="c-timestamp">[live]</span> Hardware: NVIDIA RTX 3060 (12GB) emulating future VANA SoC
-<span class="c-timestamp">[live]</span> <span class="c-info">CPU_EMULATION: 1,664 us/tick (601 Hz) — completed in 1.7s</span>
-<span class="c-timestamp">[live]</span> <span class="c-success">GPU_DENSE: 279 us/tick (3.6K Hz) — 40% GPU utilization</span>
-<span class="c-timestamp">[live]</span> <span class="c-success">GPU_REGION: 127 us/tick (7.9K Hz) — 65% of 40 regions active</span>
-<span class="c-timestamp">[live]</span> <span class="c-success">GPU_SPARSE: 86 us/tick (11.6K Hz) — 1 region active, 39 skipped — 19.3x faster</span>`
+<span class="c-timestamp">[live]</span> <span class="c-info">CPU_EMULATION: 1,664 us/tick (601 Hz) - completed in 1.7s</span>
+<span class="c-timestamp">[live]</span> <span class="c-success">GPU_DENSE: 279 us/tick (3.6K Hz) - 40% GPU utilization</span>
+<span class="c-timestamp">[live]</span> <span class="c-success">GPU_REGION: 127 us/tick (7.9K Hz) - 65% of 40 regions active</span>
+<span class="c-timestamp">[live]</span> <span class="c-success">GPU_SPARSE: 86 us/tick (11.6K Hz) - 1 region active, 39 skipped - 19.3x faster</span>`
       },
       circuit_1k: {
         isCpuBlocked: false,
-        cpuSub: "VANA Emulation — Not Native",
+        cpuSub: "VANA Emulation - Not Native",
         cpuBadge: "DONE",
         cpuTime: "164 us", cpuFreq: "6.1K Hz", cpuWall: "Emulating on i7-12700K", cpuMult: "1.0x (Emulated)",
-        baseTime: "64 us", baseFreq: "15.6K Hz", baseWall: "15% — 200MB VRAM", baseMult: "2.6x Faster",
-        regionTime: "80 us", regionFreq: "12.5K Hz", regionWall: "12% — 200MB VRAM", regionMult: "2.1x Faster",
-        sparseTime: "80 us", sparseFreq: "12.5K Hz", sparseWall: "10% — 200MB VRAM", sparseMult: "2.1x Faster",
-        desc: "1K neurons, 90K connections. At small scales the GPU kernel launch overhead dominates — all three GPU modes converge to similar times because the work per tick is too small to saturate the RTX 3060. The sparse advantage only emerges at scale. This is expected: the VANA architecture is designed for organisms with millions of neurons, not thousands.",
-        log: `<span class="c-timestamp">[live]</span> === VANA BENCHMARK — CIRCUIT_1K ===
+        baseTime: "64 us", baseFreq: "15.6K Hz", baseWall: "15% - 200MB VRAM", baseMult: "2.6x Faster",
+        regionTime: "80 us", regionFreq: "12.5K Hz", regionWall: "12% - 200MB VRAM", regionMult: "2.1x Faster",
+        sparseTime: "80 us", sparseFreq: "12.5K Hz", sparseWall: "10% - 200MB VRAM", sparseMult: "2.1x Faster",
+        desc: "1K neurons, 90K connections. At small scales the GPU kernel launch overhead dominates; all three GPU modes converge to similar times because the work per tick is too small to saturate the RTX 3060. The sparse advantage only emerges at scale. This is expected: the VANA architecture is designed for organisms with millions of neurons, not thousands.",
+        log: `<span class="c-timestamp">[live]</span> === VANA BENCHMARK - CIRCUIT_1K ===
 <span class="c-timestamp">[live]</span> Neurons: 1,000 | Connections: 90,000 | Regions: 4
 <span class="c-timestamp">[live]</span> Hardware: NVIDIA RTX 3060 (12GB) emulating future VANA SoC
-<span class="c-timestamp">[live]</span> <span class="c-info">CPU_EMULATION: 164 us/tick (6.1K Hz) — completed in 0.2s</span>
-<span class="c-timestamp">[live]</span> <span class="c-info">GPU_DENSE: 64 us/tick (15.6K Hz) — kernel launch overhead dominates</span>
-<span class="c-timestamp">[live]</span> <span class="c-info">GPU_REGION: 80 us/tick (12.5K Hz) — too few regions to skip</span>
-<span class="c-timestamp">[live]</span> <span class="c-info">GPU_SPARSE: 80 us/tick (12.5K Hz) — sparse advantage needs scale</span>`
+<span class="c-timestamp">[live]</span> <span class="c-info">CPU_EMULATION: 164 us/tick (6.1K Hz) - completed in 0.2s</span>
+<span class="c-timestamp">[live]</span> <span class="c-info">GPU_DENSE: 64 us/tick (15.6K Hz) - kernel launch overhead dominates</span>
+<span class="c-timestamp">[live]</span> <span class="c-info">GPU_REGION: 80 us/tick (12.5K Hz) - too few regions to skip</span>
+<span class="c-timestamp">[live]</span> <span class="c-info">GPU_SPARSE: 80 us/tick (12.5K Hz) - sparse advantage needs scale</span>`
       }
     };
 

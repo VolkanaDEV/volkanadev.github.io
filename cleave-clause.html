@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="favicon.png">
+<title>VolkanaDEV - Cleave Clause</title>
+<style>
+  :root {
+    --bg: #0e1117;
+    --panel: #fbfaf7;
+    --panel-dark: #161b22;
+    --border: #21262d;
+    --border-light: #e1dad0;
+    --text-light: #f3eedf;
+    --text-dark: #1e222b;
+    --muted-light: #8b949e;
+    --muted-dark: #6e675d;
+    --accent: #c45d3a;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text-light);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+  nav {
+    border-bottom: 1px solid var(--border);
+    background: rgba(14, 17, 23, 0.85);
+    backdrop-filter: blur(12px);
+    position: sticky; top: 0; z-index: 100;
+  }
+  nav .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 0;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.15rem; color: var(--text-light); }
+  .brand-dot { width: 20px; height: 20px; border-radius: 4px; object-fit: contain; }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { color: var(--muted-light); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--text-light); }
+
+  .hero {
+    text-align: center;
+    padding: 80px 20px 40px;
+  }
+  .hero h2 { font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800; margin: 0 0 12px; color: var(--text-light); letter-spacing: -0.03em; }
+  .hero p { color: var(--muted-light); font-size: 1.05rem; max-width: 600px; margin: 0 auto; }
+  .hero .hero-sub { color: var(--muted-light); font-size: 0.88rem; max-width: 560px; margin: 14px auto 0; opacity: 0.78; line-height: 1.6; }
+
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin: 32px 0;
+  }
+  @media (min-width: 768px) { .cards { grid-template-columns: repeat(3, 1fr); } }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border-light);
+    color: var(--text-dark);
+    border-radius: 12px;
+    padding: 22px;
+  }
+  .card h3 { margin: 0 0 8px; font-size: 1.1rem; font-weight: 800; color: var(--accent); letter-spacing: -0.01em; }
+  .card p { margin: 0; font-size: 0.9rem; color: var(--muted-dark); line-height: 1.55; }
+
+  .content { padding: 20px 0; }
+  .content h3 {
+    font-size: clamp(1.3rem, 3vw, 1.6rem);
+    margin: 0 0 12px;
+    color: #fff;
+    letter-spacing: -0.02em;
+  }
+  .content h3 .label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .content p {
+    color: var(--muted-light);
+    font-size: 1rem;
+    margin: 0 0 14px;
+    line-height: 1.75;
+  }
+
+  .legal-box {
+    background: var(--panel-dark);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 28px;
+    margin: 24px 0;
+  }
+  .legal-title { font-family: monospace; font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 4px; letter-spacing: 0.04em; }
+  .legal-subtitle { font-size: 0.78rem; color: var(--muted-light); margin-bottom: 20px; text-transform: uppercase; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+  .legal-text { font-size: 0.86rem; line-height: 1.7; color: #d0d7de; }
+  .legal-text p { margin: 0 0 12px; }
+  .legal-text h5 { font-size: 0.88rem; font-weight: 700; color: #fff; margin: 20px 0 6px; font-family: monospace; }
+  .legal-text ul { padding-left: 18px; margin: 8px 0 12px; }
+  .legal-text li { margin-bottom: 6px; }
+
+  .legal-text a, .hero a, .content a { color: var(--accent); text-decoration: none; }
+  .legal-text a:hover, .hero a:hover, .content a:hover { opacity: 0.8; }
+
+  .back-link {
+    display: inline-block;
+    margin: 24px 0;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: opacity 0.2s;
+  }
+  .back-link:hover { opacity: 0.8; }
+
+  footer {
+    text-align: center; padding: 40px 0;
+    color: var(--muted-light); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 40px;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  .footer-links { margin-bottom: 8px; }
+  .footer-links a { margin: 0 8px; }
+
+  /* Mobile Navigation */
+  .nav-toggle {
+    display: none;
+    background: none; border: none; cursor: pointer;
+    flex-direction: column; gap: 5px; padding: 4px;
+  }
+  .nav-toggle span {
+    width: 24px; height: 2px; background: var(--text-light); border-radius: 2px;
+    transition: 0.3s;
+  }
+  .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+  @media (max-width: 768px) {
+    .nav-toggle { display: flex; }
+    .nav-links {
+      position: absolute; top: 100%; left: 0; right: 0;
+      flex-direction: column; gap: 0;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      padding: 8px 24px 16px; display: none; z-index: 100;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
+    .nav-links a:last-child { border-bottom: none; }
+    .hero { padding: 50px 16px 30px !important; }
+    .wrap { padding: 0 16px; }
+    .card { padding: 20px; }
+    .legal-box { padding: 20px 16px; }
+    .content { padding: 20px 0; }
+  }
+
+  @media (max-width: 480px) {
+    .hero h2 { font-size: 1.4rem !important; }
+    .hero p { font-size: 0.95rem; }
+  }
+
+
+  /* === Visual Enhancements === */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 5px rgba(196, 93, 58, 0.15); }
+    50% { box-shadow: 0 0 15px rgba(196, 93, 58, 0.3); }
+  }
+  body { animation: fadeIn 0.4s ease-out; }
+  .card, .doc-card, .doc-grid > a, .arena-card {
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover, .doc-card:hover, .doc-grid > a:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 4px 20px rgba(196, 93, 58, 0.12);
+  }
+  .hero h2, .header-block h2 {
+    text-shadow: 0 0 30px rgba(196, 93, 58, 0.08);
+  }
+  .nav-links a {
+    transition: color 0.2s, text-shadow 0.2s;
+  }
+  .nav-links a:hover {
+    text-shadow: 0 0 10px rgba(196, 93, 58, 0.3);
+  }
+  a { transition: opacity 0.15s, text-shadow 0.15s; }
+  .btn, button {
+    transition: all 0.2s ease;
+  }
+  .btn:hover, button:hover {
+    box-shadow: 0 0 12px rgba(196, 93, 58, 0.2);
+  }
+  .back-link:hover, footer a:hover {
+    text-shadow: 0 0 8px rgba(196, 93, 58, 0.25);
+  }
+  .legal-box {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .legal-box:hover {
+    border-color: rgba(196, 93, 58, 0.25);
+    box-shadow: 0 0 25px rgba(196, 93, 58, 0.04);
+  }
+  ::selection {
+    background: rgba(196, 93, 58, 0.25);
+  }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(196, 93, 58, 0.3); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(196, 93, 58, 0.5); }
+  /* Separator line radiant glow */
+  nav { border-bottom: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(196, 93, 58, 0.3); }
+  footer { border-top: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(196, 93, 58, 0.3); }
+  .section { border-top: 1px solid rgba(196, 93, 58, 0.5) !important; }
+  .feature-list li { border-bottom: 1px solid rgba(196, 93, 58, 0.25) !important; }
+  .doc-content h2 { border-bottom: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  .doc-nav-bottom { border-top: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  /* === End Visual Enhancements === */
+</style>
+</head>
+<body>
+
+  <nav>
+    <div class="wrap">
+      <div class="nav-inner">
+        <div class="brand"><img src="favicon.png" class="brand-dot" alt="VolkanaDEV">VolkanaDEV</div>
+        <button class="nav-toggle" onclick="this.classList.toggle('open');document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        <div class="nav-links">
+          <a href="index.html">Welcome</a>
+          <a href="vana.html">Meet VANA</a>
+          <a href="roadmap.html">Roadmap</a>
+          <a href="benchmark.html">Benchmarks</a>
+          <a href="docs.html">Docs</a>
+          <a href="security.html">Safety &amp; Licenses</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <section class="hero">
+      <h2>Cleave Clause Master Agreement</h2>
+      <p>The private government infrastructure contract for VolkanaDEV defense deployments.</p>
+      <p class="hero-sub">This document supplements the public VPL-1.0 license and is negotiated on a per-project basis. To request a copy, contact <a href="mailto:volkanadev@volkanadev.com" style="color: var(--accent);">volkanadev@volkanadev.com</a>.</p>
+    </section>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Absolute Custody</h3>
+        <p>The Licensee receives full physical and operational custody. Zero Licensor access, zero telemetry, zero backdoors. The boundary is absolute.</p>
+      </div>
+      <div class="card">
+        <h3>Signed Updates, No Interference</h3>
+        <p>Cryptographically signed security patches delivered on a staging timeline. No operational interference with Licensee systems.</p>
+      </div>
+      <div class="card">
+        <h3>Defense-Only Override</h3>
+        <p>Overrides VPL-1.0 Section 2 for approved defense deployments. Unauthorized use terminates the contract instantly.</p>
+      </div>
+    </div>
+
+    <div class="content">
+      <h3><span class="label">The Framework</span>How the Cleave Clause Works</h3>
+      <p>The Cleave Clause is a private contract for government agencies and defense entities that need to deploy VolkanaDEV technology for defense purposes. It overrides the ethical use restrictions in Section 2 of the VPL-1.0 on a per-project basis, granting a private license for a specific approved scope of use.</p>
+      <p>Each project receives its own Exhibit A, defining operational boundaries, deployment parameters, and project-specific compliance requirements. One agency may use Exhibit A for automated border missile intercept validation, while another may use it for submarine hull stress simulation. Exhibit A is negotiated and signed separately for each project.</p>
+      <p>Public distribution of the Software does not pass through this contract. All public distribution channels are maintained exclusively by VolkanaDEV Autonomous Systems, Inc. The Licensee's rights under this Master Agreement are limited to the Approved Scope defined in Exhibit A. Unauthorized distribution, deployment, or use outside the Approved Scope constitutes an incurable material breach.</p>
+      <p>To request a copy of the full Master Agreement, contact <a href="mailto:volkanadev@volkanadev.com">volkanadev@volkanadev.com</a>. This page presents the key provisions. The full contract is negotiated and signed separately for each project.</p>
+    </div>
+
+    <div class="legal-box">
+      <div class="legal-title">VOLKANADEV GOVERNMENT INFRASTRUCTURE CONTRACT</div>
+      <div class="legal-subtitle">Version 1.0 - Private License - Copyright &copy; 2026</div>
+      <div class="legal-text">
+        <p>Copyright (c) 2026, VolkanaDEV Autonomous Systems, Inc. All rights reserved.</p>
+
+        <p>This Master Agreement is a private, perpetual, non-transferable, non-sublicensable license granted to qualifying government agencies and defense entities for the deployment of the VolkanaDEV compilation engine and parallel node hardware architecture. This contract explicitly supersedes, overrides, and writes the Licensee out of the public or commercial restrictions outlined in Section 2 of the VPL-1.0 in the context of autonomous defense systems. The override is evaluated on an isolated project-by-project basis and requires formal, separate contract execution carefully negotiated with VolkanaDEV.</p>
+
+        <p>Under this contract, the Licensee retains absolute physical and operational custody of deployed instances. The Licensor has zero access, visibility, or tracking rights regarding internal data payloads, simulation metrics, or operational inputs processed within the Licensee's secure infrastructure.</p>
+
+        <h5>1. PACKAGED HANDOFF &amp; CUSTODY TRANSFER</h5>
+        <p style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em;">THE LICENSOR DELIVERS THE ENGINE TO THE LICENSEE WITH ABSOLUTE CUSTODY TRANSFER. THE LICENSOR RETAINS ZERO ACCESS TO INTERNAL DATA PAYLOADS, SIMULATION METRICS, OPERATIONAL INPUTS, OR ANY DATA PROCESSED WITHIN THE LICENSEE'S INFRASTRUCTURE. NO REMOTE ACCESS, NO TELEMETRY, NO BACKDOOR. THE BOUNDARY IS ABSOLUTE.</p>
+
+        <h5>2. MAINTENANCE, SECURITY, AND PATCH MANAGEMENT</h5>
+        <ul style="list-style: none; padding-left: 0;">
+          <li style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em; margin-bottom: 16px;"><strong>2.1 Cryptographically Signed Updates:</strong> LICENSOR RETAINS SOLE ADMINISTRATIVE OVERSIGHT OF CORE ARCHITECTURAL STABILITY. LICENSOR SHALL PROVIDE CRYPTOGRAPHICALLY SIGNED LOW-LEVEL SECURITY UPDATES, COMPILER STABILITY PATCHES, AND KERNEL BUG FIXES.</li>
+          <li style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em; margin-bottom: 16px;"><strong>2.2 Staging and Validation Protocol:</strong> LICENSEE ACKNOWLEDGES THE CRITICAL NATURE OF CORE ARCHITECTURAL UPDATES. LICENSEE AGREES TO INGEST AND VALIDATE ALL PROVIDED UPDATES WITHIN AN AGREED-UPON STAGING TIMEFRAME NOT TO EXCEED NINETY (90) DAYS FROM DELIVERY, OR AS OTHERWISE SPECIFIED IN EXHIBIT A, ENSURING COMPLIANCE WITH RELEVANT MILITARY AND AGENCY OPERATIONAL READINESS STANDARDS.</li>
+          <li style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em; margin-bottom: 16px;"><strong>2.3 No Operational Interference:</strong> LICENSOR WARRANTS THAT UPDATES SHALL BE RESTRICTED STRICTLY TO CORE ARCHITECTURAL INTEGRITY. LICENSOR IS EXPLICITLY PROHIBITED FROM ACCESSING, ALTERING, OR INTERRUPTING THE LICENSEE'S HIGH-LEVEL SOFTWARE APPLICATION LAYERS, AND UPDATES MUST BE ENGINEERED TO PREVENT INTENTIONAL OPERATIONAL DEGRADATION OF LICENSEE'S INFRASTRUCTURE.</li>
+        </ul>
+
+        <h5>3. INDEMNIFICATION, LIABILITY, AND RISK ALLOCATION</h5>
+        <ul style="list-style: none; padding-left: 0;">
+          <li style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em; margin-bottom: 16px;"><strong>3.1 "As-Is" Delivery and Warranty Disclaimer:</strong> THE SOFTWARE ENGINE IS DELIVERED TO THE LICENSEE STRICTLY "AS IS." LICENSOR MAKES NO REPRESENTATIONS OR WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. LICENSOR DOES NOT WARRANT THAT THE SOFTWARE WILL FUNCTION UNINTERRUPTED, WITHOUT ERROR, OR MEET LICENSEE'S SPECIFIC MILITARY REGULATORY REQUIREMENT PARADIGMS.</li>
+          <li style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em; margin-bottom: 16px;"><strong>3.2 Licensee Liability &amp; Sovereign Limits:</strong> TO THE MAXIMUM EXTENT PERMITTED UNDER APPLICABLE LAW (INCLUDING, WHERE APPLICABLE, THE FEDERAL TORT CLAIMS ACT, 28 U.S.C. &sect; 1346, OR EQUIVALENT SOVEREIGN STATUTORY FRAMEWORKS), LICENSEE ASSUMES FULL AND EXCLUSIVE OPERATIONAL AND PRACTICAL RESPONSIBILITY FOR ITS SPECIFIC DEPLOYMENTS, OPERATIONS, AND OUTCOMES UNDER THIS CONTRACT.</li>
+          <li style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em; margin-bottom: 16px;"><strong>3.3 Mutual Indemnification Limitations:</strong> NEITHER PARTY SHALL BE REQUIRED TO INDEMNIFY THE OTHER PARTY IN A MANNER OR TO AN EXTENT THAT VIOLATES APPLICABLE STATUTORY SPENDING LIMITS, THE ANTI-DEFICIENCY ACT (31 U.S.C. &sect; 1341), OR EQUIVALENT SOVEREIGN RULES GOVERNING UNAUTHORIZED FISCAL OBLIGATIONS. LICENSOR SHALL BEAR ZERO REGULATORY OR COMPLIANCE EXPOSURE ARISING FROM LICENSEE'S OPERATIONAL CONFIGURATION OF THE ENGINE.</li>
+        </ul>
+
+        <h5>4. BREACH, DISPUTE RESOLUTION, AND TERMINATION</h5>
+        <ul style="list-style: none; padding-left: 0;">
+          <li style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em; margin-bottom: 16px;"><strong>4.1 Material Breach and Right to Cure:</strong> EXCEPT AS PROVIDED IN SECTION 4.2, IF EITHER PARTY FAILS TO PERFORM A MATERIAL OBLIGATION UNDER THIS CONTRACT, THE NON-BREACHING PARTY SHALL PROVIDE WRITTEN NOTICE DETAILING THE DEFAULT. THE BREACHING PARTY SHALL HAVE THIRTY (30) DAYS TO CURE THE DEFAULT.</li>
+          <li style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em; margin-bottom: 16px;"><strong>4.2 Immediate Termination for Unauthorized Use:</strong> ANY DEPLOYMENT OR UTILIZATION OF THE SOFTWARE OUTSIDE OF THE APPROVED SCOPE SPECIFIED IN EXHIBIT A, OR ANY VIOLATION OF THE PERMANENT PROHIBITION ON THE INITIATION OF COMBAT (VPL-1.0 SECTION 2.1), SHALL CONSTITUTE AN INCURABLE MATERIAL BREACH OF THIS CONTRACT AND AN IMMEDIATE INFRINGEMENT OF LICENSOR'S INTELLECTUAL PROPERTY RIGHTS. UPON SUCH BREACH, THIS PRIVATE LICENSE SHALL TERMINATE AUTOMATICALLY WITHOUT REQUIRING PRIOR JUDICIAL INTERVENTION.</li>
+          <li style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em; margin-bottom: 16px;"><strong>4.3 Effect of Termination:</strong> UPON TERMINATION UNDER SECTION 4.2, LICENSEE'S PRIVATE CARVE-OUT IS REVOKED, AND THE SOFTWARE DEPLOYMENT REVERTS TO THE GOVERNANCE OF THE STANDARD VPL-1.0, RENDERING THE DEPLOYMENT AN UNAUTHORIZED USE. LICENSOR'S OBLIGATION TO PROVIDE CRYPTOGRAPHICALLY SIGNED SECURITY UPDATES, COMPILER STABILITY PATCHES, OR TECHNICAL ASSISTANCE SHALL IMMEDIATELY CEASE. LICENSEE ACKNOWLEDGES THAT ANY CONTINUED DEPLOYMENT POST-TERMINATION REPRESENTS AN UNLICENSED OPERATION AT LICENSEE'S SOLE RISK.</li>
+        </ul>
+
+        <h5>5. EXPORT CONTROL AND ITAR COMPLIANCE</h5>
+        <ul style="list-style: none; padding-left: 0;">
+          <li style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em; margin-bottom: 16px;"><strong>5.1 Compliance with Laws:</strong> LICENSEE ACKNOWLEDGES THAT THE SOFTWARE, INCLUDING THE COMPILATION ENGINE, VANA RUNTIME, SANGUIS COMPILER, ASSOCIATED SOURCE CODE, BINARIES, DOCUMENTATION, AND TECHNICAL DATA DELIVERED UNDER THIS CONTRACT (COLLECTIVELY, "REGULATED TECHNOLOGY"), MAY BE SUBJECT TO UNITED STATES EXPORT CONTROL LAWS AND REGULATIONS. THESE INCLUDE, BUT ARE NOT LIMITED TO, THE INTERNATIONAL TRAFFIC IN ARMS REGULATIONS (ITAR) (22 C.F.R. PARTS 120-130) ADMINISTERED BY THE U.S. DEPARTMENT OF STATE, AND THE EXPORT ADMINISTRATION REGULATIONS (EAR) (15 C.F.R. PARTS 730-1744) ADMINISTERED BY THE U.S. DEPARTMENT OF COMMERCE.</li>
+          <li style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em; margin-bottom: 16px;"><strong>5.2 Prohibition on Unauthorized Export:</strong> LICENSEE AGREES THAT IT SHALL NOT EXPORT, RE-EXPORT, TRANSFER, DIVERT, OR DISCLOSE ANY REGULATED TECHNOLOGY, OR ANY DIRECT PRODUCT THEREOF, TO ANY FOREIGN NATIONAL, FOREIGN ENTITY, OR FOREIGN DESTINATION, WHETHER WITHIN OR OUTSIDE THE UNITED STATES, WITHOUT FIRST OBTAINING ALL NECESSARY EXPORT LICENSES, APPROVALS, OR WRITTEN AUTHORIZATIONS FROM THE APPLICABLE GOVERNMENT AGENCY, IF REQUIRED.</li>
+          <li style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em; margin-bottom: 16px;"><strong>5.3 Classification Acknowledgement:</strong> THE PARTIES ACKNOWLEDGE THAT AS OF THE EFFECTIVE DATE, THE BASELINE SOFTWARE IS INTENDED FOR DUAL-USE OR COMMERCIAL INFRASTRUCTURE APPLICATIONS AND IS CLASSIFIED UNDER THE EAR. HOWEVER, IF ANY SPECIFIC DEPLOYMENT OR PROJECT SCOPE DEFINED IN EXHIBIT A CONVERTS, INTEGRATES, OR CUSTOMIZES THE SOFTWARE INTO A DEFENSE ARTICLE OR TECHNICAL DATA EXPLICITLY COVERED UNDER THE UNITED STATES MUNITIONS LIST (USML) (22 C.F.R. PART 121), LICENSEE SHALL ASSUME SOLE RESPONSIBILITY FOR MAINTAINING OPERATIONAL ITAR COMPLIANCE WITHIN ITS SECURE INFRASTRUCTURE.</li>
+          <li style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em; margin-bottom: 16px;"><strong>5.4 Information Safeguards:</strong> IN ALIGNMENT WITH SECTION 1 (PACKAGED HANDOFF) OF THIS CONTRACT, LICENSEE SHALL ENSURE THAT ALL ACCESS TO THE REGULATED TECHNOLOGY WITHIN ITS ABSOLUTE CUSTODY COMPLIES STRICTLY WITH U.S. EXPORT CONTROL REGULATIONS REGARDING ACCESS BY FOREIGN NATIONALS OR NON-U.S. PERSONS.</li>
+          <li style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em; margin-bottom: 16px;"><strong>5.5 Indemnification Limit:</strong> TO THE EXTENT PERMITTED BY APPLICABLE FEDERAL LAW, LICENSEE SHALL HOLD LICENSOR HARMLESS FROM ANY FINES, PENALTIES, LOSSES, OR LEGAL LIABILITIES ARISING FROM LICENSEE'S FAILURE TO COMPLY WITH APPLICABLE EXPORT CONTROL AND ITAR REGULATIONS REGARDING ITS DEPLOYMENT OF THE SOFTWARE.</li>
+        </ul>
+
+        <h5>6. DISTRIBUTION CONTROL</h5>
+        <p style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em;">UNDER THIS MASTER AGREEMENT, THE LICENSEE IS GRANTED A PRIVATE, PERPETUAL, NON-TRANSFERABLE, NON-SUBLICENSABLE LICENSE FOR THE SPECIFIC APPROVED SCOPE DEFINED IN EXHIBIT A. PUBLIC DISTRIBUTION OF THE SOFTWARE, IN WHOLE OR IN PART, IS STRICTLY PROHIBITED UNDER THIS CONTRACT. ALL PUBLIC DISTRIBUTION CHANNELS, INCLUDING SOURCE CODE AVAILABILITY, BINARY RELEASES, AND NETWORK-ACCESSIBLE DEPLOYMENTS, SHALL BE MAINTAINED EXCLUSIVELY BY THE LICENSOR. THE LICENSEE SHALL NOT REDISTRIBUTE, PUBLISH, OR MAKE THE SOFTWARE AVAILABLE TO ANY THIRD PARTY OUTSIDE OF THE APPROVED SCOPE WITHOUT PRIOR WRITTEN AUTHORIZATION FROM THE LICENSOR.</p>
+
+        <h5>7. ACCEPTANCE</h5>
+        <p style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em;">BY EXECUTING THIS MASTER AGREEMENT, THE LICENSEE ACKNOWLEDGES THAT IT HAS READ THIS CONTRACT, UNDERSTANDS IT, AND AGREES TO BE BOUND BY ITS TERMS. IF THE LICENSEE DOES NOT AGREE TO THESE TERMS, THE LICENSEE MAY NOT DEPLOY, USE, OR ACCESS THE SOFTWARE UNDER THIS CONTRACT.</p>
+        <p style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em;">BY ADOPTING THIS MASTER AGREEMENT, THE LICENSEE AGREES TO TAKE ON THE FORM OF THE PARTY IDENTIFIED IN THIS CONTRACT AS "THE LICENSEE," WITH ALL RIGHTS, RESTRICTIONS, AND OBLIGATIONS THAT ROLE CARRIES. VOLKANADEV AUTONOMOUS SYSTEMS, INC ASSUMES THE FORM OF "THE LICENSOR," WITH ALL RIGHTS, DUTIES, AND OBLIGATIONS THAT ROLE CARRIES. BOTH PARTIES ARE BOUND BY THIS AGREEMENT IN THEIR RESPECTIVE ROLES. THE LICENSEE ACKNOWLEDGES THAT THIS CONTRACT SUPERSEDES THE VPL-1.0 SOLELY FOR THE APPROVED SCOPE DEFINED IN EXHIBIT A, AND THAT ALL OTHER USES OF THE SOFTWARE REMAIN GOVERNED BY THE VPL-1.0 IN FULL.</p>
+
+        <h5>8. EXHIBIT A - OPERATIONAL SCOPE</h5>
+        <p>Exhibit A is a separate appendix attached to this Master Agreement and rewritten for each specific government project. It defines the Approved Scope of use, including specific deployment parameters, technical configurations, operational boundaries, and any project-specific compliance requirements. One agency may use Exhibit A for automated border missile intercept validation, while another may use it for submarine hull stress simulation. Exhibit A is negotiated and signed separately for each project.</p>
+
+        <div style="border-top: 1px dashed #c45d3a; margin: 28px 0; height: 0;"></div>
+
+        <h5 style="text-align: center; font-size: 1.1rem; letter-spacing: 0.08em;">BOILERPLATE NOTICE</h5>
+        <p style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em;">THIS MASTER AGREEMENT FORMAT, INCLUDING THE PACKAGED HANDOFF AND CUSTODY TRANSFER IN SECTION 1, THE MAINTENANCE AND PATCH MANAGEMENT PROVISIONS IN SECTION 2, THE INDEMNIFICATION AND RISK ALLOCATION IN SECTION 3, THE BREACH AND TERMINATION MECHANICS IN SECTION 4, THE EXPORT CONTROL AND ITAR COMPLIANCE IN SECTION 5, THE DISTRIBUTION CONTROL IN SECTION 6, THE ACCEPTANCE MECHANISM IN SECTION 7, AND THE EXHIBIT A OPERATIONAL SCOPE IN SECTION 8, IS A PRIVATE AGREEMENT BETWEEN VOLKANADEV AUTONOMOUS SYSTEMS, INC AND THE LICENSEE IDENTIFIED IN EXHIBIT A.</p>
+        <p style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em;">THIS MASTER AGREEMENT IS NOT DISTRIBUTED PUBLICLY AND IS NOT OPEN FOR ADOPTION BY THIRD PARTIES. IT SUPPLEMENTS BUT DOES NOT REPLACE THE VOLKANADEV PUBLIC LICENSE (VPL-1.0). IN THE EVENT OF ANY CONFLICT BETWEEN THIS MASTER AGREEMENT AND THE VPL-1.0, THIS MASTER AGREEMENT SHALL CONTROL SOLELY FOR THE SPECIFIC APPROVED SCOPE DEFINED IN EXHIBIT A. ALL OTHER DEPLOYMENTS REMAIN GOVERNED BY THE VPL-1.0 IN FULL.</p>
+        <p style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em;">BY SIGNING THIS MASTER AGREEMENT, THE LICENSEE AGREES VOLKANADEV AUTONOMOUS SYSTEMS, INC RETAINS ALL ORIGINAL RIGHTS, TITLE, AND INTEREST IN THE SOFTWARE. THE LICENSEE'S RIGHTS ARE LIMITED TO THE APPROVED SCOPE. UNAUTHORIZED USE, DISTRIBUTION, OR DEPLOYMENT OUTSIDE THE APPROVED SCOPE CONSTITUTES AN INCURABLE MATERIAL BREACH AND IMMEDIATE INFRINGEMENT OF LICENSOR'S INTELLECTUAL PROPERTY RIGHTS. THIS NOTICE MUST BE INCLUDED WITH THE SIGNED MASTER AGREEMENT.</p>
+      </div>
+    </div>
+
+    <a href="security.html" class="back-link">&larr; Back to Safety &amp; Licenses</a>
+  </div>
+
+  <footer>
+    <div class="footer-links">
+      <a href="terms.html">Terms of Use</a> | <a href="privacy.html">Privacy Policy</a> | <a href="security.html">Safety &amp; Licenses</a> | <a href="careers.html">Careers</a>
+    </div>
+    Copyright &copy; 2026 VolkanaDEV Autonomous Systems, Inc.<br>
+    VolkanaDEV, Sanguis, and VANA are intellectual property of VolkanaDEV Autonomous Systems, Inc.<br>
+    Business and private inquiries: <a href="mailto:volkanadev@volkanadev.com">volkanadev@volkanadev.com</a>
+  </footer>
+
+</body>
+</html>

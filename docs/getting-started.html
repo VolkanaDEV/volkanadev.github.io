@@ -59,6 +59,63 @@
   .footer-links{margin-bottom:8px}
   .footer-links a{margin:0 8px}
   @media(max-width:768px){.nav-toggle{display:flex}.nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--border);padding:8px 24px 16px;display:none;z-index:100}.nav-links.open{display:flex}.nav-links a{padding:12px 0;border-bottom:1px solid var(--border);font-size:0.95rem}.nav-links a:last-child{border-bottom:none}.doc-layout{flex-direction:column}.doc-sidebar{display:none}.doc-content{padding:24px 16px 60px}.wrap{padding:0 16px}}
+
+  /* === Visual Enhancements === */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 5px rgba(196, 93, 58, 0.15); }
+    50% { box-shadow: 0 0 15px rgba(196, 93, 58, 0.3); }
+  }
+  body { animation: fadeIn 0.4s ease-out; }
+  .card, .doc-card, .doc-grid > a, .arena-card {
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover, .doc-card:hover, .doc-grid > a:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 4px 20px rgba(196, 93, 58, 0.12);
+  }
+  .hero h2, .header-block h2 {
+    text-shadow: 0 0 30px rgba(196, 93, 58, 0.08);
+  }
+  .nav-links a {
+    transition: color 0.2s, text-shadow 0.2s;
+  }
+  .nav-links a:hover {
+    text-shadow: 0 0 10px rgba(196, 93, 58, 0.3);
+  }
+  a { transition: opacity 0.15s, text-shadow 0.15s; }
+  .btn, button {
+    transition: all 0.2s ease;
+  }
+  .btn:hover, button:hover {
+    box-shadow: 0 0 12px rgba(196, 93, 58, 0.2);
+  }
+  .back-link:hover, footer a:hover {
+    text-shadow: 0 0 8px rgba(196, 93, 58, 0.25);
+  }
+  .legal-box {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .legal-box:hover {
+    border-color: rgba(196, 93, 58, 0.25);
+    box-shadow: 0 0 25px rgba(196, 93, 58, 0.04);
+  }
+  ::selection {
+    background: rgba(196, 93, 58, 0.25);
+  }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(196, 93, 58, 0.3); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(196, 93, 58, 0.5); }
+  /* Separator line radiant glow */
+  nav { border-bottom: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(196, 93, 58, 0.3); }
+  footer { border-top: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(196, 93, 58, 0.3); }
+  .section { border-top: 1px solid rgba(196, 93, 58, 0.5) !important; }
+  .feature-list li { border-bottom: 1px solid rgba(196, 93, 58, 0.25) !important; }
+  .doc-content h2 { border-bottom: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  .doc-nav-bottom { border-top: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  /* === End Visual Enhancements === */
 </style>
 </head>
 <body>
@@ -102,20 +159,20 @@
       <p class="subtitle">Run your first Sanguis V4 program</p>
 
       <h2 id="prerequisites">Prerequisites</h2>
-      <p>Windows 10 or later. No external dependencies required. A CUDA-capable NVIDIA GPU is optional &mdash; the runtime runs on CPU by default, and GPU acceleration is used for parallel route execution at scale.</p>
+      <p>Windows 10 or later. No external dependencies required. A CUDA-capable NVIDIA GPU is optional - the runtime runs on CPU by default, and GPU acceleration is used for parallel route execution at scale.</p>
 
       <h2 id="runtime-binaries">Runtime Binaries</h2>
-      <p>The V4 SDK includes two executables. Both are <strong>command-line tools</strong> &mdash; do not double-click them. Run them from a terminal (Command Prompt, PowerShell, or Git Bash):</p>
+      <p>The V4 SDK includes two executables. Both are <strong>command-line tools</strong> - do not double-click them. Run them from a terminal (Command Prompt, PowerShell, or Git Bash):</p>
       <table class="doc-table">
         <tr><th>Binary</th><th>Purpose</th><th>Usage</th></tr>
-        <tr><td><span class="code-inline">vana_runner.exe</span></td><td>V4 runtime &mdash; reads and executes <span class="code-inline">.sang</span> files directly</td><td><span class="code-inline">vana_runner.exe program.sang</span></td></tr>
-        <tr><td><span class="code-inline">vana_bench.exe</span></td><td>CUDA benchmark &mdash; measures GPU vs CPU route throughput (requires NVIDIA GPU)</td><td><span class="code-inline">vana_bench.exe</span></td></tr>
+        <tr><td><span class="code-inline">vana_runner.exe</span></td><td>V4 runtime - reads and executes <span class="code-inline">.sang</span> files directly</td><td><span class="code-inline">vana_runner.exe program.sang</span></td></tr>
+        <tr><td><span class="code-inline">vana_bench.exe</span></td><td>CUDA benchmark - measures GPU vs CPU route throughput (requires NVIDIA GPU)</td><td><span class="code-inline">vana_bench.exe</span></td></tr>
       </table>
 
       <h2 id="running-a-program">Running a Program</h2>
       <p>The V4 runtime (<span class="code-inline">vana_runner.exe</span>) reads <span class="code-inline">.sang</span> files directly and executes them:</p>
       <div class="code-block"><pre>vana_runner.exe program.sang</pre></div>
-      <p>No compilation step required for execution. The runner parses the file, builds the route table, and ticks until a terminal condition is reached. Route execution is parallel by default &mdash; on GPU systems, VANA can dispatch routes across CUDA cores for large-scale parallelism.</p>
+      <p>No compilation step required for execution. The runner parses the file, builds the route table, and ticks until a terminal condition is reached. Route execution is parallel by default - on GPU systems, VANA can dispatch routes across CUDA cores for large-scale parallelism.</p>
 
       <h2 id="hello-world">Hello World</h2>
       <p>Create <span class="code-inline">hello.sang</span>:</p>

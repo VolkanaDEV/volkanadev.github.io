@@ -589,7 +589,7 @@
     </div>
 
     <div class="disclaimer-box">
-      * <strong>Architectural Note:</strong> All timing data is measured from real CUDA kernel runs on an NVIDIA RTX 3060 (12GB VRAM) using the VANA settle, novelty, and convergence kernels from vana_kernels.cu. The GPU emulates the future VANA SoC architecture; it is not the final hardware, but it runs the same computation natively in parallel. The CPU cannot perform sparse parallel computation natively. To produce a CPU baseline, the i7-12700K emulated VANA's route-based architecture sequentially, processing 22.5 million connections one at a time. The 250K-neuron payload timed out after 60 seconds at 654 ticks. GPU utilization was verified at 99% via nvidia-smi during dense runs. The benchmark tool (vana_bench.cu) compiles with nvcc and is available in the Sanguis distribution.
+      * <strong>Architectural Note:</strong> All timing data is measured from real CUDA kernel runs on an NVIDIA RTX 3060 (12GB VRAM) using the VANA settle, novelty, and convergence kernels from vana_kernels.cu. The GPU emulates the future VANA SoC architecture; it is not the final hardware, but it runs the same computation natively in parallel. The CPU cannot perform sparse parallel computation natively. To produce a CPU baseline, the i7-12700K emulated VANA's route-based architecture sequentially, processing 22.5 million connections one at a time. The 250K-neuron payload timed out after 60 seconds at 654 ticks. GPU utilization was verified at 99% via nvidia-smi during dense runs. The benchmark tool (vana_bench.cu) compiles with nvcc and will be available in the Sanguis distribution at a later date.
     </div>
   </div>
 

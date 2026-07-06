@@ -159,15 +159,17 @@
       <p class="subtitle">Run your first Sanguis program</p>
 
       <h2 id="prerequisites">Prerequisites</h2>
-      <p>Windows 10 or later. An NVIDIA CUDA-capable GPU is required. The runtime executes programs directly on CUDA cores. No other dependencies. No Python, no compiler toolchain, nothing to build. The SDK ships as pre-compiled binaries.</p>
+      <p>Windows 10 or later. An NVIDIA CUDA-capable GPU is required. The runtime executes programs directly on CUDA cores. You also need the CUDA Toolkit (nvcc compiler) and MSVC (cl.exe) to compile the blood bridge for your GPU. Both are free from NVIDIA and Microsoft.</p>
 
       <h2 id="install">Installation</h2>
       <p>Extract the SDK archive to any folder on your system. The folder structure looks like this:</p>
       <div class="code-block"><pre>sanguis-sdk/
   bin/
     sanguis_run.bat              one-command pipeline
+    build.bat                    compiles the blood bridge for your GPU
     vana_connectome_transposer.exe   .sang to .vana compiler
-    v5_blood_bridge.exe          CUDA runtime (the GPU engine)
+    v5_blood_bridge.cu           CUDA runtime source
+    v5_blood_bridge.exe          compiled bridge (after running build.bat)
   examples/
     hello.sang                   hello world
     add.sang                     arithmetic
@@ -176,7 +178,10 @@
     build.bat                    compiles the benchmark tool
     benchmark.bat                runs CPU vs GPU comparison
     vana_bench.cu                benchmark source</pre></div>
-      <p>Open a command prompt, navigate to the <span class="code-inline">bin</span> folder, and you are ready. There is no installer, no PATH configuration, no setup script. The SDK runs from wherever you extracted it.</p>
+      <p>Open a command prompt, navigate to the <span class="code-inline">bin</span> folder, and run <span class="code-inline">build.bat</span> once. This compiles the blood bridge for your specific GPU. After that, <span class="code-inline">sanguis_run.bat</span> will auto-build it if the exe is missing.</p>
+      <div class="callout">
+        <p><strong>Why source?</strong> The blood bridge runs CUDA kernels directly on your GPU. Compiling from source with <span class="code-inline">-arch=native</span> ensures the binary targets your exact GPU architecture. A pre-compiled binary from one GPU generation may not run on another.</p>
+      </div>
       <div class="callout">
         <p><strong>Optional: add to PATH.</strong> If you want to run <span class="code-inline">sanguis_run.bat</span> from any directory, add the <span class="code-inline">bin</span> folder to your system PATH. Otherwise just <span class="code-inline">cd</span> into the <span class="code-inline">bin</span> folder each time.</p>
       </div>

@@ -112,7 +112,6 @@
   nav { border-bottom: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(196, 93, 58, 0.3); }
   footer { border-top: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(196, 93, 58, 0.3); }
   .section { border-top: 1px solid rgba(196, 93, 58, 0.5) !important; }
-  .feature-list li { border-bottom: 1px solid rgba(196, 93, 58, 0.25) !important; }
   .doc-content h2 { border-bottom: 1px solid rgba(196, 93, 58, 0.4) !important; }
   .doc-nav-bottom { border-top: 1px solid rgba(196, 93, 58, 0.4) !important; }
   /* === End Visual Enhancements === */
@@ -156,36 +155,38 @@
       <div class="breadcrumb"><a href="index.html">Docs</a> / Language Reference</div>
 
       <h1>Language Reference</h1>
-      <p class="subtitle">Eight keywords: circuit, hold, memory, when, but, emit, through, wire. Grammar, condition operators, builtins, and comments.</p>
+      <p class="subtitle">Nine keywords: circuit, hold, memory, when, but, emit, append, through, wire. Grammar, condition operators, and comments.</p>
 
       <h2 id="keywords">Keywords</h2>
-      <p>V4 has 8 keywords. No more, no less.</p>
+      <p>Sanguis has 9 keywords.</p>
       <table class="doc-table">
         <tr><th>Keyword</th><th>Purpose</th></tr>
-        <tr><td><span class="code-inline">circuit</span></td><td>Declare a body - a collection of holds and routes</td></tr>
+        <tr><td><span class="code-inline">circuit</span></td><td>Declare a body, a collection of holds and routes</td></tr>
         <tr><td><span class="code-inline">hold</span></td><td>Declare a named value (scalar or text)</td></tr>
         <tr><td><span class="code-inline">memory</span></td><td>Declare the layer type of a hold (persistent state)</td></tr>
         <tr><td><span class="code-inline">when</span></td><td>Declare a route trigger</td></tr>
         <tr><td><span class="code-inline">but</span></td><td>Gate a route with a condition</td></tr>
-        <tr><td><span class="code-inline">emit</span></td><td>Send a value to a target</td></tr>
+        <tr><td><span class="code-inline">emit</span></td><td>Send a value to a target (replaces current content)</td></tr>
+        <tr><td><span class="code-inline">append</span></td><td>Append a value to a text hold (accumulates)</td></tr>
         <tr><td><span class="code-inline">through</span></td><td>Iterate through text, one character per tick</td></tr>
         <tr><td><span class="code-inline">wire</span></td><td>Connect a hold in one circuit to a hold in another</td></tr>
       </table>
 
       <h2 id="grammar">Grammar</h2>
       <div class="code-block"><pre>program     := (circuit | wire)*
-circuit     := "circuit" IDENT "{" (hold | when | wire)* "}"
+circuit     := "circuit" IDENT "{" (hold | when)* "}"
 hold        := "hold" IDENT ":" "memory" ("scalar" | "text") ("=" value)?
-when        := "when" IDENT "{" ("but" condition)* ("through" IDENT)? emit* "}"
+when        := "when" IDENT "{" ("but" condition)* ("through" IDENT)? (emit | append)* "}"
 wire        := "wire" IDENT "." IDENT "to" IDENT "." IDENT
 condition   := IDENT ("<" | ">" | "=") (number | IDENT)
 emit        := "emit" expr "to" target
-target      := IDENT | "screen" | "world" | "disk" string
+append      := "append" expr "to" IDENT
+target      := IDENT | "screen"
 value       := number | string
 expr        := number | string | IDENT | IDENT ("+" | "-" | "*") expr | builtin "(" args ")"</pre></div>
 
       <h2 id="condition-operators">Condition Operators</h2>
-      <p>V4 supports three comparison operators:</p>
+      <p>Sanguis supports three comparison operators:</p>
       <table class="doc-table">
         <tr><th>Operator</th><th>Meaning</th></tr>
         <tr><td><span class="code-inline">&lt;</span></td><td>Less than</td></tr>
@@ -212,7 +213,7 @@ emit pos + 1.0 to pos    // increment</pre></div>
       <p>Comments are ignored by the parser. Use them freely.</p>
 
       <h2 id="builtins">Builtins</h2>
-      <p>V4 provides 18 builtins for string manipulation, file I/O, comparison, conversion, output, and native output:</p>
+      <p>Sanguis provides 17 builtins for string manipulation, file I/O, comparison, and conversion. Builtins run on the GPU. Text operations happen in VRAM.</p>
 
       <h3>String Builtins</h3>
       <table class="doc-table">
@@ -223,9 +224,10 @@ emit pos + 1.0 to pos    // increment</pre></div>
         <tr><td><span class="code-inline">trim</span></td><td><span class="code-inline">trim(s)</span></td><td>text</td><td>Remove leading/trailing whitespace</td></tr>
         <tr><td><span class="code-inline">replace</span></td><td><span class="code-inline">replace(s, old, new)</span></td><td>text</td><td>Replace all occurrences of old with new</td></tr>
         <tr><td><span class="code-inline">split</span></td><td><span class="code-inline">split(s, delim)</span></td><td>text</td><td>Split on delimiter, return first field</td></tr>
+        <tr><td><span class="code-inline">split_at</span></td><td><span class="code-inline">split_at(s, delim, n)</span></td><td>text</td><td>Split on delimiter, return nth field (0-indexed)</td></tr>
         <tr><td><span class="code-inline">crop</span></td><td><span class="code-inline">crop(s)</span></td><td>text</td><td>Return text after first <span class="code-inline">|</span> character</td></tr>
-        <tr><td><span class="code-inline">char_at</span></td><td><span class="code-inline">char_at(s, pos)</span></td><td>text</td><td>Character at position (as text)</td></tr>
-        <tr><td><span class="code-inline">lookup</span></td><td><span class="code-inline">lookup(pairs, key, delim)</span></td><td>text</td><td>Look up key in delimited pairs</td></tr>
+        <tr><td><span class="code-inline">join</span></td><td><span class="code-inline">join(template, arg1, ...)</span></td><td>text</td><td>Fill <span class="code-inline">{}</span> placeholders in template with args</td></tr>
+        <tr><td><span class="code-inline">starts_with</span></td><td><span class="code-inline">starts_with(s, prefix)</span></td><td>text</td><td>Returns <span class="code-inline">"true"</span> or <span class="code-inline">"false"</span></td></tr>
       </table>
 
       <h3>Comparison Builtins</h3>
@@ -255,21 +257,17 @@ emit pos + 1.0 to pos    // increment</pre></div>
         <tr><td><span class="code-inline">print</span></td><td><span class="code-inline">print(s)</span></td><td>text</td><td>Pass-through (prints to screen)</td></tr>
       </table>
 
-      <h3>Native Output Builtins</h3>
-      <table class="doc-table">
-        <tr><th>Builtin</th><th>Signature</th><th>Returns</th><th>Description</th></tr>
-        <tr><td><span class="code-inline">write_bytes</span></td><td><span class="code-inline">write_bytes(data)</span></td><td>scalar</td><td>Write raw bytes to native output</td></tr>
-        <tr><td><span class="code-inline">write_tcode</span></td><td><span class="code-inline">write_tcode(hex)</span></td><td>scalar</td><td>Write a tcode (hex-encoded opcode) to native output</td></tr>
-      </table>
-
       <h3 id="builtin-examples">Builtin Examples</h3>
       <div class="code-block"><pre>emit concat("Hello", " World!") to screen         // "Hello World!"
-emit len("hello") to screen                        // "5.0000"
+emit len("hello") to screen                        // 5.0000
 emit extract("hello", 0, 3) to screen              // "hel"
 emit trim("  hi  ") to screen                      // "hi"
 emit replace("a.b.c", ".", "_") to screen          // "a_b_c"
 emit match("abc", "abc") to screen                 // "1"
 emit contains("hello world", "world") to screen    // "true"
+emit starts_with("hello", "he") to screen          // "true"
+emit split_at("a,b,c", ",", 1) to screen           // "b"
+emit join("{} + {} = {}", "1", "2", "3") to screen // "1 + 2 = 3"
 emit read_file("input.txt") to buffer              // file contents
 emit write_file("out.txt", "data") to result       // "1" on success</pre></div>
 
@@ -277,7 +275,7 @@ emit write_file("out.txt", "data") to result       // "1" on success</pre></div>
       <p>Builtins can be nested:</p>
       <div class="code-block"><pre>emit concat(genome, concat("BODY|", concat(trim(name), "\n"))) to genome
 emit match(extract(line, 0, 4), "body") to f_body</pre></div>
-      <p>Arguments are evaluated recursively. Up to 3 arguments per call are supported.</p>
+      <p>Arguments are evaluated recursively. Up to 8 arguments per call are supported.</p>
 
       <div class="doc-nav-bottom">
         <a href="getting-started.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Getting Started</span></a>

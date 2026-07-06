@@ -81,34 +81,6 @@
     line-height: 1.75;
   }
 
-  /* Feature list for V2/V3 */
-  .feature-list {
-    list-style: none;
-    padding: 0;
-    margin: 20px 0;
-  }
-  .feature-list li {
-    padding: 14px 0;
-    border-bottom: 1px solid var(--border);
-    color: var(--muted-light);
-    font-size: 0.98rem;
-    line-height: 1.65;
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-  }
-  .feature-list li:last-child { border-bottom: none; }
-  .feature-list .check {
-    flex: 0 0 auto;
-    width: 18px; height: 18px;
-    border-radius: 4px;
-    background: rgba(196, 93, 58, 0.15);
-    color: var(--accent);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.7rem; font-weight: 800;
-    margin-top: 2px;
-  }
-
   /* Status badges */
   .status-badge {
     display: inline-block;
@@ -212,27 +184,6 @@
     color: var(--muted-light);
   }
 
-  /* Goal callout */
-  .goal-box {
-    margin: 32px 0;
-    background: linear-gradient(135deg, rgba(196, 93, 58, 0.06), rgba(196, 93, 58, 0.02));
-    border: 1px solid rgba(196, 93, 58, 0.2);
-    border-radius: 14px;
-    padding: 32px 28px;
-  }
-  .goal-box strong {
-    color: #fff;
-    font-size: 1rem;
-    display: block;
-    margin-bottom: 8px;
-  }
-  .goal-box p {
-    color: var(--muted-light);
-    font-size: 0.95rem;
-    margin: 0;
-    line-height: 1.7;
-  }
-
   footer {
     text-align: center; padding: 40px 0;
     color: var(--muted-light); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 40px;
@@ -279,7 +230,7 @@
     .milestone-year { margin-bottom: 0; margin-top: 2px; min-width: 42px; }
     .milestone-dot { margin-bottom: 0; margin-top: 4px; }
     .milestone-card { flex: 1; }
-    .goal-box { padding: 18px 16px; }
+
   }
 
   @media (max-width: 480px) {
@@ -341,7 +292,7 @@
   nav { border-bottom: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(196, 93, 58, 0.3); }
   footer { border-top: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(196, 93, 58, 0.3); }
   .section { border-top: 1px solid rgba(196, 93, 58, 0.5) !important; }
-  .feature-list li { border-bottom: 1px solid rgba(196, 93, 58, 0.25) !important; }
+
   .doc-content h2 { border-bottom: 1px solid rgba(196, 93, 58, 0.4) !important; }
   .doc-nav-bottom { border-top: 1px solid rgba(196, 93, 58, 0.4) !important; }
   /* === End Visual Enhancements === */
@@ -377,16 +328,11 @@
   <div class="wrap">
     <div class="content">
 
-      <h3><span class="label">Working Now</span>V4: The Language</h3>
+      <h3><span class="label">Working Now</span>V4: The Code</h3>
       <span class="status-badge live">Live</span>
-      <p>Sanguis V4 is the complete language. It has 10 keywords, and programs are "bodies" of holds and routes that fire in parallel every tick. When you write Sanguis code, it gets transposed into a connectome: a graph of neurons and connections. That connectome settles on the GPU in parallel, in real-time. No instruction pointer, no sequential execution. The C transposer is scaffolding to get the language standing on its own. Once it does, the C goes away.</p>
-      <ul class="feature-list">
-        <li><span class="check">&#10003;</span><span>The transposer takes your .sang source and builds a .vana connectome from it: neurons, connections, gates, and frequency fields. VANA owns execution from there.</span></li>
-        <li><span class="check">&#10003;</span><span>The "blood bridge" runs the full organism on the GPU in a single async CUDA kernel. Settle, gate, emit, output; all on the GPU. The CPU does not sync every tick. It observes.</span></li>
-        <li><span class="check">&#10003;</span><span>CUDA benchmarks prove 191.6x parallel speedup on consumer RTX 3060 hardware. Real numbers, real silicon.</span></li>
-        <li><span class="check">&#10003;</span><span>fcodes are frequency-encoded routes that fire at preset frequencies. Two routes at a 2:1 ratio produce what would be referred to in music as an "octave". The grid "reasons" from frequency-aligned signals. Inference-based, rather than interference-based.</span></li>
-        <li><span class="check">&#10003;</span><span>Over 1,620 tests pass: arithmetic, string output, counters, convergence, and frequency-gated routes. The connectome is not a prototype. It is running.</span></li>
-      </ul>
+      <p>Sanguis is currently in its fourth iteration. It contains 9 keywords, and allows you to write programs that "fire" at parallel rates, dramatically increasing compute speeds, and reducing costs and byproducts such as heat. The code is still in its younger stages, and we hope that the general public will take interest and develop Sanguis alongside us. We're ready to work on custom packages of our in-house terminal for private use as well. Early adopters wishing to deploy early versions of VolkanaDEV software or code language are encouraged to contact us at your earliest convenience. We'll work with you to give you a reasonable, accurate time-frame and fair costs ahead of time.</p>
+      <p>We'll keep updating, you can get started while we support you. Sanguis and VANA will come with support service as part of your contract, for extended periods. We offer optional payment installments with no interest, and you're welcome to re-negotiate for extended support plans at lower costs when your initial free period ends.</p>
+      <p>VolkanaDEV can ensure quality configurations and deployments tailored to your needs, and is happy to help grow your local platforms with you. We also offer limited support for designs, or technical issues with future hardware, during your initial time with us. If you feel lost, you'll always have a way to get help.</p>
 
       <h3><span class="label">Where It Goes</span>What Comes Next</h3>
       <p>The software side is always in progress. V4 is just another step on the way to our final vision. It's messy, self-hosted by today's standards, and runs on most consumer hardware; with some type of current graphics processing unit that can handle AI-generated frame rendering.</p>
@@ -399,15 +345,15 @@
             <div class="milestone-dot"></div>
             <div class="milestone-card">
               <strong>Where We Are</strong>
-              V4 is complete. 10 keywords, over 1,620 tests passing, and the organism runs on the GPU you already own. The C scaffolding is temporary; it stays until the language can stand on its own, and then it goes away.
+              V4 is complete. 9 keywords, over 260 tests passing, and the organism runs on the GPU you already own. The C scaffolding is temporary; it stays until the silicon platform can support native VANA framework, then it goes away.
             </div>
           </div>
           <div class="milestone future">
             <div class="milestone-year">2027</div>
             <div class="milestone-dot"></div>
             <div class="milestone-card">
-              <strong>Public Release</strong>
-              Sanguis V4 ships. SDK, source code, and documentation go public. The world gets its hands on Sanguis for the first time.
+              <strong>SDK Deployment</strong>
+              Sanguis V4 ships. SDK binaries, examples, and documentation go public. The world gets its hands on Sanguis for the first time. Source code follows later.
             </div>
           </div>
           <div class="milestone future">
@@ -415,7 +361,7 @@
             <div class="milestone-dot"></div>
             <div class="milestone-card">
               <strong>First Prototype PCB</strong>
-              Sanguis and VANA meet a dedicated circuit board for the first time. No complex GPU driver stack, no operating system in the way. The VANA engine talks to the silicon chip directly and lives inside, as well as alongside it. The .vana file becomes firmware, and your programs can be made on any operating system, in any supported programming langauge, and adapted to the modern VANA system networks.
+              Sanguis and VANA meet a dedicated circuit board for the first time. No complex GPU driver stack, no operating system in the way. The VANA engine talks to the silicon chip directly and lives inside, as well as alongside it. The .vana file becomes firmware, and your programs can be made on any operating system, in any supported programming language, and adapted to the modern VANA system networks.
             </div>
           </div>
           <div class="milestone future">
@@ -423,15 +369,10 @@
             <div class="milestone-dot"></div>
             <div class="milestone-card">
               <strong>Custom Silicon on Chip (SoC)</strong>
-              A custom made chip where VANAs and the hardware are the same thing. No complicated programming necessary, no lengthy translations of code langauges. Just your sanguis programming, and VANA running togther. Sanguis may be deprecated as a modern dialect is adapted, and VANA will eventually be self-supporting hardware technology, designed not to replace, but assist current day technology, with respect to their creators, and operators.
+              A custom made chip where VANAs and the hardware are the same thing. No complicated programming necessary, no lengthy translations of code languages. Just your sanguis programming, and VANA running together. Sanguis may be deprecated as a modern dialect is adapted, and VANA will eventually be self-supporting hardware technology, designed not to replace, but assist current day technology, with respect to their creators, and operators.
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="goal-box">
-        <strong>What a future VANA could look like</strong>
-        <p>Right now VANA runs on a GPU through CUDA. It works, but it could work even better. The PCB is the first time VANA gets its own hardware. No driver stack. No operating system abstraction. Just the engine and the silicon. Same language. Same .sang file. Any different framework underneath. 2030 is an estimation, and while we are optimistic, there is no telling what the future holds. Proper care and a sizable budget allow Sanguis to become a household powerhouse, while leaving room for the friendly neighborhood programming languages in the same system today, compatible for tomorrow.</p>
       </div>
 
     </div>

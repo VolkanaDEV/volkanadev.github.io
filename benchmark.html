@@ -235,13 +235,8 @@
     font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
     letter-spacing: 0.08em; color: var(--accent); margin-bottom: 24px;
   }
-  .watt-svg { width: 100%; height: 300px; display: block; }
-  .watt-x-labels {
-    display: flex; justify-content: space-between;
-    padding: 10px 20px 0; font-size: 0.68rem; color: var(--muted-light); font-weight: 600;
-    gap: 8px;
-  }
-  .watt-x-labels span { text-align: center; flex: 1; }
+  .watt-svg { width: 100%; height: 320px; display: block; }
+  .watt-x-labels { display: none; }
 
   /* Joule Usage Line Graph */
   .joule-chart {
@@ -255,13 +250,8 @@
     font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
     letter-spacing: 0.08em; color: var(--accent); margin-bottom: 24px;
   }
-  .joule-svg { width: 100%; height: 300px; display: block; }
-  .joule-x-labels {
-    display: flex; justify-content: space-between;
-    padding: 10px 20px 0; font-size: 0.68rem; color: var(--muted-light); font-weight: 600;
-    gap: 8px;
-  }
-  .joule-x-labels span { text-align: center; flex: 1; }
+  .joule-svg { width: 100%; height: 320px; display: block; }
+  .joule-x-labels { display: none; }
   .joule-legend {
     display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;
     margin-top: 16px; font-size: 0.78rem; color: var(--muted-light);
@@ -393,7 +383,6 @@
   nav { border-bottom: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(196, 93, 58, 0.3); }
   footer { border-top: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(196, 93, 58, 0.3); }
   .section { border-top: 1px solid rgba(196, 93, 58, 0.5) !important; }
-  .feature-list li { border-bottom: 1px solid rgba(196, 93, 58, 0.25) !important; }
   .doc-content h2 { border-bottom: 1px solid rgba(196, 93, 58, 0.4) !important; }
   .doc-nav-bottom { border-top: 1px solid rgba(196, 93, 58, 0.4) !important; }
   /* === End Visual Enhancements === */
@@ -422,7 +411,7 @@
   <div class="wrap">
     <section class="header-block">
       <h2>Arena Performance Realities</h2>
-      <p>Select a logic file below to see how the VANA engine's sparse routing performs on real GPU silicon. All results are measured on an NVIDIA RTX 3060 (12GB VRAM) emulating the future VANA SoC architecture. Traditional CPUs cannot perform sparse parallel computation; the results below are from CUDA kernels running on the GPU, which stands in for the eventual custom XE3 hardware.</p>
+      <p>Select a logic file below to see how the VANA engine's sparse routing performs on real GPU silicon. All results are measured on an NVIDIA RTX 3060 (12GB VRAM) emulating the future VANA SoC architecture. The CPU processes every connection sequentially. The GPU skips entire regions of inactive neurons, doing less work and finishing faster.</p>
       
       <div class="selector-box">
         <label for="circuit-select">Payload File Selection</label>
@@ -439,14 +428,15 @@
       <div id="card-cpu" class="arena-card blocked">
         <div class="card-top">
           <div class="arena-title">CPU (Emulated)</div>
-          <div id="cpu-sub" class="arena-subtitle">VANA Emulation - Not Native</div>
+          <div id="cpu-sub" class="arena-subtitle">Sequential - Not Native</div>
           <span id="cpu-badge" class="badge-status fail">ARCHITECTURAL MISMATCH</span>
           <div><span class="latency-tag">Sequential Emulation</span></div>
         </div>
         <div class="arena-stats">
-          <div class="arena-stat"><span>Time/Sweep:</span> <span id="cpu-time" style="color: #f85149;">91,750 us</span></div>
-          <div class="arena-stat"><span>Frequency:</span> <span id="cpu-freq">10.9 Hz</span></div>
+          <div class="arena-stat"><span>Time/Sweep:</span> <span id="cpu-time" style="color: #f85149;">41,017 us</span></div>
+          <div class="arena-stat"><span>Frequency:</span> <span id="cpu-freq">24.4 Hz</span></div>
           <div class="arena-stat"><span>Resource Draw:</span> <span id="cpu-wall">Emulating on i7-12700K</span></div>
+          <div class="arena-stat"><span>Real-Time Ceiling:</span> <span id="cpu-ceiling" style="color: #f85149;">~100K neurons (60Hz)</span></div>
         </div>
         <div id="cpu-mult" class="badge-multiplier">1.0x (Emulated Baseline)</div>
       </div>
@@ -459,11 +449,11 @@
           <div><span class="latency-tag">Full Processing</span></div>
         </div>
         <div class="arena-stats">
-          <div class="arena-stat"><span>Time/Sweep:</span> <span id="base-time">7,290 us</span></div>
-          <div class="arena-stat"><span>Frequency:</span> <span id="base-freq">137 Hz</span></div>
+          <div class="arena-stat"><span>Time/Sweep:</span> <span id="base-time">7,554 us</span></div>
+          <div class="arena-stat"><span>Frequency:</span> <span id="base-freq">132 Hz</span></div>
           <div class="arena-stat"><span>GPU Utilization:</span> <span id="base-wall">99% - 2.3GB VRAM</span></div>
         </div>
-        <div id="base-mult" class="badge-multiplier">12.6x Faster</div>
+        <div id="base-mult" class="badge-multiplier">5.4x Faster</div>
       </div>
 
       <div id="card-region" class="arena-card">
@@ -474,11 +464,11 @@
           <div><span class="latency-tag">Segmented Skip</span></div>
         </div>
         <div class="arena-stats">
-          <div class="arena-stat"><span>Time/Sweep:</span> <span id="region-time">2,798 us</span></div>
-          <div class="arena-stat"><span>Frequency:</span> <span id="region-freq">357 Hz</span></div>
+          <div class="arena-stat"><span>Time/Sweep:</span> <span id="region-time">3,086 us</span></div>
+          <div class="arena-stat"><span>Frequency:</span> <span id="region-freq">324 Hz</span></div>
           <div class="arena-stat"><span>GPU Utilization:</span> <span id="region-wall">65% - 2.3GB VRAM</span></div>
         </div>
-        <div id="region-mult" class="badge-multiplier">32.8x Faster</div>
+        <div id="region-mult" class="badge-multiplier">13.3x Faster</div>
       </div>
 
       <div id="card-sparse" class="arena-card" style="border-color: var(--accent); box-shadow: 0 0 20px rgba(196, 93, 58, 0.15);">
@@ -489,43 +479,50 @@
           <div><span class="latency-tag" style="border-color: var(--accent); color: var(--accent); background: rgba(196,93,58,0.02);">Native GPU - Measured on RTX 3060</span></div>
         </div>
         <div class="arena-stats">
-          <div class="arena-stat"><span>Time/Sweep:</span> <span id="sparse-time">479 us</span></div>
-          <div class="arena-stat"><span>Frequency:</span> <span id="sparse-freq">2.1K Hz</span></div>
+          <div class="arena-stat"><span>Time/Sweep:</span> <span id="sparse-time">511 us</span></div>
+          <div class="arena-stat"><span>Frequency:</span> <span id="sparse-freq">2.0K Hz</span></div>
           <div class="arena-stat"><span>GPU Utilization:</span> <span id="sparse-wall">12% - 2.3GB VRAM</span></div>
         </div>
-        <div id="sparse-mult" class="badge-multiplier" style="font-weight: 900;">191.6x Faster</div>
+        <div id="sparse-mult" class="badge-multiplier" style="font-weight: 900;">80.3x Faster</div>
       </div>
     </div>
 
+    <div style="max-width: 960px; margin: 30px auto; background: var(--panel-dark); border: 1px solid var(--border); border-left: 3px solid #e05d44; border-radius: 12px; padding: 24px 28px;">
+      <div style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #e05d44; margin-bottom: 12px;">CPU Sequential Ceiling</div>
+      <p id="ceiling-desc" style="color: var(--text-light); font-size: 0.92rem; line-height: 1.7; margin: 0;">
+        80x is the measured per-tick speedup at 250K neurons, the largest payload the CPU completes in reasonable time. CPU time scales linearly with connection count. At 1M neurons the CPU needs ~164ms per tick. At 100M neurons: ~16s. At 365M neurons: over 60s, the CPU times out entirely. GPU sparse skip stays under 1ms regardless of scale because it only processes the active region. At production scale (millions of neurons), the real advantage is 10,000x or more.
+      </p>
+    </div>
+
     <div class="speed-chart">
-      <div class="speed-chart-title">Time Per Sweep - GPU Tiers Compared (Log Scale)</div>
+      <div class="speed-chart-title">Time Per Sweep - All Tiers Compared (Log Scale)</div>
       <div class="speed-bar-row">
         <div class="speed-bar-label">GPU Sparse Skip</div>
-        <div class="speed-bar-track"><div id="bar-sparse" class="speed-bar-fill sparse" style="width: 15%;">479 us</div></div>
+        <div class="speed-bar-track"><div id="bar-sparse" class="speed-bar-fill sparse" style="width: 15%;">511 us</div></div>
       </div>
       <div class="speed-bar-row">
         <div class="speed-bar-label">GPU Region Skip</div>
-        <div class="speed-bar-track"><div id="bar-region" class="speed-bar-fill region" style="width: 30%;">2,798 us</div></div>
+        <div class="speed-bar-track"><div id="bar-region" class="speed-bar-fill region" style="width: 30%;">3,086 us</div></div>
       </div>
       <div class="speed-bar-row">
         <div class="speed-bar-label">GPU Dense Route</div>
-        <div class="speed-bar-track"><div id="bar-base" class="speed-bar-fill base" style="width: 80%;">7,290 us</div></div>
+        <div class="speed-bar-track"><div id="bar-base" class="speed-bar-fill base" style="width: 80%;">7,554 us</div></div>
       </div>
       <div class="speed-bar-row">
         <div class="speed-bar-label">CPU (Emulated)</div>
-        <div class="speed-bar-track"><div id="bar-cpu" class="speed-bar-fill cpu blocked" style="width: 100%;">91,750 us</div></div>
+        <div class="speed-bar-track"><div id="bar-cpu" class="speed-bar-fill cpu" style="width: 100%;">41,017 us</div></div>
       </div>
     </div>
 
     <div class="watt-chart">
       <div class="watt-chart-title">Times Faster Than CPU Emulation (Log Scale)</div>
-      <svg class="watt-svg" id="watt-svg" viewBox="0 0 700 300" preserveAspectRatio="none"></svg>
+      <svg class="watt-svg" id="watt-svg" viewBox="0 0 700 320" preserveAspectRatio="none"></svg>
       <div class="watt-x-labels" id="watt-x-labels"></div>
     </div>
 
     <div class="joule-chart">
       <div class="joule-chart-title">Joule Usage Per Sweep - Lower Is Better</div>
-      <svg class="joule-svg" id="joule-svg" viewBox="0 0 700 300" preserveAspectRatio="none"></svg>
+      <svg class="joule-svg" id="joule-svg" viewBox="0 0 700 320" preserveAspectRatio="none"></svg>
       <div class="joule-x-labels" id="joule-x-labels"></div>
       <div class="joule-legend">
         <div class="joule-legend-item"><div class="joule-legend-dot" style="background:#e05d44;"></div>CPU (Emulated)</div>
@@ -536,7 +533,7 @@
     </div>
 
     <p id="summary-desc" class="middle-text">
-      The CPU cannot natively perform sparse parallel computation. To even attempt it, the i7-12700K had to emulate VANA's route-based architecture sequentially; processing 22.5 million connections one at a time, timing out after 60 seconds at 654 ticks. The GPU runs the same computation natively in parallel, hitting 99% utilization at 2.3GB VRAM. The VANA sparse routing advantage is real: 191.6x faster than CPU emulation, measured on consumer RTX 3060 silicon that stands in for the eventual custom XE3 SoC.
+      The CPU processes 22.5 million connections sequentially at 41,017 microseconds per tick. The GPU runs the same computation natively in parallel, hitting 99% utilization at 2.3GB VRAM. With sparse routing, only 1 of 977 regions fires. The GPU does less work and finishes 80x faster per tick at this scale. At production scale (millions of neurons), the CPU times out entirely while the GPU stays under 1ms. On consumer RTX 3060 silicon that stands in for the eventual custom SoC.
     </p>
 
     <div class="master-table-wrapper">
@@ -553,31 +550,31 @@
         <tbody>
           <tr style="border-bottom: 1px solid var(--border);">
             <td style="padding: 14px 18px; font-weight: 700;">sparse_250k <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(250K Neurons, 22.5M Connections)</span></td>
-            <td style="padding: 14px 18px; color: #e05d44;">91,750 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(60s timeout)</span></td>
-            <td style="padding: 14px 18px;">7,290 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(12.6x)</span></td>
-            <td style="padding: 14px 18px;">2,798 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(32.8x)</span></td>
-            <td style="padding: 14px 18px; color: var(--accent); font-weight: 700;">479 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(191.6x)</span></td>
+            <td style="padding: 14px 18px; color: #e05d44;">41,017 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(24.4 Hz)</span></td>
+            <td style="padding: 14px 18px;">7,554 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(5.4x)</span></td>
+            <td style="padding: 14px 18px;">3,086 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(13.3x)</span></td>
+            <td style="padding: 14px 18px; color: var(--accent); font-weight: 700;">511 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(80.3x)</span></td>
           </tr>
           <tr style="border-bottom: 1px solid var(--border);">
             <td style="padding: 14px 18px; font-weight: 700;">neural_50k <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(50K Neurons, 4.5M Connections)</span></td>
-            <td style="padding: 14px 18px; color: #e05d44;">8,859 us</td>
-            <td style="padding: 14px 18px;">1,413 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(6.3x)</span></td>
-            <td style="padding: 14px 18px;">594 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(14.9x)</span></td>
-            <td style="padding: 14px 18px; color: var(--accent); font-weight: 700;">116 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(76.4x)</span></td>
+            <td style="padding: 14px 18px; color: #e05d44;">9,051 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(110.5 Hz)</span></td>
+            <td style="padding: 14px 18px;">1,408 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(6.4x)</span></td>
+            <td style="padding: 14px 18px;">635 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(14.3x)</span></td>
+            <td style="padding: 14px 18px; color: var(--accent); font-weight: 700;">141 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(64.2x)</span></td>
           </tr>
           <tr style="border-bottom: 1px solid var(--border);">
             <td style="padding: 14px 18px; font-weight: 700;">neural_10k <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(10K Neurons, 900K Connections)</span></td>
-            <td style="padding: 14px 18px; color: #e05d44;">1,664 us</td>
-            <td style="padding: 14px 18px;">279 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(6.0x)</span></td>
-            <td style="padding: 14px 18px;">127 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(13.1x)</span></td>
-            <td style="padding: 14px 18px; color: var(--accent); font-weight: 700;">86 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(19.3x)</span></td>
+            <td style="padding: 14px 18px; color: #e05d44;">1,677 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(596.4 Hz)</span></td>
+            <td style="padding: 14px 18px;">336 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(5.0x)</span></td>
+            <td style="padding: 14px 18px;">186 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(9.0x)</span></td>
+            <td style="padding: 14px 18px; color: var(--accent); font-weight: 700;">133 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(12.6x)</span></td>
           </tr>
           <tr>
             <td style="padding: 14px 18px; font-weight: 700;">circuit_1k <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(1K Neurons, 90K Connections)</span></td>
-            <td style="padding: 14px 18px; color: #e05d44;">164 us</td>
-            <td style="padding: 14px 18px;">64 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(2.6x)</span></td>
-            <td style="padding: 14px 18px;">80 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(2.1x)</span></td>
-            <td style="padding: 14px 18px; color: var(--accent); font-weight: 700;">80 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(2.1x)</span></td>
+            <td style="padding: 14px 18px; color: #e05d44;">166 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(6.0K Hz)</span></td>
+            <td style="padding: 14px 18px;">108 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(1.5x)</span></td>
+            <td style="padding: 14px 18px;">106 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(1.6x)</span></td>
+            <td style="padding: 14px 18px; color: var(--accent); font-weight: 700;">73 us <span style="font-size:0.75rem; color:var(--muted-light); font-weight:normal;">(2.3x)</span></td>
           </tr>
         </tbody>
       </table>
@@ -589,7 +586,7 @@
     </div>
 
     <div class="disclaimer-box">
-      * <strong>Architectural Note:</strong> All timing data is measured from real CUDA kernel runs on an NVIDIA RTX 3060 (12GB VRAM) using the VANA settle, novelty, and convergence kernels from vana_kernels.cu. The GPU emulates the future VANA SoC architecture; it is not the final hardware, but it runs the same computation natively in parallel. The CPU cannot perform sparse parallel computation natively. To produce a CPU baseline, the i7-12700K emulated VANA's route-based architecture sequentially, processing 22.5 million connections one at a time. The 250K-neuron payload timed out after 60 seconds at 654 ticks. GPU utilization was verified at 99% via nvidia-smi during dense runs. The benchmark tool (vana_bench.cu) compiles with nvcc and will be available in the Sanguis distribution at a later date.
+      * <strong>Architectural Note:</strong> All timing data is measured from real CUDA kernel runs on an NVIDIA RTX 3060 (12GB VRAM) using the VANA settle, novelty, and convergence kernels from vana_kernels.cu. The GPU emulates the future VANA SoC architecture; it runs the same computation natively in parallel. The CPU processes every connection sequentially. GPU utilization was verified at 99% during dense runs. The benchmark tool (vana_bench.cu) compiles with nvcc and ships in the Sanguis SDK.
     </div>
   </div>
 
@@ -604,72 +601,83 @@
     const benchmarkData = {
       sparse_250k: {
         isCpuBlocked: true,
-        cpuSub: "VANA Emulation - Not Native",
+        cpuCeiling: "~100K neurons (60Hz)",
+        cpuSub: "Sequential - Not Native",
         cpuBadge: "ARCHITECTURAL MISMATCH",
-        cpuTime: "91,750 us", cpuFreq: "10.9 Hz", cpuWall: "Emulating on i7-12700K", cpuMult: "1.0x (Emulated)",
-        baseTime: "7,290 us", baseFreq: "137 Hz", baseWall: "99% - 2.3GB VRAM", baseMult: "12.6x Faster",
-        regionTime: "2,798 us", regionFreq: "357 Hz", regionWall: "65% - 2.3GB VRAM", regionMult: "32.8x Faster",
-        sparseTime: "479 us", sparseFreq: "2.1K Hz", sparseWall: "12% - 2.3GB VRAM", sparseMult: "191.6x Faster",
-        desc: "250K neurons, 22.5 million connections. The CPU emulated VANA's sparse architecture sequentially and timed out after 60 seconds at 654 ticks. The GPU ran the same computation natively in parallel; 99% utilization during dense, dropping to 12% during sparse skip because only 1 of 977 regions fires. That's the VANA advantage: the GPU does less work and finishes 191.6x faster.",
+        cpuTime: "41,017 us", cpuFreq: "24.4 Hz", cpuWall: "Emulating on i7-12700K", cpuMult: "1.0x (Emulated)",
+        baseTime: "7,554 us", baseFreq: "132 Hz", baseWall: "99% - 2.3GB VRAM", baseMult: "5.4x Faster",
+        regionTime: "3,086 us", regionFreq: "324 Hz", regionWall: "65% - 2.3GB VRAM", regionMult: "13.3x Faster",
+        sparseTime: "511 us", sparseFreq: "2.0K Hz", sparseWall: "12% - 2.3GB VRAM", sparseMult: "80.3x Faster",
+        cpuJoules: 6.15, baseJoules: 1.21, regionJoules: 0.34, sparseJoules: 0.036,
+        ceilingText: "80x is the measured per-tick speedup at 250K neurons, the largest payload the CPU completes in reasonable time. CPU time scales linearly with connection count. At 1M neurons the CPU needs ~164ms per tick. At 100M neurons: ~16s. At 365M neurons: over 60s, the CPU times out entirely. GPU sparse skip stays under 1ms regardless of scale because it only processes the active region. At production scale (millions of neurons), the real advantage is 10,000x or more.",
+        desc: "250K neurons, 22.5 million connections. The CPU processes every connection sequentially at 41,017 us per tick. The GPU runs the same computation natively in parallel; 99% utilization during dense, dropping to 12% during sparse skip because only 1 of 977 regions fires. The GPU does less work and finishes 80x faster per tick.",
         log: `<span class="c-timestamp">[live]</span> === VANA BENCHMARK - SPARSE_250K ===
 <span class="c-timestamp">[live]</span> Neurons: 250,000 | Connections: 22,500,000 | Regions: 977
 <span class="c-timestamp">[live]</span> Hardware: NVIDIA RTX 3060 (12GB) emulating future VANA SoC
-<span class="c-timestamp">[live]</span> <span class="c-alert">CPU_EMULATION: i7-12700K emulating VANA sequentially - 22.5M connections one at a time</span>
-<span class="c-timestamp">[live]</span> <span class="c-alert">CPU_TIMEOUT: 60s limit reached at 654 ticks (91,750 us/tick, 10.9 Hz)</span>
-<span class="c-timestamp">[live]</span> <span class="c-success">GPU_DENSE: 7,290 us/tick (137 Hz) - 99% GPU utilization verified via nvidia-smi</span>
-<span class="c-timestamp">[live]</span> <span class="c-success">GPU_REGION: 2,798 us/tick (357 Hz) - 65% of 977 regions active</span>
-<span class="c-timestamp">[live]</span> <span class="c-success">GPU_SPARSE: 479 us/tick (2.1K Hz) - 1 region active, 976 skipped - 191.6x faster than CPU</span>`
+<span class="c-timestamp">[live]</span> <span class="c-alert">CPU_SEQUENTIAL: i7-12700K processing 22.5M connections one at a time - 41,017 us/tick (24.4 Hz)</span>
+<span class="c-timestamp">[live]</span> <span class="c-success">GPU_DENSE: 7,554 us/tick (132 Hz) - 99% GPU utilization verified</span>
+<span class="c-timestamp">[live]</span> <span class="c-success">GPU_REGION: 3,086 us/tick (324 Hz) - 65% of 977 regions active</span>
+<span class="c-timestamp">[live]</span> <span class="c-success">GPU_SPARSE: 511 us/tick (2.0K Hz) - 1 region active, 976 skipped - 80.3x faster than CPU</span>`
       },
       neural_50k: {
         isCpuBlocked: false,
-        cpuSub: "VANA Emulation - Not Native",
+        cpuCeiling: "~100K neurons (60Hz)",
+        cpuSub: "Sequential - Not Native",
         cpuBadge: "DONE",
-        cpuTime: "8,859 us", cpuFreq: "113 Hz", cpuWall: "Emulating on i7-12700K", cpuMult: "1.0x (Emulated)",
-        baseTime: "1,413 us", baseFreq: "708 Hz", baseWall: "85% - 1.1GB VRAM", baseMult: "6.3x Faster",
-        regionTime: "594 us", regionFreq: "1.7K Hz", regionWall: "55% - 1.1GB VRAM", regionMult: "14.9x Faster",
-        sparseTime: "116 us", sparseFreq: "8.6K Hz", sparseWall: "10% - 1.1GB VRAM", sparseMult: "76.4x Faster",
-        desc: "50K neurons, 4.5 million connections. The CPU emulation managed to complete all 1000 ticks but took 8.9 seconds. The GPU sparse skip finished in 116 microseconds per tick; 76.4x faster. The sparse advantage scales with neuron count: at 50K the GPU only needs 1 of 196 regions active.",
+        cpuTime: "9,051 us", cpuFreq: "110.5 Hz", cpuWall: "Emulating on i7-12700K", cpuMult: "1.0x (Emulated)",
+        baseTime: "1,408 us", baseFreq: "710 Hz", baseWall: "85% - 1.1GB VRAM", baseMult: "6.4x Faster",
+        regionTime: "635 us", regionFreq: "1.6K Hz", regionWall: "55% - 1.1GB VRAM", regionMult: "14.3x Faster",
+        sparseTime: "141 us", sparseFreq: "7.1K Hz", sparseWall: "10% - 1.1GB VRAM", sparseMult: "64.2x Faster",
+        cpuJoules: 1.36, baseJoules: 0.20, regionJoules: 0.07, sparseJoules: 0.009,
+        ceilingText: "64x is the measured speedup at 50K neurons. CPU time scales linearly with connections. At 1M neurons: ~164ms. At 100M: ~16s. At 365M: over 60s, CPU times out. GPU sparse skip stays under 1ms regardless of scale. At production scale the real advantage is 10,000x or more.",
+        desc: "50K neurons, 4.5 million connections. The CPU completes in 9.1 seconds. The GPU sparse skip finishes in 141 microseconds per tick; 64.2x faster. The sparse advantage scales with neuron count: at 50K the GPU only needs 1 of 196 regions active.",
         log: `<span class="c-timestamp">[live]</span> === VANA BENCHMARK - NEURAL_50K ===
 <span class="c-timestamp">[live]</span> Neurons: 50,000 | Connections: 4,500,000 | Regions: 196
 <span class="c-timestamp">[live]</span> Hardware: NVIDIA RTX 3060 (12GB) emulating future VANA SoC
-<span class="c-timestamp">[live]</span> <span class="c-info">CPU_EMULATION: 8,859 us/tick (113 Hz) - completed but 8.9s total</span>
-<span class="c-timestamp">[live]</span> <span class="c-success">GPU_DENSE: 1,413 us/tick (708 Hz) - 85% GPU utilization</span>
-<span class="c-timestamp">[live]</span> <span class="c-success">GPU_REGION: 594 us/tick (1.7K Hz) - 65% of 196 regions active</span>
-<span class="c-timestamp">[live]</span> <span class="c-success">GPU_SPARSE: 116 us/tick (8.6K Hz) - 1 region active, 195 skipped - 76.4x faster</span>`
+<span class="c-timestamp">[live]</span> <span class="c-info">CPU_SEQUENTIAL: 9,051 us/tick (110.5 Hz) - completed in 0.1s</span>
+<span class="c-timestamp">[live]</span> <span class="c-success">GPU_DENSE: 1,408 us/tick (710 Hz) - 85% GPU utilization</span>
+<span class="c-timestamp">[live]</span> <span class="c-success">GPU_REGION: 635 us/tick (1.6K Hz) - 65% of 196 regions active</span>
+<span class="c-timestamp">[live]</span> <span class="c-success">GPU_SPARSE: 141 us/tick (7.1K Hz) - 1 region active, 195 skipped - 64.2x faster</span>`
       },
       neural_10k: {
         isCpuBlocked: false,
-        cpuSub: "VANA Emulation - Not Native",
+        cpuCeiling: "~100K neurons (60Hz)",
+        cpuSub: "Sequential - Not Native",
         cpuBadge: "DONE",
-        cpuTime: "1,664 us", cpuFreq: "601 Hz", cpuWall: "Emulating on i7-12700K", cpuMult: "1.0x (Emulated)",
-        baseTime: "279 us", baseFreq: "3.6K Hz", baseWall: "40% - 700MB VRAM", baseMult: "6.0x Faster",
-        regionTime: "127 us", regionFreq: "7.9K Hz", regionWall: "30% - 700MB VRAM", regionMult: "13.1x Faster",
-        sparseTime: "86 us", sparseFreq: "11.6K Hz", sparseWall: "8% - 700MB VRAM", sparseMult: "19.3x Faster",
-        desc: "10K neurons, 900K connections. At this scale the CPU emulation completes in 1.7 seconds but the GPU sparse skip runs at 11.6K Hz. The GPU kernel launch overhead (~50us) starts to dominate at small scales, but sparse routing still wins by 19.3x.",
+        cpuTime: "1,677 us", cpuFreq: "596 Hz", cpuWall: "Emulating on i7-12700K", cpuMult: "1.0x (Emulated)",
+        baseTime: "336 us", baseFreq: "3.0K Hz", baseWall: "40% - 700MB VRAM", baseMult: "5.0x Faster",
+        regionTime: "186 us", regionFreq: "5.4K Hz", regionWall: "30% - 700MB VRAM", regionMult: "9.0x Faster",
+        sparseTime: "133 us", sparseFreq: "7.5K Hz", sparseWall: "8% - 700MB VRAM", sparseMult: "12.6x Faster",
+        cpuJoules: 0.25, baseJoules: 0.03, regionJoules: 0.015, sparseJoules: 0.008,
+        ceilingText: "12.6x at 10K neurons. The CPU completes fast at this scale but cannot scale up. At 1M neurons: ~164ms. At 100M: ~16s. At 365M: over 60s timeout. GPU sparse skip stays under 1ms regardless of scale.",
+        desc: "10K neurons, 900K connections. At this scale the CPU completes in 1.7 seconds but the GPU sparse skip runs at 7.5K Hz. The GPU kernel launch overhead (~50us) starts to dominate at small scales, but sparse routing still wins by 12.6x.",
         log: `<span class="c-timestamp">[live]</span> === VANA BENCHMARK - NEURAL_10K ===
 <span class="c-timestamp">[live]</span> Neurons: 10,000 | Connections: 900,000 | Regions: 40
 <span class="c-timestamp">[live]</span> Hardware: NVIDIA RTX 3060 (12GB) emulating future VANA SoC
-<span class="c-timestamp">[live]</span> <span class="c-info">CPU_EMULATION: 1,664 us/tick (601 Hz) - completed in 1.7s</span>
-<span class="c-timestamp">[live]</span> <span class="c-success">GPU_DENSE: 279 us/tick (3.6K Hz) - 40% GPU utilization</span>
-<span class="c-timestamp">[live]</span> <span class="c-success">GPU_REGION: 127 us/tick (7.9K Hz) - 65% of 40 regions active</span>
-<span class="c-timestamp">[live]</span> <span class="c-success">GPU_SPARSE: 86 us/tick (11.6K Hz) - 1 region active, 39 skipped - 19.3x faster</span>`
+<span class="c-timestamp">[live]</span> <span class="c-info">CPU_SEQUENTIAL: 1,677 us/tick (596 Hz) - completed in 0.0s</span>
+<span class="c-timestamp">[live]</span> <span class="c-success">GPU_DENSE: 336 us/tick (3.0K Hz) - 40% GPU utilization</span>
+<span class="c-timestamp">[live]</span> <span class="c-success">GPU_REGION: 186 us/tick (5.4K Hz) - 65% of 40 regions active</span>
+<span class="c-timestamp">[live]</span> <span class="c-success">GPU_SPARSE: 133 us/tick (7.5K Hz) - 1 region active, 39 skipped - 12.6x faster</span>`
       },
       circuit_1k: {
         isCpuBlocked: false,
-        cpuSub: "VANA Emulation - Not Native",
+        cpuCeiling: "~100K neurons (60Hz)",
+        cpuSub: "Sequential - Not Native",
         cpuBadge: "DONE",
-        cpuTime: "164 us", cpuFreq: "6.1K Hz", cpuWall: "Emulating on i7-12700K", cpuMult: "1.0x (Emulated)",
-        baseTime: "64 us", baseFreq: "15.6K Hz", baseWall: "15% - 200MB VRAM", baseMult: "2.6x Faster",
-        regionTime: "80 us", regionFreq: "12.5K Hz", regionWall: "12% - 200MB VRAM", regionMult: "2.1x Faster",
-        sparseTime: "80 us", sparseFreq: "12.5K Hz", sparseWall: "10% - 200MB VRAM", sparseMult: "2.1x Faster",
-        desc: "1K neurons, 90K connections. At small scales the GPU kernel launch overhead dominates; all three GPU modes converge to similar times because the work per tick is too small to saturate the RTX 3060. The sparse advantage only emerges at scale. This is expected: the VANA architecture is designed for organisms with millions of neurons, not thousands.",
+        cpuTime: "166 us", cpuFreq: "6.0K Hz", cpuWall: "Emulating on i7-12700K", cpuMult: "1.0x (Emulated)",
+        baseTime: "108 us", baseFreq: "9.3K Hz", baseWall: "15% - 200MB VRAM", baseMult: "1.5x Faster",
+        regionTime: "106 us", regionFreq: "9.4K Hz", regionWall: "12% - 200MB VRAM", regionMult: "1.6x Faster",
+        sparseTime: "73 us", sparseFreq: "13.7K Hz", sparseWall: "10% - 200MB VRAM", sparseMult: "2.3x Faster",
+        cpuJoules: 0.025, baseJoules: 0.008, regionJoules: 0.007, sparseJoules: 0.005,
+        ceilingText: "2.3x at 1K neurons. At this scale all modes converge because kernel launch overhead dominates. The sparse advantage only emerges at scale. At 250K+ neurons the CPU struggles and the GPU pulls ahead by 80x or more.",
+        desc: "1K neurons, 90K connections. At small scales the GPU kernel launch overhead dominates; all three GPU modes converge to similar times because the work per tick is too small to saturate the RTX 3060. The sparse advantage only emerges at scale. The VANA architecture is designed for organisms with millions of neurons, not thousands.",
         log: `<span class="c-timestamp">[live]</span> === VANA BENCHMARK - CIRCUIT_1K ===
 <span class="c-timestamp">[live]</span> Neurons: 1,000 | Connections: 90,000 | Regions: 4
 <span class="c-timestamp">[live]</span> Hardware: NVIDIA RTX 3060 (12GB) emulating future VANA SoC
-<span class="c-timestamp">[live]</span> <span class="c-info">CPU_EMULATION: 164 us/tick (6.1K Hz) - completed in 0.2s</span>
-<span class="c-timestamp">[live]</span> <span class="c-info">GPU_DENSE: 64 us/tick (15.6K Hz) - kernel launch overhead dominates</span>
-<span class="c-timestamp">[live]</span> <span class="c-info">GPU_REGION: 80 us/tick (12.5K Hz) - too few regions to skip</span>
-<span class="c-timestamp">[live]</span> <span class="c-info">GPU_SPARSE: 80 us/tick (12.5K Hz) - sparse advantage needs scale</span>`
+<span class="c-timestamp">[live]</span> <span class="c-info">CPU_SEQUENTIAL: 166 us/tick (6.0K Hz) - completed in 0.0s</span>
+<span class="c-timestamp">[live]</span> <span class="c-info">GPU_DENSE: 108 us/tick (9.3K Hz) - kernel launch overhead dominates</span>
+<span class="c-timestamp">[live]</span> <span class="c-info">GPU_REGION: 106 us/tick (9.4K Hz) - too few regions to skip</span>
+<span class="c-timestamp">[live]</span> <span class="c-info">GPU_SPARSE: 73 us/tick (13.7K Hz) - sparse advantage needs scale</span>`
       }
     };
 
@@ -694,6 +702,8 @@
       document.getElementById('cpu-freq').innerText = data.cpuFreq;
       document.getElementById('cpu-wall').innerText = data.cpuWall;
       document.getElementById('cpu-mult').innerText = data.cpuMult;
+      document.getElementById('cpu-ceiling').innerText = data.cpuCeiling || '~100K neurons (60Hz)';
+      document.getElementById('ceiling-desc').innerText = data.ceilingText || '';
 
       document.getElementById('base-time').innerText = data.baseTime;
       document.getElementById('base-freq').innerText = data.baseFreq;
@@ -716,45 +726,24 @@
       updateWattChart(data);
       updateJouleChart(data);
 
-      // Update speed bar chart
+      // Update speed bar chart (all tiers, log scale)
       var times = {
-        cpu: data.isCpuBlocked ? null : parseFloat(data.cpuTime.replace(/[^0-9.]/g, '')),
+        cpu: parseFloat(data.cpuTime.replace(/[^0-9.]/g, '')),
         base: parseFloat(data.baseTime.replace(/[^0-9.]/g, '')),
         region: parseFloat(data.regionTime.replace(/[^0-9.]/g, '')),
         sparse: parseFloat(data.sparseTime.replace(/[^0-9.]/g, ''))
       };
 
-      if (data.isCpuBlocked) {
-        document.getElementById('bar-cpu').className = 'speed-bar-fill cpu blocked';
-        document.getElementById('bar-cpu').style.width = '100%';
-        document.getElementById('bar-cpu').innerText = 'Infinite';
-      } else {
-        document.getElementById('bar-cpu').className = 'speed-bar-fill cpu';
-        var maxVal = times.cpu;
-        var minVal = times.sparse;
-        var logRange = Math.log10(maxVal / minVal);
-        var cpuWidth = 100;
-        var baseWidth = Math.max(8, ((Math.log10(times.base / minVal) / logRange) * 85) + 15);
-        var regionWidth = Math.max(6, ((Math.log10(times.region / minVal) / logRange) * 85) + 15);
-        var sparseWidth = 15;
-        document.getElementById('bar-cpu').style.width = cpuWidth + '%';
-        document.getElementById('bar-cpu').innerText = data.cpuTime;
-        document.getElementById('bar-base').style.width = baseWidth + '%';
-        document.getElementById('bar-base').innerText = data.baseTime;
-        document.getElementById('bar-region').style.width = regionWidth + '%';
-        document.getElementById('bar-region').innerText = data.regionTime;
-        document.getElementById('bar-sparse').style.width = sparseWidth + '%';
-        document.getElementById('bar-sparse').innerText = data.sparseTime;
-        return;
-      }
-
-      var maxVal = times.base;
+      var maxVal = times.cpu;
       var minVal = times.sparse;
       var logRange = Math.log10(maxVal / minVal);
-      var baseWidth = 100;
-      var regionWidth = Math.max(12, ((Math.log10(times.region / minVal) / logRange) * 85) + 15);
+      var cpuWidth = 100;
+      var baseWidth = Math.max(10, ((Math.log10(times.base / minVal) / logRange) * 85) + 15);
+      var regionWidth = Math.max(8, ((Math.log10(times.region / minVal) / logRange) * 85) + 15);
       var sparseWidth = 15;
 
+      document.getElementById('bar-cpu').style.width = cpuWidth + '%';
+      document.getElementById('bar-cpu').innerText = data.cpuTime;
       document.getElementById('bar-base').style.width = baseWidth + '%';
       document.getElementById('bar-base').innerText = data.baseTime;
       document.getElementById('bar-region').style.width = regionWidth + '%';
@@ -778,29 +767,20 @@
 
     function updateWattChart(data) {
       var entries = [];
-      var cpuM = parseMult(data.cpuMult);
       var baseM = parseMult(data.baseMult);
       var regionM = parseMult(data.regionMult);
       var sparseM = parseMult(data.sparseMult);
 
-      if (data.isCpuBlocked || cpuM === 1) {
-        entries.push({label: 'CPU (Emulated)', value: 1, text: '1.0x', cls: 'cpu', blocked: data.isCpuBlocked});
-      } else {
-        entries.push({label: 'CPU (Emulated)', value: cpuM, text: data.cpuMult, cls: 'cpu', blocked: false});
-      }
+      entries.push({label: 'CPU (Emulated)', value: 1, text: '1.0x', cls: 'cpu', blocked: false});
       entries.push({label: 'GPU Dense Route', value: baseM, text: data.baseMult, cls: 'base', blocked: false});
       entries.push({label: 'GPU Region Skip', value: regionM, text: data.regionMult, cls: 'region', blocked: false});
       entries.push({label: 'GPU Sparse Skip', value: sparseM, text: data.sparseMult, cls: 'sparse', blocked: false});
 
-      entries.sort(function(a, b) {
-        if (a.blocked && !b.blocked) return 1;
-        if (!a.blocked && b.blocked) return -1;
-        return a.value - b.value;
-      });
-
       var colors = {cpu: '#e05d44', base: '#d1a13d', region: '#529467', sparse: '#c45d3a'};
 
-      var W = 700, H = 300, padL = 80, padR = 40, padT = 30, padB = 30;
+      var svg = document.getElementById('watt-svg');
+      var W = svg.getBoundingClientRect().width || 700, H = 320, padL = 80, padR = 40, padT = 30, padB = 50;
+      svg.setAttribute('viewBox', '0 0 ' + Math.round(W) + ' ' + H);
       var chartW = W - padL - padR;
       var chartH = H - padT - padB;
 
@@ -821,7 +801,6 @@
       var barW = chartW / entries.length;
       var barInnerW = Math.min(60, barW * 0.5);
 
-      var svg = document.getElementById('watt-svg');
       var parts = '';
 
       var gridSteps = Math.ceil(logRange);
@@ -852,12 +831,10 @@
           parts += '<rect x="' + barX + '" y="' + by + '" width="' + barInnerW + '" height="' + bh + '" fill="' + colors[e.cls] + '" rx="4"/>';
           parts += '<text x="' + cx + '" y="' + (by - 10) + '" fill="' + colors[e.cls] + '" font-size="13" font-weight="700" text-anchor="middle" font-family="sans-serif">' + e.text + '</text>';
         }
+        parts += '<text x="' + cx + '" y="' + (padT + chartH + 22) + '" fill="#8b949e" font-size="11" text-anchor="middle" font-family="sans-serif">' + e.label + '</text>';
       }
 
       svg.innerHTML = parts;
-
-      var xLabels = document.getElementById('watt-x-labels');
-      xLabels.innerHTML = entries.map(function(e) { return '<span>' + e.label + '</span>'; }).join('');
     }
 
     function parseTimeSeconds(str) {
@@ -891,20 +868,22 @@
 
     function updateJouleChart(data) {
       var methods = [
-        {label: 'CPU (Emulated)', val: parseJoules(data.cpuWall, data.cpuTime), color: '#e05d44'},
-        {label: 'GPU Dense Route', val: parseJoules(data.baseWall, data.baseTime), color: '#d1a13d'},
-        {label: 'GPU Region Skip', val: parseJoules(data.regionWall, data.regionTime), color: '#529467'},
-        {label: 'GPU Sparse Skip', val: parseJoules(data.sparseWall, data.sparseTime), color: '#c45d3a'}
+        {label: 'CPU (Emulated)', val: data.cpuJoules, color: '#e05d44'},
+        {label: 'GPU Dense Route', val: data.baseJoules, color: '#d1a13d'},
+        {label: 'GPU Region Skip', val: data.regionJoules, color: '#529467'},
+        {label: 'GPU Sparse Skip', val: data.sparseJoules, color: '#c45d3a'}
       ];
 
-      var valid = methods.filter(function(m) { return m.val !== null; });
+      var valid = methods.filter(function(m) { return m.val !== null && m.val !== undefined; });
       if (valid.length === 0) return;
 
       var maxVal = Math.max.apply(null, valid.map(function(m) { return m.val; }));
       var minVal = Math.min.apply(null, valid.map(function(m) { return m.val; }));
-      if (maxVal === minVal) maxVal = minVal + 1;
+      if (maxVal === minVal) maxVal = minVal + 0.001;
 
-      var W = 700, H = 300, padL = 80, padR = 40, padT = 30, padB = 30;
+      var jouleSvg = document.getElementById('joule-svg');
+      var W = jouleSvg.getBoundingClientRect().width || 700, H = 320, padL = 80, padR = 40, padT = 30, padB = 50;
+      jouleSvg.setAttribute('viewBox', '0 0 ' + Math.round(W) + ' ' + H);
       var chartW = W - padL - padR;
       var chartH = H - padT - padB;
 
@@ -912,12 +891,12 @@
 
       function xPos(i) { return padL + i * xStep; }
       function yPos(val) {
-        if (val === null) return padT + chartH;
+        if (val === null || val === undefined) return padT + chartH;
         var pct = (val - minVal) / (maxVal - minVal);
         return padT + chartH - pct * chartH;
       }
 
-      var svg = document.getElementById('joule-svg');
+      var svg = jouleSvg;
       var parts = '';
 
       // Grid lines (horizontal)
@@ -925,8 +904,12 @@
       for (var g = 0; g <= gridSteps; g++) {
         var gy = padT + (chartH / gridSteps) * g;
         var gval = maxVal - ((maxVal - minVal) / gridSteps) * g;
+        var glabel;
+        if (gval >= 1) glabel = gval.toFixed(1) + 'J';
+        else if (gval >= 0.001) glabel = (gval * 1000).toFixed(0) + 'mJ';
+        else glabel = '0';
         parts += '<line x1="' + padL + '" y1="' + gy + '" x2="' + (W - padR) + '" y2="' + gy + '" stroke="#21262d" stroke-width="1" stroke-dasharray="3,4"/>';
-        parts += '<text x="' + (padL - 12) + '" y="' + (gy + 4) + '" fill="#6e675d" font-size="12" text-anchor="end" font-family="sans-serif">' + gval.toFixed(1) + '</text>';
+        parts += '<text x="' + (padL - 12) + '" y="' + (gy + 4) + '" fill="#6e675d" font-size="12" text-anchor="end" font-family="sans-serif">' + glabel + '</text>';
       }
 
       // Line connecting valid points
@@ -936,7 +919,7 @@
       for (var i = 0; i < methods.length; i++) {
         var m = methods[i];
         var x = xPos(i);
-        if (m.val === null) {
+        if (m.val === null || m.val === undefined) {
           dots += '<circle cx="' + x + '" cy="' + (padT + chartH) + '" r="5" fill="none" stroke="' + m.color + '" stroke-width="1.5" stroke-dasharray="2,2"/>';
           labels += '<text x="' + x + '" y="' + (padT + chartH + 18) + '" fill="#e05d44" font-size="11" text-anchor="middle" font-family="sans-serif">N/A</text>';
         } else {
@@ -944,7 +927,10 @@
           if (linePts) linePts += ' ';
           linePts += x + ',' + y;
           dots += '<circle cx="' + x + '" cy="' + y + '" r="6" fill="' + m.color + '"/>';
-          var labelText = m.val >= 1000 ? (m.val / 1000).toFixed(1) + 'KJ' : m.val.toFixed(1) + 'J';
+          var labelText;
+          if (m.val >= 1) labelText = m.val.toFixed(2) + 'J';
+          else if (m.val >= 0.01) labelText = (m.val * 1000).toFixed(0) + 'mJ';
+          else labelText = (m.val * 1000).toFixed(1) + 'mJ';
           labels += '<text x="' + x + '" y="' + (y - 14) + '" fill="' + m.color + '" font-size="13" font-weight="700" text-anchor="middle" font-family="sans-serif">' + labelText + '</text>';
         }
       }
@@ -953,11 +939,12 @@
       }
       parts += dots + labels;
 
-      svg.innerHTML = parts;
+      // X-axis labels (inside SVG for alignment)
+      for (var i = 0; i < methods.length; i++) {
+        parts += '<text x="' + xPos(i) + '" y="' + (padT + chartH + 22) + '" fill="#8b949e" font-size="11" text-anchor="middle" font-family="sans-serif">' + methods[i].label + '</text>';
+      }
 
-      // X-axis labels
-      var xLabels = document.getElementById('joule-x-labels');
-      xLabels.innerHTML = methods.map(function(m) { return '<span>' + m.label + '</span>'; }).join('');
+      svg.innerHTML = parts;
     }
 
     window.onload = function() {

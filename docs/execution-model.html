@@ -112,7 +112,6 @@
   nav { border-bottom: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(196, 93, 58, 0.3); }
   footer { border-top: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(196, 93, 58, 0.3); }
   .section { border-top: 1px solid rgba(196, 93, 58, 0.5) !important; }
-  .feature-list li { border-bottom: 1px solid rgba(196, 93, 58, 0.25) !important; }
   .doc-content h2 { border-bottom: 1px solid rgba(196, 93, 58, 0.4) !important; }
   .doc-nav-bottom { border-top: 1px solid rgba(196, 93, 58, 0.4) !important; }
   /* === End Visual Enhancements === */
@@ -156,7 +155,7 @@
       <div class="breadcrumb"><a href="index.html">Docs</a> / Execution Model</div>
 
       <h1>Execution Model</h1>
-      <p class="subtitle">Tick cycle, parallel semantics, termination, and scalar formatting. The <span class="code-inline">vana_runner.exe</span> runtime model.</p>
+      <p class="subtitle">Tick cycle, parallel semantics, termination, and scalar formatting.</p>
 
       <h2 id="tick-cycle">Tick Cycle</h2>
       <p>The engine runs in ticks. Each tick:</p>
@@ -167,22 +166,24 @@
       5. <strong>Check.</strong> If the <span class="code-inline">state</span> hold reaches <span class="code-inline">2.0</span> or the <span class="code-inline">done</span> hold reaches <span class="code-inline">1.0</span>, execution stops.</p>
 
       <h2 id="parallel-semantics">Parallel Semantics</h2>
-      <p>All routes are evaluated against the same snapshot - the state at the start of the tick. This means:</p>
+      <p>All routes are evaluated against the same snapshot - the state at the start of the tick. So:</p>
       <p>&bull; Route A's emit to hold X is <strong>NOT</strong> visible to Route B's conditions in the same tick.<br>
       &bull; Route A's emit to hold X <strong>IS</strong> visible to Route A's own subsequent emits in the same tick.</p>
       <div class="callout">
-        <p><strong>This is intentional.</strong> Routes are parallel. Within a route, emits are sequential.</p>
+        <p><strong>Intentional.</strong> Routes are parallel. Within a route, emits are sequential.</p>
       </div>
 
       <h2 id="termination">Termination</h2>
       <p>The engine stops when:</p>
       <p>&bull; A hold named <span class="code-inline">state</span> reaches <span class="code-inline">2.0</span> or higher<br>
       &bull; A hold named <span class="code-inline">done</span> reaches <span class="code-inline">1.0</span> or higher<br>
-      &bull; The maximum tick count is reached (default: 1,000,000)</p>
-      <p>The exit code is read from the <span class="code-inline">exit_code</span> hold (if set) or the <span class="code-inline">world</span> target.</p>
+      &bull; The maximum tick count is reached (default: 5,000)</p>
 
       <h2 id="scalar-formatting">Scalar Formatting</h2>
       <p>Scalars are formatted as <span class="code-inline">%.4f</span> (4 decimal places): <span class="code-inline">1.0000</span>, <span class="code-inline">3.5000</span>, <span class="code-inline">0.0000</span>.</p>
+
+      <h2 id="gpu-execution">GPU Execution</h2>
+      <p>The runtime maps the organism onto CUDA cores. Neurons become threads, connections become memory reads, gates evaluate in parallel. Text operations run in VRAM. File I/O bridges to CPU, the only operation that leaves the GPU.</p>
 
       <h2 id="examples">Examples</h2>
 
@@ -233,7 +234,7 @@
   }
 }</pre></div>
       <div class="callout">
-        <p><strong>Note:</strong> V4 only supports <span class="code-inline">&lt;</span>, <span class="code-inline">&gt;</span>, <span class="code-inline">=</span>. Use <span class="code-inline">but total &gt; 9.0</span> instead of <span class="code-inline">&gt;= 10.0</span>.</p>
+        <p><strong>Note:</strong> Only <span class="code-inline">&lt;</span>, <span class="code-inline">&gt;</span>, <span class="code-inline">=</span>. Use <span class="code-inline">but total &gt; 9.0</span> instead of <span class="code-inline">&gt;= 10.0</span>.</p>
       </div>
 
       <h3>File Processor</h3>

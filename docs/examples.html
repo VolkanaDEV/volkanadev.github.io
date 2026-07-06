@@ -112,7 +112,6 @@
   nav { border-bottom: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(196, 93, 58, 0.3); }
   footer { border-top: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(196, 93, 58, 0.3); }
   .section { border-top: 1px solid rgba(196, 93, 58, 0.5) !important; }
-  .feature-list li { border-bottom: 1px solid rgba(196, 93, 58, 0.25) !important; }
   .doc-content h2 { border-bottom: 1px solid rgba(196, 93, 58, 0.4) !important; }
   .doc-nav-bottom { border-top: 1px solid rgba(196, 93, 58, 0.4) !important; }
   /* === End Visual Enhancements === */
@@ -156,7 +155,7 @@
       <div class="breadcrumb"><a href="index.html">Docs</a> / Circuits</div>
 
       <h1>Circuits, Holds, Routes, Emits</h1>
-      <p class="subtitle">The building blocks of a Sanguis V4 program. Run with <span class="code-inline">vana_runner.exe</span>.</p>
+      <p class="subtitle">The building blocks of a Sanguis program.</p>
 
       <h2 id="circuit">circuit</h2>
       <p>A <span class="code-inline">circuit</span> is a body - a named scope containing holds and routes. A program is one or more circuits.</p>
@@ -171,7 +170,7 @@
 hold name : memory text = "value"     // text string
 hold name : memory scalar              // defaults to 0.0
 hold name : memory text                // defaults to ""</pre></div>
-      <p>Scalars are stored as double-precision floating point. Text is stored as variable-length strings. There are no other types.</p>
+      <p>Scalars are stored as floating-point. Text is stored as variable-length strings. There are no other types.</p>
 
       <h2 id="when">when</h2>
       <p>A <span class="code-inline">when</span> block defines a route. The route fires every tick if all its <span class="code-inline">but</span> conditions pass. If a route has no <span class="code-inline">but</span> conditions, it fires every tick.</p>
@@ -190,17 +189,22 @@ hold name : memory text                // defaults to ""</pre></div>
 }</pre></div>
 
       <h2 id="emit">emit</h2>
-      <p><span class="code-inline">emit</span> sends a value to a target. Targets are hold names or built-in output channels:</p>
-      <div class="code-block"><pre>emit 42.0 to state          // write to a hold
-emit "text" to screen       // print to terminal
-emit 0.0 to world           // set exit code</pre></div>
-      <p>Multiple emits in a route execute in order within the route. Emits are applied immediately - subsequent emits in the same route see updated values.</p>
+      <p><span class="code-inline">emit</span> sends a value to a target. When the target is a hold, <span class="code-inline">emit</span> replaces the hold's current value:</p>
+      <div class="code-block"><pre>emit 42.0 to state          // write to a hold (replaces)
+emit "text" to screen       // print to terminal</pre></div>
+      <p>Multiple emits in a route execute in order within the route. Emits are applied immediately, subsequent emits in the same route see updated values.</p>
       <table class="doc-table">
         <tr><th>Target</th><th>Behavior</th></tr>
         <tr><td><span class="code-inline">screen</span></td><td>Print the value to terminal output</td></tr>
-        <tr><td><span class="code-inline">world</span></td><td>Set the program exit code (integer)</td></tr>
-        <tr><td>Hold name</td><td>Write the value to the named hold</td></tr>
+        <tr><td>Hold name</td><td>Write the value to the named hold (replace)</td></tr>
       </table>
+
+      <h2 id="append">append</h2>
+      <p><span class="code-inline">append</span> accumulates text into a text hold. Unlike <span class="code-inline">emit</span> (which replaces), <span class="code-inline">append</span> concatenates after existing content:</p>
+      <div class="code-block"><pre>append "Hello, " to out     // out = "Hello, "
+append "World!" to out      // out = "Hello, World!"
+append "\n" to out          // out = "Hello, World!\n"</pre></div>
+      <p>Strings build incrementally across routes this way.</p>
 
       <h2 id="through">through</h2>
       <p><span class="code-inline">through</span> iterates through a text hold, one character per tick. Each tick the route fires, the <span class="code-inline">char</span> hold is set to the next character in the text, and the position advances.</p>
@@ -221,12 +225,12 @@ emit 0.0 to world           // set exit code</pre></div>
       <p><span class="code-inline">memory</span> is the layer type for holds. Every hold uses <span class="code-inline">memory</span> to declare that it persists its value across ticks:</p>
       <div class="code-block"><pre>hold name : memory scalar = 0.0    // persistent scalar
 hold name : memory text = "value" // persistent text</pre></div>
-      <p>All holds in V4 are <span class="code-inline">memory</span> layer. The hold retains its value from tick to tick until a route emits a new value to it.</p>
+      <p>All holds are <span class="code-inline">memory</span> layer. The hold retains its value from tick to tick until a route emits or appends a new value to it.</p>
 
       <h2 id="wire">wire</h2>
       <p><span class="code-inline">wire</span> connects a hold in one circuit to a hold in another, creating a connectome link:</p>
       <div class="code-block"><pre>wire Body.sense to Brain.think</pre></div>
-      <p>Wires can be declared at the top level or inside a circuit. A wire routes data from the source hold to the target hold every tick. This is how circuits communicate: the organism is a network of circuits wired together.</p>
+      <p>Wires can be declared at the top level or inside a circuit. A wire routes data from the source hold to the target hold every tick. Circuits communicate this way. The organism is a network of circuits wired together.</p>
 
       <div class="doc-nav-bottom">
         <a href="execution-model.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Execution Model</span></a>

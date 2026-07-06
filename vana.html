@@ -292,7 +292,6 @@
   nav { border-bottom: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(196, 93, 58, 0.3); }
   footer { border-top: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(196, 93, 58, 0.3); }
   .section { border-top: 1px solid rgba(196, 93, 58, 0.5) !important; }
-  .feature-list li { border-bottom: 1px solid rgba(196, 93, 58, 0.25) !important; }
   .doc-content h2 { border-bottom: 1px solid rgba(196, 93, 58, 0.4) !important; }
   .doc-nav-bottom { border-top: 1px solid rgba(196, 93, 58, 0.4) !important; }
   /* === End Visual Enhancements === */
@@ -334,7 +333,7 @@
 
       <h3><span class="label">How It Works</span>The Runtime Engine</h3>
       <p>When you write Sanguis code, it doesn't get interpreted line by line. It gets transposed into a "connectome", a graph of neurons and the connections between them. That connectome is a .vana file. VANA owns execution from there. The graph "settles" on the GPU in parallel every tick. No instruction pointer. No sequential step-through. The computation is the settling.</p>
-      <p>Today, that surface is the GPU. VANA does not emulate a CPU on the GPU. It does not translate instructions. It treats the GPU as the processor and maps the computation to what the silicon can actually do. The entire organism lives in a single CUDA kernel; settle, gate, emit, output all on the GPU. The CPU does not sync every tick. It observes.</p>
+      <p>Today, that surface is the GPU. VANA does not emulate a CPU on the GPU. It does not translate instructions. It treats the GPU as the processor and maps the computation to what the silicon can actually do. The CPU does not sync every tick. It observes.</p>
 
       <h3><span class="label">The Pipeline</span>From Source to Silicon</h3>
       <p>Every Sanguis program follows the same path from your keyboard to the GPU. Here's what happens at each stage:</p>
@@ -344,7 +343,7 @@
           <div class="pipeline-num">1</div>
           <div class="pipeline-body">
             <h4>You Write .sang</h4>
-            <p>You write Sanguis code using the 10 keywords: <em>circuit</em>, <em>hold</em>, <em>memory</em>, <em>when</em>, <em>but</em>, <em>emit</em>, <em>through</em>, <em>stream</em>, <em>route</em>, <em>freq</em>. This is source code, same as writing Python or C. The difference is what happens next.</p>
+            <p>You write Sanguis code using the 9 keywords: <em>circuit</em>, <em>hold</em>, <em>memory</em>, <em>when</em>, <em>but</em>, <em>emit</em>, <em>append</em>, <em>through</em>, <em>wire</em>. This is source code, same as writing Python or C. The difference is what happens next.</p>
           </div>
         </div>
         <div class="pipeline-arrow">&darr;</div>
@@ -352,7 +351,7 @@
           <div class="pipeline-num">2</div>
           <div class="pipeline-body">
             <h4>Transposer Builds the Connectome</h4>
-            <p>The transposer reads your .sang file and builds a .vana connectome, a list of neurons, connections between them, gates, and emit mappings. Each <em>hold</em> becomes a sensory neuron. Each <em>when</em>/<em>but</em> becomes a gate. Each <em>emit</em> becomes an excitatory connection. Each <em>route</em> becomes the path signals travel.</p>
+            <p>The transposer reads your .sang file and builds a .vana connectome: neurons, connections between them, gates, and emit mappings. The connectome is a text file. VANA loads it and takes over from there.</p>
           </div>
         </div>
         <div class="pipeline-arrow">&darr;</div>
@@ -368,7 +367,7 @@
           <div class="pipeline-num">4</div>
           <div class="pipeline-body">
             <h4>The Graph Settles</h4>
-            <p>Every tick, the GPU settles the entire connectome in parallel. Neurons hold values. Connections carry signals. Gates fire when conditions are met. Routes fire "switches", binaric voltage timing representations, at preset frequencies. Two routes at a 2:1 ratio produce what musicians call an "octave". The graph relaxes toward a stable state, and that stable state IS your answer.</p>
+            <p>Every tick, the GPU settles the entire connectome in parallel. Neurons hold values. Connections carry signals. Gates fire when conditions are met. The graph relaxes toward a stable state, and that stable state IS your answer.</p>
           </div>
         </div>
         <div class="pipeline-arrow">&darr;</div>
@@ -387,11 +386,11 @@
 
       <h3><span class="label">Where It Goes</span>Connectome Architectures</h3>
       <p>The long-term vision for VANA is not just a faster runtime. It is a fundamentally different way for hardware to compute. The architecture maps naturally to connectome-style systems, where computation flows through interconnected pathways the way signals flow through biological neural tissue.</p>
-      <p>The connectome is not a prototype anymore. It is running today. The sparse skip routing, the parallel path activation, the frequency-gated routes. These are not theoretical. They are live on consumer hardware, settling real programs on real silicon that was not designed for it.</p>
+      <p>The connectome is not a prototype anymore. It is running today, settling real programs on real silicon that was not designed for it.</p>
 
       <div class="status-box">
         <strong>Current Status</strong>
-        <p>The VANA connectome runtime executes Sanguis programs on consumer GPUs today. The transposer builds neural graphs from .sang source. The blood bridge runs the full organism on the GPU in a single async kernel; no per-tick CPU sync. Over 1,620 tests pass, including frequency-gated routes that prove fcodes work. Benchmark results on the Benchmarks page show real performance data from this hardware.</p>
+        <p>The VANA connectome runtime executes Sanguis programs on consumer GPUs today. The transposer builds neural graphs from .sang source. The blood bridge runs the full organism on the GPU. Over 260 tests pass. Benchmark results on the Benchmarks page show real performance data from this hardware.</p>
       </div>
 
     </div>

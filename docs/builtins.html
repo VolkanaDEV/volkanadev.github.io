@@ -112,7 +112,6 @@
   nav { border-bottom: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(196, 93, 58, 0.3); }
   footer { border-top: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(196, 93, 58, 0.3); }
   .section { border-top: 1px solid rgba(196, 93, 58, 0.5) !important; }
-  .feature-list li { border-bottom: 1px solid rgba(196, 93, 58, 0.25) !important; }
   .doc-content h2 { border-bottom: 1px solid rgba(196, 93, 58, 0.4) !important; }
   .doc-nav-bottom { border-top: 1px solid rgba(196, 93, 58, 0.4) !important; }
   /* === End Visual Enhancements === */
@@ -153,16 +152,16 @@
       </li></ul>
     </aside>
     <main class="doc-content">
-      <div class="breadcrumb"><a href="index.html">Docs</a> / Novel vs Traditional</div>
+      <div class="breadcrumb"><a href="index.html">Docs</a> / What's Different</div>
 
-      <h1>What's Novel vs Traditional Programming</h1>
-      <p class="subtitle">For programmers coming from C, Python, and everything else. All builtins available in <span class="code-inline">vana_runner.exe</span>.</p>
+      <h1>What's Different From Traditional Programming</h1>
+      <p class="subtitle">For programmers coming from C, Python, and everything else.</p>
 
-      <p>This section is for programmers coming from traditional languages (C, Python, etc.). Here's what Sanguis V4 does differently.</p>
+      <p>If you've written code in C, Python, or most anything else, Sanguis works differently. Here's what changes.</p>
 
       <h2 id="no-control-flow">No control flow statements</h2>
       <table class="doc-table">
-        <tr><th>Traditional</th><th>Sanguis V4</th></tr>
+        <tr><th>Traditional</th><th>Sanguis</th></tr>
         <tr><td><span class="code-inline">if (x &gt; 5) { ... }</span></td><td><span class="code-inline">but x &gt; 5.0</span> (gates a route)</td></tr>
         <tr><td><span class="code-inline">for (i=0; i&lt;N; i++)</span></td><td>Route fires every tick - loop is implicit</td></tr>
         <tr><td><span class="code-inline">while (cond)</span></td><td>Route ticks until conditions fail</td></tr>
@@ -173,8 +172,8 @@
 
       <h2 id="two-data-types">Two data types only</h2>
       <table class="doc-table">
-        <tr><th>Traditional types</th><th>Sanguis V4 types</th></tr>
-        <tr><td><span class="code-inline">int</span>, <span class="code-inline">float</span>, <span class="code-inline">double</span></td><td><span class="code-inline">memory scalar</span> (double-precision float)</td></tr>
+        <tr><th>Traditional types</th><th>Sanguis types</th></tr>
+        <tr><td><span class="code-inline">int</span>, <span class="code-inline">float</span>, <span class="code-inline">double</span></td><td><span class="code-inline">memory scalar</span> (floating-point)</td></tr>
         <tr><td><span class="code-inline">string</span>, <span class="code-inline">char*</span></td><td><span class="code-inline">memory text</span> (variable-length string)</td></tr>
         <tr><td><span class="code-inline">bool</span></td><td>Use <span class="code-inline">scalar</span> (<span class="code-inline">0.0</span> = false, <span class="code-inline">1.0</span> = true)</td></tr>
         <tr><td><span class="code-inline">struct</span>, <span class="code-inline">class</span></td><td>No structs or classes</td></tr>
@@ -183,24 +182,24 @@
       <p>There are no ints, no structs, no classes, no arrays. Scalars are floating-point. Text is strings. That's it.</p>
 
       <h2 id="parallel-by-default">Parallel by default</h2>
-      <p>In traditional languages, code runs sequentially - one instruction after another. In Sanguis V4, all routes evaluate every tick, simultaneously. There is no sequential ordering.</p>
+      <p>In traditional languages, code runs sequentially, one instruction after another. In Sanguis, all routes evaluate every tick, simultaneously. There is no sequential ordering.</p>
       <table class="doc-table">
-        <tr><th>Traditional</th><th>Sanguis V4</th></tr>
+        <tr><th>Traditional</th><th>Sanguis</th></tr>
         <tr><td>Sequential execution</td><td>Parallel route evaluation every tick</td></tr>
-        <tr><td>Shared mutable state + locks</td><td>Snapshot semantics - no races</td></tr>
-        <tr><td>Threads, async, goroutines</td><td>Not needed - parallelism is the default</td></tr>
+        <tr><td>Shared mutable state + locks</td><td>Snapshot semantics, no races</td></tr>
+        <tr><td>Threads, async, goroutines</td><td>Not needed, parallelism is the default</td></tr>
         <tr><td>Manual synchronization</td><td>Engine handles it via tick snapshots</td></tr>
       </table>
-      <p>All routes see the same snapshot at the start of the tick. Route A's emit to hold X is not visible to Route B's conditions in the same tick. This eliminates data races by design.</p>
+      <p>All routes see the same snapshot at the start of the tick. Route A's emit to hold X is not visible to Route B's conditions in the same tick. Data races are eliminated by design.</p>
 
       <h2 id="settling-not-stepping">Settling, not stepping</h2>
-      <p>In traditional languages, you write a sequence of steps: do this, then that, then the other. In Sanguis V4, you describe state and rules. The engine settles the system tick by tick until it reaches a terminal state.</p>
+      <p>In traditional languages, you write a sequence of steps: do this, then that, then the other. In Sanguis, you describe state and rules. The engine settles the system tick by tick until it reaches a terminal state.</p>
       <div class="code-block"><pre>// Traditional: step-by-step
 x = 1
 y = x + 2
 print(y)
 
-// Sanguis V4: describe state and rules, engine settles
+// Sanguis: describe state and rules, engine settles
 circuit Add {
   hold a : memory scalar = 0.0
   hold b : memory scalar = 0.0
@@ -217,17 +216,17 @@ circuit Add {
   }
 }</pre></div>
 
-      <h2 id="no-assignment">No assignment - data flows</h2>
+      <h2 id="no-assignment">No assignment, data flows</h2>
       <div class="code-block"><pre>// Traditional: x = 5
-// Sanguis V4: emit 5.0 to x          (inside a route)
+// Sanguis: emit 5.0 to x          (inside a route)
 
 // Traditional: result = compute(input)
-// Sanguis V4: emit compute(input) to result</pre></div>
+// Sanguis: emit compute(input) to result</pre></div>
       <p>The keyword <span class="code-inline">to</span> is the only operator that moves data. Everything else is either a hold declaration, a condition, or arithmetic inside an emit.</p>
 
       <h2 id="programs-are-circuits">Programs are circuits, not functions</h2>
       <table class="doc-table">
-        <tr><th>Traditional</th><th>Sanguis V4</th></tr>
+        <tr><th>Traditional</th><th>Sanguis</th></tr>
         <tr><td>Files of functions</td><td>Circuits of holds and routes</td></tr>
         <tr><td><span class="code-inline">main()</span> starts, runs, exits</td><td>Engine ticks until terminal state</td></tr>
         <tr><td>You manage state explicitly</td><td>Holds hold state; routes transform it</td></tr>

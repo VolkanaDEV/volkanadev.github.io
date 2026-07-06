@@ -112,7 +112,6 @@
   nav { border-bottom: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(196, 93, 58, 0.3); }
   footer { border-top: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(196, 93, 58, 0.3); }
   .section { border-top: 1px solid rgba(196, 93, 58, 0.5) !important; }
-  .feature-list li { border-bottom: 1px solid rgba(196, 93, 58, 0.25) !important; }
   .doc-content h2 { border-bottom: 1px solid rgba(196, 93, 58, 0.4) !important; }
   .doc-nav-bottom { border-top: 1px solid rgba(196, 93, 58, 0.4) !important; }
   /* === End Visual Enhancements === */
@@ -153,72 +152,38 @@
       </li></ul>
     </aside>
     <main class="doc-content">
-      <div class="breadcrumb"><a href="index.html">Docs</a> / Engine &amp; Soul</div>
+      <div class="breadcrumb"><a href="index.html">Docs</a> / Pipeline</div>
 
-      <h1>The VANA Engine - Runtime and Compiler</h1>
-      <p class="subtitle">How the V4 runtime works and the self-hosting compiler pipeline</p>
+      <h1>Compiler Pipeline</h1>
+      <p class="subtitle">How Sanguis programs compile and run</p>
 
-      <h2 id="the-runtime">The VANA Runtime</h2>
-      <p>The VANA engine is what makes Sanguis programs run. It takes a parsed <span class="code-inline">.sang</span> file, builds the route table, and ticks until a terminal condition is reached.</p>
-      <p>You don't call the route. The engine ticks it. You don't write <span class="code-inline">main()</span>. The tick cycle is the main function. It evaluates all routes in parallel each tick, applies emits, and checks for termination.</p>
+      <h2 id="overview">Two Stages, One Command</h2>
+      <p>Sanguis compiles in two stages. Both are invisible to the user:</p>
+      <div class="code-block"><pre>.sang source &rarr; [compiler] &rarr; .vana connectome &rarr; [runtime] &rarr; GPU execution</pre></div>
 
-      <h3 id="tick-cycle">Tick Cycle</h3>
-      <p>Each tick:</p>
-      <p>1. <strong>Snapshot.</strong> All route conditions are evaluated against the current state of all holds.<br>
-      2. <strong>Fire.</strong> Routes whose conditions all pass are marked as firing.<br>
-      3. <strong>Execute.</strong> Each firing route executes its emits in order. Emits within a route are applied immediately.<br>
-      4. <strong>Advance.</strong> Through positions advance for routes that fired with a <span class="code-inline">through</span> clause.<br>
-      5. <strong>Check.</strong> If the <span class="code-inline">state</span> hold reaches <span class="code-inline">2.0</span> or the <span class="code-inline">done</span> hold reaches <span class="code-inline">1.0</span>, execution stops.</p>
+      <p>1. <strong>Compiler.</strong> Parses <span class="code-inline">.sang</span> source and emits a <span class="code-inline">.vana</span> connectome, a pipe-delimited description of neurons, connections, gates, and text holds.</p>
+      <p>2. <strong>Runtime.</strong> Reads the <span class="code-inline">.vana</span> connectome and runs the organism on the GPU. Neurons map to CUDA threads, connections to memory reads, gates to parallel activation checks.</p>
 
-      <h3 id="parallel-semantics">Parallel Semantics</h3>
-      <p>All routes are evaluated against the same snapshot - the state at the start of the tick. Route A's emit to hold X is <strong>NOT</strong> visible to Route B's conditions in the same tick. Route A's emit to hold X <strong>IS</strong> visible to Route A's own subsequent emits in the same tick. Routes are parallel. Within a route, emits are sequential.</p>
+      <p>The user writes <span class="code-inline">.sang</span>, runs one command, and gets output. The compiler and runtime are implementation details.</p>
 
-      <h3 id="termination">Termination</h3>
-      <p>The engine stops when:</p>
-      <p>&bull; A hold named <span class="code-inline">state</span> reaches <span class="code-inline">2.0</span> or higher<br>
-      &bull; A hold named <span class="code-inline">done</span> reaches <span class="code-inline">1.0</span> or higher<br>
-      &bull; The maximum tick count is reached (default: 1,000,000)</p>
-      <p>The exit code is read from the <span class="code-inline">exit_code</span> hold (if set) or the <span class="code-inline">world</span> target.</p>
+      <div class="code-block"><pre>sanguis_run.bat program.sang [ticks]</pre></div>
 
-      <h3 id="gpu-acceleration">GPU Acceleration</h3>
-      <p>Route execution is parallel by default. On GPU systems, VANA can dispatch routes across CUDA cores for large-scale parallelism. The <span class="code-inline">vana_bench.exe</span> tool measures GPU vs CPU route throughput on NVIDIA hardware.</p>
+      <h2 id="file-formats">File Formats</h2>
 
-      <h1 style="margin-top:80px">The Self-Hosting Compiler</h1>
-      <p class="subtitle">Sanguis V4 compiles itself to native x86-64 machine code</p>
+      <h3 id="sang">.sang - Source</h3>
+      <p>Human-written text file containing circuit declarations, holds, routes, conditions, emits, appends, throughs, and wires. Comments with <span class="code-inline">//</span>. The primary source format.</p>
 
-      <h2 id="self-hosting">Sanguis V4 is Self-Hosting</h2>
-      <p>The compiler is written in Sanguis and compiles Sanguis source to native x86-64 machine code. No external compiler, no assembler, no linker required.</p>
-
-      <h2 id="pipeline-stages">Pipeline Stages</h2>
-      <div class="code-block"><pre>.sang source &rarr; [phase1.sang] &rarr; .vana genome &rarr; [phase2.sang] &rarr; patch.ps1 &rarr; [PE assembler] &rarr; .exe</pre></div>
-      <p>1. <strong>Phase 1</strong> (<span class="code-inline">phase1.sang</span>): Reads <span class="code-inline">.sang</span> source, classifies each line (circuit, hold, when, but, emit, through, wire), and emits a pipe-delimited genome file (<span class="code-inline">.vana</span>).</p>
-      <p>2. <strong>Phase 2</strong> (<span class="code-inline">phase2.sang</span>): Reads the <span class="code-inline">.vana</span> genome, extracts holds, routes, and emits, and generates a PowerShell script (<span class="code-inline">patch.ps1</span>) that assembles a Windows PE binary.</p>
-      <p>3. <strong>PE Assembly</strong>: The PowerShell script encodes the program as x86-64 opcodes (tcodes), builds the PE headers, .text, .rdata, and .data sections, and writes a standalone <span class="code-inline">.exe</span>.</p>
-
-      <h2 id="tcodes">tcodes</h2>
-      <p>Tcodes are x86-64 opcodes encoded as Sanguis tokens. The PE template currently supports:</p>
-      <table class="doc-table">
-        <tr><th>Tcode</th><th>x86-64 Operation</th></tr>
-        <tr><td><span class="code-inline">sub_rsp</span></td><td>Allocate stack space</td></tr>
-        <tr><td><span class="code-inline">get_stdout</span></td><td>Get stdout handle</td></tr>
-        <tr><td><span class="code-inline">save_stdout</span></td><td>Store stdout handle</td></tr>
-        <tr><td><span class="code-inline">load_scalar</span></td><td>Load a scalar value</td></tr>
-        <tr><td><span class="code-inline">store_scalar</span></td><td>Store a scalar value</td></tr>
-        <tr><td><span class="code-inline">check_cond</span></td><td>Conditional jump (jle/jne/jge)</td></tr>
-        <tr><td><span class="code-inline">write_string</span></td><td>Write text to stdout</td></tr>
-        <tr><td><span class="code-inline">exit</span></td><td>ExitProcess</td></tr>
-      </table>
-      <p>tcodes are the dialect of x86-64 that Sanguis speaks. The instruction set expands as the compiler matures.</p>
-
-      <h2 id="running-the-compiler">Running the Compiler</h2>
-      <div class="code-block"><pre>vana_runner.exe phase1.sang    # produces output.vana
-vana_runner.exe phase2.sang    # produces patch.ps1
-powershell patch.ps1           # produces output.exe
-output.exe                     # runs the compiled program</pre></div>
-
-      <div class="callout">
-        <p><strong>100% Sanguis.</strong> When all V4 features compile natively, the compiler itself can be compiled to <span class="code-inline">.exe</span>, replacing <span class="code-inline">vana_runner.exe</span>. Zero external dependencies.</p>
-      </div>
+      <h3 id="vana">.vana - Connectome</h3>
+      <p>Pipe-delimited text format produced by the compiler. Each line is a record describing part of the organism:</p>
+      <div class="code-block"><pre>VANA|v1
+NEURON|index|name
+CONN|from|to|weight|gate_idx|expr_idx
+GATE|neuron_idx|cond_count|cond_lhs|cond_op|cond_rhs|...
+EMIT|neuron_idx|value|target_type|target_name|is_string|is_append
+EXPR|index|lhs|op|rhs|result_hold
+TEXT|name|value
+ENDBODY</pre></div>
+      <p>Users do not normally inspect <span class="code-inline">.vana</span> files. They are intermediate output, cleaned up after execution.</p>
 
       <div class="doc-nav-bottom">
         <a href="examples.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Examples</span></a>

@@ -254,7 +254,7 @@
   nav { border-bottom: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(196, 93, 58, 0.3); }
   footer { border-top: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(196, 93, 58, 0.3); }
   .section { border-top: 1px solid rgba(196, 93, 58, 0.5) !important; }
-  .feature-list li { border-bottom: 1px solid rgba(196, 93, 58, 0.25) !important; }
+
   .doc-content h2 { border-bottom: 1px solid rgba(196, 93, 58, 0.4) !important; }
   .doc-nav-bottom { border-top: 1px solid rgba(196, 93, 58, 0.4) !important; }
   /* === End Visual Enhancements === */
@@ -292,7 +292,7 @@
         <div class="timer-block"><div class="timer-val" id="seconds">55</div><div class="timer-lbl">Secs</div></div>
       </div>
 
-      <p style="color: var(--muted-light); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin: 0 auto 32px; text-align: center; max-width: 500px;">until public source release</p>
+      <p style="color: var(--muted-light); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin: 0 auto 32px; text-align: center; max-width: 500px;">until SDK deployment</p>
 
       <div class="hero-actions">
         <a href="benchmark.html" class="btn">View Benchmarks</a>
@@ -310,7 +310,7 @@
     <div class="wrap">
       <div class="section-label">The Language</div>
       <h3>Introducing Sanguis</h3>
-      <p>Sanguis is a self-hosting programming language built on 10 keywords. Instead of objects, you write "bodies", self-contained structures that hold their own state, fire when their conditions are met, and "emit" signals to each other through routes. No classes, no inheritance, no method calls. When you write Sanguis code, it gets transposed into a connectome that settles on the GPU in parallel, in real-time. The compiler itself is written in Sanguis, so the language will eventually host itself.</p>
+      <p>Sanguis is a self-hosting programming language built on 9 keywords. Instead of objects, you write circuits, self-contained structures that hold their own state, fire when their conditions are met, and emit signals to each other through routes. No classes, no inheritance, no method calls. When you write Sanguis code, it gets transposed into a connectome that settles on the GPU in parallel, in real-time. The compiler itself is written in Sanguis, so the language will eventually host itself.</p>
       
       <div class="carousel" id="carousel-1">
         <div class="carousel-viewport">
@@ -324,7 +324,7 @@
             <div class="carousel-slide">
               <div class="card">
                 <h4>Unbounded Data Flow</h4>
-                <p>Data in Sanguis doesn't wait in a single-file line. When your code is transposed into a connectome, the GPU processes every route simultaneously. The sparse skip method "hops" over empty "regions", or groups of warps that hold nothing, rather than reading them as zero. This means your programs settle in real-time, and the GPU draws less power than it would processing the same data the old way.</p>
+                <p>Data in Sanguis doesn't wait in a single-file line. When your code is transposed into a connectome, the GPU processes every route simultaneously. The sparse skip method "hops" over empty "regions", or groups of warps that hold nothing, rather than reading them as zero. Your programs settle in real-time, and the GPU draws less power than it would processing the same data the old way.</p>
               </div>
             </div>
             <div class="carousel-slide">
@@ -363,7 +363,7 @@
             <div class="carousel-slide">
               <div class="card">
                 <h4>Frequency As Machine Code</h4>
-                <p>Routes in VANA don't call functions. They fire "switches", binaric representations of electrical voltage timings, at preset frequencies. Two routes at a 2:1 ratio produce what musicians call an "octave". The GPU "reasons" from these signals by confirming they've converged while staying asynchronous. We call these frequencies "fcodes". They're VANA's machine code; same role as x86 instructions, but in the frequency domain.</p>
+                <p>Routes in VANA don't call functions. They fire at preset frequencies. Two routes at a 2:1 ratio produce what musicians call an "octave". The GPU "reasons" from these signals by confirming they've converged while staying asynchronous. These frequencies are VANA's machine code; same role as x86 instructions, but in the frequency domain.</p>
               </div>
             </div>
             <div class="carousel-slide">
@@ -428,7 +428,7 @@
     var timerInterval = setInterval(updateTimer, 1000); 
     updateTimer();
 
-    // Carousel logic — one card at a time, auto-rotate, arrows + dots
+    // Carousel logic - one card at a time, auto-rotate, arrows + dots
     var carouselStates = {};
     function initCarousel(id) {
       var c = document.getElementById(id);

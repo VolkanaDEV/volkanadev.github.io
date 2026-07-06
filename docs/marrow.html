@@ -4,10 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="../favicon.png">
-<title>Builtins | VolkanaDEV Docs</title>
+<title>Marrow Terminal | VolkanaDEV Docs</title>
 <style>
   :root{--bg:#0e1117;--panel:#fbfaf7;--panel-dark:#161b22;--border:#21262d;--border-light:#e1dad0;--text-light:#f3eedf;--text-dark:#1e222b;--muted-light:#8b949e;--muted-dark:#6e675d;--accent:#c45d3a;--accent-hover:#b04f2f;--code-bg:#0d1117;--code-border:#30363d}
   *{box-sizing:border-box}body{margin:0;padding:0;background-color:var(--bg);color:var(--text-light);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+  body::before{content:'';position:fixed;inset:0;z-index:-1;background-image:url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http:%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2784%27%20height%3D%2749%27%20viewBox%3D%270%200%2084%2049%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23c45d3a%27%20stroke-opacity%3D%270.025%27%20stroke-width%3D%271%27%3E%3Cpath%20d%3D%27M56%200.5%20L70%2024.5%20L56%2048.5%20L28%2048.5%20L14%2024.5%20L28%200.5%20Z%27%2F%3E%3Cpath%20d%3D%27M0%2024.5%20L14%2024.5%27%2F%3E%3Cpath%20d%3D%27M70%2024.5%20L84%2024.5%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');background-size:84px 49px;animation:hexHeartbeat 7s ease-in-out infinite}
+  @keyframes hexHeartbeat{0%{opacity:.5}7%{opacity:1}14%{opacity:.55}21%{opacity:.9}35%{opacity:.5}100%{opacity:.5}}
   .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
   nav{border-bottom:1px solid var(--border);background:rgba(14,17,23,0.85);backdrop-filter:blur(12px);position:sticky;top:0;z-index:100}
   nav .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
@@ -58,60 +60,28 @@
   footer a{color:var(--accent);text-decoration:none}
   .footer-links{margin-bottom:8px}
   .footer-links a{margin:0 8px}
-  @media(max-width:768px){.nav-toggle{display:flex}.nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--border);padding:8px 24px 16px;display:none;z-index:100}.nav-links.open{display:flex}.nav-links a{padding:12px 0;border-bottom:1px solid var(--border);font-size:0.95rem}.nav-links a:last-child{border-bottom:none}.doc-layout{flex-direction:column}.doc-sidebar{display:none}.doc-content{padding:24px 16px 60px}body::before{content:'';position:fixed;inset:0;z-index:-1;background-image:url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http:%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2784%27%20height%3D%2749%27%20viewBox%3D%270%200%2084%2049%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23c45d3a%27%20stroke-opacity%3D%270.025%27%20stroke-width%3D%271%27%3E%3Cpath%20d%3D%27M56%200.5%20L70%2024.5%20L56%2048.5%20L28%2048.5%20L14%2024.5%20L28%200.5%20Z%27%2F%3E%3Cpath%20d%3D%27M0%2024.5%20L14%2024.5%27%2F%3E%3Cpath%20d%3D%27M70%2024.5%20L84%2024.5%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');background-size:84px 49px;animation:hexHeartbeat 7s ease-in-out infinite}@keyframes hexHeartbeat{0%{opacity:.5}7%{opacity:1}14%{opacity:.55}21%{opacity:.9}35%{opacity:.5}100%{opacity:.5}}.wrap{padding:0 16px}}
+  .term-mockup{background:#0a0e14;border:1px solid var(--code-border);border-radius:10px;margin:24px 0;overflow:hidden;max-width:780px}
+  .term-titlebar{background:#161b22;padding:8px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border)}
+  .term-dot{width:12px;height:12px;border-radius:50%}
+  .term-dot.red{background:#e06c75}.term-dot.yellow{background:#e5c07b}.term-dot.green{background:#98c379}
+  .term-title{font-size:0.8rem;color:var(--muted-light);margin-left:8px;font-family:monospace}
+  .term-body{padding:16px 20px;font-family:'JetBrains Mono','Fira Code','Consolas',monospace;font-size:0.82rem;line-height:1.7;color:#c9d1d9;white-space:pre;overflow-x:auto}
+  .term-accent{color:var(--accent)}.term-muted{color:var(--muted-light)}.term-bright{color:#f3eedf}
+  @media(max-width:768px){.nav-toggle{display:flex}.nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--border);padding:8px 24px 16px;display:none;z-index:100}.nav-links.open{display:flex}.nav-links a{padding:12px 0;border-bottom:1px solid var(--border);font-size:0.95rem}.nav-links a:last-child{border-bottom:none}.doc-layout{flex-direction:column}.doc-sidebar{display:none}.doc-content{padding:24px 16px 60px}.wrap{padding:0 16px}}
 
   /* === Visual Enhancements === */
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes glowPulse {
-    0%, 100% { box-shadow: 0 0 5px rgba(196, 93, 58, 0.15); }
-    50% { box-shadow: 0 0 15px rgba(196, 93, 58, 0.3); }
-  }
   body { animation: fadeIn 0.4s ease-out; }
-  .card, .doc-card, .doc-grid > a, .arena-card {
-    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-  }
-  .card:hover, .doc-card:hover, .doc-grid > a:hover {
-    transform: translateY(-2px);
-    border-color: var(--accent);
-    box-shadow: 0 4px 20px rgba(196, 93, 58, 0.12);
-  }
-  .hero h2, .header-block h2 {
-    text-shadow: 0 0 30px rgba(196, 93, 58, 0.08);
-  }
-  .nav-links a {
-    transition: color 0.2s, text-shadow 0.2s;
-  }
-  .nav-links a:hover {
-    text-shadow: 0 0 10px rgba(196, 93, 58, 0.3);
-  }
+  .nav-links a { transition: color 0.2s, text-shadow 0.2s; }
+  .nav-links a:hover { text-shadow: 0 0 10px rgba(196, 93, 58, 0.3); }
   a { transition: opacity 0.15s, text-shadow 0.15s; }
-  .btn, button {
-    transition: all 0.2s ease;
-  }
-  .btn:hover, button:hover {
-    box-shadow: 0 0 12px rgba(196, 93, 58, 0.2);
-  }
-  .back-link:hover, footer a:hover {
-    text-shadow: 0 0 8px rgba(196, 93, 58, 0.25);
-  }
-  .legal-box {
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  }
-  .legal-box:hover {
-    border-color: rgba(196, 93, 58, 0.25);
-    box-shadow: 0 0 25px rgba(196, 93, 58, 0.04);
-  }
-  ::selection {
-    background: rgba(196, 93, 58, 0.25);
-  }
+  ::selection { background: rgba(196, 93, 58, 0.25); }
   ::-webkit-scrollbar { width: 8px; height: 8px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: rgba(196, 93, 58, 0.3); border-radius: 4px; }
   ::-webkit-scrollbar-thumb:hover { background: rgba(196, 93, 58, 0.5); }
-  /* Separator line radiant glow */
   nav { border-bottom: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(196, 93, 58, 0.3); }
   footer { border-top: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(196, 93, 58, 0.3); }
-  .section { border-top: 1px solid rgba(196, 93, 58, 0.5) !important; }
   .doc-content h2 { border-bottom: 1px solid rgba(196, 93, 58, 0.4) !important; }
   .doc-nav-bottom { border-top: 1px solid rgba(196, 93, 58, 0.4) !important; }
   /* === End Visual Enhancements === */
@@ -144,99 +114,120 @@
         <a href="index.html">Overview</a>
         <a href="getting-started.html">Getting Started</a>
         <a href="language-reference.html">Language Reference</a>
-        <a href="builtins.html" class="active">Builtins</a>
+        <a href="builtins.html">Builtins</a>
         <a href="execution-model.html">Execution Model</a>
         <a href="examples.html">Examples</a>
         <a href="compiler-pipeline.html">Compiler Pipeline</a>
-        <a href="marrow.html">Marrow Terminal</a>
+        <a href="marrow.html" class="active">Marrow Terminal</a>
         <a href="glossary.html">Glossary</a>
       </li></ul>
     </aside>
     <main class="doc-content">
-      <div class="breadcrumb"><a href="index.html">Docs</a> / What's Different</div>
+      <div class="breadcrumb"><a href="index.html">Docs</a> / Marrow Terminal</div>
 
-      <h1>What's Different From Traditional Programming</h1>
-      <p class="subtitle">For programmers coming from C, Python, and everything else.</p>
+      <h1>Marrow Terminal</h1>
+      <p class="subtitle">The editor and runtime that ships with the Sanguis SDK</p>
 
-      <p>If you've written code in C, Python, or most anything else, Sanguis works differently. Here's what changes.</p>
+      <p>Marrow is the terminal user interface for Sanguis. It is a built-in code editor, file browser, and runtime panel. You write <span class="code-inline">.sang</span> source, press F5, and Marrow runs it through the C transposer and blood bridge on the GPU. No external editor or build system required.</p>
 
-      <h2 id="no-control-flow">No control flow statements</h2>
+      <p>Marrow ships inside the Sanguis binary. Launch it from the command line:</p>
+
+      <div class="code-block"><pre>sanguis tui</pre></div>
+
+      <p>Or open a specific file:</p>
+
+      <div class="code-block"><pre>sanguis tui examples/hello.sang</pre></div>
+
+      <h2 id="interface">Interface</h2>
+
+      <p>Marrow has four panels arranged in a single window:</p>
+
       <table class="doc-table">
-        <tr><th>Traditional</th><th>Sanguis</th></tr>
-        <tr><td><span class="code-inline">if (x &gt; 5) { ... }</span></td><td><span class="code-inline">but x &gt; 5.0</span> (gates a route)</td></tr>
-        <tr><td><span class="code-inline">for (i=0; i&lt;N; i++)</span></td><td>Route fires every tick - loop is implicit</td></tr>
-        <tr><td><span class="code-inline">while (cond)</span></td><td>Route ticks until conditions fail</td></tr>
-        <tr><td><span class="code-inline">return value</span></td><td><span class="code-inline">emit value to target</span></td></tr>
-        <tr><td><span class="code-inline">function call</span></td><td>Route fires when conditions pass</td></tr>
+        <tr><th>Panel</th><th>Description</th></tr>
+        <tr><td>Editor</td><td>Syntax-highlighted code editor for <span class="code-inline">.sang</span> files. Supports tabs, find, undo/redo.</td></tr>
+        <tr><td>File tree</td><td>Browse, open, create, and delete <span class="code-inline">.sang</span> files. Press F2 to toggle.</td></tr>
+        <tr><td>Scope</td><td>Shows memory state and output from the last run. Press F3 to toggle.</td></tr>
+        <tr><td>Runtime</td><td>Displays organism output, errors, and diagnostics after a run.</td></tr>
       </table>
-      <p>There is no <span class="code-inline">if</span>. There is no <span class="code-inline">for</span>. There is no <span class="code-inline">while</span>. There is no <span class="code-inline">return</span>. The <strong>route</strong> is the only control flow. Conditions gate routes. Routes loop by firing repeatedly until conditions fail.</p>
 
-      <h2 id="two-data-types">Two data types only</h2>
+      <h2 id="pipeline">Pipeline</h2>
+
+      <p>When you press F5 to run, Marrow executes the same pipeline as the command-line tools:</p>
+
+      <p>1. Write source to a temp <span class="code-inline">.sang</span> file<br>
+      2. Call the C transposer to compile <span class="code-inline">.sang</span> to <span class="code-inline">.vana</span><br>
+      3. Call the blood bridge to run the <span class="code-inline">.vana</span> on the GPU<br>
+      4. Capture stdout and display it in the runtime panel</p>
+
+      <p>The Rust parser and engine are not used for normal runs. They remain as a fallback if the SDK binaries are not found.</p>
+
+      <div class="callout">
+        <p><strong>Note.</strong> The awakening sequence (F9) still uses the Rust engine internally. It will switch to the C pipeline when the blood bridge supports tick-by-tick execution.</p>
+      </div>
+
+      <h2 id="keybindings">Keybindings</h2>
+
       <table class="doc-table">
-        <tr><th>Traditional types</th><th>Sanguis types</th></tr>
-        <tr><td><span class="code-inline">int</span>, <span class="code-inline">float</span>, <span class="code-inline">double</span></td><td><span class="code-inline">memory scalar</span> (floating-point)</td></tr>
-        <tr><td><span class="code-inline">string</span>, <span class="code-inline">char*</span></td><td><span class="code-inline">memory text</span> (variable-length string)</td></tr>
-        <tr><td><span class="code-inline">bool</span></td><td>Use <span class="code-inline">scalar</span> (<span class="code-inline">0.0</span> = false, <span class="code-inline">1.0</span> = true)</td></tr>
-        <tr><td><span class="code-inline">struct</span>, <span class="code-inline">class</span></td><td>No structs or classes</td></tr>
-        <tr><td><span class="code-inline">int[]</span>, arrays</td><td>No arrays - use individual holds</td></tr>
+        <tr><th>Key</th><th>Action</th></tr>
+        <tr><td>F1</td><td>Help screen</td></tr>
+        <tr><td>F2</td><td>File tree panel</td></tr>
+        <tr><td>F3</td><td>Scope panel (memory and output)</td></tr>
+        <tr><td>F4</td><td>Organism graph (circuit structure)</td></tr>
+        <tr><td>F5</td><td>Run without saving</td></tr>
+        <tr><td>F6</td><td>New file</td></tr>
+        <tr><td>F7</td><td>Save file</td></tr>
+        <tr><td>F8</td><td>Reset organism (fresh boot)</td></tr>
+        <tr><td>F9</td><td>Awaken (tick-by-tick awareness watch)</td></tr>
+        <tr><td>Tab / Shift+Tab</td><td>Next / previous tab</td></tr>
+        <tr><td>Ctrl+N</td><td>New tab</td></tr>
+        <tr><td>Ctrl+W</td><td>Close tab</td></tr>
+        <tr><td>Ctrl+S</td><td>Save file</td></tr>
+        <tr><td>Ctrl+Alt+S</td><td>Save and run</td></tr>
+        <tr><td>Ctrl+F</td><td>Find / search</td></tr>
+        <tr><td>Ctrl+Z / Ctrl+Y</td><td>Undo / redo</td></tr>
+        <tr><td>Ctrl+A</td><td>Toggle auto-run</td></tr>
+        <tr><td>Ctrl+C / Ctrl+Q</td><td>Quit</td></tr>
       </table>
-      <p>There are no ints, no structs, no classes, no arrays. Scalars are floating-point. Text is strings. That's it.</p>
 
-      <h2 id="parallel-by-default">Parallel by default</h2>
-      <p>In traditional languages, code runs sequentially, one instruction after another. In Sanguis, all routes evaluate every tick, simultaneously. There is no sequential ordering.</p>
-      <table class="doc-table">
-        <tr><th>Traditional</th><th>Sanguis</th></tr>
-        <tr><td>Sequential execution</td><td>Parallel route evaluation every tick</td></tr>
-        <tr><td>Shared mutable state + locks</td><td>Snapshot semantics, no races</td></tr>
-        <tr><td>Threads, async, goroutines</td><td>Not needed, parallelism is the default</td></tr>
-        <tr><td>Manual synchronization</td><td>Engine handles it via tick snapshots</td></tr>
-      </table>
-      <p>All routes see the same snapshot at the start of the tick. Route A's emit to hold X is not visible to Route B's conditions in the same tick. Data races are eliminated by design.</p>
+      <h2 id="screenshot">What It Looks Like</h2>
 
-      <h2 id="settling-not-stepping">Settling, not stepping</h2>
-      <p>In traditional languages, you write a sequence of steps: do this, then that, then the other. In Sanguis, you describe state and rules. The engine settles the system tick by tick until it reaches a terminal state.</p>
-      <div class="code-block"><pre>// Traditional: step-by-step
-x = 1
-y = x + 2
-print(y)
+      <p>Marrow runs in a standard terminal. The layout is a dark-themed split view: editor on the left, runtime output on the right, file tree on the far left, status bar at the bottom.</p>
 
-// Sanguis: describe state and rules, engine settles
-circuit Add {
-  hold a : memory scalar = 0.0
-  hold b : memory scalar = 0.0
-  hold c : memory scalar = 0.0
-  hold state : memory scalar = 0.0
+      <div class="term-mockup">
+        <div class="term-titlebar">
+          <span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span>
+          <span class="term-title">marrow</span>
+        </div>
+        <div class="term-body"><span class="term-muted">  circuit Hello {
+    hold state : memory scalar = 0.0
+    when speak {
+      but state = 0.0
+      </span><span class="term-accent">emit</span><span class="term-muted"> </span><span class="term-bright">"Hello from VANA!"</span><span class="term-muted"> to screen
+      </span><span class="term-accent">emit</span><span class="term-muted"> 1.0 to state
+    }
+  }</span>
 
-  when start {
-    but state = 0.0
-    emit 1.0 to a
-    emit 2.0 to b
-    emit a + b to c
-    emit c to screen
-    emit 1.0 to state
-  }
-}</pre></div>
+<span class="term-accent">F1 help  F2 files  F3 scope  F4 graph  F5 run  F6 new  F7 save  F8 reset</span>
+<span class="term-muted">  Provided by Volkana</span></div>
+      </div>
 
-      <h2 id="no-assignment">No assignment, data flows</h2>
-      <div class="code-block"><pre>// Traditional: x = 5
-// Sanguis: emit 5.0 to x          (inside a route)
+      <h2 id="graph">Organism Graph</h2>
 
-// Traditional: result = compute(input)
-// Sanguis: emit compute(input) to result</pre></div>
-      <p>The keyword <span class="code-inline">to</span> is the only operator that moves data. Everything else is either a hold declaration, a condition, or arithmetic inside an emit.</p>
+      <p>Press F4 to see a structural view of your program. The graph shows circuits, holds, routes, conditions, emits, and wires. It parses the source to build this view, so it updates as you type.</p>
 
-      <h2 id="programs-are-circuits">Programs are circuits, not functions</h2>
-      <table class="doc-table">
-        <tr><th>Traditional</th><th>Sanguis</th></tr>
-        <tr><td>Files of functions</td><td>Circuits of holds and routes</td></tr>
-        <tr><td><span class="code-inline">main()</span> starts, runs, exits</td><td>Engine ticks until terminal state</td></tr>
-        <tr><td>You manage state explicitly</td><td>Holds hold state; routes transform it</td></tr>
-        <tr><td>Solve problems step by step</td><td>Describe state and rules, engine settles</td></tr>
-      </table>
+      <div class="callout">
+        <p><strong>Tip.</strong> Use F4 to verify your circuit structure before running. If the graph shows an error, the program will not compile.</p>
+      </div>
 
       <div class="doc-nav-bottom">
-        <a href="language-reference.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Language Reference</span></a>
-        <a href="execution-model.html" class="nav-right"><span class="nav-label">Next &rarr;</span><span class="nav-title">Execution Model</span></a>
+        <a href="compiler-pipeline.html">
+          <span class="nav-label">&larr; Previous</span>
+          <span class="nav-title">Compiler Pipeline</span>
+        </a>
+        <a href="glossary.html" class="nav-right" style="margin-left:auto;text-align:right">
+          <span class="nav-label">Next &rarr;</span>
+          <span class="nav-title">Glossary</span>
+        </a>
       </div>
     </main>
   </div>

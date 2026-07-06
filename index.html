@@ -29,7 +29,11 @@
   * { box-sizing: border-box; }
   body {
     margin: 0; padding: 0;
-    background: var(--bg);
+    background-color: var(--bg);
+    background-image:
+      linear-gradient(rgba(196, 93, 58, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(196, 93, 58, 0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
     color: var(--text-light);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     line-height: 1.6;
@@ -282,7 +286,7 @@
 
   <div class="wrap">
     <section class="hero">
-      <h2>Your CPU turns 82 soon. Ready to give it a rest?</h2>
+      <h2>Your CPU turns 82 soon.<br>Ready to give it a rest?</h2>
       <p>Sanguis routes data across many paths at once on the GPU you already own. Real-time, real hardware, real progress. Your laptop, home desktop, or data center can become the next step in technology.</p>
 
       <div class="timer-container">

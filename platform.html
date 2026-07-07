@@ -63,10 +63,31 @@
     padding: 16px 24px;
   }
   .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.15rem; color: var(--text-light); letter-spacing: -0.02em; }
-  .brand-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+  .brand-dot { width: 20px; height: 20px; border-radius: 4px; object-fit: contain; }
   .nav-links { display: flex; gap: 24px; }
   .nav-links a { color: var(--muted-light); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
   .nav-links a:hover, .nav-links a.active { color: var(--text-light); }
+  .nav-links a { position: relative; }
+  .nav-links a:not(:last-child)::after {
+    content: ''; position: absolute; right: -12px; top: 50%; transform: translateY(-50%);
+    width: 1px; height: 14px; background: var(--border); opacity: 0.6;
+  }
+  @media (max-width: 768px) { .nav-links a:not(:last-child)::after { display: none; } }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; padding: 4px; }
+  .nav-toggle span { width: 24px; height: 2px; background: var(--text-light); border-radius: 2px; transition: 0.3s; }
+  .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+  @media (max-width: 768px) {
+    .nav-toggle { display: flex; }
+    .nav-links { position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; background: var(--bg); border-bottom: 1px solid var(--border); padding: 8px 24px 16px; display: none; z-index: 100; }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
+    .nav-links a:last-child { border-bottom: none; }
+    .hero-mini { padding: 36px 16px 20px !important; }
+    .wrap { padding: 0 16px; }
+  }
 
   /* Hero / Header Dynamic Context */
   .hero-mini {
@@ -217,12 +238,16 @@
   <nav>
     <div class="wrap">
       <div class="nav-inner">
-        <div class="brand"><div class="brand-dot"></div>VolkanaDEV</div>
+        <div class="brand"><img src="favicon.png" class="brand-dot" alt="VolkanaDEV">VolkanaDEV</div>
+        <button class="nav-toggle" onclick="this.classList.toggle('open');document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu"><span></span><span></span><span></span></button>
         <div class="nav-links">
           <a href="index.html">Welcome</a>
+          <a href="vana.html">Meet VANA</a>
+          <a href="roadmap.html">Roadmap</a>
           <a href="benchmark.html">Benchmarks</a>
-          <a href="platform.html" class="active">The Roadmap</a>
+          <a href="docs.html">Docs</a>
           <a href="security.html">Safety &amp; Licenses</a>
+          <a href="contact.html">Contact</a>
         </div>
       </div>
     </div>

@@ -35,8 +35,14 @@
   .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.15rem; color: var(--text-light); }
   .brand-dot { width: 20px; height: 20px; border-radius: 4px; object-fit: contain; }
   .nav-links { display: flex; gap: 24px; }
-  .nav-links a { color: var(--muted-light); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
+  .nav-links a { color: var(--muted-light); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
   .nav-links a:hover, .nav-links a.active { color: var(--text-light); }
+  .nav-links a { position: relative; }
+  .nav-links a:not(:last-child)::after {
+    content: ''; position: absolute; right: -12px; top: 50%; transform: translateY(-50%);
+    width: 1px; height: 14px; background: var(--border); opacity: 0.6;
+  }
+  @media (max-width: 768px) { .nav-links a:not(:last-child)::after { display: none; } }
   .header-block { text-align: center; padding: 48px 20px 24px; background: radial-gradient(circle at 50% 0%, rgba(196, 93, 58, 0.08), transparent 60%); }
   .header-block h2 { font-size: clamp(1.8rem, 5.5vw, 2.8rem); font-weight: 800; margin: 0 0 20px; line-height: 1.2; color: var(--text-light); letter-spacing: -0.03em; }
   .header-block p { color: var(--muted-light); font-size: clamp(1.05rem, 2.5vw, 1.2rem); max-width: 780px; margin: 0 auto 24px; text-align: center; }

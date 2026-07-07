@@ -68,6 +68,12 @@
   .nav-links { display: flex; gap: 24px; }
   .nav-links a { color: var(--muted-light); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
   .nav-links a:hover, .nav-links a.active { color: var(--text-light); }
+  .nav-links a { position: relative; }
+  .nav-links a:not(:last-child)::after {
+    content: ''; position: absolute; right: -12px; top: 50%; transform: translateY(-50%);
+    width: 1px; height: 14px; background: var(--border); opacity: 0.6;
+  }
+  @media (max-width: 768px) { .nav-links a:not(:last-child)::after { display: none; } }
 
   /* Hero Section */
   .hero {

@@ -31,17 +31,17 @@
   }
   body::before {
     content: ''; position: fixed; inset: 0; z-index: -1;
-    background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http:%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2784%27%20height%3D%2749%27%20viewBox%3D%270%200%2084%2049%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23c45d3a%27%20stroke-opacity%3D%270.025%27%20stroke-width%3D%271%27%3E%3Cpath%20d%3D%27M56%200.5%20L70%2024.5%20L56%2048.5%20L28%2048.5%20L14%2024.5%20L28%200.5%20Z%27%2F%3E%3Cpath%20d%3D%27M0%2024.5%20L14%2024.5%27%2F%3E%3Cpath%20d%3D%27M70%2024.5%20L84%2024.5%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+    background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http:%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2784%27%20height%3D%2749%27%20viewBox%3D%270%200%2084%2049%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23d4623a%27%20stroke-opacity%3D%270.04%27%20stroke-width%3D%271%27%3E%3Cpath%20d%3D%27M56%200.5%20L70%2024.5%20L56%2048.5%20L28%2048.5%20L14%2024.5%20L28%200.5%20Z%27%2F%3E%3Cpath%20d%3D%27M0%2024.5%20L14%2024.5%27%2F%3E%3Cpath%20d%3D%27M70%2024.5%20L84%2024.5%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
     background-size: 84px 49px;
     animation: hexHeartbeat 7s ease-in-out infinite;
   }
   @keyframes hexHeartbeat {
-    0%   { opacity: 0.5; }
+    0%   { opacity: 0.6; }
     7%   { opacity: 1; }
-    14%  { opacity: 0.55; }
+    14%  { opacity: 0.65; }
     21%  { opacity: 0.9; }
-    35%  { opacity: 0.5; }
-    100% { opacity: 0.5; }
+    35%  { opacity: 0.6; }
+    100% { opacity: 0.6; }
   }
   .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
   nav {
@@ -74,7 +74,7 @@
   .hero p { color: var(--muted-light); font-size: 1.05rem; max-width: 600px; margin: 0 auto; text-align: center; }
   .hero .company-line { color: var(--accent); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin: 0 0 12px; }
 
-  .section { padding: 32px 0; border-top: 1px solid var(--border); text-align: center; }
+  .section { padding: 48px 0; border-top: 1px solid var(--border); text-align: center; }
   .section h3 { font-size: 1.3rem; font-weight: 700; margin: 0 0 20px; color: #fff; letter-spacing: -0.02em; }
   .section .lead { color: var(--muted-light); font-size: 1rem; margin: 0 auto 32px; max-width: 600px; text-align: center; }
 
@@ -84,12 +84,12 @@
   .principle h4 { margin: 0; min-width: 220px; flex-shrink: 0; color: var(--accent); font-size: 0.95rem; font-weight: 700; }
   .principle p { margin: 0; color: var(--muted-light); font-size: 0.95rem; line-height: 1.6; }
 
-  .benefits { display: flex; flex-wrap: wrap; gap: 12px 40px; max-width: 900px; margin: 0 auto; justify-content: center; }
-  .benefit { width: 200px; padding: 0; text-align: left; }
+  .benefits { display: flex; flex-wrap: wrap; gap: 16px 32px; max-width: 760px; margin: 0 auto; justify-content: center; }
+  .benefit { width: 220px; padding: 0; text-align: left; }
   .benefit h5 { margin: 0 0 4px; color: var(--text-light); font-size: 0.92rem; font-weight: 700; }
   .benefit p { margin: 0; color: var(--muted-light); font-size: 0.85rem; line-height: 1.5; }
 
-  .roles { max-width: 100%; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .roles { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .role {
     background: var(--panel-dark); border: 1px solid var(--border); border-radius: 12px;
     padding: 24px 28px; margin: 0; transition: 0.15s; text-align: left;
@@ -240,13 +240,13 @@
       <div class="company-line">VolkanaDEV Autonomous Systems, Inc.</div>
       <h2>Careers</h2>
       <p>We're building a programming language where programs are alive. If that's the kind of problem you want to work on, we want to talk.</p>
-      <p style="color: var(--muted-light); font-size: 0.85rem; margin-top: 20px;">VolkanaDEV is in the startup phase. Most roles start as contract positions with equity grants - no cash comp until we're funded. When funding comes through, roles convert to full-time W2 with salary and benefits. The Deployment Consultant role is paid at quote rates per engagement from day one.</p>
+      <p style="color: var(--muted-light); font-size: 0.85rem; margin-top: 20px;">VolkanaDEV is pre-funding. Roles are equity-only until we raise. When funding comes through, everyone converts to salaried W-2 with full benefits. No managers, no fixed schedule, no clock. You do the work, we handle the rest.</p>
     </section>
   </div>
 
   <section class="section">
     <div class="wrap">
-      <h3>How we work</h3>
+      <h3>How We Work</h3>
       <div class="principles">
         <div class="principle">
           <h4>Ship, don't present</h4>
@@ -255,6 +255,10 @@
         <div class="principle">
           <h4>Safety is non-negotiable</h4>
           <p>VANA is built to help, never to hurt. The fuse is real. If you don't understand why that matters, this isn't the right fit.</p>
+        </div>
+        <div class="principle">
+          <h4>No managers</h4>
+          <p>Flat structure. You choose what to work on. The Architect sets direction, not your schedule. If you need someone to tell you what to do, this won't work.</p>
         </div>
         <div class="principle">
           <h4>Depth over headcount</h4>
@@ -266,7 +270,7 @@
         </div>
         <div class="principle">
           <h4>Remote, async, flexible</h4>
-          <p>No office. No standups. Work when you're sharp. We measure output.</p>
+          <p>No office. No standups. No time tracking. Work when you're sharp. We measure output.</p>
         </div>
       </div>
     </div>
@@ -274,25 +278,25 @@
 
   <section class="section">
     <div class="wrap">
-      <h3>What we offer</h3>
+      <h3>What We Offer</h3>
       <div class="benefits">
         <div class="benefit"><h5>Equity</h5><p>Meaningful stake from day one. Your shares vest as the company grows.</p></div>
-        <div class="benefit"><h5>Path to W2</h5><p>Contract roles convert to salaried positions with full benefits when we're funded.</p></div>
-        <div class="benefit"><h5>Internal training</h5><p>Learn Sanguis and VANA from the inside, directly from the team building it.</p></div>
-        <div class="benefit"><h5>Remote-first</h5><p>Work from anywhere.</p></div>
-        <div class="benefit"><h5>Flexible hours</h5><p>No clock-watching.</p></div>
-        <div class="benefit"><h5>Merit-based promotion</h5><p>The more you contribute, the faster you move up. Your effort decides your pace, not tenure.</p></div>
+        <div class="benefit"><h5>Salary on funding</h5><p>Equity-only until funded. When we raise, everyone converts to salaried W-2 with full benefits.</p></div>
+        <div class="benefit"><h5>No managers</h5><p>Flat structure. You choose what to work on. The Architect sets direction, not your schedule.</p></div>
+        <div class="benefit"><h5>Remote-first</h5><p>Work from anywhere. In-person is voluntary, for collaboration sessions.</p></div>
+        <div class="benefit"><h5>Flexible hours</h5><p>No clock-watching. No time tracking. Do the work when you're sharp.</p></div>
+        <div class="benefit"><h5>Merit-based</h5><p>Compensation reflects contribution, not tenure or title. Peer input, Architect decides.</p></div>
       </div>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
-      <h3>Open roles</h3>
+      <h3>Open Roles</h3>
       <div class="roles">
         <div class="role">
           <h4>Systems Engineer - Compiler &amp; Runtime</h4>
-          <div class="role-meta">Contract / Equity &middot; Remote &middot; C / Systems</div>
+          <div class="role-meta">Equity-only &middot; Remote &middot; C / Systems</div>
           <p>Work on the Sanguis compiler and VANA runtime. The long-term goal is replacing the C runtime scaffold with self-hosted Sanguis code.</p>
           <ul>
             <li>Experience building compilers, linkers, or language runtimes</li>
@@ -304,7 +308,7 @@
 
         <div class="role">
           <h4>Neural Systems Engineer</h4>
-          <div class="role-meta">Contract / Equity &middot; Remote &middot; CUDA / GPU / Neural</div>
+          <div class="role-meta">Equity-only &middot; Remote &middot; CUDA / GPU / Neural</div>
           <p>Scale the VANA Cortex to GPU hardware. You'll work on GPU dispatch for large-scale neural simulations and help build out the cortex architecture.</p>
           <ul>
             <li>CUDA or GPU compute dispatch experience</li>
@@ -316,8 +320,8 @@
 
         <div class="role">
           <h4>Security &amp; Cryptography Engineer</h4>
-          <div class="role-meta">Contract / Equity &middot; Remote &middot; Crypto / Systems Security</div>
-          <p>Work on the cryptographic security layer - five stacked crypto layers (SHA-256, HMAC-SHA3-256, AES-256-GCM, ChaCha20-Poly1305, Argon2id). Maintain, test, and extend the integrity verification system.</p>
+          <div class="role-meta">Equity-only &middot; Remote &middot; Crypto / Systems Security</div>
+          <p>Work on the security layer. Maintain, test, and extend the integrity verification system. You'll help protect VANA from tampering and unauthorized modification.</p>
           <ul>
             <li>Production crypto implementation experience</li>
             <li>Deep understanding of authenticated encryption and KDFs</li>
@@ -328,7 +332,7 @@
 
         <div class="role">
           <h4>Hardware / FPGA Engineer</h4>
-          <div class="role-meta">Contract / Equity &middot; Remote (travel for prototyping) &middot; FPGA / PCB / SoC</div>
+          <div class="role-meta">Equity-only &middot; Remote (travel for prototyping) &middot; FPGA / PCB / SoC</div>
           <p>The end goal is VANA on custom silicon. Design and prototype the hardware pathway - FPGA boards, custom PCBs, eventually SoC.</p>
           <ul>
             <li>Custom PCB design from schematic to fabrication</li>
@@ -340,8 +344,8 @@
 
         <div class="role">
           <h4>Deployment Consultant</h4>
-          <div class="role-meta">Contract &middot; Remote &middot; Quote-based</div>
-          <p>Recommend VANA and Sanguis implementations for client projects. Assess needs, propose architectures, and advise on deployment. This is a contract role paid at quote rates per engagement.</p>
+          <div class="role-meta">Quote-based &middot; Remote &middot; Consulting</div>
+          <p>Recommend VANA and Sanguis implementations for client projects. Assess needs, propose architectures, and advise on deployment. This is a per-engagement consulting role paid at quote rates from day one.</p>
           <ul>
             <li>Experience in technical consulting or solutions architecture</li>
             <li>Ability to assess client needs and propose practical implementations</li>
@@ -352,7 +356,7 @@
 
         <div class="role">
           <h4>Software Tester</h4>
-          <div class="role-meta">Contract / Equity &middot; Remote &middot; QA / Testing</div>
+          <div class="role-meta">Equity-only &middot; Remote &middot; QA / Testing</div>
           <p>Break things on purpose. Write test cases, run them, find edge cases, and report what breaks. You'll work directly with the compiler and runtime to catch regressions before they ship.</p>
           <ul>
             <li>Experience writing and running automated tests</li>
@@ -364,7 +368,7 @@
 
         <div class="role">
           <h4>Programmer</h4>
-          <div class="role-meta">Contract / Equity &middot; Remote &middot; Generalist</div>
+          <div class="role-meta">Equity-only &middot; Remote &middot; Generalist</div>
           <p>Write Sanguis code. Build tools, scripts, and internal infrastructure. If you can pick up new languages fast and ship working code, you'll fit here.</p>
           <ul>
             <li>Solid programming fundamentals in any language</li>
@@ -376,7 +380,7 @@
 
         <div class="role">
           <h4>App Developer (Sanguis)</h4>
-          <div class="role-meta">Contract / Equity &middot; Remote &middot; Experimental</div>
+          <div class="role-meta">Equity-only &middot; Remote &middot; Experimental</div>
           <p>Build real apps in Sanguis. Experiment with the language, push it to its limits, and tell us what works and what doesn't. Your feedback directly shapes the language.</p>
           <ul>
             <li>Experience building and shipping applications</li>
@@ -388,11 +392,11 @@
 
         <div class="role">
           <h4>HR Coordinator</h4>
-          <div class="role-meta">Contract / Equity &middot; Remote &middot; People Operations</div>
-          <p>Build the people side of the company. Handle onboarding, contractor agreements, and help us scale hiring as we grow. Early-stage means you'll shape the culture from the ground up.</p>
+          <div class="role-meta">Equity-only &middot; Remote &middot; People Operations</div>
+          <p>Build the people side of the company. Handle onboarding, employment agreements, and help us scale hiring as we grow. Early-stage means you'll shape the culture from the ground up.</p>
           <ul>
             <li>Experience in HR or people operations at a startup or small team</li>
-            <li>Knowledge of contractor and W2 employment basics</li>
+            <li>Knowledge of most Federal and state level labor basics</li>
             <li>Strong organizational and communication skills</li>
           </ul>
           <a href="mailto:volkanadev@volkanadev.com?subject=Application: HR Coordinator" class="btn">Apply</a>
@@ -400,7 +404,7 @@
 
         <div class="role">
           <h4>PR &amp; Communications</h4>
-          <div class="role-meta">Contract / Equity &middot; Remote &middot; Public Relations</div>
+          <div class="role-meta">Equity-only &middot; Remote &middot; Public Relations</div>
           <p>Tell the story of Sanguis and VANA to the world. Manage external communications, press relationships, and public-facing messaging. You'll help people understand why programs being alive matters.</p>
           <ul>
             <li>Experience in PR, communications, or tech marketing</li>
@@ -412,7 +416,7 @@
 
         <div class="role">
           <h4>QA Lead</h4>
-          <div class="role-meta">Contract / Equity &middot; Remote &middot; Quality Assurance</div>
+          <div class="role-meta">Equity-only &middot; Remote &middot; Quality Assurance</div>
           <p>Own the quality pipeline. Design the test strategy, build the CI test infrastructure, and make sure nothing ships broken. You'll define what "done" means.</p>
           <ul>
             <li>Experience leading QA or test engineering at a software company</li>
@@ -424,7 +428,7 @@
 
         <div class="role">
           <h4>Researcher</h4>
-          <div class="role-meta">Contract / Equity &middot; Remote &middot; Research</div>
+          <div class="role-meta">Equity-only &middot; Remote &middot; Research</div>
           <p>Explore the frontiers. Whether it's neural architectures, connectomics, new compilation strategies, or cognitive models - if it could shape VANA's future, we want to know about it. Publish or perish doesn't apply here. We want results we can use.</p>
           <ul>
             <li>Background in CS, neuroscience, cognitive science, or related field</li>
@@ -436,7 +440,7 @@
 
         <div class="role">
           <h4>Internal Floater</h4>
-          <div class="role-meta">Contract / Equity &middot; Remote &middot; Generalist / Rotational</div>
+          <div class="role-meta">Equity-only &middot; Remote &middot; Generalist / Rotational</div>
           <p>Not sure where you fit? Neither are we - and that's the point. You'll rotate across teams, pick up whatever's on fire, and get exposed to everything from compiler internals to PR. For people who learn fast and want their hand in everything.</p>
           <ul>
             <li>Strong generalist who picks up new domains quickly</li>
@@ -451,7 +455,7 @@
 
   <section class="section">
     <div class="wrap">
-      <h3>How we hire</h3>
+      <h3>How We Hire</h3>
       <div class="process">
         <div class="step">
           <div class="step-num">1</div>
@@ -487,26 +491,28 @@
 
   <section class="section">
     <div class="wrap">
-      <h3>Don't see your role?</h3>
+      <h3>Don't See Your Role?</h3>
       <div class="open-call">
         <div class="open-call-box">
           <p>If you believe in what we're building and have skills we need, write anyway. Tell us what you can do, what you've built, and why Sanguis matters to you.</p>
           <a href="mailto:volkanadev@volkanadev.com?subject=General Application" class="btn">Email us</a>
         </div>
-        <div class="eoe">
-          <p>VolkanaDEV Autonomous Systems, Inc. is an equal opportunity employer. We do not discriminate on the basis of race, color, religion, gender, gender identity, sexual orientation, national origin, genetics, disability, age, or veteran status. We hire for ability and character.</p>
-        </div>
+      </div>
+      <div class="eoe">
+        <p>VolkanaDEV Autonomous Systems, Inc. is an equal opportunity employer. We do not discriminate on the basis of race, color, religion, gender, gender identity, sexual orientation, national origin, genetics, disability, age, or veteran status. We hire for ability and character.</p>
       </div>
     </div>
   </section>
 
   <footer>
-    <div class="footer-links">
-      <a href="terms.html">Terms of Use</a> | <a href="privacy.html">Privacy Policy</a> | <a href="careers.html">Careers</a>
+    <div class="wrap">
+      <div class="footer-links">
+        <a href="terms.html">Terms of Use</a> | <a href="privacy.html">Privacy Policy</a> | <a href="careers.html">Careers</a>
+      </div>
+      Copyright &copy; 2026 VolkanaDEV Autonomous Systems, Inc.<br>
+      VolkanaDEV, Sanguis, and VANA are intellectual property of VolkanaDEV Autonomous Systems, Inc.<br>
+      Business and private inquiries: <a href="mailto:volkanadev@volkanadev.com">volkanadev@volkanadev.com</a>
     </div>
-    Copyright &copy; 2026 VolkanaDEV Autonomous Systems, Inc.<br>
-    VolkanaDEV, Sanguis, and VANA are intellectual property of VolkanaDEV Autonomous Systems, Inc.<br>
-    Business and private inquiries: <a href="mailto:volkanadev@volkanadev.com">volkanadev@volkanadev.com</a>
   </footer>
 
 </body>

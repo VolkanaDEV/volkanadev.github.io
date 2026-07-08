@@ -436,7 +436,7 @@
   <div class="wrap">
     <section class="header-block">
       <h2>Arena Performance Realities</h2>
-      <p>Select a logic file below to see how the VANA engine's sparse routing performs on real GPU silicon. All results are measured on an NVIDIA RTX 3060 (12GB VRAM) emulating the future VANA SoC architecture. The CPU processes every connection sequentially. The GPU skips entire regions of inactive neurons, doing less work and finishing faster.</p>
+      <p>Select a logic file below to see how the VANA engine's sparse routing performs on real GPU silicon. All results are measured on an NVIDIA RTX 3060 (12GB VRAM) emulating the future VANA SoC architecture. The same benchmark was also verified on an NVIDIA RTX 5080 (Blackwell, 16GB VRAM) using the same source code compiled with <code style="color: var(--accent);">-arch=native</code>. The CPU processes every connection sequentially. The GPU skips entire regions of inactive neurons, doing less work and finishing faster.</p>
       
       <div class="selector-box">
         <label for="circuit-select">Payload File Selection</label>
@@ -605,13 +605,72 @@
       </table>
     </div>
 
+    <div class="speed-chart" style="border-left: 3px solid var(--accent);">
+      <div class="speed-chart-title" style="color: var(--accent);">Cross-Hardware Verification — 250K Neurons</div>
+      <p style="color: var(--muted-light); font-size: 0.88rem; margin: 0 0 20px; line-height: 1.6;">
+        Same source code, two GPU architectures. The v5_blood_bridge.cu benchmark compiled and ran on both
+        NVIDIA RTX 3060 (Ampere, sm_86) and RTX 5080 (Blackwell, sm_120) using <code style="color: var(--accent);">-arch=native</code>.
+        Sparse routing scales across hardware. The 5080 finishes the same 250K-neuron sparse sweep in 382 microseconds.
+      </p>
+      <div class="speed-bar-row">
+        <div class="speed-bar-label">RTX 5080 Sparse</div>
+        <div class="speed-bar-track"><div class="speed-bar-fill sparse" style="width: 8%;">382 us</div></div>
+      </div>
+      <div class="speed-bar-row">
+        <div class="speed-bar-label">RTX 3060 Sparse</div>
+        <div class="speed-bar-track"><div class="speed-bar-fill sparse" style="width: 15%;">511 us</div></div>
+      </div>
+      <div class="speed-bar-row">
+        <div class="speed-bar-label">RTX 5080 Region</div>
+        <div class="speed-bar-track"><div class="speed-bar-fill region" style="width: 20%;">1,321 us</div></div>
+      </div>
+      <div class="speed-bar-row">
+        <div class="speed-bar-label">RTX 3060 Region</div>
+        <div class="speed-bar-track"><div class="speed-bar-fill region" style="width: 30%;">3,086 us</div></div>
+      </div>
+      <div class="speed-bar-row">
+        <div class="speed-bar-label">RTX 5080 Dense</div>
+        <div class="speed-bar-track"><div class="speed-bar-fill base" style="width: 35%;">2,245 us</div></div>
+      </div>
+      <div class="speed-bar-row">
+        <div class="speed-bar-label">RTX 3060 Dense</div>
+        <div class="speed-bar-track"><div class="speed-bar-fill base" style="width: 80%;">7,554 us</div></div>
+      </div>
+      <div class="speed-bar-row">
+        <div class="speed-bar-label">RTX 5080 CPU</div>
+        <div class="speed-bar-track"><div class="speed-bar-fill cpu" style="width: 92%;">37,810 us</div></div>
+      </div>
+      <div class="speed-bar-row">
+        <div class="speed-bar-label">RTX 3060 CPU</div>
+        <div class="speed-bar-track"><div class="speed-bar-fill cpu" style="width: 100%;">41,017 us</div></div>
+      </div>
+      <div style="display: flex; gap: 24px; flex-wrap: wrap; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);">
+        <div style="text-align: center;">
+          <div style="font-size: 1.6rem; font-weight: 800; color: var(--accent);">99x</div>
+          <div style="font-size: 0.78rem; color: var(--muted-light); text-transform: uppercase; letter-spacing: 0.05em;">RTX 5080 Sparse vs CPU</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="font-size: 1.6rem; font-weight: 800; color: var(--accent);">80x</div>
+          <div style="font-size: 0.78rem; color: var(--muted-light); text-transform: uppercase; letter-spacing: 0.05em;">RTX 3060 Sparse vs CPU</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="font-size: 1.6rem; font-weight: 800; color: var(--accent);">16,609x</div>
+          <div style="font-size: 0.78rem; color: var(--muted-light); text-transform: uppercase; letter-spacing: 0.05em;">RTX 5080 Combined</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="font-size: 1.6rem; font-weight: 800; color: var(--accent);">65x</div>
+          <div style="font-size: 0.78rem; color: var(--muted-light); text-transform: uppercase; letter-spacing: 0.05em;">RTX 5080 Wall vs CPU Wall</div>
+        </div>
+      </div>
+    </div>
+
     <div class="console-panel">
       <div class="console-header"><div class="console-dot-ui"></div> Terminal Output Diagnostics - Live Session</div>
       <div id="console-box" class="console-log"></div>
     </div>
 
     <div class="disclaimer-box">
-      * <strong>Architectural Note:</strong> All timing data is measured from real CUDA kernel runs on an NVIDIA RTX 3060 (12GB VRAM) using the VANA settle, novelty, and convergence kernels from vana_kernels.cu. The GPU emulates the future VANA SoC architecture; it runs the same computation natively in parallel. The CPU processes every connection sequentially. GPU utilization was verified at 99% during dense runs. The benchmark tool (vana_bench.cu) compiles with nvcc and ships in the Sanguis SDK.
+      * <strong>Architectural Note:</strong> All timing data is measured from real CUDA kernel runs on an NVIDIA RTX 3060 (12GB VRAM) and verified on an NVIDIA RTX 5080 (16GB VRAM, Blackwell). Both GPUs run the same vana_bench.cu and v5_blood_bridge.cu source compiled with <code>-arch=native</code>. The GPU emulates the future VANA SoC architecture; it runs the same computation natively in parallel. The CPU processes every connection sequentially. GPU utilization was verified at 99% during dense runs. The benchmark tool (vana_bench.cu) compiles with nvcc and ships in the Sanguis SDK.
     </div>
   </div>
 

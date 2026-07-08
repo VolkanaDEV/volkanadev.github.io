@@ -32,12 +32,14 @@
   .wrap { max-width: 800px; margin: 0 auto; padding: 0 24px; }
   nav .wrap { max-width: 1200px; }
   nav { border-bottom: 1px solid var(--border); background: rgba(14, 17, 23, 0.85); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100; }
-  nav .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 16px 16px 2px; }
+  nav .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; }
   .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.15rem; color: var(--text-light); letter-spacing: -0.02em; }
   .brand-dot { width: 20px; height: 20px; border-radius: 4px; object-fit: contain; }
   .nav-links { display: flex; gap: 24px; }
   .nav-links a { color: var(--muted-light); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
   .nav-links a:hover, .nav-links a.active { color: var(--text-light); }
+  nav .brand { margin-left: 4px; }
+  .nav-links { margin-left: auto; }
   .nav-links a { position: relative; }
   .nav-links a:not(:last-child)::after {
     content: ''; position: absolute; right: -12px; top: 50%; transform: translateY(-50%);

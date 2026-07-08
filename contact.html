@@ -326,6 +326,7 @@
           <option value="consumer">I am a public citizen or researcher and I want to use Sanguis for myself</option>
           <option value="corporate">I am a corporate or retail business interested in deployment</option>
           <option value="government">I am with the government and I need a Cleave Clause Contract</option>
+          <option value="general">I have a general question or concern</option>
         </select>
       </div>
 
@@ -402,8 +403,29 @@
           </div>
         </div>
 
+        <div id="general-fields" class="conditional-fields">
+          <div class="form-row">
+            <label for="generalName">Your Name</label>
+            <input type="text" id="generalName" placeholder="Your name">
+          </div>
+          <div class="form-row">
+            <label for="generalEmail">Your Email</label>
+            <input type="email" id="generalEmail" placeholder="you@example.com">
+          </div>
+          <div class="form-row">
+            <label for="generalMessage">What Can We Help With?</label>
+            <textarea id="generalMessage" rows="4" placeholder="Question, feedback, concern, or anything else..."></textarea>
+          </div>
+        </div>
+
         <button type="submit" class="btn">Submit Request</button>
       </form>
+    </div>
+
+    <div class="sidebar-box">
+      <h4>General Questions &amp; Concerns</h4>
+      <p>Not sure where you fit? That is fine. Use the general category above and tell us what is on your mind. We read everything that comes in and we will point you in the right direction.</p>
+      <p style="margin-top: 12px;">We can help with questions about the language, documentation, licensing, deployment, or just talk through what you are trying to build. Limited design help is available for projects that use Sanguis or VANA.</p>
     </div>
 
     <div class="sidebar-box">
@@ -451,9 +473,11 @@
       document.getElementById('consumer-fields').classList.remove('active');
       document.getElementById('corporate-fields').classList.remove('active');
       document.getElementById('government-fields').classList.remove('active');
+      document.getElementById('general-fields').classList.remove('active');
       if (type === 'consumer') document.getElementById('consumer-fields').classList.add('active');
       if (type === 'corporate') document.getElementById('corporate-fields').classList.add('active');
       if (type === 'government') document.getElementById('government-fields').classList.add('active');
+      if (type === 'general') document.getElementById('general-fields').classList.add('active');
     }
 
     function buildEmail() {
@@ -484,6 +508,10 @@
                 '\nRepresentative: ' + (document.getElementById('govRep').value || 'not provided') +
                 '\nAddress: ' + (document.getElementById('govAddress').value || 'not provided') +
                 '\nCarve-Out: ' + (document.getElementById('govCarveout').value || 'standard');
+      } else if (type === 'general') {
+        emailFrom = document.getElementById('generalEmail').value || 'not provided';
+        infoBox = document.getElementById('generalMessage').value || '';
+        extra = 'Name: ' + (document.getElementById('generalName').value || 'not provided');
       }
 
       var subject = 'VolkanaDEV Contact: ' + type.toUpperCase();

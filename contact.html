@@ -317,7 +317,7 @@
 
     <div class="form-box">
       <h3>Get In Touch</h3>
-      <div class="form-desc">Select your category, fill in the relevant fields, and hit submit. Your email client will open with everything pre-filled. General inquiries go to volkanadev@volkanadev.com, support requests go to support@volkanadev.com.</div>
+      <div class="form-desc">Select your category, fill in the relevant fields, and hit submit. Your email client will open with everything pre-filled to the right inbox.</div>
 
       <div class="inquiry-box">
         <label for="inquiryType">Who Are You?</label>
@@ -458,16 +458,6 @@
 
   </div>
 
-  <div class="wrap" style="text-align: center; padding: 20px 0 40px;">
-    <p style="color: var(--muted-light); font-size: 0.92rem;">
-      General: <a href="mailto:volkanadev@volkanadev.com" style="color: var(--accent); text-decoration: none;">volkanadev@volkanadev.com</a>
-      &nbsp;&middot;&nbsp;
-      Support: <a href="mailto:support@volkanadev.com" style="color: var(--accent); text-decoration: none;">support@volkanadev.com</a>
-      &nbsp;&middot;&nbsp;
-      Careers: <a href="mailto:careers@volkanadev.com" style="color: var(--accent); text-decoration: none;">careers@volkanadev.com</a>
-    </p>
-  </div>
-
   <footer>
     <div class="footer-links">
       <a href="terms.html">Terms of Use</a> | <a href="privacy.html">Privacy Policy</a> | <a href="careers.html">Careers</a>
@@ -532,7 +522,13 @@
                  '\n\nInfo:\n' + (infoBox || 'No additional info provided') +
                  '\n\nExtra:\n' + extra;
 
-      var mailto = 'mailto:' + (type === 'general' ? 'volkanadev@volkanadev.com' : 'support@volkanadev.com') + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      var targetEmail = {
+        consumer: 'support@volkanadev.com',
+        corporate: 'support@volkanadev.com',
+        government: 'legal@volkanadev.com',
+        general: 'volkanadev@volkanadev.com'
+      }[type] || 'volkanadev@volkanadev.com';
+      var mailto = 'mailto:' + targetEmail + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
       window.location.href = mailto;
       return false;
     }

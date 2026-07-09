@@ -188,35 +188,38 @@ circuit     := "circuit" IDENT "{" (hold | when)* "}"
 hold        := "hold" IDENT ":" "memory" ("scalar" | "text") ("=" value)?
 when        := "when" IDENT "{" ("but" condition)* ("through" IDENT)? (emit | append)* "}"
 wire        := "wire" IDENT "." IDENT "to" IDENT "." IDENT
-condition   := IDENT ("<" | ">" | "=") (number | IDENT)
+condition   := IDENT ("<" | ">" | "=" | "<=" | ">=") (number | IDENT)
 emit        := "emit" expr "to" target
 append      := "append" expr "to" IDENT
 target      := IDENT | "screen"
 value       := number | string
-expr        := number | string | IDENT | IDENT ("+" | "-" | "*") expr | builtin "(" args ")"</pre></div>
+expr        := number | string | IDENT | IDENT ("+" | "-" | "*" | "/") expr | builtin "(" args ")"
 
       <h2 id="condition-operators">Condition Operators</h2>
-      <p>Sanguis supports three comparison operators:</p>
+      <p>Sanguis supports five comparison operators:</p>
       <table class="doc-table">
         <tr><th>Operator</th><th>Meaning</th></tr>
         <tr><td><span class="code-inline">&lt;</span></td><td>Less than</td></tr>
         <tr><td><span class="code-inline">&gt;</span></td><td>Greater than</td></tr>
         <tr><td><span class="code-inline">=</span></td><td>Equal to</td></tr>
+        <tr><td><span class="code-inline">&lt;=</span></td><td>Less than or equal to</td></tr>
+        <tr><td><span class="code-inline">&gt;=</span></td><td>Greater than or equal to</td></tr>
       </table>
       <p>Operands are either a hold name and a number, or a hold name and another hold name:</p>
       <div class="code-block"><pre>but x &lt; 5.0       // hold vs number
 but x &gt; y         // hold vs hold
-but x = 0.0       // hold vs number (equality)</pre></div>
-      <div class="callout">
-        <p><strong>There is no <span class="code-inline">&gt;=</span>, <span class="code-inline">&lt;=</span>, <span class="code-inline">==</span>, or <span class="code-inline">!=</span>.</strong> Use combinations: <span class="code-inline">but x &gt; 4.0</span> for x &ge; 5, <span class="code-inline">but x &lt; 5.0</span> for x &le; 4.</p>
-      </div>
+but x = 0.0       // hold vs number (equality)
+but x &gt;= 3.0      // hold vs number (greater or equal)
+but x &lt;= 10.0     // hold vs number (less or equal)</pre></div>
 
       <h2 id="arithmetic">Arithmetic</h2>
       <p>Arithmetic is supported inside emit expressions:</p>
       <div class="code-block"><pre>emit a + b to sum        // addition
 emit a - b to diff       // subtraction
+emit a * b to prod       // multiplication
+emit a / b to quot       // division (returns 0.0 if b is 0)
 emit pos + 1.0 to pos    // increment</pre></div>
-      <p>Only <span class="code-inline">+</span>, <span class="code-inline">-</span>, and <span class="code-inline">*</span> are supported. Arithmetic is evaluated left to right. Operands can be numbers, hold names, or builtin results.</p>
+      <p>Only <span class="code-inline">+</span>, <span class="code-inline">-</span>, <span class="code-inline">*</span>, and <span class="code-inline">/</span> are supported. Division by zero returns 0.0. Arithmetic is evaluated left to right. Operands can be numbers, hold names, or builtin results.</p>
 
       <h2 id="comments">Comments</h2>
       <div class="code-block"><pre>// Comments start with // and run to end of line.</pre></div>

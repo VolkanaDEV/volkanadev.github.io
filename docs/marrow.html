@@ -69,13 +69,6 @@
   footer a{color:var(--accent);text-decoration:none}
   .footer-links{margin-bottom:8px}
   .footer-links a{margin:0 8px}
-  .term-mockup{background:#0a0e14;border:1px solid var(--code-border);border-radius:10px;margin:24px 0;overflow:hidden;max-width:780px}
-  .term-titlebar{background:#161b22;padding:8px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border)}
-  .term-dot{width:12px;height:12px;border-radius:50%}
-  .term-dot.red{background:#e06c75}.term-dot.yellow{background:#e5c07b}.term-dot.green{background:#98c379}
-  .term-title{font-size:0.8rem;color:var(--muted-light);margin-left:8px;font-family:monospace}
-  .term-body{padding:16px 20px;font-family:'JetBrains Mono','Fira Code','Consolas',monospace;font-size:0.82rem;line-height:1.7;color:#c9d1d9;white-space:pre;}
-  .term-accent{color:var(--accent)}.term-muted{color:var(--muted-light)}.term-bright{color:#f3eedf}
   @media(max-width:768px){.nav-toggle{display:flex}.nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--border);padding:8px 24px 16px;display:none;z-index:100}.nav-links.open{display:flex}.nav-links a{padding:12px 0;border-bottom:1px solid var(--border);font-size:0.95rem}.nav-links a:last-child{border-bottom:none}.doc-layout{flex-direction:column}.doc-sidebar{display:none}.doc-content{padding:24px 16px 60px}.wrap{padding:0 16px}}
 
   /* === Visual Enhancements === */
@@ -201,24 +194,6 @@
       <h2 id="screenshot">What It Looks Like</h2>
 
       <p>Marrow runs in a standard terminal. The layout is a dark-themed split view: editor on the left, runtime output on the right, file tree on the far left, status bar at the bottom.</p>
-
-      <div class="term-mockup">
-        <div class="term-titlebar">
-          <span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span>
-          <span class="term-title">marrow</span>
-        </div>
-        <div class="term-body"><span class="term-muted">  circuit Hello {
-    hold state : memory scalar = 0.0
-    when speak {
-      but state = 0.0
-      </span><span class="term-accent">emit</span><span class="term-muted"> </span><span class="term-bright">"Hello from VANA!"</span><span class="term-muted"> to screen
-      </span><span class="term-accent">emit</span><span class="term-muted"> 1.0 to state
-    }
-  }</span>
-
-<span class="term-accent">F1 help  F2 files  F3 scope  F4 graph  F5 run  F6 new  F7 save  F8 reset</span>
-<span class="term-muted">  Provided by Volkana</span></div>
-      </div>
 
       <h2 id="graph">Organism Graph</h2>
 

@@ -436,7 +436,7 @@
   <div class="wrap">
     <section class="header-block">
       <h2>Arena Performance Realities</h2>
-      <p>Select a logic file below to see how the VANA engine's sparse routing performs on real GPU silicon. All results are measured on an NVIDIA RTX 3060 (12GB VRAM) emulating the future VANA SoC architecture. The CPU processes every connection sequentially. The GPU skips entire regions of inactive neurons, doing less work and finishing faster.</p>
+      <p>Select a logic file below to see how the VANA engine's sparse routing performs on real GPU silicon. All results are measured on an NVIDIA RTX 3060 (12GB VRAM) and verified on an NVIDIA RTX 5080 (16GB VRAM, Blackwell), both emulating the future VANA SoC architecture. The CPU processes every connection sequentially. The GPU skips entire regions of inactive neurons, doing less work and finishing faster.</p>
       
       <div class="selector-box">
         <label for="circuit-select">Payload File Selection</label>
@@ -501,7 +501,7 @@
           <div class="arena-title" style="color: var(--accent);">GPU Sparse Skip</div>
           <div class="arena-subtitle">VANA Sparse Routing - 1 Region Active</div>
           <span id="sparse-badge" class="badge-status success" style="background: rgba(196, 93, 58, 0.15); color: var(--accent);">DONE</span>
-          <div><span class="latency-tag" style="border-color: var(--accent); color: var(--accent); background: rgba(196,93,58,0.02);">Native GPU - Measured on RTX 3060</span></div>
+          <div><span class="latency-tag" style="border-color: var(--accent); color: var(--accent); background: rgba(196,93,58,0.02);">Native GPU - Measured on RTX 3060 & RTX 5080</span></div>
         </div>
         <div class="arena-stats">
           <div class="arena-stat"><span>Time/Sweep:</span> <span id="sparse-time">511 us</span></div>
@@ -697,7 +697,7 @@
         desc: "250K neurons, 22.5 million connections. The CPU processes every connection sequentially at 41,017 us per tick. The GPU runs the same computation natively in parallel; 99% utilization during dense, dropping to 12% during sparse skip because only 1 of 977 regions fires. The GPU does less work and finishes 80x faster per tick.",
         log: `<span class="c-timestamp">[live]</span> === VANA BENCHMARK - SPARSE_250K ===
 <span class="c-timestamp">[live]</span> Neurons: 250,000 | Connections: 22,500,000 | Regions: 977
-<span class="c-timestamp">[live]</span> Hardware: NVIDIA RTX 3060 (12GB) emulating future VANA SoC
+<span class="c-timestamp">[live]</span> Hardware: NVIDIA RTX 3060 (12GB) & RTX 5080 (16GB) emulating future VANA SoC
 <span class="c-timestamp">[live]</span> <span class="c-alert">CPU_SEQUENTIAL: i7-12700K processing 22.5M connections one at a time - 41,017 us/tick (24.4 Hz)</span>
 <span class="c-timestamp">[live]</span> <span class="c-success">GPU_DENSE: 7,554 us/tick (132 Hz) - 99% GPU utilization verified</span>
 <span class="c-timestamp">[live]</span> <span class="c-success">GPU_REGION: 3,086 us/tick (324 Hz) - 65% of 977 regions active</span>
@@ -717,7 +717,7 @@
         desc: "50K neurons, 4.5 million connections. The CPU completes in 9.1 seconds. The GPU sparse skip finishes in 141 microseconds per tick; 64.2x faster. The sparse advantage scales with neuron count: at 50K the GPU only needs 1 of 196 regions active.",
         log: `<span class="c-timestamp">[live]</span> === VANA BENCHMARK - NEURAL_50K ===
 <span class="c-timestamp">[live]</span> Neurons: 50,000 | Connections: 4,500,000 | Regions: 196
-<span class="c-timestamp">[live]</span> Hardware: NVIDIA RTX 3060 (12GB) emulating future VANA SoC
+<span class="c-timestamp">[live]</span> Hardware: NVIDIA RTX 3060 (12GB) & RTX 5080 (16GB) emulating future VANA SoC
 <span class="c-timestamp">[live]</span> <span class="c-info">CPU_SEQUENTIAL: 9,051 us/tick (110.5 Hz) - completed in 0.1s</span>
 <span class="c-timestamp">[live]</span> <span class="c-success">GPU_DENSE: 1,408 us/tick (710 Hz) - 85% GPU utilization</span>
 <span class="c-timestamp">[live]</span> <span class="c-success">GPU_REGION: 635 us/tick (1.6K Hz) - 65% of 196 regions active</span>
@@ -737,7 +737,7 @@
         desc: "10K neurons, 900K connections. At this scale the CPU completes in 1.7 seconds but the GPU sparse skip runs at 7.5K Hz. The GPU kernel launch overhead (~50us) starts to dominate at small scales, but sparse routing still wins by 12.6x.",
         log: `<span class="c-timestamp">[live]</span> === VANA BENCHMARK - NEURAL_10K ===
 <span class="c-timestamp">[live]</span> Neurons: 10,000 | Connections: 900,000 | Regions: 40
-<span class="c-timestamp">[live]</span> Hardware: NVIDIA RTX 3060 (12GB) emulating future VANA SoC
+<span class="c-timestamp">[live]</span> Hardware: NVIDIA RTX 3060 (12GB) & RTX 5080 (16GB) emulating future VANA SoC
 <span class="c-timestamp">[live]</span> <span class="c-info">CPU_SEQUENTIAL: 1,677 us/tick (596 Hz) - completed in 0.0s</span>
 <span class="c-timestamp">[live]</span> <span class="c-success">GPU_DENSE: 336 us/tick (3.0K Hz) - 40% GPU utilization</span>
 <span class="c-timestamp">[live]</span> <span class="c-success">GPU_REGION: 186 us/tick (5.4K Hz) - 65% of 40 regions active</span>
@@ -757,7 +757,7 @@
         desc: "1K neurons, 90K connections. At small scales the GPU kernel launch overhead dominates; all three GPU modes converge to similar times because the work per tick is too small to saturate the RTX 3060. The sparse advantage only emerges at scale. The VANA architecture is designed for organisms with millions of neurons, not thousands.",
         log: `<span class="c-timestamp">[live]</span> === VANA BENCHMARK - CIRCUIT_1K ===
 <span class="c-timestamp">[live]</span> Neurons: 1,000 | Connections: 90,000 | Regions: 4
-<span class="c-timestamp">[live]</span> Hardware: NVIDIA RTX 3060 (12GB) emulating future VANA SoC
+<span class="c-timestamp">[live]</span> Hardware: NVIDIA RTX 3060 (12GB) & RTX 5080 (16GB) emulating future VANA SoC
 <span class="c-timestamp">[live]</span> <span class="c-info">CPU_SEQUENTIAL: 166 us/tick (6.0K Hz) - completed in 0.0s</span>
 <span class="c-timestamp">[live]</span> <span class="c-info">GPU_DENSE: 108 us/tick (9.3K Hz) - kernel launch overhead dominates</span>
 <span class="c-timestamp">[live]</span> <span class="c-info">GPU_REGION: 106 us/tick (9.4K Hz) - too few regions to skip</span>

@@ -340,7 +340,7 @@
     <div class="wrap">
       <div class="section-label">The Language</div>
       <h3>Introducing Sanguis</h3>
-      <p>Sanguis is a self-hosting programming language. Instead of objects, you write organs, self-contained structures that hold their own state, fire when their conditions are met, and emit signals to each other through routes. No classes, no inheritance. When you write Sanguis code, it gets transposed into a wiring grid that settles on the GPU in parallel, in real-time. The compiler itself is written in Sanguis, and the language hosts itself.</p>
+      <p>Sanguis is a self-hosting programming language. Instead of objects, you write organs, self-contained structures that hold their own state, fire when their conditions are met, and emit signals to each other through routes. No classes, no inheritance. When you write Sanguis code, it gets compiled into a wiring grid that runs on the GPU in parallel, in real-time. Signals flow through the grid until it stabilizes, and that stable state is your program's output. The compiler itself is written in Sanguis, and the language hosts itself.</p>
       
       <div class="carousel" id="carousel-1">
         <div class="carousel-viewport">
@@ -353,8 +353,8 @@
             </div>
             <div class="carousel-slide">
               <div class="card">
-                <h4>It Settles, It Doesn't Loop</h4>
-                <p>Your program presses into a wiring grid and the GPU processes every path at once. There is no instruction pointer stepping through lines: the grid holds your whole program, and execution is the grid reaching its settled state. Empty regions get skipped, so it settles fast and draws less power than the old way.</p>
+                <h4>No Steps, Just Signals</h4>
+                <p>A normal program runs one line at a time. Sanguis is different: your whole program turns into a circuit that runs everywhere at once. Values flow through the circuit until every part of it stops changing. That stable end state is your program's output. Because nothing is stepped through, it runs fast and draws less power than the old way.</p>
               </div>
             </div>
             <div class="carousel-slide">
@@ -379,7 +379,7 @@
     <div class="wrap">
       <div class="section-label">The Engine</div>
       <h3>What is a VANA?</h3>
-      <p class="vana-body">VANA stands for "Voltage Activated Neural Architecture." It is the runtime engine that executes your Sanguis programs. Instead of forcing data through a single processing line, VANA routes it across many paths simultaneously on the GPU you already own. The organism lives on the GPU through what we call the "blood bridge", an async stream that keeps it running in real-time without stopping to sync with the CPU every tick. Your CPU does some very light work, and then gets out of the way.</p>
+      <p class="vana-body">VANA stands for "Voltage Activated Neural Architecture." It is the runtime engine that executes your Sanguis programs. Instead of forcing data through a single processing line, VANA routes it across many paths simultaneously on the GPU you already own. The organism lives entirely on the GPU. The CPU hands it inputs and reads its outputs, and otherwise stays out of the way; there is no constant back-and-forth between the two. Your CPU does some very light work, and then gets out of the way.</p>
       
       <div class="carousel" id="carousel-2">
         <div class="carousel-viewport">
@@ -387,19 +387,19 @@
             <div class="carousel-slide">
               <div class="card">
                 <h4>No Instruction Pointer</h4>
-                <p>VANA doesn't step through your code one line at a time. Your program presses into a grid and the whole thing settles on the GPU at once. Switches hold values, wires carry signals, gates fire on conditions. The settled state is your answer.</p>
+                <p>VANA doesn't step through your code one line at a time. Your whole program becomes a grid of switches and wires that runs all at once on the GPU. Signals flow until every part of the grid stabilizes, and that stable state is your answer.</p>
               </div>
             </div>
             <div class="carousel-slide">
               <div class="card">
-                <h4>The Press</h4>
-                <p>One fixed kernel runs every program. Your program is data: switches, wires, and conduction delays. The kernel never changes. Press the same genome into any body that speaks the grid, from a gaming GPU to a datacenter card to custom silicon.</p>
+                <h4>Same Machine, Different Programs</h4>
+                <p>Every Sanguis program compiles down to the same shape: a pattern of switches, wires, and signal timings. The GPU kernel that runs that pattern is fixed. It never changes, no matter what you write. That means the same program pattern runs on any hardware that has this kernel, from a gaming GPU to a datacenter card to custom silicon.</p>
               </div>
             </div>
             <div class="carousel-slide">
               <div class="card">
                 <h4>It Runs Until You Close It</h4>
-                <p>Programs hold a heartbeat: a sustained pulse with no input and no timer. It runs until you close it, and the close is deliberate. The last state gets printed and kept. The reference run crossed two million sweeps on a consumer GPU, and the same code has settled on every machine we've pointed it at.</p>
+                <p>Programs hold a heartbeat: a sustained pulse with no input and no timer. It runs until you close it, and the close is deliberate. The last state gets printed and kept. The reference run crossed two million computation cycles on a consumer GPU without drift, and the same code runs on every machine we've pointed it at.</p>
               </div>
             </div>
           </div>

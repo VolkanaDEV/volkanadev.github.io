@@ -362,7 +362,7 @@
       <p>A traditional CPU processes instructions one at a time along a single line. It does this very fast, but the model is the same regardless of how many cores you stack. VANA changes the model. Data activates across many paths at once. The hardware does the work simultaneously, not sequentially.</p>
 
       <h3><span class="label">How It Works</span>The Runtime Engine</h3>
-      <p>When you write Sanguis code, it doesn't get interpreted line by line. It gets transposed into a "connectome", a graph of neurons and the connections between them. That connectome is a .vana file. VANA owns execution from there. The graph "settles" on the GPU in parallel every tick. No instruction pointer. No sequential step-through. The computation is the settling.</p>
+      <p>When you write Sanguis code, it doesn't get interpreted line by line. It gets compiled into a wiring grid: switches, wires, and signal timings, stored in a single text file. VANA owns execution from there. Signals flow through the grid in parallel on the GPU until every part of it stabilizes. No instruction pointer. No sequential step-through. The stable state is the computation.</p>
       <p>Today, that surface is the GPU. VANA does not emulate a CPU on the GPU. It does not translate instructions. It treats the GPU as the processor and maps the computation to what the silicon can actually do. The CPU does not sync every tick. It observes.</p>
 
       <h3><span class="label">The Pipeline</span>From Source to Silicon</h3>
@@ -372,7 +372,7 @@
         <div class="pipeline-step">
           <div class="pipeline-num">1</div>
           <div class="pipeline-body">
-            <h4>You Write .sang</h4>
+            <h4>You Write Sanguis</h4>
             <p>You write Sanguis code: <em>organ</em>, <em>cell</em>, <em>let</em>, <em>gate</em>, <em>emit</em>, <em>new</em> and the rest. This is source code, same as writing Python or C. The difference is what happens next.</p>
           </div>
         </div>
@@ -381,7 +381,7 @@
           <div class="pipeline-num">2</div>
           <div class="pipeline-body">
             <h4>Transposer Builds the Connectome</h4>
-            <p>The transposer reads your .sang file and builds a .vana connectome: neurons, connections between them, gates, and emit mappings. The connectome is a text file. VANA loads it and takes over from there.</p>
+            <p>The compiler reads your .sanguis file and builds the compiled artifact: the organ manifest, switches, wires, gates, and output mappings, all in one text file. VANA loads it and takes over from there.</p>
           </div>
         </div>
         <div class="pipeline-arrow">&darr;</div>
@@ -389,7 +389,7 @@
           <div class="pipeline-num">3</div>
           <div class="pipeline-body">
             <h4>Blood Bridge Loads It Onto the GPU</h4>
-            <p>The "blood bridge" is an async CUDA kernel that uploads the connectome to your GPU and starts the organism running. It doesn't sync with the CPU every tick; it streams. The CPU does some very light work to feed data in, and then gets out of the way. The GPU is where the organism lives.</p>
+            <p>The compiled program is uploaded to your GPU and starts running. It doesn't sync with the CPU every tick; it streams. The CPU does some very light work to feed data in, and then gets out of the way. The GPU is where the organism lives.</p>
           </div>
         </div>
         <div class="pipeline-arrow">&darr;</div>
@@ -397,7 +397,7 @@
           <div class="pipeline-num">4</div>
           <div class="pipeline-body">
             <h4>The Graph Settles</h4>
-            <p>Every tick, the GPU settles the entire connectome in parallel. Neurons hold values. Connections carry signals. Gates fire when conditions are met. The graph relaxes toward a stable state, and that stable state IS your answer.</p>
+            <p>Every pass, the GPU runs the entire grid in parallel. Switches hold values. Wires carry signals. Gates fire when conditions are met. Signals flow until the grid stabilizes, and that stable state is your answer.</p>
           </div>
         </div>
         <div class="pipeline-arrow">&darr;</div>
@@ -405,22 +405,22 @@
           <div class="pipeline-num">5</div>
           <div class="pipeline-body">
             <h4>Output Comes Back</h4>
-            <p>When the organism settles, motor neurons emit their values back through the blood bridge. Those values are your program's output: numbers, text, whatever your code produces. The CPU reads them and hands them to you. The round trip is done.</p>
+            <p>When the grid stabilizes, output wires carry their values back to the CPU. Those values are your program's output: numbers, text, whatever your code produces. The CPU reads them and hands them to you. The round trip is done.</p>
           </div>
         </div>
       </div>
 
       <h3><span class="label">Beyond the GPU</span>Hardware Independence</h3>
-      <p>A new CPU core asks how to make the same thing faster. VANA asks, what if the hardware did something different. Today the engine runs on CUDA cores. Tomorrow it can run on custom firmware on a dedicated board. Eventually it can run on a SoC where the language and the chip share the same structure.</p>
+      <p>A new CPU core asks how to make the same thing faster. VANA asks, what if the hardware did something different. Today the engine runs on the GPU you already own. Tomorrow it can run on custom firmware on a dedicated board. Eventually it can run on a SoC where the language and the chip share the same structure.</p>
       <p>The hardware may change underneath, but the language, and support for older hardware, does not. VANA is not tied to any preset configuration in silicon, firmware, or software. It is meant to serve as the bridge between Sanguis coding language and native hardware support for GPU-based compiled programs, until custom SoC allows full native integration.</p>
 
       <h3><span class="label">Where It Goes</span>Connectome Architectures</h3>
-      <p>VANA isn't just a faster runtime. It's a different way for hardware to compute. The connectome maps to the same kind of parallel structure your brain uses, not a single line of instructions.</p>
-      <p>The connectome isn't a prototype. It's running today, settling real programs on real silicon that wasn't built for it.</p>
+      <p>VANA isn't just a faster runtime. It's a different way for hardware to compute. The wiring grid maps to the same kind of parallel structure your brain uses, not a single line of instructions.</p>
+      <p>This isn't a prototype. It's running today, executing real programs on real hardware that wasn't built for it.</p>
 
       <div class="status-box">
         <strong>Current Status</strong>
-        <p>The VANA connectome runtime executes Sanguis programs on consumer GPUs today. The transposer builds neural graphs from .sang source. The blood bridge runs the full organism on the GPU. Over 260 tests pass. Benchmark results on the Benchmarks page show real performance data from this hardware.</p>
+        <p>The VANA runtime executes Sanguis programs on consumer GPUs today. The compiler presses your source into the grid as data. The fixed kernel runs the full organism on the GPU. 207 tests pass. Benchmark results on the Benchmarks page show real performance data from this hardware.</p>
       </div>
 
     </div>

@@ -21,8 +21,8 @@
     --text-dark: #1e222b;
     --muted-light: #8b949e;
     --muted-dark: #6e675d;
-    --accent: #c45d3a;
-    --accent-hover: #b04f2f;
+    --accent: #00d4ff;
+    --accent-hover: #00b8e6;
   }
 
   * { box-sizing: border-box; }
@@ -37,7 +37,7 @@
 
   body::before {
     content: ''; position: fixed; inset: 0; z-index: -1;
-    background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http:%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2784%27%20height%3D%2749%27%20viewBox%3D%270%200%2084%2049%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23d4623a%27%20stroke-opacity%3D%270.025%27%20stroke-width%3D%271%27%3E%3Cpath%20d%3D%27M56%200.5%20L70%2024.5%20L56%2048.5%20L28%2048.5%20L14%2024.5%20L28%200.5%20Z%27%2F%3E%3Cpath%20d%3D%27M0%2024.5%20L14%2024.5%27%2F%3E%3Cpath%20d%3D%27M70%2024.5%20L84%2024.5%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+    background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http:%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2784%27%20height%3D%2749%27%20viewBox%3D%270%200%2084%2049%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%2300d4ff%27%20stroke-opacity%3D%270.025%27%20stroke-width%3D%271%27%3E%3Cpath%20d%3D%27M56%200.5%20L70%2024.5%20L56%2048.5%20L28%2048.5%20L14%2024.5%20L28%200.5%20Z%27%2F%3E%3Cpath%20d%3D%27M0%2024.5%20L14%2024.5%27%2F%3E%3Cpath%20d%3D%27M70%2024.5%20L84%2024.5%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
     background-size: 84px 49px;
     animation: hexHeartbeat 7s ease-in-out infinite;
   }
@@ -79,7 +79,7 @@
   .hero {
     text-align: center;
     padding: 48px 20px 24px;
-    background: radial-gradient(circle at 50% 0%, rgba(196, 93, 58, 0.08), transparent 60%);
+    background: radial-gradient(circle at 50% 0%, rgba(0, 212, 255, 0.08), transparent 60%);
   }
   .hero h2 { font-size: clamp(1.8rem, 5.5vw, 2.8rem); font-weight: 800; margin: 0 0 20px; color: var(--text-light); letter-spacing: -0.03em; line-height: 1.2; }
   .hero p { color: var(--muted-light); font-size: clamp(1.05rem, 2.5vw, 1.2rem); max-width: 780px; margin: 0 auto 24px; text-align: center; }
@@ -124,7 +124,7 @@
     padding: 24px;
     transition: transform 0.2s, box-shadow 0.2s;
   }
-  .card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(196, 93, 58, 0.12); }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0, 212, 255, 0.12); }
   .card h4 { margin: 0 0 8px; color: var(--accent); font-size: 1.1rem; font-weight: 800; letter-spacing: -0.01em; }
   .card p { margin: 0; color: var(--muted-dark); font-size: 0.92rem; line-height: 1.55; }
 
@@ -149,7 +149,7 @@
   }
   .pipeline-step:hover {
     transform: translateY(-2px);
-    border-color: rgba(196, 93, 58, 0.4);
+    border-color: rgba(0, 212, 255, 0.4);
   }
   .pipeline-num {
     flex-shrink: 0;
@@ -191,7 +191,7 @@
 
   .status-box {
     margin: 28px 0;
-    background: rgba(196, 93, 58, 0.04);
+    background: rgba(0, 212, 255, 0.04);
     border: 1px solid var(--border);
     border-left: 3px solid var(--accent);
     border-radius: 0 8px 8px 0;
@@ -272,8 +272,8 @@
   /* === Visual Enhancements === */
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   @keyframes glowPulse {
-    0%, 100% { box-shadow: 0 0 5px rgba(196, 93, 58, 0.15); }
-    50% { box-shadow: 0 0 15px rgba(196, 93, 58, 0.3); }
+    0%, 100% { box-shadow: 0 0 5px rgba(0, 212, 255, 0.15); }
+    50% { box-shadow: 0 0 15px rgba(0, 212, 255, 0.3); }
   }
   body { animation: fadeIn 0.4s ease-out; }
   .card, .doc-card, .doc-grid > a, .arena-card {
@@ -282,49 +282,50 @@
   .card:hover, .doc-card:hover, .doc-grid > a:hover {
     transform: translateY(-2px);
     border-color: var(--accent);
-    box-shadow: 0 4px 20px rgba(196, 93, 58, 0.12);
+    box-shadow: 0 4px 20px rgba(0, 212, 255, 0.12);
   }
   .hero h2, .header-block h2 {
-    text-shadow: 0 0 30px rgba(196, 93, 58, 0.08);
+    text-shadow: 0 0 30px rgba(0, 212, 255, 0.08);
   }
   .nav-links a {
     transition: color 0.2s, text-shadow 0.2s;
   }
   .nav-links a:hover {
-    text-shadow: 0 0 10px rgba(196, 93, 58, 0.3);
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
   }
   a { transition: opacity 0.15s, text-shadow 0.15s; }
   .btn, button {
     transition: all 0.2s ease;
   }
   .btn:hover, button:hover {
-    box-shadow: 0 0 12px rgba(196, 93, 58, 0.2);
+    box-shadow: 0 0 12px rgba(0, 212, 255, 0.2);
   }
   .back-link:hover, footer a:hover {
-    text-shadow: 0 0 8px rgba(196, 93, 58, 0.25);
+    text-shadow: 0 0 8px rgba(0, 212, 255, 0.25);
   }
   .legal-box {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
   }
   .legal-box:hover {
-    border-color: rgba(196, 93, 58, 0.25);
-    box-shadow: 0 0 25px rgba(196, 93, 58, 0.04);
+    border-color: rgba(0, 212, 255, 0.25);
+    box-shadow: 0 0 25px rgba(0, 212, 255, 0.04);
   }
   ::selection {
-    background: rgba(196, 93, 58, 0.25);
+    background: rgba(0, 212, 255, 0.25);
   }
   ::-webkit-scrollbar { width: 8px; height: 8px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: rgba(196, 93, 58, 0.3); border-radius: 4px; }
-  ::-webkit-scrollbar-thumb:hover { background: rgba(196, 93, 58, 0.5); }
+  ::-webkit-scrollbar-thumb { background: rgba(0, 212, 255, 0.3); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(0, 212, 255, 0.5); }
   /* Separator line radiant glow */
-  nav { border-bottom: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(196, 93, 58, 0.3); }
-  footer { border-top: 1px solid rgba(196, 93, 58, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(196, 93, 58, 0.3); }
-  .section { border-top: 1px solid rgba(196, 93, 58, 0.5) !important; }
-  .doc-content h2 { border-bottom: 1px solid rgba(196, 93, 58, 0.4) !important; }
-  .doc-nav-bottom { border-top: 1px solid rgba(196, 93, 58, 0.4) !important; }
+  nav { border-bottom: 1px solid rgba(0, 212, 255, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(0, 212, 255, 0.3); }
+  footer { border-top: 1px solid rgba(0, 212, 255, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(0, 212, 255, 0.3); }
+  .section { border-top: 1px solid rgba(0, 212, 255, 0.5) !important; }
+  .doc-content h2 { border-bottom: 1px solid rgba(0, 212, 255, 0.4) !important; }
+  .doc-nav-bottom { border-top: 1px solid rgba(0, 212, 255, 0.4) !important; }
   /* === End Visual Enhancements === */
 </style>
+<link rel="stylesheet" href="theme.css">
 </head>
 <body>
 

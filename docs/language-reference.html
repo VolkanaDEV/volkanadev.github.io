@@ -173,32 +173,37 @@
       <p class="subtitle">Nine keywords: circuit, hold, memory, when, but, emit, append, through, wire. Grammar, condition operators, and comments.</p>
 
       <h2 id="keywords">Keywords</h2>
-      <p>Sanguis has 9 keywords.</p>
+      <p>Sanguis 2.2 keywords:</p>
       <table class="doc-table">
         <tr><th>Keyword</th><th>Purpose</th></tr>
-        <tr><td><span class="code-inline">circuit</span></td><td>Declare a body, a collection of holds and routes</td></tr>
-        <tr><td><span class="code-inline">hold</span></td><td>Declare a named value (scalar or text)</td></tr>
-        <tr><td><span class="code-inline">memory</span></td><td>Declare the layer type of a hold (persistent state)</td></tr>
-        <tr><td><span class="code-inline">when</span></td><td>Declare a route trigger</td></tr>
-        <tr><td><span class="code-inline">but</span></td><td>Gate a route with a condition</td></tr>
-        <tr><td><span class="code-inline">emit</span></td><td>Send a value to a target (replaces current content)</td></tr>
-        <tr><td><span class="code-inline">append</span></td><td>Append a value to a text hold (accumulates)</td></tr>
-        <tr><td><span class="code-inline">through</span></td><td>Iterate through text, one character per tick</td></tr>
-        <tr><td><span class="code-inline">wire</span></td><td>Connect a hold in one circuit to a hold in another</td></tr>
+        <tr><td><span class="code-inline">circuit</span></td><td>Declare a program body</td></tr>
+        <tr><td><span class="code-inline">organ</span></td><td>Declare an organ: fields plus methods</td></tr>
+        <tr><td><span class="code-inline">cell</span></td><td>Declare a function (a method inside an organ, or a free function)</td></tr>
+        <tr><td><span class="code-inline">let</span></td><td>Declare a variable</td></tr>
+        <tr><td><span class="code-inline">new</span></td><td>Construct an organ instance</td></tr>
+        <tr><td><span class="code-inline">if</span> / <span class="code-inline">else</span></td><td>Branching</td></tr>
+        <tr><td><span class="code-inline">while</span></td><td>Loops</td></tr>
+        <tr><td><span class="code-inline">gate</span> / <span class="code-inline">then</span></td><td>Conditional expression form</td></tr>
+        <tr><td><span class="code-inline">emit</span> / <span class="code-inline">return</span> / <span class="code-inline">output</span></td><td>Return a value from a cell or the program</td></tr>
+        <tr><td><span class="code-inline">signal</span> / <span class="code-inline">print</span></td><td>Write to the screen</td></tr>
+        <tr><td><span class="code-inline">true</span> / <span class="code-inline">false</span> / <span class="code-inline">nil</span></td><td>Literal values</td></tr>
       </table>
 
       <h2 id="grammar">Grammar</h2>
-      <div class="code-block"><pre>program     := (circuit | wire)*
-circuit     := "circuit" IDENT "{" (hold | when)* "}"
-hold        := "hold" IDENT ":" "memory" ("scalar" | "text") ("=" value)?
-when        := "when" IDENT "{" ("but" condition)* ("through" IDENT)? (emit | append)* "}"
-wire        := "wire" IDENT "." IDENT "to" IDENT "." IDENT
-condition   := IDENT ("<" | ">" | "=" | "<=" | ">=") (number | IDENT)
-emit        := "emit" expr "to" target
-append      := "append" expr "to" IDENT
-target      := IDENT | "screen"
-value       := number | string
-expr        := number | string | IDENT | IDENT ("+" | "-" | "*" | "/") expr | builtin "(" args ")"
+      <div class="code-block"><pre>program  := circuit*
+circuit  := "circuit" IDENT ";"
+          | "organ" IDENT "{" field* cell* "}"
+field    := IDENT ":" type ";"
+cell     := "cell" IDENT "(" params? ")" "->" type "{" statement* "}"
+statement:= "let" IDENT "=" expr ";"
+          | "while" condition "{" statement* "}"
+          | "if" condition "{" statement* "}" ("else" "{" statement* "}")?
+          | "when" condition "{" statement* "}"
+          | expr ";"
+          | "emit" expr ";"
+          | "return" expr ";"
+          | "signal" "(" expr ")" ";"</pre></div>
+      <p>Organs compile into the grid with their fields as declared state and their methods as wiring. See the organ example on the Getting Started page and <span class="code-inline">examples/organ.sanguis</span> in the repository.</p>
 
       <h2 id="condition-operators">Condition Operators</h2>
       <p>Sanguis supports five comparison operators:</p>
@@ -211,11 +216,11 @@ expr        := number | string | IDENT | IDENT ("+" | "-" | "*" | "/") expr | bu
         <tr><td><span class="code-inline">&gt;=</span></td><td>Greater than or equal to</td></tr>
       </table>
       <p>Operands are either a hold name and a number, or a hold name and another hold name:</p>
-      <div class="code-block"><pre>but x &lt; 5.0       // hold vs number
-but x &gt; y         // hold vs hold
-but x = 0.0       // hold vs number (equality)
-but x &gt;= 3.0      // hold vs number (greater or equal)
-but x &lt;= 10.0     // hold vs number (less or equal)</pre></div>
+      <div class="code-block"><pre>if x &lt; 5.0        // variable vs number
+if x &gt; y          // variable vs variable
+if x == 0.0       // variable vs number (equality)
+if x &gt;= 3.0       // variable vs number (greater or equal)
+if x &lt;= 10.0      // variable vs number (less or equal)</pre></div>
 
       <h2 id="arithmetic">Arithmetic</h2>
       <p>Arithmetic is supported inside emit expressions:</p>

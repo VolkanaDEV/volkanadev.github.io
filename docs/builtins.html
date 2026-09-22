@@ -174,79 +174,39 @@
 
       <p>If you've written code in C, Python, or most anything else, Sanguis works differently. Here's what changes.</p>
 
-      <h2 id="no-control-flow">No control flow statements</h2>
+      <h2 id="what-changes">What changes coming from C or Python</h2>
+      <p>If you've written code in C, Python, or most anything else, here's the honest comparison.</p>
+
+      <h3>Control flow</h3>
+      <p>Sanguis has the control flow you know: <span class="code-inline">if</span>/<span class="code-inline">else</span>, <span class="code-inline">while</span>, and cells are functions. What it doesn't have: <span class="code-inline">for</span> (use <span class="code-inline">while</span> with a counter), <span class="code-inline">switch</span> (chain <span class="code-inline">if</span>/<span class="code-inline">else</span>), <span class="code-inline">goto</span> (deliberately absent: a jump is a conditional in disguise).</p>
+
+      <h3>Data types</h3>
       <table class="doc-table">
         <tr><th>Traditional</th><th>Sanguis</th></tr>
-        <tr><td><span class="code-inline">if (x &gt; 5) { ... }</span></td><td><span class="code-inline">but x &gt; 5.0</span> (gates a route)</td></tr>
-        <tr><td><span class="code-inline">for (i=0; i&lt;N; i++)</span></td><td>Route fires every tick - loop is implicit</td></tr>
-        <tr><td><span class="code-inline">while (cond)</span></td><td>Route ticks until conditions fail</td></tr>
-        <tr><td><span class="code-inline">return value</span></td><td><span class="code-inline">emit value to target</span></td></tr>
-        <tr><td><span class="code-inline">function call</span></td><td>Route fires when conditions pass</td></tr>
+        <tr><td><span class="code-inline">int</span>, <span class="code-inline">float</span>, <span class="code-inline">double</span></td><td><span class="code-inline">float</span> (floating-point numbers)</td></tr>
+        <tr><td><span class="code-inline">string</span></td><td><span class="code-inline">string</span></td></tr>
+        <tr><td><span class="code-inline">bool</span></td><td>Use numbers (<span class="code-inline">0.0</span> false, <span class="code-inline">1.0</span> true), or boolean circuits</td></tr>
+        <tr><td><span class="code-inline">struct</span> with methods</td><td><span class="code-inline">organ</span> with fields and cells</td></tr>
+        <tr><td><span class="code-inline">int[]</span>, arrays</td><td><span class="code-inline">list</span> via <span class="code-inline">grow_list</span></td></tr>
       </table>
-      <p>There is no <span class="code-inline">if</span>. There is no <span class="code-inline">for</span>. There is no <span class="code-inline">while</span>. There is no <span class="code-inline">return</span>. The <strong>route</strong> is the only control flow. Conditions gate routes. Routes loop by firing repeatedly until conditions fail.</p>
+      <p>Organs are the struct equivalent: declared fields, methods, and a manifest that travels with the compiled artifact.</p>
 
-      <h2 id="two-data-types">Two data types only</h2>
-      <table class="doc-table">
-        <tr><th>Traditional types</th><th>Sanguis types</th></tr>
-        <tr><td><span class="code-inline">int</span>, <span class="code-inline">float</span>, <span class="code-inline">double</span></td><td><span class="code-inline">memory scalar</span> (floating-point)</td></tr>
-        <tr><td><span class="code-inline">string</span>, <span class="code-inline">char*</span></td><td><span class="code-inline">memory text</span> (variable-length string)</td></tr>
-        <tr><td><span class="code-inline">bool</span></td><td>Use <span class="code-inline">scalar</span> (<span class="code-inline">0.0</span> = false, <span class="code-inline">1.0</span> = true)</td></tr>
-        <tr><td><span class="code-inline">struct</span>, <span class="code-inline">class</span></td><td>No structs or classes</td></tr>
-        <tr><td><span class="code-inline">int[]</span>, arrays</td><td>No arrays - use individual holds</td></tr>
-      </table>
-      <p>There are no ints, no structs, no classes, no arrays. Scalars are floating-point. Text is strings. That's it.</p>
+      <h3>Assignment</h3>
+      <p>Inside cells, you assign directly: <span class="code-inline">let x = 5;</span> and <span class="code-inline">x = x + 1;</span>. On the GPU, an organ's field is a wire: writing it drives the wire, reading it senses the wire.</p>
 
       <h2 id="parallel-by-default">Parallel by default</h2>
-      <p>In traditional languages, code runs sequentially, one instruction after another. In Sanguis, all routes evaluate every tick, simultaneously. There is no sequential ordering.</p>
+      <p>In traditional languages, code runs sequentially. In Sanguis, the whole grid evaluates simultaneously: every switch, every wire, every pass.</p>
       <table class="doc-table">
         <tr><th>Traditional</th><th>Sanguis</th></tr>
-        <tr><td>Sequential execution</td><td>Parallel route evaluation every tick</td></tr>
+        <tr><td>Sequential execution</td><td>Parallel grid evaluation every sweep</td></tr>
         <tr><td>Shared mutable state + locks</td><td>Snapshot semantics, no races</td></tr>
-        <tr><td>Threads, async, goroutines</td><td>Not needed, parallelism is the default</td></tr>
-        <tr><td>Manual synchronization</td><td>Engine handles it via tick snapshots</td></tr>
+        <tr><td>Threads, async, goroutines</td><td>Not needed: parallelism is the default</td></tr>
+        <tr><td>Manual synchronization</td><td>The engine handles it via sweep snapshots</td></tr>
       </table>
-      <p>All routes see the same snapshot at the start of the tick. Route A's emit to hold X is not visible to Route B's conditions in the same tick. Data races are eliminated by design.</p>
+      <p>All switches see the same snapshot at the start of a sweep. One switch's change is not visible to another switch until the next sweep. Data races are eliminated by design.</p>
 
-      <h2 id="settling-not-stepping">Settling, not stepping</h2>
-      <p>In traditional languages, you write a sequence of steps: do this, then that, then the other. In Sanguis, you describe state and rules. The engine settles the system tick by tick until it reaches a terminal state.</p>
-      <div class="code-block"><pre>// Traditional: step-by-step
-x = 1
-y = x + 2
-print(y)
-
-// Sanguis: describe state and rules, engine settles
-circuit Add {
-  hold a : memory scalar = 0.0
-  hold b : memory scalar = 0.0
-  hold c : memory scalar = 0.0
-  hold state : memory scalar = 0.0
-
-  when start {
-    but state = 0.0
-    emit 1.0 to a
-    emit 2.0 to b
-    emit a + b to c
-    emit c to screen
-    emit 1.0 to state
-  }
-}</pre></div>
-
-      <h2 id="no-assignment">No assignment, data flows</h2>
-      <div class="code-block"><pre>// Traditional: x = 5
-// Sanguis: emit 5.0 to x          (inside a route)
-
-// Traditional: result = compute(input)
-// Sanguis: emit compute(input) to result</pre></div>
-      <p>The keyword <span class="code-inline">to</span> is the only operator that moves data. Everything else is either a hold declaration, a condition, or arithmetic inside an emit.</p>
-
-      <h2 id="programs-are-circuits">Programs are circuits, not functions</h2>
-      <table class="doc-table">
-        <tr><th>Traditional</th><th>Sanguis</th></tr>
-        <tr><td>Files of functions</td><td>Circuits of holds and routes</td></tr>
-        <tr><td><span class="code-inline">main()</span> starts, runs, exits</td><td>Engine ticks until terminal state</td></tr>
-        <tr><td>You manage state explicitly</td><td>Holds hold state; routes transform it</td></tr>
-        <tr><td>Solve problems step by step</td><td>Describe state and rules, engine settles</td></tr>
-      </table>
+      <h2 id="no-assignment">No interpreter, no JIT, no runtime library</h2>
+      <p>The program compiles into switch-and-wire data. The GPU kernel that runs it is fixed: the same kernel for every program. There is nothing to deploy alongside your program except the kernel itself.</p>
 
       <div class="doc-nav-bottom">
         <a href="language-reference.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Language Reference</span></a>

@@ -173,79 +173,53 @@
       <p class="subtitle">Run your first Sanguis program</p>
 
       <h2 id="prerequisites">Prerequisites</h2>
-      <p>Windows 10 or later. An NVIDIA CUDA-capable GPU is required. The runtime executes programs directly on CUDA cores. You also need the CUDA Toolkit (nvcc compiler) and MSVC (cl.exe) to compile the blood bridge for your GPU. Both are free from NVIDIA and Microsoft.</p>
+      <p>Windows 10 or later with Rust installed. A Vulkan-capable GPU is optional: with one, programs press into the grid and settle on the GPU. Without one, everything still runs on the CPU. Vulkan drivers come with your GPU drivers; nothing extra to install.</p>
 
       <h2 id="install">Installation</h2>
-      <p>Extract the SDK archive to any folder on your system. The folder structure looks like this:</p>
-      <div class="code-block"><pre>sanguis-sdk/
-  bin/
-    sanguis_run.bat              one-command pipeline
-    build.bat                    compiles the blood bridge for your GPU
-    vana_connectome_transposer.exe   .sang to .vana compiler
-    v5_blood_bridge.cu           CUDA runtime source
-    v5_blood_bridge.exe          compiled bridge (after running build.bat)
-  examples/
-    hello.sang                   hello world
-    add.sang                     arithmetic
-    ...                          more examples
-  benchmark/
-    build.bat                    compiles the benchmark tool
-    benchmark.bat                runs CPU vs GPU comparison
-    vana_bench.cu                benchmark source</pre></div>
-      <p>Open a command prompt, navigate to the <span class="code-inline">bin</span> folder, and run <span class="code-inline">build.bat</span> once. This compiles the blood bridge for your specific GPU. After that, <span class="code-inline">sanguis_run.bat</span> will auto-build it if the exe is missing.</p>
+      <p>Clone and build:</p>
+      <div class="code-block"><pre>git clone https://github.com/VolkanaDEV/sanguis.git
+cd sanguis
+cargo build</pre></div>
+      <p>The build produces the language toolchain: <span class="code-inline">sanguis.exe</span>. The compiler and VM are written in Sanguis itself (<span class="code-inline">lib/compiler.sanguis</span>); Rust only bootstraps them.</p>
       <div class="callout">
-        <p><strong>Why source?</strong> The blood bridge runs CUDA kernels directly on your GPU. Compiling from source with <span class="code-inline">-arch=native</span> ensures the binary targets your exact GPU architecture. A pre-compiled binary from one GPU generation may not run on another.</p>
-      </div>
-      <div class="callout">
-        <p><strong>Optional: add to PATH.</strong> If you want to run <span class="code-inline">sanguis_run.bat</span> from any directory, add the <span class="code-inline">bin</span> folder to your system PATH. Otherwise just <span class="code-inline">cd</span> into the <span class="code-inline">bin</span> folder each time.</p>
+        <p><strong>First run compiles the compiler.</strong> The toolchain hosts its own compiler written in Sanguis. The first <span class="code-inline">bleed</span> takes a few extra seconds while the bootstrap runs; after that it is fast.</p>
       </div>
 
-      <h2 id="one-command">One Command</h2>
-      <p>The SDK provides a single entry point. Write <span class="code-inline">.sang</span>, run one command, get output:</p>
-      <div class="code-block"><pre>sanguis_run.bat program.sang [ticks]</pre></div>
-      <p>Both stages run invisibly: compilation and GPU execution. You never see the intermediate files or the runtime layer.</p>
+      <h2 id="one-command">The Pipeline</h2>
+      <p>Two commands cover the whole toolchain. Write <span class="code-inline">.sanguis</span>, compile it, run it:</p>
+      <div class="code-block"><pre>target\debug\sanguis.exe bleed my_program.sanguis -o my_program.bc
+target\debug\sanguis.exe ad --target vulkan my_program.bc</pre></div>
+      <p><span class="code-inline">bleed</span> compiles source into BloodCode, the portable artifact. <span class="code-inline">ad</span> presses that artifact into the wiring grid and settles it on your GPU. The intermediate file is a text file you can open and read.</p>
 
       <h2 id="hello-world">Hello World</h2>
-      <p>Create <span class="code-inline">hello.sang</span>:</p>
-      <div class="code-block"><pre>circuit Hello {
-  hold state : memory scalar = 0.0
+      <p>Create <span class="code-inline">hello.sanguis</span>:</p>
+      <div class="code-block"><pre>circuit hello;
 
-  when speak {
-    but state = 0.0
-    emit "Hello, VANA!" to screen
-    emit "\n" to screen
-    emit 1.0 to state
-  }
+cell main() -> float {
+    print(99.0);
+    emit 0.0;
 }</pre></div>
       <p>Run it:</p>
-      <div class="code-block"><pre>sanguis_run.bat hello.sang</pre></div>
+      <div class="code-block"><pre>target\debug\sanguis.exe drip hello.sanguis</pre></div>
       <p>Output:</p>
-      <div class="code-block"><pre>Hello, VANA!</pre></div>
-      <p>The <span class="code-inline">speak</span> route fires on tick 0 (when <span class="code-inline">state</span> is still <span class="code-inline">0.0</span>), prints the message, sets <span class="code-inline">state</span> to <span class="code-inline">1.0</span>, and never fires again because the condition <span class="code-inline">state = 0.0</span> no longer holds.</p>
+      <div class="code-block"><pre>99.0</pre></div>
+      <p><span class="code-inline">circuit</span> declares the program body. <span class="code-inline">cell</span> declares a function. <span class="code-inline">print</span> writes to the screen. <span class="code-inline">emit</span> returns the circuit's result. This source was compiled by the Sanguis-written compiler, which is why the language can host itself.</p>
 
       <h2 id="arithmetic">Arithmetic</h2>
-      <div class="code-block"><pre>circuit Add {
-  hold a : memory scalar = 0.0
-  hold b : memory scalar = 0.0
-  hold c : memory scalar = 0.0
-  hold state : memory scalar = 0.0
+      <div class="code-block"><pre>circuit add_test;
 
-  when start {
-    but state = 0.0
-    emit 1.0 to a
-    emit 2.0 to b
-    emit a + b to c
-    emit "1+2=" to screen
-    emit c to screen
-    emit "\n" to screen
-    emit 1.0 to state
-  }
+cell main() -> float {
+    let a = 1.0;
+    let b = 2.0;
+    let c = a + b;
+    print(c);
+    emit 0.0;
 }</pre></div>
       <p>Output:</p>
-      <div class="code-block"><pre>1+2=3.0000</pre></div>
+      <div class="code-block"><pre>3.0</pre></div>
 
       <div class="callout">
-        <p><strong>Four operators.</strong> <span class="code-inline">+</span>, <span class="code-inline">-</span>, <span class="code-inline">*</span>, <span class="code-inline">/</span>. Division by zero returns 0.0. Evaluated left to right. Operands can be numbers, hold names, or builtin results.</p>
+        <p><strong>Four operators.</strong> <span class="code-inline">+</span>, <span class="code-inline">-</span>, <span class="code-inline">*</span>, <span class="code-inline">/</span>. Division by zero returns 0.0. Evaluated left to right. Operands can be numbers, variables, or builtin results.</p>
       </div>
 
       <div class="doc-nav-bottom">

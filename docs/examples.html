@@ -173,79 +173,115 @@
       <p class="subtitle">The building blocks of a Sanguis program.</p>
 
       <h2 id="circuit">circuit</h2>
-      <p>A <span class="code-inline">circuit</span> is a body - a named scope containing holds and routes. A program is one or more circuits.</p>
-      <div class="code-block"><pre>circuit Name {
-  // holds and routes
+      <p>Every program is a circuit: a named body containing cells.</p>
+      <div class="code-block"><pre>circuit hello;
+
+cell main() -> float {
+    print(99.0);
+    emit 0.0;
 }</pre></div>
-      <p>All holds declared inside a circuit are globally accessible by name. Circuits are organizational scope, not isolation.</p>
+      <p>Run it: <span class="code-inline">sanguis drip hello.sanguis</span> prints <span class="code-inline">99.0</span>.</p>
 
-      <h2 id="hold">hold</h2>
-      <p>A <span class="code-inline">hold</span> is a named value. Every hold has a type:</p>
-      <div class="code-block"><pre>hold name : memory scalar = 0.0       // floating-point number
-hold name : memory text = "value"     // text string
-hold name : memory scalar              // defaults to 0.0
-hold name : memory text                // defaults to ""</pre></div>
-      <p>Scalars are stored as floating-point. Text is stored as variable-length strings. There are no other types.</p>
+      <h2 id="let">let</h2>
+      <p>Declare a variable. Types are inferred.</p>
+      <div class="code-block"><pre>circuit let_test;
 
-      <h2 id="when">when</h2>
-      <p>A <span class="code-inline">when</span> block defines a route. The route fires every tick if all its <span class="code-inline">but</span> conditions pass. If a route has no <span class="code-inline">but</span> conditions, it fires every tick.</p>
-      <div class="code-block"><pre>when trigger_name {
-  but condition
-  emit value to target
+cell main() -> float {
+    let n = 1.0;
+    emit n;
 }</pre></div>
-      <p>A route with no conditions always fires. A route with conditions fires only when all conditions are simultaneously true at the start of the tick.</p>
+      <p>Emits <span class="code-inline">1.0</span>.</p>
 
-      <h2 id="but">but</h2>
-      <p>A <span class="code-inline">but</span> condition gates a route. Multiple <span class="code-inline">but</span> conditions are ANDed - all must pass for the route to fire.</p>
-      <div class="code-block"><pre>when process {
-  but state &lt; 10.0
-  but active = 1.0
-  emit state + 1.0 to state
+      <h2 id="cells">cells and functions</h2>
+      <p>Cells are functions. They take parameters and return values.</p>
+      <div class="code-block"><pre>circuit math_test;
+
+cell add(a: float, b: float) -> float {
+    return a + b;
+}
+
+cell main() -> float {
+    let x = add(1.0, 2.0);
+    let y = x * 4.0;
+    if y >= 10.0 {
+        emit y;
+    } else {
+        emit 0.0;
+    }
 }</pre></div>
+      <p>Emits <span class="code-inline">12.0</span>. Control flow (<span class="code-inline">if</span>/<span class="code-inline">else</span>, <span class="code-inline">while</span>) works inside cells.</p>
 
-      <h2 id="emit">emit</h2>
-      <p><span class="code-inline">emit</span> sends a value to a target. When the target is a hold, <span class="code-inline">emit</span> replaces the hold's current value:</p>
-      <div class="code-block"><pre>emit 42.0 to state          // write to a hold (replaces)
-emit "text" to screen       // print to terminal</pre></div>
-      <p>Multiple emits in a route execute in order within the route. Emits are applied immediately, subsequent emits in the same route see updated values.</p>
-      <table class="doc-table">
-        <tr><th>Target</th><th>Behavior</th></tr>
-        <tr><td><span class="code-inline">screen</span></td><td>Print the value to terminal output</td></tr>
-        <tr><td>Hold name</td><td>Write the value to the named hold (replace)</td></tr>
-      </table>
+      <h2 id="while">while</h2>
+      <div class="code-block"><pre>circuit control;
 
-      <h2 id="append">append</h2>
-      <p><span class="code-inline">append</span> accumulates text into a text hold. Unlike <span class="code-inline">emit</span> (which replaces), <span class="code-inline">append</span> concatenates after existing content:</p>
-      <div class="code-block"><pre>append "Hello, " to out     // out = "Hello, "
-append "World!" to out      // out = "Hello, World!"
-append "\n" to out          // out = "Hello, World!\n"</pre></div>
-      <p>Strings build incrementally across routes this way.</p>
-
-      <h2 id="through">through</h2>
-      <p><span class="code-inline">through</span> iterates through a text hold, one character per tick. Each tick the route fires, the <span class="code-inline">char</span> hold is set to the next character in the text, and the position advances.</p>
-      <div class="code-block"><pre>circuit Reader {
-  hold src : memory text = "Hello"
-  hold state : memory scalar = 0.0
-
-  when scan {
-    but state = 0.0
-    through src
-    emit char to screen
-  }
+cell main() -> float {
+    let counter = 0;
+    while counter &lt; 3 {
+        counter = counter + 1;
+        emit counter;
+    }
+    emit 0.0;
 }</pre></div>
-      <p>This prints each character of <span class="code-inline">src</span> one per tick: <span class="code-inline">H</span>, <span class="code-inline">e</span>, <span class="code-inline">l</span>, <span class="code-inline">l</span>, <span class="code-inline">o</span>.</p>
-      <p>The <span class="code-inline">char</span> hold is automatically created and managed by the engine. The through position is internal to the route and advances each tick the route fires.</p>
+      <p>Emits 1, 2, 3, then 0.</p>
 
-      <h2 id="memory">memory</h2>
-      <p><span class="code-inline">memory</span> is the layer type for holds. Every hold uses <span class="code-inline">memory</span> to declare that it persists its value across ticks:</p>
-      <div class="code-block"><pre>hold name : memory scalar = 0.0    // persistent scalar
-hold name : memory text = "value" // persistent text</pre></div>
-      <p>All holds are <span class="code-inline">memory</span> layer. The hold retains its value from tick to tick until a route emits or appends a new value to it.</p>
+      <h2 id="organ">organ: state that persists</h2>
+      <p>An organ is a struct with fields and methods. It compiles into the grid: fields become wires that hold state, methods become inlined wiring.</p>
+      <div class="code-block"><pre>circuit counter_demo;
 
-      <h2 id="wire">wire</h2>
-      <p><span class="code-inline">wire</span> connects a hold in one circuit to a hold in another, creating a connectome link:</p>
-      <div class="code-block"><pre>wire Body.sense to Brain.think</pre></div>
-      <p>Wires can be declared at the top level or inside a circuit. A wire routes data from the source hold to the target hold every tick. Circuits communicate this way. The organism is a network of circuits wired together.</p>
+organ Counter {
+    count: float;
+
+    cell new(start: float) -&gt; Counter {
+        let c = new Counter { count: start };
+        output c;
+    }
+
+    cell tick(self) -&gt; Counter {
+        self.count = self.count + 1.0;
+        output self;
+    }
+}
+
+cell main() -&gt; float {
+    let c = Counter.new(10.0);
+    c = c.tick();
+    c = c.tick();
+    c = c.tick();
+    signal(c.count);
+    output 1.0;
+}</pre></div>
+      <p>Three ticks on a Counter starting at 10. The compiled artifact declares the organ's layout up front, so the program runs without its source file.</p>
+
+      <h2 id="ext">ext: talking to the outside</h2>
+      <p><span class="code-inline">ext:name</span> reads an external input wire. This is how a program receives values from the world.</p>
+      <div class="code-block"><pre>circuit bool_and_test;
+
+cell main() -> float {
+    let a = ext:a;
+    let b = ext:b;
+    let result = a * b;
+    signal(result);
+    output 1.0;
+}</pre></div>
+      <p>After <span class="code-inline">bleed</span>, run it with <span class="code-inline">ad --target vulkan</span> and the truth table settles on your GPU.</p>
+
+      <h2 id="builtins">builtins</h2>
+      <p>String, file, and conversion builtins work inside cells.</p>
+      <div class="code-block"><pre>circuit builtin_test;
+
+cell main() -> float {
+    write_file("out.txt", "hello from sanguis");
+    let contents = read_file("out.txt");
+    print(contents);
+
+    let c = concat("abc", "def");
+    print(c);
+
+    let ch = char_at("voltage", 4.0);
+    print(ch);
+    emit 0.0;
+}</pre></div>
+      <p>Prints the file contents, <span class="code-inline">abcdef</span>, then <span class="code-inline">l</span>.</p>
 
       <div class="doc-nav-bottom">
         <a href="execution-model.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Execution Model</span></a>

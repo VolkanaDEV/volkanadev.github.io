@@ -172,81 +172,71 @@
       <h1>Execution Model</h1>
       <p class="subtitle">Tick cycle, parallel semantics, termination, and scalar formatting.</p>
 
-      <h2 id="tick-cycle">Tick Cycle</h2>
-      <p>The engine runs in ticks. Each tick:</p>
-      <p>1. <strong>Snapshot.</strong> All route conditions are evaluated against the current state of all holds.<br>
-      2. <strong>Fire.</strong> Routes whose conditions all pass are marked as firing.<br>
-      3. <strong>Execute.</strong> Each firing route executes its emits in order. Emits within a route are applied immediately - subsequent emits in the same route see updated values.<br>
-      4. <strong>Advance.</strong> Through positions advance for routes that fired with a <span class="code-inline">through</span> clause.<br>
-      5. <strong>Check.</strong> If the <span class="code-inline">state</span> hold reaches <span class="code-inline">2.0</span> or the <span class="code-inline">done</span> hold reaches <span class="code-inline">1.0</span>, execution stops.</p>
+      <h2 id="tick-cycle">The Sweep</h2>
+      <p>The engine runs in sweeps. Each sweep:</p>
+      <p>1. <strong>Evaluate.</strong> Every switch computes its logic from its input wires, all at once.<br>
+      2. <strong>Propagate.</strong> Every wire picks up the state of the switch driving it. Wires with conduction delay hold their previous state and count down before latching.<br>
+      3. <strong>Check.</strong> If nothing changed, the grid has stabilized. That stable state is the program's output.</p>
+      <p>A program that holds a feedback loop never stabilizes: it oscillates. That is not an error. A sustained pulse is how a Sanguis program stays alive.</p>
 
       <h2 id="parallel-semantics">Parallel Semantics</h2>
-      <p>All routes are evaluated against the same snapshot - the state at the start of the tick. So:</p>
-      <p>&bull; Route A's emit to hold X is <strong>NOT</strong> visible to Route B's conditions in the same tick.<br>
-      &bull; Route A's emit to hold X <strong>IS</strong> visible to Route A's own subsequent emits in the same tick.</p>
+      <p>All switches evaluate against the same snapshot: the wire states at the start of the sweep. So:</p>
+      <p>&bull; Switch A's change is <strong>NOT</strong> visible to switch B until the next sweep.<br>
+      &bull; Regions run many local sweeps between global synchronizations (block-Jacobi iteration).</p>
       <div class="callout">
-        <p><strong>Intentional.</strong> Routes are parallel. Within a route, emits are sequential.</p>
+        <p><strong>Deliberate.</strong> This is how hardware behaves. It is not a simulation of parallelism; it is parallelism.</p>
       </div>
 
       <h2 id="termination">Termination</h2>
       <p>The engine stops when:</p>
-      <p>&bull; A hold named <span class="code-inline">state</span> reaches <span class="code-inline">2.0</span> or higher<br>
-      &bull; A hold named <span class="code-inline">done</span> reaches <span class="code-inline">1.0</span> or higher<br>
-      &bull; The maximum tick count is reached (default: 5,000)</p>
+      <p>&bull; The grid stabilizes: no switch changed state in a sweep<br>
+      &bull; The maximum sweep count is reached, in which case the result is reported as oscillating rather than failed<br>
+      &bull; You close it. A running program that holds a pulse stops only when someone stops it, and the last state is kept.</p>
 
       <h2 id="scalar-formatting">Scalar Formatting</h2>
       <p>Scalars are formatted as <span class="code-inline">%.4f</span> (4 decimal places): <span class="code-inline">1.0000</span>, <span class="code-inline">3.5000</span>, <span class="code-inline">0.0000</span>.</p>
 
       <h2 id="gpu-execution">GPU Execution</h2>
-      <p>The runtime maps the organism onto CUDA cores. Neurons become threads, connections become memory reads, gates evaluate in parallel. Text operations run in VRAM. File I/O bridges to CPU, the only operation that leaves the GPU.</p>
+      <p>The grid is uploaded to the GPU as buffer data. One fixed kernel evaluates switches and propagates wires: regions run many local sweeps between global synchronization barriers. The kernel is the same for every program; programs are data, never code. File I/O bridges to the CPU, the only operation that leaves the GPU.</p>
 
       <h2 id="examples">Examples</h2>
 
       <h3>Echo</h3>
       <p>Read a file and print its contents:</p>
-      <div class="code-block"><pre>circuit Echo {
-  hold src : memory text
-  hold state : memory scalar = 0.0
+      <div class="code-block"><pre>circuit echo;
 
-  when start {
-    but state = 0.0
-    emit read_file("input.txt") to src
-    emit src to screen
-    emit 1.0 to state
-  }
+cell main() -> float {
+    let src = read_file("input.txt");
+    print(src);
+    emit 0.0;
 }</pre></div>
 
       <h3>Character Scanner</h3>
       <p>Iterate through text character by character:</p>
-      <div class="code-block"><pre>circuit Scanner {
-  hold src : memory text = "Hello VANA!"
-  hold state : memory scalar = 0.0
+      <div class="code-block"><pre>circuit scanner;
 
-  when scan {
-    but state = 0.0
-    through src
-    emit char to screen
-  }
+cell main() -> float {
+    let src = "Hello VANA!";
+    let i = 0.0;
+    while i < len(src) {
+        print(char_at(src, i));
+        i = i + 1.0;
+    }
+    emit 0.0;
 }</pre></div>
 
       <h3>Conditional Accumulator</h3>
       <p>Add numbers until a limit is reached:</p>
-      <div class="code-block"><pre>circuit Accumulator {
-  hold total : memory scalar = 0.0
-  hold step  : memory scalar = 1.0
+      <div class="code-block"><pre>circuit accumulator;
 
-  when add {
-    but total &lt; 10.0
-    emit total + step to total
-  }
-
-  when done {
-    but total &gt; 9.0
-    emit "Total: " to screen
-    emit total to screen
-    emit "\n" to screen
-    emit 2.0 to state
-  }
+cell main() -> float {
+    let total = 0.0;
+    let step = 1.0;
+    while total &lt; 10.0 {
+        total = total + step;
+    }
+    print(total);
+    emit 0.0;
 }</pre></div>
       <div class="callout">
         <p><strong>Note:</strong> Five operators: <span class="code-inline">&lt;</span>, <span class="code-inline">&gt;</span>, <span class="code-inline">=</span>, <span class="code-inline">&lt;=</span>, <span class="code-inline">&gt;=</span>.</p>
@@ -254,18 +244,13 @@
 
       <h3>File Processor</h3>
       <p>Read, transform, and write:</p>
-      <div class="code-block"><pre>circuit FileProcessor {
-  hold input : memory text
-  hold output : memory text
-  hold state : memory scalar = 0.0
+      <div class="code-block"><pre>circuit file_processor;
 
-  when process {
-    but state = 0.0
-    emit read_file("data.txt") to input
-    emit replace(input, "old", "new") to output
-    emit write_file("result.txt", output) to screen
-    emit 1.0 to state
-  }
+cell main() -> float {
+    let input = read_file("data.txt");
+    let output = replace(input, "old", "new");
+    write_file("result.txt", output);
+    emit 0.0;
 }</pre></div>
 
       <div class="doc-nav-bottom">

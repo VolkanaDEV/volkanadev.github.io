@@ -135,7 +135,7 @@
       <h1>Marrow Terminal</h1>
       <p class="subtitle">The editor and runtime that ships with the Sanguis SDK</p>
 
-      <p>Marrow is the terminal user interface for Sanguis. It is a built-in code editor, file browser, and runtime panel. You write <span class="code-inline">.sang</span> source, press F5, and Marrow runs it through the C transposer and blood bridge on the GPU. No external editor or build system required.</p>
+      <p>Marrow is the terminal user interface for Sanguis. It is a built-in code editor, file browser, and runtime panel. You write Sanguis source, press F5, and Marrow runs it through the compiler and the grid. On a .netlist file, F5 starts the GPU heartbeat; F5 again closes it. No external editor or build system required.</p>
 
       <p>Marrow ships inside the Sanguis binary. Launch it from the command line:</p>
 
@@ -143,7 +143,7 @@
 
       <p>Or open a specific file:</p>
 
-      <div class="code-block"><pre>sanguis tui examples/hello.sang</pre></div>
+      <div class="code-block"><pre>sanguis tui</pre></div>
 
       <h2 id="interface">Interface</h2>
 
@@ -151,8 +151,8 @@
 
       <table class="doc-table">
         <tr><th>Panel</th><th>Description</th></tr>
-        <tr><td>Editor</td><td>Syntax-highlighted code editor for <span class="code-inline">.sang</span> files. Supports tabs, find, undo/redo.</td></tr>
-        <tr><td>File tree</td><td>Browse, open, create, and delete <span class="code-inline">.sang</span> files. Press F2 to toggle.</td></tr>
+        <tr><td>Editor</td><td>Syntax-highlighted code editor for Sanguis files. Supports tabs, find, undo/redo.</td></tr>
+        <tr><td>File tree</td><td>Browse, open, create, and delete files. Press F2 to toggle.</td></tr>
         <tr><td>Scope</td><td>Shows memory state and output from the last run. Press F3 to toggle.</td></tr>
         <tr><td>Runtime</td><td>Displays organism output, errors, and diagnostics after a run.</td></tr>
       </table>
@@ -161,15 +161,15 @@
 
       <p>When you press F5 to run, Marrow executes the same pipeline as the command-line tools:</p>
 
-      <p>1. Write source to a temp <span class="code-inline">.sang</span> file<br>
-      2. Call the C transposer to compile <span class="code-inline">.sang</span> to <span class="code-inline">.vana</span><br>
-      3. Call the blood bridge to run the <span class="code-inline">.vana</span> on the GPU<br>
-      4. Capture stdout and display it in the runtime panel</p>
+      <p>1. Write source to a temp .sanguis file<br>
+      2. Compile it through the Sanguis-written compiler<br>
+      3. Press the result into the grid and settle it<br>
+      4. Read the outputs and display them</p>
 
       <p>The Rust parser and engine are not used for normal runs. They remain as a fallback if the SDK binaries are not found.</p>
 
       <div class="callout">
-        <p><strong>Note.</strong> The awakening sequence (F9) still uses the Rust engine internally. It will switch to the C pipeline when the blood bridge supports tick-by-tick execution.</p>
+        <p><strong>Note.</strong> The awakening sequence (F9) still uses the bootstrap engine internally. It switches to the full Sanguis pipeline when tick-by-tick execution lands.</p>
       </div>
 
       <h2 id="keybindings">Keybindings</h2>

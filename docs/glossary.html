@@ -178,16 +178,16 @@
         <tr><td>VANA</td><td>The engine/runtime ("Voltage Activated Neural Architecture")</td></tr>
         <tr><td>Circuit</td><td>A body, a named scope of holds and routes</td></tr>
         <tr><td>Hold</td><td>A named value (scalar or text)</td></tr>
-        <tr><td>Route</td><td>A triggered block that fires when conditions pass</td></tr>
+        <tr><td>Cell</td><td>A function. Inside an organ, a method</td></tr>
         <tr><td>Tick</td><td>One execution cycle, all routes evaluated in parallel</td></tr>
         <tr><td>Emit</td><td>Send a value to a target (hold or screen), replacing content</td></tr>
         <tr><td>Append</td><td>Accumulate text into a text hold, concatenating</td></tr>
         <tr><td>Through</td><td>Iterate through text one character per tick</td></tr>
         <tr><td>Wire</td><td>Connectome link between circuits</td></tr>
         <tr><td>Gate</td><td>A condition check that controls whether a route fires</td></tr>
-        <tr><td>Connectome</td><td>The <span class="code-inline">.vana</span> intermediate format describing the organism</td></tr>
-        <tr><td>Compiler</td><td>Converts <span class="code-inline">.sang</span> source to <span class="code-inline">.vana</span> connectome</td></tr>
-        <tr><td>Runtime</td><td>Executes <span class="code-inline">.vana</span> on the GPU</td></tr>
+        <tr><td>BloodCode (.bc)</td><td>The compiled artifact: organ manifest plus program instructions, stored as readable text</td></tr>
+        <tr><td>Compiler</td><td>Compiles Sanguis source into BloodCode, the portable artifact (written in Sanguis itself)</td></tr>
+        <tr><td>Runtime (ad)</td><td>Presses BloodCode into the grid and settles it on the GPU</td></tr>
       </table>
 
       <div class="doc-nav-bottom">

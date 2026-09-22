@@ -174,31 +174,29 @@
 
       <h2 id="overview">Two Stages, One Command</h2>
       <p>Sanguis compiles in two stages. Both are invisible to the user:</p>
-      <div class="code-block"><pre>.sang source &rarr; [compiler] &rarr; .vana connectome &rarr; [runtime] &rarr; GPU execution</pre></div>
+      <div class="code-block"><pre>.sanguis source &rarr; [bleed] &rarr; BloodCode (.bc) &rarr; [ad --target vulkan] &rarr; grid settles on GPU</pre></div>
+      <p>The pipeline has two stages:</p>
+      <p>1. <strong>Compiler (bleed).</strong> Parses Sanguis source and emits BloodCode: a pipe-delimited text file containing the organ manifest (declared field layouts), named method blocks, and the program instructions.</p>
+      <p>2. <strong>Runtime (ad).</strong> Reads the BloodCode file and presses it into the VANA wiring grid: organs become field wires, methods become inlined subcircuits, and the whole structure settles on the GPU. The kernel is fixed; the program is data.</p>
+      <p>The user writes Sanguis source, runs two commands, and gets output. Both artifacts are readable text files.</p>
+      <div class="code-block"><pre>sanguis bleed program.sanguis -o program.bc
+sanguis ad --target vulkan program.bc</pre></div>
 
-      <p>1. <strong>Compiler.</strong> Parses <span class="code-inline">.sang</span> source and emits a <span class="code-inline">.vana</span> connectome, a pipe-delimited description of neurons, connections, gates, and text holds.</p>
-      <p>2. <strong>Runtime.</strong> Reads the <span class="code-inline">.vana</span> connectome and runs the organism on the GPU. Neurons map to CUDA threads, connections to memory reads, gates to parallel activation checks.</p>
+      <h3 id="sanguis">.sanguis - Source</h3>
+      <p>Human-written text file: organs with fields and methods, circuits with cells, variables, control flow, and comments (<span class="code-inline">//</span>). The primary source format.</p>
 
-      <p>The user writes <span class="code-inline">.sang</span>, runs one command, and gets output. The compiler and runtime are implementation details.</p>
-
-      <div class="code-block"><pre>sanguis_run.bat program.sang [ticks]</pre></div>
-
-      <h2 id="file-formats">File Formats</h2>
-
-      <h3 id="sang">.sang - Source</h3>
-      <p>Human-written text file containing circuit declarations, holds, routes, conditions, emits, appends, throughs, and wires. Comments with <span class="code-inline">//</span>. The primary source format.</p>
-
-      <h3 id="vana">.vana - Connectome</h3>
-      <p>Pipe-delimited text format produced by the compiler. Each line is a record describing part of the organism:</p>
-      <div class="code-block"><pre>VANA|v1
-NEURON|index|name
-CONN|from|to|weight|gate_idx|expr_idx
-GATE|neuron_idx|cond_count|cond_lhs|cond_op|cond_rhs|...
-EMIT|neuron_idx|value|target_type|target_name|is_string|is_append
-EXPR|index|lhs|op|rhs|result_hold
-TEXT|name|value
-ENDBODY</pre></div>
-      <p>Users do not normally inspect <span class="code-inline">.vana</span> files. They are intermediate output, cleaned up after execution.</p>
+      <h3 id="bc">.bc - BloodCode</h3>
+      <p>Pipe-delimited text format produced by the compiler. It carries two things:</p>
+      <div class="code-block"><pre>decl|Counter|1              <- declared organ layout
+field|count:float|0         <- field name and type
+block|main|0                <- a named block (the program body)
+pulse|_|10                  <- push the constant 10
+dispatch|new|1              <- inline the block `new`
+hold|c|0                    <- store top of stack into `c`
+read_field|count|0          <- read an organ field
+output|_|0                  <- emit
+end||0</pre></div>
+      <p>The <span class="code-inline">decl|</span>/<span class="code-inline">field|</span> header is the organ manifest: the declared layout travels with the compiled program, so the .bc file runs without the source that produced it. Users can open and read .bc files; they are the portable artifact.</p>
 
       <div class="doc-nav-bottom">
         <a href="examples.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Examples</span></a>

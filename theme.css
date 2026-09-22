@@ -1,0 +1,132 @@
+/* ============================================================
+   VOLKANADEV THEME LAYER — polish pass
+   Palette unchanged: #0e1117 / #c45d3a / cream text.
+   Changes: card elevation, type scale, contrast, nav, rhythm.
+   ============================================================ */
+
+/* ── 1. Type scale: modular, restrained weights ── */
+:root {
+  --text-muted-bright: #a3adb8;      /* brighter muted text for body copy */
+  --surface: #131820;                /* dark card surface (between bg and panel-dark) */
+  --surface-hover: #171d26;
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.12);
+  --type-scale: 1.25;
+}
+
+/* ── 2. Cards: dark-on-dark with border elevation. THE big fix. ── */
+.card {
+  background: var(--surface) !important;
+  border: 1px solid var(--border-subtle) !important;
+  color: var(--text-light) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.2) !important;
+  min-height: auto !important;
+}
+.card h4 {
+  color: var(--accent) !important;
+  font-weight: 700 !important;
+  font-size: 1.1rem !important;
+  letter-spacing: -0.01em !important;
+}
+.card p {
+  color: var(--text-muted-bright) !important;
+  font-size: 0.95rem !important;
+}
+
+/* ── 3. Document cards / grids on other pages ── */
+.doc-card, .doc-grid > a, .arena-card {
+  background: var(--surface) !important;
+  border: 1px solid var(--border-subtle) !important;
+  color: var(--text-light) !important;
+  border-radius: 12px !important;
+}
+.doc-card h4, .doc-grid > a h4 { color: var(--text-light) !important; font-weight: 700 !important; }
+.doc-card p, .doc-grid > a p { color: var(--text-muted-bright) !important; }
+.doc-card .doc-num { color: var(--accent) !important; }
+
+/* ── 4. Note box: quiet it to match (it was already close) ── */
+.note-box {
+  background: var(--surface) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ── 5. Timer blocks: same surface treatment ── */
+.timer-block {
+  background: var(--surface) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: 10px !important;
+}
+.timer-val { font-weight: 700 !important; }
+
+/* ── 6. Typography: kill the 800s, tighten the scale ── */
+h2 {
+  font-weight: 700 !important;
+  letter-spacing: -0.025em !important;
+  color: #f7f3e8 !important;
+}
+h3 { font-weight: 700 !important; color: var(--text-light) !important; }
+.card h4, .doc-card h4 { font-weight: 700 !important; }
+.hero h2 { font-weight: 700 !important; }
+
+/* ── 7. Muted text: brighter, so paragraphs breathe ── */
+.hero p, .section p, .vana-body {
+  color: var(--text-muted-bright) !important;
+}
+
+/* ── 8. Nav: drop the pipes, space with gaps ── */
+.nav-links { gap: 28px !important; }
+.nav-links a:not(:last-child)::after { display: none !important; }
+
+/* ── 9. Buttons: sharper radius, refined variants ── */
+.btn {
+  border-radius: 8px !important;
+  padding: 11px 22px !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+}
+.btn:hover { box-shadow: 0 0 14px rgba(0, 212, 255, 0.25) !important; }
+.btn.cream {
+  background: var(--surface) !important;
+  color: var(--text-light) !important;
+  border: 1px solid var(--border-strong) !important;
+}
+.btn.cream:hover { background: var(--surface-hover) !important; }
+.btn.ghost { border-color: var(--border-subtle) !important; }
+
+/* ── 10. Section rhythm: consistent 72px, subtle dividers ── */
+.section { padding: 72px 0 !important; border-top: 1px solid var(--border-subtle) !important; }
+.hero { padding: 72px 20px 40px !important; }
+
+/* ── 11. Status badge: the pulse. The brand made visible. ── */
+.status-badge.live, .live {
+  background: rgba(0, 212, 255, 0.10) !important;
+  color: #5ce1ff !important;
+  border: 1px solid rgba(0, 212, 255, 0.35) !important;
+  animation: badgePulse 2.4s ease-in-out infinite;
+}
+@keyframes badgePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.25); }
+  50% { box-shadow: 0 0 0 6px rgba(0, 212, 255, 0); }
+}
+
+/* ── 12. LIVE dots in the carousel + anywhere accent dots appear ── */
+.carousel-dots span.active, .carousel-dots .active {
+  background: #00d4ff !important;
+}
+
+/* ── 13. Footer: match the quieter look ── */
+footer { background: transparent !important; }
+/* ── 14. Accent override: reactor cyan replaces terracotta everywhere ── */
+:root {
+  --accent: #00d4ff !important;
+  --accent-hover: #33e0ff !important;
+}
+
+/* ── 15. Creator's note: the handwritten lines stay neutral, never accent-colored ── */
+.note-box p:last-child {
+  color: var(--text-light) !important;
+  font-weight: 600 !important;
+}

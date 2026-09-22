@@ -130,3 +130,16 @@ footer { background: transparent !important; }
   color: var(--text-light) !important;
   font-weight: 600 !important;
 }
+
+/* ── 16. Cyan discipline: solid accent buttons are too eye-melting on dark.
+   Accent becomes a BORDER + GLOW treatment; fill stays dark. ── */
+.btn:not(.ghost):not(.cream) {
+  background: rgba(0, 212, 255, 0.08) !important;
+  border: 1px solid rgba(0, 212, 255, 0.55) !important;
+  color: #7fe7ff !important;
+  text-shadow: 0 0 8px rgba(0, 212, 255, 0.35);
+}
+.btn:not(.ghost):not(.cream):hover {
+  background: rgba(0, 212, 255, 0.16) !important;
+  box-shadow: 0 0 18px rgba(0, 212, 255, 0.35) !important;
+}

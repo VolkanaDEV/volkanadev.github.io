@@ -331,3 +331,44 @@ body::after {
     transform: none !important;
   }
 }
+
+
+/* ============================================================
+   3.0 LAYER 4 — hexes STATIC; the heartbeat now FLOWS THROUGH them
+   (supersedes the sliding-position version)
+   ============================================================ */
+
+/* base: the cells, still, faint */
+body::before {
+  background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http:%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2784%27%20height%3D%2749%27%20viewBox%3D%270%200%2084%2049%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23af0000%27%20stroke-opacity%3D%270.10%27%20stroke-width%3D%271%27%3E%3Cpath%20d%3D%27M56%200.5%20L70%2024.5%20L56%2048.5%20L28%2048.5%20L14%2024.5%20L28%200.5%20Z%27%2F%3E%3Cpath%20d%3D%27M0%2024.5%20L14%2024.5%27%2F%3E%3Cpath%20d%3D%27M70%2024.5%20L84%2024.5%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E') !important;
+  background-size: 84px 49px !important;
+  background-position: 0 0 !important;
+  animation: none !important;      /* the cells do not move */
+}
+
+/* the pulse: a brighter copy of the SAME cells, revealed by a travelling band */
+body::after {
+  content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http:%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2784%27%20height%3D%2749%27%20viewBox%3D%270%200%2084%2049%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23ff3b3b%27%20stroke-opacity%3D%270.5%27%20stroke-width%3D%271.2%27%3E%3Cpath%20d%3D%27M56%200.5%20L70%2024.5%20L56%2048.5%20L28%2048.5%20L14%2024.5%20L28%200.5%20Z%27%2F%3E%3Cpath%20d%3D%27M0%2024.5%20L14%2024.5%27%2F%3E%3Cpath%20d%3D%27M70%2024.5%20L84%2024.5%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+  background-size: 84px 49px;
+  background-repeat: repeat;
+  /* the band: transparent, up to a soft glow, back to transparent */
+  -webkit-mask-image: linear-gradient(to bottom,
+      transparent 0%, rgba(0,0,0,0.15) 26%, #000 48%, #000 56%, rgba(0,0,0,0.15) 78%, transparent 100%);
+  mask-image: linear-gradient(to bottom,
+      transparent 0%, rgba(0,0,0,0.15) 26%, #000 48%, #000 56%, rgba(0,0,0,0.15) 78%, transparent 100%);
+  -webkit-mask-size: 100% 340px;
+  mask-size: 100% 340px;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: 0 -340px;
+  mask-position: 0 -340px;
+  animation: hexHeartbeatFlow 9s linear infinite;
+}
+@keyframes hexHeartbeatFlow {
+  0%   { -webkit-mask-position: 0 -340px; mask-position: 0 -340px; }
+  100% { -webkit-mask-position: 0 100vh;  mask-position: 0 100vh; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body::after { animation: none !important; -webkit-mask-position: 0 30%; mask-position: 0 30%; }
+}

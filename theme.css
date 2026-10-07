@@ -842,3 +842,29 @@ body.docs-sanguis .doc-sidebar a.active { color: #38bdf8 !important; }
   body.nav-hidden { padding-left: 0 !important; }
 }
 /* no max-width overrides, no transforms, no extra padding. Let the page CSS win. */
+
+
+/* ============================================================
+   3.0 LAYER 25 — the closing band: the eye-grabbing statement
+   above every footer (like the benchmark page's, site-wide).
+   ============================================================ */
+.closing-band {
+  padding: 70px 0 54px;
+  text-align: center;
+  background: radial-gradient(circle at 50% 120%, rgba(175,0,0,0.13), transparent 62%);
+}
+.closing-line {
+  font-size: clamp(1.7rem, 4.4vw, 2.9rem) !important;
+  font-weight: 800 !important; letter-spacing: -0.03em !important;
+  line-height: 1.1 !important; color: #fff !important;
+  margin: 0 0 26px !important;
+  text-shadow: 0 0 40px rgba(175,0,0,0.18);
+}
+.closing-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+/* the divider above the legal text: make the blood rule crisp site-wide */
+footer { border-top: 1px solid rgba(175,0,0,0.55) !important;
+         box-shadow: 0 -2px 20px -4px rgba(175,0,0,0.30) !important;
+         padding-top: 26px !important; }
+body.docs-sanguis footer { border-top-color: rgba(56,189,248,0.55) !important;
+         box-shadow: 0 -2px 20px -4px rgba(56,189,248,0.28) !important; }
+@media (max-width: 700px) { .closing-band { padding: 48px 0 36px; } }

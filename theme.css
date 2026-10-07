@@ -1628,3 +1628,49 @@ footer { position: relative; }
   body.nav-hidden .nav-tab::before { transform: translateX(-50%) rotate(180deg) !important; }
   .nav-tab:hover::before { color: rgba(232,230,227,0.62); }
 }
+
+
+/* ── LAYER 63 — MOBILE BREATHING ROOM (tuned against a Galaxy S24 Ultra,
+      ~412px CSS wide). Everything hugged a 16px gutter and the hero set at
+      38px only had 36px to the wall. Loosen the gutters, the hero, the
+      countdown, the buttons and the cards. ── */
+@media (max-width: 900px) {
+  /* wider gutters than the old 16px */
+  .wrap { padding-left: 22px !important; padding-right: 22px !important; }
+  .hero { padding: 46px 22px 34px !important; }
+
+  /* hero: less shouty, more room */
+  .hero h2 { font-size: 2.1rem !important; line-height: 1.12 !important; margin-bottom: 18px !important; }
+  .hero p  { font-size: 1.02rem !important; line-height: 1.62 !important; margin-bottom: 22px !important; }
+
+  /* sections breathe */
+  .section { padding: 62px 0 !important; }
+  .section h3 { margin-bottom: 14px !important; }
+  .middle-text, .one-sub { line-height: 1.7 !important; }
+
+  /* countdown: inside breathing */
+  .ea-countdown, .timer-container, .timer-block { padding: 20px 14px !important; }
+  .ea-unit, .timer-block { padding: 0 8px !important; }
+  .ea-num, .timer-val { font-size: 1.9rem !important; line-height: 1.05 !important; }
+  .ea-cap, .timer-lbl { margin-top: 6px !important; letter-spacing: 0.16em !important; }
+
+  /* buttons: roomier, easier to hit, and stack with a real gap when tight */
+  .btn, button.btn { padding: 14px 28px !important; font-size: 0.95rem !important; }
+  .center-btn { gap: 14px !important; }
+  .hero .center-btn, .center-btn { display: flex !important; flex-wrap: wrap !important; gap: 14px !important; justify-content: center !important; }
+
+  /* cards: a touch more interior padding */
+  .card, .note-box { padding: 26px 22px !important; }
+  .stat { padding: 22px 22px !important; }
+  .stat-band { margin: 56px 0 10px !important; gap: 12px !important; }
+  .stat-lbl { line-height: 1.6 !important; }
+
+  /* tables: give cells room so numbers do not touch */
+  .master-table th, .master-table td { padding: 12px 12px !important; }
+
+  footer { padding: 52px 22px 44px !important; line-height: 1.7 !important; }
+}
+@media (max-width: 420px) {
+  .btn, button.btn { display: block; width: 100%; }
+  .center-btn { flex-direction: column !important; }
+}

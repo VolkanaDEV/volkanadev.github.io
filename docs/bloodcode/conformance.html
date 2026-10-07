@@ -178,7 +178,7 @@
       <h1>Conformance</h1>
       <p class="subtitle">A new machine joins by passing one public test suite, not by being trusted.</p>
       <h2>The gate</h2>
-      <p>Any executor &mdash; another GPU, an FPGA, a microcontroller, a JIT &mdash; is admitted by passing the per-operation suite: one test per op, checking that the machine produces the reference output. The reference implementation is the JIT; the suite is the contract.</p>
+      <p>Any executor, whether another GPU, an FPGA, a microcontroller, or a JIT, is admitted by passing the per-operation suite: one test per op, checking that the machine produces the reference output. The reference implementation is the JIT; the suite is the contract.</p>
       <h2>Why a suite and not a spec</h2>
       <p>A written spec drifts. A test suite cannot: it either passes on a new machine or it doesn't. Admission is operational, not aspirational.</p>
       <h2>Portability</h2>

@@ -1,5 +1,5 @@
 /* ============================================================
-   VOLKANADEV THEME LAYER — polish pass
+   VOLKANADEV THEME LAYER - polish pass
    Palette unchanged: #0e1117 / #c45d3a / cream text.
    Changes: card elevation, type scale, contrast, nav, rhythm.
    ============================================================ */
@@ -145,7 +145,7 @@ footer { background: transparent !important; }
 
 
 /* ============================================================
-   3.0 THEME — BoneMarrow palette + sidebar nav + glass
+   3.0 THEME - BoneMarrow palette + sidebar nav + glass
    Palette lifted from the TUI (src/tui/mod.rs):
    blood #af0000 (124) / deep #870000 (88) / teal #5fafaf (73)
    ink #e8e6e3 (247) / dim #6c6c6c (242) / bg #101011 (233)
@@ -244,7 +244,7 @@ footer { border-top: 1px solid rgba(175,0,0,0.5) !important; box-shadow: 0 -2px 
 
 
 /* ============================================================
-   3.0 LAYER 2 — flowing hexes (blood), glass carousels, no old brand
+   3.0 LAYER 2 - flowing hexes (blood), glass carousels, no old brand
    ============================================================ */
 
 /* ── brighter hexes, flowing DOWNWARD (was: pulsing) ── */
@@ -253,7 +253,7 @@ body::before {
   background-size: 84px 49px !important;
   animation: hexFlow 11s linear infinite !important;
 }
-/* a slow second layer for depth: same pattern, offset, softer — reads as flow, not a loop */
+/* a slow second layer for depth: same pattern, offset, softer - reads as flow, not a loop */
 body::after {
   content: ''; position: fixed; inset: 0; z-index: -2; pointer-events: none;
   background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http:%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2784%27%20height%3D%2749%27%20viewBox%3D%270%200%2084%2049%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23af0000%27%20stroke-opacity%3D%270.05%27%20stroke-width%3D%271%27%3E%3Cpath%20d%3D%27M56%200.5%20L70%2024.5%20L56%2048.5%20L28%2048.5%20L14%2024.5%20L28%200.5%20Z%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
@@ -298,7 +298,7 @@ body::after {
 
 
 /* ============================================================
-   3.0 LAYER 3 — cards: no border, soft shadow, hover brings to front
+   3.0 LAYER 3 - cards: no border, soft shadow, hover brings to front
    ============================================================ */
 .card, .doc-card, .doc-grid > a, .arena-card, .note-box {
   border: none !important;
@@ -334,7 +334,7 @@ body::after {
 
 
 /* ============================================================
-   3.0 LAYER 4 — hexes STATIC; the heartbeat now FLOWS THROUGH them
+   3.0 LAYER 4 - hexes STATIC; the heartbeat now FLOWS THROUGH them
    (supersedes the sliding-position version)
    ============================================================ */
 
@@ -375,7 +375,7 @@ body::after {
 
 
 /* ============================================================
-   3.0 LAYER 5 — pulse tuning: slower, dimmer, with a quiet gap,
+   3.0 LAYER 5 - pulse tuning: slower, dimmer, with a quiet gap,
    and a long trailing gradient so the crest fades smoothly
    (supersedes LAYER 4)
    ============================================================ */
@@ -407,7 +407,7 @@ body::after {
 
 
 /* ============================================================
-   3.0 LAYER 6 — hexes -> ORGANIC PCB LINEWORK; pulse runs the traces
+   3.0 LAYER 6 - hexes -> ORGANIC PCB LINEWORK; pulse runs the traces
    ============================================================ */
 body::before {
   background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22100%22%20height%3D%22100%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23af0000%22%20stroke-opacity%3D%220.16%22%20stroke-width%3D%221.1%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M0%2012%20H26%20L34%2018%20L42%2012%20H100%22%2F%3E%3Cpath%20d%3D%22M0%2032%20H32%20L40%2026%20L48%2032%20H100%22%2F%3E%3Cpath%20d%3D%22M0%2052%20H38%20L46%2058%20L54%2052%20H100%22%2F%3E%3Cpath%20d%3D%22M0%2072%20H26%20L34%2066%20L42%2072%20H100%22%2F%3E%3Cpath%20d%3D%22M0%2092%20H32%20L40%2098%20L48%2092%20H100%22%2F%3E%3Cpath%20d%3D%22M16%2012%20V32%22%2F%3E%3Cpath%20d%3D%22M84%2032%20V52%22%2F%3E%3Cpath%20d%3D%22M60%2052%20V72%22%2F%3E%3Cpath%20d%3D%22M16%2072%20V92%22%2F%3E%3Cpath%20d%3D%22M44%2012%20V32%22%2F%3E%3Cpath%20d%3D%22M44%2052%20V72%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2212%22%20r%3D%222.1%22%2F%3E%3Ccircle%20cx%3D%2284%22%20cy%3D%2232%22%20r%3D%222.1%22%2F%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2252%22%20r%3D%222.1%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2272%22%20r%3D%222.1%22%2F%3E%3Ccircle%20cx%3D%2244%22%20cy%3D%2232%22%20r%3D%222.1%22%2F%3E%3Ccircle%20cx%3D%2244%22%20cy%3D%2272%22%20r%3D%222.1%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E') !important;
@@ -422,7 +422,7 @@ body::after {
 
 
 /* ============================================================
-   3.0 LAYER 7 — organic PCB (meandering traces, curved, 220px tile)
+   3.0 LAYER 7 - organic PCB (meandering traces, curved, 220px tile)
    ============================================================ */
 body::before {
   background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22220%22%20height%3D%22220%22%20viewBox%3D%220%200%20220%20220%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23af0000%22%20stroke-opacity%3D%220.15%22%20stroke-width%3D%221.1%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M0%2022%20H14%20L19%2028%20H28%20C34%2028%2040%2020%2046%2020%20H60%20L65%2014%20H74%20C80%2014%2086%2022%2092%2022%20C98%2022%20104%2030%20110%2030%20H119%20L124%2024%20H128%20H139%20L144%2018%20H150%20C162%2018%20172%2013%20184%2013%20H193%20L198%207%20H202%20C212%207%20220%206%20220%206%20C180%206%20190%2022%20220%2022%22%2F%3E%3Cpath%20d%3D%22M0%2054%20H14%20L19%2048%20H28%20H37%20L42%2042%20H46%20C56%2042%2064%2034%2074%2034%20H83%20L88%2040%20H92%20H109%20L114%2046%20H126%20C138%2046%20148%2041%20160%2041%20H171%20L176%2035%20H182%20H191%20L196%2041%20H200%20H214%20L219%2047%20H220%20C180%2047%20190%2054%20220%2054%22%2F%3E%3Cpath%20d%3D%22M0%2086%20C6%2086%2012%2094%2018%2094%20H29%20L34%2088%20H40%20C52%2088%2062%2080%2074%2080%20C84%2080%2092%2085%20102%2085%20H119%20L124%2091%20H136%20H145%20L150%2097%20H154%20H171%20L176%2091%20H188%20H197%20L202%2097%20H206%20C218%2097%20228%20105%20220%20105%20C180%20105%20190%2086%20220%2086%22%2F%3E%3Cpath%20d%3D%22M0%20118%20C10%20118%2018%20126%2028%20126%20C38%20126%2046%20118%2056%20118%20C68%20118%2078%20123%2090%20123%20H101%20L106%20129%20H112%20H129%20L134%20135%20H146%20C152%20135%20158%20143%20164%20143%20H178%20L183%20149%20H192%20H206%20L211%20155%20H220%20C180%20155%20190%20118%20220%20118%22%2F%3E%3Cpath%20d%3D%22M0%20150%20H17%20L22%20144%20H34%20C40%20144%2046%20139%2052%20139%20C60%20139%2066%20134%2074%20134%20C84%20134%2092%20129%20102%20129%20H119%20L124%20135%20H136%20H147%20L152%20129%20H158%20H175%20L180%20135%20H192%20C204%20135%20214%20127%20220%20127%20C180%20127%20190%20150%20220%20150%22%2F%3E%3Cpath%20d%3D%22M0%20182%20H17%20L22%20176%20H34%20C42%20176%2048%20171%2056%20171%20C68%20171%2078%20176%2090%20176%20C96%20176%20102%20171%20108%20171%20H117%20L122%20165%20H126%20H135%20L140%20171%20H144%20H155%20L160%20177%20H166%20H180%20L185%20171%20H194%20H211%20L216%20177%20H220%20C180%20177%20190%20182%20220%20182%22%2F%3E%3Cpath%20d%3D%22M0%20202%20H17%20L22%20196%20H34%20C42%20196%2048%20201%2056%20201%20H70%20L75%20195%20H84%20C90%20195%2096%20200%20102%20200%20H113%20L118%20194%20H124%20H138%20L143%20188%20H152%20H166%20L171%20182%20H180%20H194%20L199%20188%20H208%20H219%20L224%20182%20H220%20C180%20182%20190%20202%20220%20202%22%2F%3E%3Cpath%20d%3D%22M34%200%20V12%20L28%2017%20V24%20V36%20L34%2041%20V48%20C34%2061%2027%2073%2027%2086%20C27%2096%2023%20106%2023%20116%20V135%20L29%20140%20V154%20V169%20L35%20174%20V184%20C35%20194%2028%20204%2028%20214%20C28%20222%2032%20230%2032%20220%20C32%20180%2034%20190%2034%20220%22%2F%3E%3Cpath%20d%3D%22M100%200%20C100%208%2093%2016%2093%2024%20V39%20L99%2044%20V54%20C99%2067%2092%2079%2092%2092%20V107%20L86%20112%20V122%20V137%20L92%20142%20V152%20C92%20165%2099%20177%2099%20190%20C99%20200%2092%20210%2092%20220%20C92%20180%20100%20190%20100%20220%22%2F%3E%3Cpath%20d%3D%22M138%200%20C138%2013%20134%2025%20134%2038%20C134%2046%20141%2054%20141%2062%20C141%2075%20148%2087%20148%20100%20V119%20L142%20124%20V138%20V157%20L136%20162%20V176%20V188%20L130%20193%20V200%20V219%20L124%20224%20V220%20C124%20180%20138%20190%20138%20220%22%2F%3E%3Cpath%20d%3D%22M176%200%20V15%20L170%2020%20V30%20C170%2038%20166%2046%20166%2054%20V69%20L172%2074%20V84%20V99%20L166%20104%20V114%20V126%20L172%20131%20V138%20V153%20L178%20158%20V168%20C178%20181%20174%20193%20174%20206%20V225%20L180%20230%20V220%20C180%20180%20176%20190%20176%20220%22%2F%3E%3Ccircle%20cx%3D%22100%22%20cy%3D%2254%22%20r%3D%222.3%22%2F%3E%3Ccircle%20cx%3D%22100%22%20cy%3D%2254%22%20r%3D%224.1%22%2F%3E%3Ccircle%20cx%3D%22138%22%20cy%3D%22118%22%20r%3D%222.3%22%2F%3E%3Ccircle%20cx%3D%22138%22%20cy%3D%22118%22%20r%3D%224.1%22%2F%3E%3Ccircle%20cx%3D%2234%22%20cy%3D%22150%22%20r%3D%222.3%22%2F%3E%3Ccircle%20cx%3D%2234%22%20cy%3D%22150%22%20r%3D%224.1%22%2F%3E%3Ccircle%20cx%3D%22176%22%20cy%3D%2286%22%20r%3D%222.3%22%2F%3E%3Ccircle%20cx%3D%22176%22%20cy%3D%2286%22%20r%3D%224.1%22%2F%3E%3Ccircle%20cx%3D%22100%22%20cy%3D%22182%22%20r%3D%222.3%22%2F%3E%3Ccircle%20cx%3D%22100%22%20cy%3D%22182%22%20r%3D%224.1%22%2F%3E%3Ccircle%20cx%3D%2234%22%20cy%3D%2254%22%20r%3D%222.3%22%2F%3E%3Ccircle%20cx%3D%2234%22%20cy%3D%2254%22%20r%3D%224.1%22%2F%3E%3Ccircle%20cx%3D%22176%22%20cy%3D%22150%22%20r%3D%222.3%22%2F%3E%3Ccircle%20cx%3D%22176%22%20cy%3D%22150%22%20r%3D%224.1%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E') !important;
@@ -437,7 +437,7 @@ body::after {
 
 
 /* ============================================================
-   3.0 LAYER 8 — organic PCB at THREE SCALES (periods clash so the
+   3.0 LAYER 8 - organic PCB at THREE SCALES (periods clash so the
    eye stops seeing the repeat). Pulse lights all three together.
    ============================================================ */
 body::before {
@@ -456,7 +456,7 @@ body::after {
 
 
 /* ============================================================
-   3.0 LAYER 9 — unlit traces INVISIBLE. The board is dark until the
+   3.0 LAYER 9 - unlit traces INVISIBLE. The board is dark until the
    pulse lights it; all you see is the lit sweep + its trailing
    gradient moving through the dark. (supersedes the visible base)
    ============================================================ */
@@ -477,7 +477,7 @@ body::after {
 
 
 /* ============================================================
-   3.0 LAYER 10 — narrow the lit band: a sharper crest with a long
+   3.0 LAYER 10 - narrow the lit band: a sharper crest with a long
    thin tail, so it reads as light CRAWLING THE TRACES, not a sheet
    ============================================================ */
 body::after {
@@ -503,7 +503,7 @@ body::after {
 
 
 /* ============================================================
-   3.0 LAYER 11 — sidebar: autohide pull-tab, slide, centered content
+   3.0 LAYER 11 - sidebar: autohide pull-tab, slide, centered content
    ============================================================ */
 .nav-tab {
   display: none;
@@ -545,7 +545,7 @@ body::after {
 
 
 /* ============================================================
-   3.0 LAYER 12 — Sanguis docs keep BLUE; BloodCode owns RED.
+   3.0 LAYER 12 - Sanguis docs keep BLUE; BloodCode owns RED.
    Scoped so the two doc sections are visually distinct and can
    be deployed as separate sites.
    ============================================================ */
@@ -598,7 +598,7 @@ body.docs-sanguis footer a { color: #38bdf8 !important; }
 
 
 /* ============================================================
-   3.0 LAYER 13 — soft blood for TEXT (neon backed off a smidge);
+   3.0 LAYER 13 - soft blood for TEXT (neon backed off a smidge);
    bright red stays only in faint glows/borders where it reads as depth
    ============================================================ */
 :root { --accent-soft: #b8403a; --accent-soft-hover: #c9554e; }
@@ -613,7 +613,7 @@ body.docs-sanguis .doc-sidebar a.active { color: #38bdf8 !important; }
 
 
 /* ============================================================
-   3.0 LAYER 14 — panels instead of carousels; sharper tech boxes
+   3.0 LAYER 14 - panels instead of carousels; sharper tech boxes
    ============================================================ */
 .panel-grid {
   display: grid;
@@ -631,7 +631,7 @@ body.docs-sanguis .doc-sidebar a.active { color: #38bdf8 !important; }
   overflow: hidden;
   padding: 28px 26px 26px !important;
 }
-/* top accent bar that lights on hover — replaces the "click me" carousel cue */
+/* top accent bar that lights on hover - replaces the "click me" carousel cue */
 .card::after, .doc-card::after, .doc-grid > a::after, .arena-card::after {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
   background: linear-gradient(90deg, rgba(175,0,0,0.0), rgba(175,0,0,0.55), rgba(175,0,0,0.0));
@@ -653,7 +653,7 @@ body.docs-sanguis .doc-sidebar a.active { color: #38bdf8 !important; }
 
 
 /* ============================================================
-   3.0 LAYER 15 — buttons join the panel language: no borders,
+   3.0 LAYER 15 - buttons join the panel language: no borders,
    squared 6px, defined by fill + shadow. Two variants, not three.
    ============================================================ */
 .btn, .btn.ghost, .btn.cream {
@@ -675,7 +675,7 @@ body.docs-sanguis .doc-sidebar a.active { color: #38bdf8 !important; }
     0 12px 30px rgba(0, 0, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
 }
-/* the primary (first) button keeps the blood tint — same shape, warm fill */
+/* the primary (first) button keeps the blood tint - same shape, warm fill */
 .btn:not(.ghost):not(.cream) {
   background: rgba(175, 0, 0, 0.18) !important;
   color: #c98d88 !important;
@@ -693,7 +693,7 @@ body.docs-sanguis .doc-sidebar a.active { color: #38bdf8 !important; }
 }
 
 
-/* ── LAYER 16 — buttons: corrected specificity (match the :not() chain) ── */
+/* ── LAYER 16 - buttons: corrected specificity (match the :not() chain) ── */
 .btn:not(.ghost):not(.cream),
 .btn.ghost, .btn.cream {
   border: none !important;
@@ -734,7 +734,7 @@ body.docs-sanguis .doc-sidebar a.active { color: #38bdf8 !important; }
 
 
 /* ============================================================
-   3.0 LAYER 17 — terafab-style: stat band, one-line headings, 2-up
+   3.0 LAYER 17 - terafab-style: stat band, one-line headings, 2-up
    ============================================================ */
 
 /* the giant-number stat row */
@@ -793,7 +793,7 @@ body.docs-sanguis .doc-sidebar a.active { color: #38bdf8 !important; }
 
 
 /* ============================================================
-   3.0 LAYER 18 — the sidebar needs a right edge: a faint hairline so
+   3.0 LAYER 18 - the sidebar needs a right edge: a faint hairline so
    it reads as a distinct slab (and so the pull-tab has something to bite)
    ============================================================ */
 @media (min-width: 901px) {
@@ -832,7 +832,7 @@ body.docs-sanguis .doc-sidebar a.active { color: #38bdf8 !important; }
 
 
 /* ============================================================
-   3.0 LAYER 24 — content layout: MINIMAL. One rule only.
+   3.0 LAYER 24 - content layout: MINIMAL. One rule only.
    The pages already center themselves (.wrap has margin:0 auto).
    The nav floats; the body gets padded for it. That is the whole model.
    (All earlier centering experiments removed.)
@@ -845,7 +845,7 @@ body.docs-sanguis .doc-sidebar a.active { color: #38bdf8 !important; }
 
 
 /* ============================================================
-   3.0 LAYER 25 — the closing band: the eye-grabbing statement
+   3.0 LAYER 25 - the closing band: the eye-grabbing statement
    above every footer (like the benchmark page's, site-wide).
    ============================================================ */
 .closing-band {
@@ -870,7 +870,7 @@ body.docs-sanguis footer { border-top-color: rgba(56,189,248,0.55) !important;
 @media (max-width: 700px) { .closing-band { padding: 48px 0 36px; } }
 
 
-/* ── LAYER 26 — restore the hero breathing room lost in the terafab pass ── */
+/* ── LAYER 26 - restore the hero breathing room lost in the terafab pass ── */
 .hero { padding: 64px 20px 44px !important; }
 .hero h2 { margin-bottom: 22px !important; }
 .hero .hero-actions { margin-top: 34px; }
@@ -882,14 +882,14 @@ body.docs-sanguis footer { border-top-color: rgba(56,189,248,0.55) !important;
 
 
 
-/* ── LAYER 30 — footer: a touch more air (you flagged it; make it unambiguous) ── */
+/* ── LAYER 30 - footer: a touch more air (you flagged it; make it unambiguous) ── */
 footer { padding-top: 46px !important; padding-bottom: 40px !important; }
 
 
 
 
 /* ============================================================
-   3.0 LAYER 32 — ONE content width, everything centered on it.
+   3.0 LAYER 32 - ONE content width, everything centered on it.
    The misalignment was inconsistent widths: charts were 860,
    tables and card grids 956. Same width, same center, every block.
    ============================================================ */
@@ -910,7 +910,7 @@ footer { padding-top: 46px !important; padding-bottom: 40px !important; }
 
 
 /* ============================================================
-   3.0 LAYER 33 — ONE left edge. (headings were 268, tables 296,
+   3.0 LAYER 33 - ONE left edge. (headings were 268, tables 296,
    paragraphs 336 -- three gutters = the ragged look.)
    Every block is now 100% of one column. One edge. Done.
    ============================================================ */
@@ -932,7 +932,7 @@ footer { padding-top: 46px !important; padding-bottom: 40px !important; }
 
 
 /* ============================================================
-   3.0 LAYER 34 — ALIGNMENT. The boxes were already one column; the text
+   3.0 LAYER 34 - ALIGNMENT. The boxes were already one column; the text
    inside was center-aligned, which makes every line start at a different
    x and reads as "off to the left". Left-align section prose so the column
    has ONE left edge you can see. The hero stays centered (it earns it).
@@ -958,7 +958,7 @@ footer { padding-top: 46px !important; padding-bottom: 40px !important; }
 .header-block p { text-align: left !important; }
 
 
-/* ── LAYER 35 — kill every last auto-margin so ALL blocks share the edge ── */
+/* ── LAYER 35 - kill every last auto-margin so ALL blocks share the edge ── */
 @media (min-width: 901px) {
   .wrap > *, .section .wrap > * {
     margin-left: 0 !important;
@@ -976,7 +976,7 @@ footer { padding-top: 46px !important; padding-bottom: 40px !important; }
 
 
 /* ============================================================
-   3.0 LAYER 36 — cards: fill the column without overflowing, and
+   3.0 LAYER 36 - cards: fill the column without overflowing, and
    keep their height. (width:100% made them squat + overflowed the grid.)
    ============================================================ */
 @media (min-width: 901px) {
@@ -1004,7 +1004,7 @@ footer { padding-top: 46px !important; padding-bottom: 40px !important; }
 }
 
 
-/* ── LAYER 37 — the grid was 4 columns for 3 cards; force 3 (or fewer) ── */
+/* ── LAYER 37 - the grid was 4 columns for 3 cards; force 3 (or fewer) ── */
 @media (min-width: 1024px) {
   .arena-grid { grid-template-columns: repeat(3, 1fr) !important; }
 }
@@ -1014,7 +1014,7 @@ footer { padding-top: 46px !important; padding-bottom: 40px !important; }
 
 
 /* ============================================================
-   3.0 LAYER 38 — card stats: real font, no clipping.
+   3.0 LAYER 38 - card stats: real font, no clipping.
    (was: monospace + white-space:nowrap -> ugly + clipped "checksum")
    ============================================================ */
 .arena-stat span:last-child {
@@ -1032,7 +1032,7 @@ footer { padding-top: 46px !important; padding-bottom: 40px !important; }
 .arena-stat span:last-child { font-variant-numeric: tabular-nums; }
 
 
-/* ── LAYER 39 — the dot-plot: proper SVG axis + readable type ── */
+/* ── LAYER 39 - the dot-plot: proper SVG axis + readable type ── */
 .svg-chart .axis { stroke: rgba(255,255,255,0.22); stroke-width: 1; }
 .svg-chart { height: auto; max-height: 260px; }
 .svg-chart .lbl { fill: #e8e6e3; font-size: 12px; font-family: inherit; }
@@ -1071,7 +1071,7 @@ body.docs-sanguis footer { border-top-color: rgba(56,189,248,0.5) !important; }
 
 
 /* ============================================================
-   3.0 LAYER 41 — spec-list: the card alternative. Same info, no boxes,
+   3.0 LAYER 41 - spec-list: the card alternative. Same info, no boxes,
    no borders, no clutter. Reads like a data sheet, not a dashboard.
    ============================================================ */
 .spec-list {
@@ -1107,7 +1107,7 @@ body.docs-sanguis footer { border-top-color: rgba(56,189,248,0.5) !important; }
 .spec-v.warn   { color: #e07070; font-weight: 700; }
 
 
-/* ── LAYER 42 — the footer line: FULL WIDTH of the content column, one edge ── */
+/* ── LAYER 42 - the footer line: FULL WIDTH of the content column, one edge ── */
 footer {
   border-top: 1px solid rgba(175,0,0,0.55) !important;
   box-shadow: 0 -2px 20px -4px rgba(175,0,0,0.28) !important;
@@ -1122,7 +1122,7 @@ body.docs-sanguis footer { border-top-color: rgba(56,189,248,0.5) !important; }
 footer > div, footer > div > a { text-align: left !important; }
 
 
-/* ── LAYER 43 — footer box = the content column exactly (border on the same edges) ── */
+/* ── LAYER 43 - footer box = the content column exactly (border on the same edges) ── */
 footer {
   max-width: 1020px !important;       /* 960 content + 2*30 padding = the same outer box */
   padding-left: 30px !important; padding-right: 30px !important;
@@ -1132,7 +1132,7 @@ footer {
 }
 
 
-/* ── LAYER 44 — footer: same 960px column as the content, line spans it exactly ── */
+/* ── LAYER 44 - footer: same 960px column as the content, line spans it exactly ── */
 footer {
   max-width: 960px !important;
   width: 100% !important;
@@ -1147,7 +1147,7 @@ body.docs-sanguis footer { border-top-color: rgba(56,189,248,0.5) !important; }
 footer > div, footer > div > a { text-align: left !important; }
 
 
-/* ── LAYER 45 — footer matches whatever the page's layout box is (960 on
+/* ── LAYER 45 - footer matches whatever the page's layout box is (960 on
    plain pages, the full usable area on docs pages with two sidebars). ── */
 footer {
   max-width: none !important;
@@ -1163,7 +1163,7 @@ body.docs-sanguis footer { border-top-color: rgba(56,189,248,0.5) !important; }
    spans the usable area which equals the content column's outer box */
 
 
-/* ── LAYER 46 — footer text: a small left inset so it breathes off the line.
+/* ── LAYER 46 - footer text: a small left inset so it breathes off the line.
    (the border-top spans the full box regardless of padding, so the LINE
    stays edge-to-edge and only the TEXT scoots in.) ── */
 footer {
@@ -1173,7 +1173,7 @@ footer {
 
 
 /* ============================================================
-   3.0 LAYER 47 — the Early Access countdown (E3-style landing beat)
+   3.0 LAYER 47 - the Early Access countdown (E3-style landing beat)
    ============================================================ */
 .ea-countdown {
   max-width: 660px;
@@ -1231,7 +1231,7 @@ footer {
 }
 
 
-/* ── LAYER 48 — the countdown must fit above the fold with the date ── */
+/* ── LAYER 48 - the countdown must fit above the fold with the date ── */
 .hero { padding: 40px 20px 30px !important; }
 .ea-countdown { margin: 34px auto 8px !important; padding: 26px 26px 24px !important; }
 .ea-label { margin-bottom: 18px !important; }
@@ -1240,7 +1240,7 @@ footer {
 .hero-actions { margin-top: 26px !important; }
 
 
-/* ── LAYER 49 — "Early Access begins" uses the wordmark's font (the one the boss loves) ── */
+/* ── LAYER 49 - "Early Access begins" uses the wordmark's font (the one the boss loves) ── */
 .ea-label {
   font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace !important;
   font-weight: 800 !important;
@@ -1254,7 +1254,7 @@ footer {
 
 
 /* ============================================================
-   3.0 LAYER 50 — the sidebar spine label + relocated pull-tab.
+   3.0 LAYER 50 - the sidebar spine label + relocated pull-tab.
    Boss asked: tiny dulled "sidebar" word, mounted sideways (reading
    bottom->top so letter-tops face the page), sitting between Benchmarks
    and Docs, so the tab is discoverable without shouting.
@@ -1292,7 +1292,7 @@ footer {
 @media (max-width: 900px) { .nav-tab::before { content: none !important; } }
 
 
-/* ── LAYER 51 — Patch Notes page ── */
+/* ── LAYER 51 - Patch Notes page ── */
 .pn-entry {
   padding: 34px 0 30px;
   border-top: 1px solid rgba(255,255,255,0.06);
@@ -1323,13 +1323,13 @@ footer {
 @media (max-width: 620px) { .pn-item { grid-template-columns: 52px 1fr; gap: 12px; } .pn-date { margin-left: 0; width: 100%; } }
 
 
-/* ── LAYER 52 — re-center the pull-tab on the gap (nav gained Patch Notes) ── */
+/* ── LAYER 52 - re-center the pull-tab on the gap (nav gained Patch Notes) ── */
 @media (min-width: 901px) {
   .nav-tab { top: 204px !important; }   /* centers in the Benchmarks <-> Patch Notes gap */
 }
 
 
-/* ── LAYER 53 — Early Access: a nav accent + reservation polish ── */
+/* ── LAYER 53 - Early Access: a nav accent + reservation polish ── */
 .nav-ea {
   position: relative;
 }
@@ -1346,7 +1346,7 @@ footer {
 .panel-grid.two .card .spec-row { padding: 5px 0; }
 
 
-/* ── LAYER 54 — stat band: four across, benefit-first blurbs ── */
+/* ── LAYER 54 - stat band: four across, benefit-first blurbs ── */
 .stat-band { grid-template-columns: repeat(4, 1fr) !important; max-width: 1040px !important; }
 @media (max-width: 1000px) { .stat-band { grid-template-columns: repeat(2, 1fr) !important; } }
 @media (max-width: 560px)  { .stat-band { grid-template-columns: 1fr !important; } }

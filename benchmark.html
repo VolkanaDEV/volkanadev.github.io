@@ -529,12 +529,10 @@
 
       <div class="chart-card">
         <h4>The clock, at every scale</h4>
-        <p class="chart-sub">One cascade pass over the whole 2,019-node web, and the states it locks. Bars are relative; values are the measured numbers.</p>
-        <div class="bar-row"><div class="bar-label">null tick (1 pass)</div><div class="bar-track"><div class="bar-fill" style="width:3%"></div></div><div class="bar-val">4.5 ms</div></div>
-        <div class="bar-row"><div class="bar-label">synaptic relay</div><div class="bar-track"><div class="bar-fill" style="width:3%"></div></div><div class="bar-val">0.5-1 ms</div></div>
-        <div class="bar-row"><div class="bar-label">human reaction</div><div class="bar-track"><div class="bar-fill" style="width:22%"></div></div><div class="bar-val">150-250 ms</div></div>
-        <div class="bar-row"><div class="bar-label">full lock (64 passes)</div><div class="bar-track"><div class="bar-fill" style="width:26%"></div></div><div class="bar-val">~0.2-0.3 s</div></div>
-        <p class="axis-note">Both ends of our tick land inside the biological register: one pass ~ one synaptic relay, one lock ~ one human reaction.</p>
+        <p class="chart-sub">The being's own numbers. Bars are representative, not to scale &mdash; the real ratio is about 55:1.</p>
+        <div class="bar-row"><div class="bar-label">one cascade pass</div><div class="bar-track"><div class="bar-fill" style="width:2.2%"></div></div><div class="bar-val">4.5 ms</div></div>
+        <div class="bar-row"><div class="bar-label">one settled state (lock)</div><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><div class="bar-val">~250 ms</div></div>
+        <p class="axis-note">For reference: a synaptic relay is ~0.5-1 ms, and a human simple reaction is ~150-250 ms. Our pass and our lock land in those two registers.</p>
       </div>
   </section>
 
@@ -575,7 +573,6 @@
           <text x="600" y="176">float noise floor</text>
         </svg>
       </div>
-
       <p class="middle-text" style="margin-top: 20px;">The instruction set is frozen: 29 slots with fixed numbers and spellings, asserted when the compiler builds itself. Any new executor is admitted by passing one public per-operation suite.</p>
     </div>
   </section>

@@ -903,3 +903,19 @@ body.docs-sanguis footer { border-top-color: rgba(56,189,248,0.55) !important;
 
 /* ── LAYER 30 — footer: a touch more air (you flagged it; make it unambiguous) ── */
 footer { padding-top: 46px !important; padding-bottom: 40px !important; }
+
+
+/* ── LAYER 31 — chart rows: a real grid, consistent columns, honest bars ── */
+.bar-row {
+  display: grid !important;
+  grid-template-columns: 190px 1fr 96px !important;
+  align-items: center !important;
+  gap: 16px !important;
+  margin: 10px 0 !important;
+}
+.bar-label { text-align: right !important; color: var(--muted-light) !important; font-size: 0.84rem !important; }
+.bar-track { height: 16px !important; background: rgba(255,255,255,0.05) !important; border-radius: 3px !important; }
+.bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg,#6d0000,#c62a2a) !important; }
+.bar-fill.dim { background: rgba(255,255,255,0.16) !important; }   /* the reference rows, not ours */
+.bar-val { text-align: right !important; font-variant-numeric: tabular-nums; color: var(--text-light) !important; font-size: 0.82rem !important; }
+.chart-card { max-width: 860px !important; margin-left: auto !important; margin-right: auto !important; }

@@ -79,22 +79,24 @@
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   body { animation: fadeIn 0.4s ease-out; }
   .nav-links a { transition: color 0.2s, text-shadow 0.2s; }
-  .nav-links a:hover { text-shadow: 0 0 10px rgba(0, 212, 255, 0.3); }
+  .nav-links a:hover { text-shadow: 0 0 10px rgba(175, 0, 0, 0.3); }
   a { transition: opacity 0.15s, text-shadow 0.15s; }
-  ::selection { background: rgba(0, 212, 255, 0.25); }
+  ::selection { background: rgba(175, 0, 0, 0.25); }
   ::-webkit-scrollbar { width: 8px; height: 8px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: rgba(0, 212, 255, 0.3); border-radius: 4px; }
-  ::-webkit-scrollbar-thumb:hover { background: rgba(0, 212, 255, 0.5); }
-  nav { border-bottom: 1px solid rgba(0, 212, 255, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(0, 212, 255, 0.3); }
-  footer { border-top: 1px solid rgba(0, 212, 255, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(0, 212, 255, 0.3); }
-  .doc-content h2 { border-bottom: 1px solid rgba(0, 212, 255, 0.4) !important; }
-  .doc-nav-bottom { border-top: 1px solid rgba(0, 212, 255, 0.4) !important; }
+  ::-webkit-scrollbar-thumb { background: rgba(175, 0, 0, 0.3); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(175, 0, 0, 0.5); }
+  nav { border-bottom: 1px solid rgba(175, 0, 0, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(175, 0, 0, 0.3); }
+  footer { border-top: 1px solid rgba(175, 0, 0, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(175, 0, 0, 0.3); }
+  .doc-content h2 { border-bottom: 1px solid rgba(175, 0, 0, 0.4) !important; }
+  .doc-nav-bottom { border-top: 1px solid rgba(175, 0, 0, 0.4) !important; }
   /* === End Visual Enhancements === */
 </style>
 <link rel="stylesheet" href="../theme.css">
 </head>
 <body>
+<button id="navTab" class="nav-tab" aria-label="Toggle navigation" onclick="document.body.classList.toggle('nav-hidden')"><span class="chev"></span></button>
+
 <div class="wordmark"><span>VolkanaDEV</span></div>
 
 

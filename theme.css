@@ -87,7 +87,7 @@ h3 { font-weight: 700 !important; color: var(--text-light) !important; }
   font-weight: 600 !important;
   box-shadow: none !important;
 }
-.btn:hover { box-shadow: 0 0 14px rgba(0, 212, 255, 0.25) !important; }
+.btn:hover { box-shadow: 0 0 14px rgba(175, 0, 0, 0.25) !important; }
 .btn.cream {
   background: var(--surface) !important;
   color: var(--text-light) !important;
@@ -102,14 +102,14 @@ h3 { font-weight: 700 !important; color: var(--text-light) !important; }
 
 /* ── 11. Status badge: the pulse. The brand made visible. ── */
 .status-badge.live, .live {
-  background: rgba(0, 212, 255, 0.10) !important;
-  color: #5ce1ff !important;
-  border: 1px solid rgba(0, 212, 255, 0.35) !important;
+  background: rgba(175, 0, 0, 0.10) !important;
+  color: #f0b4b4 !important;
+  border: 1px solid rgba(175, 0, 0, 0.35) !important;
   animation: badgePulse 2.4s ease-in-out infinite;
 }
 @keyframes badgePulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.25); }
-  50% { box-shadow: 0 0 0 6px rgba(0, 212, 255, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(175, 0, 0, 0.25); }
+  50% { box-shadow: 0 0 0 6px rgba(175, 0, 0, 0); }
 }
 
 /* ── 12. LIVE dots in the carousel + anywhere accent dots appear ── */
@@ -500,3 +500,45 @@ body::after {
   62%  { -webkit-mask-position: 0 100vh;  mask-position: 0 100vh; }
   100% { -webkit-mask-position: 0 100vh;  mask-position: 0 100vh; }
 }
+
+
+/* ============================================================
+   3.0 LAYER 11 — sidebar: autohide pull-tab, slide, centered content
+   ============================================================ */
+.nav-tab {
+  display: none;
+}
+@media (min-width: 901px) {
+  /* the pull-out handle, parked at the sidebar's right edge */
+  .nav-tab {
+    display: flex; align-items: center; justify-content: center;
+    position: fixed; top: 50%; left: var(--sidebar-w); transform: translateY(-50%);
+    width: 16px; height: 58px; z-index: 130;
+    background: rgba(20,20,22,0.72);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    border: none; border-radius: 0 8px 8px 0; cursor: pointer;
+    padding: 0; margin: 0;
+    box-shadow: 2px 0 14px rgba(0,0,0,0.4);
+    transition: left 0.42s cubic-bezier(0.22,0.61,0.36,1),
+                background 0.2s ease, width 0.2s ease;
+  }
+  .nav-tab:hover { background: rgba(30,30,34,0.9); width: 20px; }
+  .nav-tab .chev {
+    width: 7px; height: 7px; border-top: 2px solid #c62a2a; border-right: 2px solid #c62a2a;
+    transform: rotate(225deg); transition: transform 0.42s cubic-bezier(0.22,0.61,0.36,1);
+  }
+  body.nav-hidden .nav-tab { left: 0; }
+  body.nav-hidden .nav-tab .chev { transform: rotate(45deg); }
+
+  /* the sidebar itself slides */
+  nav { transition: transform 0.42s cubic-bezier(0.22,0.61,0.36,1); }
+  body.nav-hidden nav { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+  /* the CONTENT stays centered: pad <body> by the sidebar width so the
+     column centers in the USABLE area; slide it back to 0 when nav hides */
+  body { padding-left: var(--sidebar-w) !important; transition: padding-left 0.42s cubic-bezier(0.22,0.61,0.36,1); }
+  body.nav-hidden { padding-left: 0 !important; }
+  .wordmark { transition: left 0.42s cubic-bezier(0.22,0.61,0.36,1); }
+  body.nav-hidden .wordmark { left: 0; }
+}
+@media (max-width: 900px) { .nav-tab { display: none !important; } }

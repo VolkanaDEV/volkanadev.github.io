@@ -114,7 +114,7 @@ h3 { font-weight: 700 !important; color: var(--text-light) !important; }
 
 /* ── 12. LIVE dots in the carousel + anywhere accent dots appear ── */
 .carousel-dots span.active, .carousel-dots .active {
-  background: #00d4ff !important;
+  background: #af0000 !important;
 }
 
 /* ── 13. Footer: match the quieter look ── */

@@ -184,7 +184,7 @@
       <div class="code-block"><pre>.sanguis source &rarr; [bleed] &rarr; BloodCode (.bc) &rarr; [ad --target vulkan] &rarr; grid settles on GPU</pre></div>
       <p>The pipeline has two stages:</p>
       <p>1. <strong>Compiler (bleed).</strong> Parses Sanguis source and emits BloodCode: a pipe-delimited text file containing the organ manifest (declared field layouts), named method blocks, and the program instructions.</p>
-      <p>2. <strong>Runtime (ad).</strong> Reads the BloodCode file and presses it into the wiring grid: organs become field wires, methods become inlined subcircuits, and the whole structure settles on the GPU. The kernel is fixed; the program is data.</p>
+      <p>2. <strong>Runtime (ad).</strong> Reads the BloodCode file and pours it into the wiring grid: organs become field wires, methods become inlined subcircuits, and the whole structure settles on the GPU. The kernel is fixed; the program is data.</p>
       <p>The user writes Sanguis source, runs two commands, and gets output. Both artifacts are readable text files.</p>
       <div class="code-block"><pre>sanguis bleed program.sanguis -o program.bc
 sanguis ad --target vulkan program.bc</pre></div>

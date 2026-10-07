@@ -1828,3 +1828,20 @@ blockquote.creator-quote { max-width: 860px !important; }
 @media (max-width: 900px) {
   .creator-quote .q-end { display: block; }
 }
+
+
+/* ── LAYER 72 — the closing line under a panel-grid was butted flush against
+      the cards (computed margin-top: 0). Give every card grid's trailing
+      paragraph real air, site-wide, and let the creator's quote inherit it. ── */
+.panel-grid + p,
+.panel-grid + .one-sub,
+.panel-grid + .middle-text,
+.panel-grid + blockquote.creator-quote {
+  margin-top: 34px !important;
+}
+.section .panel-grid + p,
+.section .panel-grid + .one-sub { margin-top: 34px !important; }
+@media (max-width: 900px) {
+  .panel-grid + p, .panel-grid + .one-sub, .panel-grid + .middle-text,
+  .panel-grid + blockquote.creator-quote { margin-top: 28px !important; }
+}

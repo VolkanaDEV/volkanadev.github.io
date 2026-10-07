@@ -1353,3 +1353,25 @@ footer {
 .stat { text-align: left; padding: 24px 20px; }
 .stat-num { font-size: clamp(1.6rem, 3vw, 2.2rem); }
 .stat-lbl { color: var(--muted-light); font-size: 0.83rem; line-height: 1.5; margin-top: 10px; }
+
+
+/* ── LAYER 55 — careers: org tiers + leadership grid ── */
+.role-tier {
+  grid-column: 1 / -1;
+  display: flex; align-items: center; gap: 14px;
+  margin: 30px 0 6px;
+}
+.role-tier:first-of-type { margin-top: 8px; }
+.role-tier span {
+  font-family: ui-monospace, monospace;
+  font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: #c98d88; white-space: nowrap;
+}
+.role-tier::after {
+  content: ""; flex: 1; height: 1px;
+  background: linear-gradient(to right, rgba(175,0,0,0.35), rgba(255,255,255,0.04));
+}
+.roles { margin-top: 4px; }
+.panel-grid.three .card h4 { font-size: 1rem !important; margin-bottom: 6px !important; }
+.panel-grid.three .card .role-meta { margin-bottom: 10px; }

@@ -330,12 +330,12 @@
         <div class="pn-head"><span class="pn-ver">3.0</span><span class="pn-name">Iteration:Determinism</span><span class="pn-date">2026</span></div>
         <p class="pn-lede">The language, made trustworthy. The property underneath everything: the same program produces bit-for-bit identical results on every machine it runs on.</p>
         <div class="pn-list">
-          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>Determinism.</strong> Bit-identical output across executors: the graphics card, the just-in-time executor, and the compiler that compiles itself. Measured, not promised.</div></div>
+          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>Determinism.</strong> Bit-identical output across executors: the graphics card, the just-in-time executor, and the compiler that compiles itself.</div></div>
           <div class="pn-item"><span class="pn-tag new">New</span><div><strong>The frozen instruction set.</strong> BloodCode, 29 slots, fixed numbers and spellings, asserted when the compiler builds itself.</div></div>
           <div class="pn-item"><span class="pn-tag new">New</span><div><strong>Continuity.</strong> A running core writes itself to a small package and resumes in a fresh process, bit-identical to the one that was running.</div></div>
           <div class="pn-item"><span class="pn-tag new">New</span><div><strong>The tick.</strong> A full pass over the entire web in about 4.5 ms; a settled state in about a quarter of a second, the human register.</div></div>
-          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>The Arena.</strong> Run any VANA circuit as the brain of a game. The engine authors no game logic; swap the circuit and the being changes.</div></div>
-          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>The composer.</strong> A BloodCode artifact lowers mechanically to parallel card execution. Lower once, re-dispatch per batch.</div></div>
+          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>The Arena.</strong> Run any circuit as the brain of a game. The engine authors no game logic; swap the circuit and the being changes.</div></div>
+          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>The composer.</strong> A BloodCode artifact lowers mechanically to parallel card execution. Lower it once, then re-dispatch it per batch.</div></div>
           <div class="pn-item"><span class="pn-tag new">New</span><div><strong>The BloodCode contract.</strong> The op table is frozen as a versioned interface; changing an assigned slot's number or spelling fails the build.</div></div>
           <div class="pn-item"><span class="pn-tag fix">Fixed</span><div>Compiler invocation unified behind one substitution point; all artifacts bit-identical.</div></div>
         </div>
@@ -345,17 +345,17 @@
         <div class="pn-head"><span class="pn-ver">2.4.1</span><span class="pn-name">Iteration:Press</span><span class="pn-date">2026</span></div>
         <p class="pn-lede">A core survives being unplugged. The press and the insert: run a grid, serialize it to a package, resume it in a fresh process.</p>
         <div class="pn-list">
-          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>The press.</strong> Serialize a running core's genome, conduction, strength, and phase into a package.</div></div>
-          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>The graded press.</strong> The W/D/readout planes travel too. The person survives transit, not just the skeleton.</div></div>
+          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>The press.</strong> Write a running core to a package: its wiring, its weights, its clock, its memories.</div></div>
+          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>The graded press.</strong> The learned state travels with it, so the core resumes with everything it had and everything it knew.</div></div>
           <div class="pn-item"><span class="pn-tag fix">Fixed</span><div>Corruption detection: one flipped bit in the weight plane fails the checksum and refuses to resume.</div></div>
         </div>
       </div>
 
       <div class="pn-entry">
         <div class="pn-head"><span class="pn-ver">2.3.0</span><span class="pn-name">Iteration:Modules</span><span class="pn-date">2026</span></div>
-        <p class="pn-lede">The child learning to feed itself: import syntax and modules.</p>
+        <p class="pn-lede">Programs compose out of named modules: import syntax, and a linker that merges them.</p>
         <div class="pn-list">
-          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>Import syntax.</strong> Programs compose from named modules.</div></div>
+          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>Import syntax.</strong> Name a module once and pull it into any program.</div></div>
           <div class="pn-item"><span class="pn-tag new">New</span><div><strong>The linker.</strong> Artifact merge and collision law, in the language.</div></div>
         </div>
       </div>

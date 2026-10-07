@@ -929,3 +929,47 @@ footer { padding-top: 46px !important; padding-bottom: 40px !important; }
   }
   footer { padding-top: 46px !important; padding-bottom: 40px !important; }
 }
+
+
+/* ============================================================
+   3.0 LAYER 34 — ALIGNMENT. The boxes were already one column; the text
+   inside was center-aligned, which makes every line start at a different
+   x and reads as "off to the left". Left-align section prose so the column
+   has ONE left edge you can see. The hero stays centered (it earns it).
+   ============================================================ */
+.section .middle-text,
+.section p,
+.section h3,
+.section .one-line,
+.section .one-sub {
+  text-align: left !important;
+}
+/* headings keep their weight, lose the centering */
+.section h3, .section .one-line { margin-left: 0 !important; }
+.section p, .section .middle-text, .section .one-sub { margin-left: 0 !important; max-width: 100% !important; }
+/* the section label (THE TICK, DETERMINISM...) aligns left too */
+.section-label { text-align: left !important; }
+/* hero: still centered, it is a hero */
+.hero, .hero h2, .hero p, .hero .hero-actions { text-align: center !important; }
+.hero .hero-actions { justify-content: center !important; }
+/* header-block (page titles like "The human clock, measured") -> left too */
+.header-block { text-align: left !important; }
+.header-block h2 { text-align: left !important; }
+.header-block p { text-align: left !important; }
+
+
+/* ── LAYER 35 — kill every last auto-margin so ALL blocks share the edge ── */
+@media (min-width: 901px) {
+  .wrap > *, .section .wrap > * {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  /* charts/tables/cards: keep their padding, lose their auto-centering */
+  .chart-card, .arena-grid, .master-table, .panel-grid, .stat-band, .note-wrapper {
+    margin-left: 0 !important; margin-right: 0 !important;
+  }
+  .stat-band { max-width: 100% !important; }
+}

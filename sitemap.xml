@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://volkanadev.com/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>1.0</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://volkanadev.com/patchnotes.html</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://volkanadev.com/preorder.html</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>https://volkanadev.com/about.html</loc>
     <lastmod>2026-10-07</lastmod>
     <priority>0.8</priority>

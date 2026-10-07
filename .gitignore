@@ -1,0 +1,6 @@
+# Local-only working files: version sources of truth, drafts, hashes.
+# Underscore files are already ignored by Jekyll, but the raw text stays
+# readable in the public GitHub repo, so keep them out of the repo too.
+_3.0_*.md
+_3.0_*.lock
+.section-baseline.json

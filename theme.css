@@ -1723,3 +1723,33 @@ footer { position: relative; }
   @keyframes scrimIn { from { opacity: 0; } to { opacity: 1; } }
 }
 @media (prefers-reduced-motion: reduce) { body:not(.nav-hidden)::after { animation: none; } }
+
+
+/* ── LAYER 66 — the tiny "be patient" note under the hero buttons ── */
+.hero-note {
+  text-align: center;
+  margin: 18px 0 0;
+  font-size: 0.76rem;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  color: rgba(232,230,227,0.38);
+  font-style: normal;
+}
+@media (max-width: 900px) {
+  .hero-note { margin-top: 16px; font-size: 0.78rem; color: rgba(232,230,227,0.42); }
+}
+
+
+/* ── LAYER 67 — the hero-note is a <p> inside .hero, so the page's own
+      `.hero p` rule (20px, bluish grey) out-specifies LAYER 66. Beat it. ── */
+.hero .hero-note, .hero p.hero-note {
+  font-size: 0.76rem !important;
+  line-height: 1.55 !important;
+  color: rgba(232,230,227,0.38) !important;
+  margin: 18px 0 0 !important;
+  text-align: center !important;
+  max-width: none !important;
+}
+@media (max-width: 900px) {
+  .hero .hero-note, .hero p.hero-note { font-size: 0.78rem !important; color: rgba(232,230,227,0.42) !important; margin-top: 16px !important; }
+}

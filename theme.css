@@ -1523,3 +1523,78 @@ footer { position: relative; }
   body.docs-sanguis nav .nav-links a:hover { background: rgba(56,189,248,0.12) !important; }
   body.docs-sanguis nav .nav-links a.active { background: rgba(56,189,248,0.16) !important; }
 }
+
+
+/* ── LAYER 61 — MOBILE IS THE SAME SIDEBAR, not a top bar.
+      Below 901px the old sticky top bar + hamburger is replaced by the real
+      glass sidebar as an off-canvas drawer, opened by the SAME pull-tab the
+      desktop uses. nav-hidden (the default) = drawer closed. ── */
+@media (max-width: 900px) {
+  body { padding-left: 0 !important; padding-top: 62px !important; }
+  .wordmark { display: flex !important; left: 0 !important; padding: 0 20px !important; }
+  .wordmark span { font-size: 0.9rem !important; }
+
+  /* the drawer: the desktop sidebar, off-canvas */
+  nav {
+    position: fixed !important; inset: 0 auto 0 0 !important;
+    width: var(--sidebar-w) !important; height: 100vh !important;
+    flex-direction: column !important; align-items: stretch !important;
+    background: rgba(16,16,17,0.62) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(150%) !important;
+    backdrop-filter: blur(18px) saturate(150%) !important;
+    border: none !important;
+    border-right: 1px solid rgba(255,255,255,0.10) !important;
+    box-shadow: 12px 0 40px -12px rgba(0,0,0,0.7) !important;
+    padding: 26px 0 18px !important; overflow-y: auto;
+    z-index: 200 !important; transform: none !important;
+    transition: transform 0.42s cubic-bezier(0.22,0.61,0.36,1) !important;
+  }
+  body.nav-hidden nav { transform: translateX(-100%) !important; }
+  nav .wrap { padding: 0 !important; max-width: none !important; }
+  nav .nav-inner { display: block !important; padding: 0 !important; }
+  nav .brand { margin: 0 0 22px !important; padding: 0 22px !important; font-size: 1.05rem !important; }
+  nav .nav-links {
+    display: flex !important; flex-direction: column !important; gap: 3px !important;
+    position: static !important; background: none !important; border: none !important;
+    box-shadow: none !important; padding: 0 12px !important; margin: 0 !important;
+    max-height: none !important; overflow: visible !important; animation: none !important;
+  }
+  nav .nav-links a {
+    padding: 11px 14px !important; border-radius: 9px !important;
+    border-bottom: none !important; font-size: 0.95rem !important;
+    color: var(--muted-light, #9b9b9b);
+  }
+  nav .nav-links a:hover { background: rgba(175,0,0,0.12) !important; color: var(--ink,#e8e6e3) !important; }
+  nav .nav-links a.active { background: rgba(175,0,0,0.16) !important; color: var(--ink,#e8e6e3) !important; }
+  nav .nav-links a.nav-ea { background: rgba(175,0,0,0.10) !important; color: #c98d88 !important; }
+  nav .nav-links a.nav-ea.active { background: rgba(175,0,0,0.22) !important; color: #fff !important; }
+  body.docs-sanguis nav .nav-links a:hover { background: rgba(56,189,248,0.12) !important; }
+  body.docs-sanguis nav .nav-links a.active { background: rgba(56,189,248,0.16) !important; }
+
+  /* hamburger is gone — the pull-tab is the affordance now */
+  .nav-toggle { display: none !important; }
+
+  /* the SAME pull-tab, living on the drawer's right edge */
+  .nav-tab {
+    display: flex !important; align-items: center; justify-content: center;
+    position: fixed !important; top: 50% !important;
+    left: var(--sidebar-w) !important;
+    transform: translateY(-50%) !important;
+    width: 16px !important; height: 58px !important; z-index: 130 !important;
+    background: rgba(20,20,22,0.72) !important;
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    border: none !important; border-radius: 0 8px 8px 0 !important;
+    cursor: pointer; padding: 0 !important; margin: 0 !important;
+    box-shadow: 2px 0 14px rgba(0,0,0,0.4) !important;
+    transition: left 0.42s cubic-bezier(0.22,0.61,0.36,1) !important;
+  }
+  .nav-tab .chev {
+    width: 7px; height: 7px;
+    border-top: 2px solid #c62a2a; border-right: 2px solid #c62a2a;
+    transform: rotate(225deg) !important;
+    transition: transform 0.42s cubic-bezier(0.22,0.61,0.36,1) !important;
+  }
+  body.nav-hidden .nav-tab { left: 0 !important; }
+  body.nav-hidden .nav-tab .chev { transform: rotate(45deg) !important; }
+  body.docs-sanguis .nav-tab .chev { border-top-color:#38bdf8 !important; border-right-color:#38bdf8 !important; }
+}

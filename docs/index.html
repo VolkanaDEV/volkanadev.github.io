@@ -26,6 +26,15 @@
   a.blood h2 { color:#e03030; } a.blood:hover { box-shadow:0 28px 62px rgba(0,0,0,.66), 0 0 36px rgba(175,0,0,.18); }
   .back { display:inline-block; margin-bottom:40px; color:var(--muted); text-decoration:none; font-size:.9rem; }
   .back:hover { color:var(--ink); }
+  footer { position:relative; border-top:1px solid rgba(175,0,0,0.5); margin-top:64px; padding:46px 20px 40px; font-size:0.85rem; line-height:1.6; color:var(--muted); }
+  .footer-note { position:absolute; right:20px; bottom:40px; display:flex; align-items:center; gap:9px; font-size:0.78rem; color:rgba(232,230,227,0.42); }
+  .footer-note .fn-ico { display:inline-flex; align-items:center; gap:3px; }
+  .footer-note .fn-ico i { display:block; width:4px; height:4px; border-radius:1px; background:#af0000; animation:fnwave 1.6s ease-in-out infinite; }
+  .footer-note .fn-ico i:nth-child(2){ animation-delay:.2s; }
+  .footer-note .fn-ico i:nth-child(3){ animation-delay:.4s; }
+  @keyframes fnwave { 0%,100%{ opacity:.25; transform:translateY(0);} 50%{ opacity:1; transform:translateY(-2px);} }
+  @media (prefers-reduced-motion: reduce){ .footer-note .fn-ico i{ animation:none; opacity:.8; } }
+  @media (max-width:820px){ .footer-note{ position:static; margin-top:16px; } }
 </style></head>
 <body class="nav-hidden">
   <div class="wrap">
@@ -43,4 +52,16 @@
       </a>
     </div>
   </div>
+  <footer>
+    <div class="footer-links">
+      <a href="../terms.html">Terms of Use</a> | <a href="../privacy.html">Privacy Policy</a> | <a href="../careers.html">Careers</a>
+    </div>
+    Copyright &copy; 2026 VolkanaDEV Autonomous Systems, Inc.<br>
+    VolkanaDEV and Sanguis are intellectual property of VolkanaDEV Autonomous Systems, Inc.<br>
+    Business and private inquiries: <a href="mailto:volkanadev@volkanadev.com">volkanadev@volkanadev.com</a>
+    <div class="footer-note">
+      <span class="fn-ico" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span>Proudly designed and built with open source models.</span>
+    </div>
+  </footer>
 </body></html>

@@ -1753,3 +1753,9 @@ footer { position: relative; }
 @media (max-width: 900px) {
   .hero .hero-note, .hero p.hero-note { font-size: 0.78rem !important; color: rgba(232,230,227,0.42) !important; margin-top: 16px !important; }
 }
+
+
+/* ── LAYER 68 — privacy.html + terms.html had NO body background or text
+      colour (they predate the theme work), so they rendered black-on-white.
+      These pages carry no body class, so they are targeted by href. ── */
+body { background: var(--bg, #101011) !important; color: var(--ink, #e8e6e3); }

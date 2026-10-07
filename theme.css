@@ -899,3 +899,7 @@ body.docs-sanguis footer { border-top-color: rgba(56,189,248,0.55) !important;
   /* footer: comfortable breathing room under the blood rule */
   footer { padding-top: 38px !important; padding-bottom: 34px !important; }
 }
+
+
+/* ── LAYER 30 — footer: a touch more air (you flagged it; make it unambiguous) ── */
+footer { padding-top: 46px !important; padding-bottom: 40px !important; }

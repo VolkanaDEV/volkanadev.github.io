@@ -119,10 +119,10 @@ h3 { font-weight: 700 !important; color: var(--text-light) !important; }
 
 /* ── 13. Footer: match the quieter look ── */
 footer { background: transparent !important; }
-/* ── 14. Accent override: reactor cyan replaces terracotta everywhere ── */
+/* ── 14. Accent: BoneMarrow blood red (was reactor cyan; superseded by 3.0) ── */
 :root {
-  --accent: #00d4ff !important;
-  --accent-hover: #33e0ff !important;
+  --accent: #af0000 !important;
+  --accent-hover: #d21c1c !important;
 }
 
 /* ── 15. Creator's note: the handwritten lines stay neutral, never accent-colored ── */
@@ -131,15 +131,113 @@ footer { background: transparent !important; }
   font-weight: 600 !important;
 }
 
-/* ── 16. Cyan discipline: solid accent buttons are too eye-melting on dark.
-   Accent becomes a BORDER + GLOW treatment; fill stays dark. ── */
+/* ── 16. Dark-fill accent buttons: accent is a BORDER + GLOW treatment, fill stays dark. ── */
 .btn:not(.ghost):not(.cream) {
-  background: rgba(0, 212, 255, 0.08) !important;
-  border: 1px solid rgba(0, 212, 255, 0.55) !important;
-  color: #7fe7ff !important;
-  text-shadow: 0 0 8px rgba(0, 212, 255, 0.35);
+  background: rgba(175, 0, 0, 0.14) !important;
+  border: 1px solid rgba(175, 0, 0, 0.6) !important;
+  color: #f0b4b4 !important;
+  text-shadow: 0 0 8px rgba(175, 0, 0, 0.4);
 }
 .btn:not(.ghost):not(.cream):hover {
-  background: rgba(0, 212, 255, 0.16) !important;
-  box-shadow: 0 0 18px rgba(0, 212, 255, 0.35) !important;
+  background: rgba(175, 0, 0, 0.24) !important;
+  box-shadow: 0 0 18px rgba(175, 0, 0, 0.4) !important;
 }
+
+
+/* ============================================================
+   3.0 THEME — BoneMarrow palette + sidebar nav + glass
+   Palette lifted from the TUI (src/tui/mod.rs):
+   blood #af0000 (124) / deep #870000 (88) / teal #5fafaf (73)
+   ink #e8e6e3 (247) / dim #6c6c6c (242) / bg #101011 (233)
+   ============================================================ */
+:root {
+  --bg: #101011;
+  --panel-dark: #181819;
+  --surface: #1c1c1e;
+  --border: rgba(255,255,255,0.08);
+  --border-light: #2b2b2e;
+  --text-light: #e8e6e3;
+  --text-dark: #141414;
+  --muted-light: #9b9b9b;
+  --muted-dark: #5a5a5a;
+  --accent: #af0000;
+  --accent-hover: #d21c1c;
+  --blood: #af0000;
+  --deep: #870000;
+  --teal: #5fafaf;
+  --ink: #e8e6e3;
+  --sidebar-w: 236px;
+}
+
+/* ── the floating wordmark (content-area top) ── */
+.wordmark {
+  position: fixed; top: 0; left: var(--sidebar-w); right: 0; height: 62px;
+  display: flex; align-items: center; padding: 0 34px; z-index: 55;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(16,16,17,0.9), rgba(16,16,17,0));
+}
+.wordmark span {
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-weight: 800; letter-spacing: 0.22em; font-size: 0.98rem;
+  text-transform: uppercase; color: var(--ink);
+  text-shadow: 0 0 22px rgba(175,0,0,0.45);
+}
+
+/* ── desktop: sidebar, no border line, glass ── */
+@media (min-width: 901px) {
+  body { padding-left: var(--sidebar-w) !important; padding-top: 62px !important; }
+  nav {
+    position: fixed !important; inset: 0 auto 0 0; width: var(--sidebar-w) !important;
+    height: 100vh; z-index: 100;
+    background: rgba(16,16,17,0.55);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    backdrop-filter: blur(18px) saturate(150%);
+    border: none !important; border-bottom: none !important; border-right: none !important;
+    box-shadow: none !important;
+    display: flex !important; flex-direction: column; align-items: stretch;
+    padding: 26px 0 18px !important; overflow-y: auto;
+  }
+  nav .wrap { padding: 0 !important; max-width: none !important; }
+  nav .nav-inner { display: block !important; padding: 0 !important; }
+  nav .brand { margin: 0 0 22px !important; padding: 0 22px; font-size: 1.1rem; }
+  nav .nav-links {
+    display: flex !important; flex-direction: column; gap: 2px;
+    margin: 0 !important; padding: 0 12px !important;
+    position: static !important; background: none !important; border: none !important;
+  }
+  nav .nav-links a {
+    padding: 10px 14px !important; border-radius: 9px !important;
+    font-size: 0.94rem !important; border-bottom: none !important;
+  }
+  nav .nav-links a:not(:last-child)::after { display: none !important; }
+  nav .nav-links a:hover { background: rgba(175,0,0,0.12); color: var(--ink) !important; text-shadow: none !important; }
+  nav .nav-links a.active { background: rgba(175,0,0,0.16); color: var(--ink) !important; }
+  .nav-toggle { display: none !important; }
+  /* kill the old top-bar glow/line, it is a sidebar now */
+  nav { animation: none !important; }
+}
+
+/* ── mobile: back to a top bar, wordmark hidden ── */
+@media (max-width: 900px) {
+  body { padding-left: 0 !important; padding-top: 0 !important; }
+  .wordmark { display: none; }
+  nav {
+    position: sticky !important; top: 0; width: auto !important; height: auto !important;
+    flex-direction: row !important; align-items: center !important;
+    background: rgba(16,16,17,0.92) !important;
+    -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(175,0,0,0.5) !important;
+  }
+  nav .nav-inner { display: flex !important; }
+}
+
+/* ── palette propagation: kill cyan glows, use blood ── */
+.hero { background: radial-gradient(circle at 50% 0%, rgba(175,0,0,0.10), transparent 60%) !important; }
+.hero h2, .header-block h2 { text-shadow: 0 0 30px rgba(175,0,0,0.10) !important; }
+::selection { background: rgba(175,0,0,0.3) !important; }
+::-webkit-scrollbar-thumb { background: rgba(175,0,0,0.35) !important; }
+::-webkit-scrollbar-thumb:hover { background: rgba(175,0,0,0.55) !important; }
+.section { border-top: 1px solid rgba(175,0,0,0.28) !important; }
+footer { border-top: 1px solid rgba(175,0,0,0.5) !important; box-shadow: 0 -2px 16px -2px rgba(175,0,0,0.25) !important; }
+.card:hover, .doc-card:hover, .doc-grid > a:hover { box-shadow: 0 4px 20px rgba(175,0,0,0.14) !important; }
+.btn:hover, button:hover { box-shadow: 0 0 12px rgba(175,0,0,0.25) !important; }

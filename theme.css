@@ -973,3 +973,41 @@ footer { padding-top: 46px !important; padding-bottom: 40px !important; }
   }
   .stat-band { max-width: 100% !important; }
 }
+
+
+/* ============================================================
+   3.0 LAYER 36 — cards: fill the column without overflowing, and
+   keep their height. (width:100% made them squat + overflowed the grid.)
+   ============================================================ */
+@media (min-width: 901px) {
+  /* the grid itself: one column-width box, no overflow */
+  .arena-grid, .panel-grid {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important; margin-right: 0 !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+  }
+  /* the cards: natural height, fill their grid cell, never forced short */
+  .arena-card, .panel-grid .card {
+    min-height: 150px !important;
+    height: auto !important;
+    width: auto !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  /* the arena card is a flex column already; give it room */
+  .arena-card { padding: 22px 20px !important; }
+  /* three across only if there is room; otherwise 2, then 1 */
+  @media (max-width: 1180px) { .arena-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+  @media (max-width: 780px)  { .arena-grid { grid-template-columns: 1fr !important; } }
+}
+
+
+/* ── LAYER 37 — the grid was 4 columns for 3 cards; force 3 (or fewer) ── */
+@media (min-width: 1024px) {
+  .arena-grid { grid-template-columns: repeat(3, 1fr) !important; }
+}
+@media (min-width: 901px) and (max-width: 1023px) {
+  .arena-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}

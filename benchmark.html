@@ -423,6 +423,39 @@
   .master-table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 0.92rem; }
   .master-table th { text-align: left; color: var(--muted-light); font-weight: 600; padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; }
   .master-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--text-light); }
+
+  /* ── charts (rebuilt for 3.0) ── */
+  .chart-card {
+    background: var(--surface, rgba(20,20,22,0.5)); border-radius: 6px;
+    padding: 26px 24px 18px; margin: 30px auto; max-width: 960px;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.42), inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+  .chart-card h4 { color: var(--accent-soft,#b8403a); font-size: 1rem; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .chart-card .chart-sub { color: var(--muted-light); font-size: 0.82rem; margin: 0 0 20px; }
+  .bar-row { display: grid; grid-template-columns: 150px 1fr 92px; align-items: center; gap: 12px; margin: 9px 0; }
+  .bar-label { color: var(--muted-light); font-size: 0.84rem; text-align: right; }
+  .bar-track { height: 14px; background: rgba(255,255,255,0.045); border-radius: 3px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #6d0000, #c62a2a); transition: width 0.8s cubic-bezier(0.22,0.61,0.36,1); }
+  .bar-val { color: var(--text-light); font-size: 0.82rem; font-variant-numeric: tabular-nums; }
+  .axis-note { color: var(--muted-light); font-size: 0.74rem; margin-top: 14px; }
+
+  /* timeline (dot plot) */
+  .tl { position: relative; height: 88px; margin: 34px 8px 8px; }
+  .tl-axis { position: absolute; left: 0; right: 0; top: 44px; height: 1px; background: rgba(255,255,255,0.12); }
+  .tl-axis::after { content: "time →"; position: absolute; right: 0; top: 10px; color: var(--muted-light); font-size: 0.7rem; }
+  .tl-dot { position: absolute; top: 37px; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%;
+            background: #c62a2a; box-shadow: 0 0 14px rgba(198,42,42,0.5); }
+  .tl-dot.gold { background: #e03030; width: 18px; height: 18px; top: 35px; margin-left: -9px; }
+  .tl-lab { position: absolute; top: 62px; transform: translateX(-50%); color: var(--muted-light); font-size: 0.72rem; white-space: nowrap; }
+
+  /* log-scale scale-invariance plot */
+  .svg-chart { width: 100%; height: auto; display: block; }
+  .svg-chart .grid { stroke: rgba(255,255,255,0.07); }
+  .svg-chart text { fill: #9b9b9b; font-size: 11px; font-family: ui-monospace, Menlo, Consolas, monospace; }
+  .svg-chart .pt { fill: #c62a2a; }
+  .svg-chart .line { stroke: #c62a2a; stroke-width: 2; }
+  .svg-chart .lbl { fill: #e8e6e3; }
+
 </style>
 <link rel="stylesheet" href="theme.css">
 </head>
@@ -493,6 +526,16 @@
         <strong>Honest read:</strong> the pass cost is round-trip-bound, not compute-bound. The card's own arithmetic is microsecond-scale; the time is the state crossing to the fabric and coming home, the way a signal crosses a synapse. <strong>What it is not:</strong> richness. The being is 2,019 nodes; the clock is human-class, the size is not.
       </p>
     </div>
+
+      <div class="chart-card">
+        <h4>The clock, at every scale</h4>
+        <p class="chart-sub">One cascade pass over the whole 2,019-node web, and the states it locks. Bars are relative; values are the measured numbers.</p>
+        <div class="bar-row"><div class="bar-label">null tick (1 pass)</div><div class="bar-track"><div class="bar-fill" style="width:3%"></div></div><div class="bar-val">4.5 ms</div></div>
+        <div class="bar-row"><div class="bar-label">synaptic relay</div><div class="bar-track"><div class="bar-fill" style="width:3%"></div></div><div class="bar-val">0.5-1 ms</div></div>
+        <div class="bar-row"><div class="bar-label">human reaction</div><div class="bar-track"><div class="bar-fill" style="width:22%"></div></div><div class="bar-val">150-250 ms</div></div>
+        <div class="bar-row"><div class="bar-label">full lock (64 passes)</div><div class="bar-track"><div class="bar-fill" style="width:26%"></div></div><div class="bar-val">~0.2-0.3 s</div></div>
+        <p class="axis-note">Both ends of our tick land inside the biological register: one pass ~ one synaptic relay, one lock ~ one human reaction.</p>
+      </div>
   </section>
 
   <section class="section">
@@ -513,6 +556,26 @@
           <tr><td>Artifacts</td><td>byte-identical</td><td>matvec / gate / gate-else across executors (319&nbsp;B / 442&nbsp;B / 447&nbsp;B)</td></tr>
         </tbody>
       </table>
+
+      <div class="chart-card">
+        <h4>How close is "identical"?</h4>
+        <p class="chart-sub">Agreement across executors, on a log scale. Smaller is better; 1e-14 is far below float rounding noise.</p>
+        <svg class="svg-chart" viewBox="0 0 700 190" preserveAspectRatio="none" role="img" aria-label="log-scale agreement">
+          <line class="grid" x1="60" y1="20"  x2="680" y2="20"/>
+          <line class="grid" x1="60" y1="60"  x2="680" y2="60"/>
+          <line class="grid" x1="60" y1="100" x2="680" y2="100"/>
+          <line class="grid" x1="60" y1="140" x2="680" y2="140"/>
+          <text x="10" y="24">1e-9</text><text x="10" y="64">1e-10</text>
+          <text x="10" y="104">1e-12</text><text x="10" y="144">1e-14</text>
+          <circle class="pt" cx="600" cy="18"  r="6"/><text class="lbl" x="612" y="22">attention 1e-9</text>
+          <circle class="pt" cx="420" cy="76"  r="6"/><text class="lbl" x="432" y="80">fixed-w 1.9e-10</text>
+          <circle class="pt" cx="200" cy="150" r="7"/><text class="lbl" x="212" y="154">softmax ~1e-14</text>
+          <circle class="pt" cx="150" cy="166" r="7"/><text class="lbl" x="162" y="170">exp 6.2e-14</text>
+          <line class="line" x1="60" y1="178" x2="680" y2="178" stroke-dasharray="4 4"/>
+          <text x="600" y="176">float noise floor</text>
+        </svg>
+      </div>
+
       <p class="middle-text" style="margin-top: 20px;">The instruction set is frozen: 29 slots with fixed numbers and spellings, asserted when the compiler builds itself. Any new executor is admitted by passing one public per-operation suite.</p>
     </div>
   </section>
@@ -573,6 +636,26 @@
           <tr><td>100,000 switches</td><td>341 ms</td><td>30.6667</td></tr>
         </tbody>
       </table>
+
+      <div class="chart-card">
+        <h4>Time grows. The answer doesn't.</h4>
+        <p class="chart-sub">A four-switch press grown to 100,000 switches. Time per batch rises with size; the settled value is identical at every scale.</p>
+        <div class="bar-row"><div class="bar-label">1,000 switches</div><div class="bar-track"><div class="bar-fill" style="width:13%"></div></div><div class="bar-val">46 ms</div></div>
+        <div class="bar-row"><div class="bar-label">10,000 switches</div><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div><div class="bar-val">69 ms</div></div>
+        <div class="bar-row"><div class="bar-label">50,000 switches</div><div class="bar-track"><div class="bar-fill" style="width:56%"></div></div><div class="bar-val">192 ms</div></div>
+        <div class="bar-row"><div class="bar-label">100,000 switches</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-val">341 ms</div></div>
+        <svg class="svg-chart" viewBox="0 0 700 130" style="margin-top:22px" role="img" aria-label="settled value flat at every scale">
+          <line class="grid" x1="60" y1="90" x2="680" y2="90"/>
+          <line class="line" x1="70" y1="45" x2="670" y2="45"/>
+          <circle class="pt" cx="90"  cy="45" r="6"/><text class="lbl" x="70"  y="70">30.6667</text>
+          <circle class="pt" cx="270" cy="45" r="6"/>
+          <circle class="pt" cx="450" cy="45" r="6"/>
+          <circle class="pt" cx="630" cy="45" r="6"/><text class="lbl" x="560" y="70">30.6667</text>
+          <text x="300" y="118">the settled value at every scale</text>
+        </svg>
+        <p class="axis-note">Memory is not the constraint: about 130 MB per million switches. That is why the unit of scale is the column, not the machine.</p>
+      </div>
+
       <p class="middle-text" style="margin-top: 20px;">Memory is not the constraint: roughly 130&nbsp;MB per million switches. That is why the unit of scale is the <strong>column</strong>: a small crossbar that fits on a microcontroller, and millions of which fill a rack, all the same being.</p>
     </div>
   </section>

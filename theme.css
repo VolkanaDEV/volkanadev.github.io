@@ -1674,3 +1674,53 @@ footer { position: relative; }
   .btn, button.btn { display: block; width: 100%; }
   .center-btn { flex-direction: column !important; }
 }
+
+
+/* ── LAYER 64 — mobile catch-up to the desktop sidebar, 1:1.
+      (1) the drawer was showing a VolkanaDEV brand+logo; the desktop sidebar
+          HIDES it (the floating wordmark is the brand). Hide it here too.
+      (2) the .wordmark carries a top fade gradient meant to sit over content;
+          on mobile it read as a weird shading band. Drop the gradient.
+      (3) LAYER 61's mobile box-shadow overrode the desktop inset HAIRLINE, so
+          the drawer lost its right edge. Put the hairline back. ── */
+@media (max-width: 900px) {
+  /* (1) no brand in the drawer -- matches desktop */
+  nav .brand { display: none !important; }
+
+  /* (2) no gradient band across the top */
+  .wordmark { background: none !important; }
+
+  /* (3) the sidebar's right hairline, same inset trick as desktop */
+  nav {
+    box-shadow: inset -1px 0 0 rgba(255,255,255,0.10),
+                inset -1px 0 12px -6px rgba(175,0,0,0.35),
+                12px 0 40px -12px rgba(0,0,0,0.7) !important;
+  }
+  body.docs-sanguis nav {
+    box-shadow: inset -1px 0 0 rgba(255,255,255,0.10),
+                inset -1px 0 12px -6px rgba(56,189,248,0.35),
+                12px 0 40px -12px rgba(0,0,0,0.7) !important;
+  }
+}
+
+
+/* ── LAYER 65 — the drawer was 62% glass sitting OVER content, so the page
+      bled through and read as a weird gradient/shading smear. A drawer needs
+      to be a panel, not a window: raise it near-opaque but keep the glass
+      blur so the edge still reads as glass, and keep the hairline. ── */
+@media (max-width: 900px) {
+  nav {
+    background: rgba(14,14,16,0.94) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(130%) !important;
+    backdrop-filter: blur(20px) saturate(130%) !important;
+  }
+  /* the scrim: dim the page behind an open drawer so the panel reads clean */
+  body:not(.nav-hidden)::after {
+    content: ""; position: fixed; inset: 0; z-index: 150; pointer-events: none;
+    background: rgba(6,6,8,0.55);
+    animation: scrimIn 0.3s ease both;
+  }
+  nav { z-index: 200 !important; }
+  @keyframes scrimIn { from { opacity: 0; } to { opacity: 1; } }
+}
+@media (prefers-reduced-motion: reduce) { body:not(.nav-hidden)::after { animation: none; } }

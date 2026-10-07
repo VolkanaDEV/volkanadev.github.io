@@ -1787,3 +1787,30 @@ body { background: var(--bg, #101011) !important; color: var(--ink, #e8e6e3); }
   .creator-quote { max-width: none; padding: 4px 0; }
   .creator-quote p { font-size: 1.02rem; }
 }
+
+
+/* ── LAYER 70 — centre the creator's quote.
+      LAYER 35 (.wrap > * { width:100%; ... }) was written to force every
+      block to one left edge; it also left-aligned the quote's <p>. Beat it
+      with equal-or-higher specificity and text-align:center. ── */
+.section .wrap > blockquote.creator-quote,
+.wrap > blockquote.creator-quote,
+blockquote.creator-quote {
+  max-width: 620px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: auto !important;
+  text-align: center !important;
+}
+.section .wrap > blockquote.creator-quote > p,
+blockquote.creator-quote > p {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: 100% !important;
+}
+.section .wrap > blockquote.creator-quote > cite,
+blockquote.creator-quote > cite { text-align: center !important; }
+@media (max-width: 900px) {
+  .section .wrap > blockquote.creator-quote, blockquote.creator-quote { max-width: 100% !important; }
+}

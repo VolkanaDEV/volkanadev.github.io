@@ -595,3 +595,58 @@ body.docs-sanguis .section-label,
 body.docs-sanguis .doc-content h2 + p.subtitle,
 body.docs-sanguis .breadcrumb a { color: #38bdf8 !important; }
 body.docs-sanguis footer a { color: #38bdf8 !important; }
+
+
+/* ============================================================
+   3.0 LAYER 13 — soft blood for TEXT (neon backed off a smidge);
+   bright red stays only in faint glows/borders where it reads as depth
+   ============================================================ */
+:root { --accent-soft: #b8403a; --accent-soft-hover: #c9554e; }
+.card h4, .doc-card h4, .doc-grid > a h4, .arena-card h4,
+.section-label, .doc-sidebar a.active, .doc-nav a.active,
+.doc-content a, .breadcrumb a, footer a, .back-link,
+.note-box p:last-child { color: var(--accent-soft) !important; }
+body.docs-sanguis .card h4, body.docs-sanguis .section-label,
+body.docs-sanguis .doc-content a, body.docs-sanguis footer a,
+body.docs-sanguis .doc-sidebar a.active { color: #38bdf8 !important; }
+.btn:not(.ghost):not(.cream) { color: #c98d88 !important; }
+
+
+/* ============================================================
+   3.0 LAYER 14 — panels instead of carousels; sharper tech boxes
+   ============================================================ */
+.panel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin: 36px auto 0;
+  max-width: 1000px;
+}
+@media (max-width: 860px) { .panel-grid { grid-template-columns: 1fr; } }
+
+/* the box: squared-off, top accent bar, glass, soft shadow (no border) */
+.card, .doc-card, .doc-grid > a, .arena-card, .note-box {
+  border-radius: 6px !important;
+  position: relative;
+  overflow: hidden;
+  padding: 28px 26px 26px !important;
+}
+/* top accent bar that lights on hover — replaces the "click me" carousel cue */
+.card::after, .doc-card::after, .doc-grid > a::after, .arena-card::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, rgba(175,0,0,0.0), rgba(175,0,0,0.55), rgba(175,0,0,0.0));
+  opacity: 0.55; transition: opacity 0.3s ease, background 0.3s ease;
+}
+.card:hover::after, .doc-card:hover::after, .doc-grid > a:hover::after, .arena-card:hover::after {
+  opacity: 1;
+  background: linear-gradient(90deg, rgba(175,0,0,0.0), rgba(198,42,42,0.95), rgba(175,0,0,0.0));
+}
+/* keep the sheen but subtler for the new shape */
+.card::before { border-radius: 6px !important; }
+
+/* the in-page hero glow: soften its red a touch too */
+.hero { background: radial-gradient(circle at 50% 0%, rgba(150,20,20,0.09), transparent 62%) !important; }
+.hero h2, .header-block h2 { text-shadow: 0 0 34px rgba(150,20,20,0.10) !important; }
+
+/* hide any leftover carousel chrome (dead CSS, but belt-and-braces) */
+.carousel, .carousel-controls { display: none !important; }

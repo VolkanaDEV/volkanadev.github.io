@@ -337,34 +337,19 @@
       <h3>Bit-for-bit, on every machine</h3>
       <p>Most software only agrees with itself on one machine. Results drift between a graphics card and a CPU, between one card and the next, between today and next year. Sanguis does not drift. The same program produces the same bytes on every executor it runs on, and every number below was measured, not promised.</p>
 
-      <div class="carousel" id="carousel-3">
-        <div class="carousel-viewport">
-          <div class="carousel-track">
-            <div class="carousel-slide">
-              <div class="card">
+      <div class="panel-grid">
+        <div class="card">
                 <h4>Measured, Not Claimed</h4>
                 <p>Across the graphics card, the just-in-time executor, and the self-compiling compiler: exponential agreement to 6.2e-14, softmax to about 1e-14, attention to 1e-9. The card's output was checked against an independent host computation, to the milli-unit. Identical, every run.</p>
               </div>
-            </div>
-            <div class="carousel-slide">
-              <div class="card">
+        <div class="card">
                 <h4>One Instruction Set, Many Machines</h4>
                 <p>The instruction set is frozen: 29 slots with fixed numbers and spellings, checked when the compiler builds itself. Any new executor (another GPU, a just-in-time engine, an FPGA, a microcontroller) is admitted by passing one public per-operation test suite. Adding a machine never splits the language.</p>
               </div>
-            </div>
-            <div class="carousel-slide">
-              <div class="card">
+        <div class="card">
                 <h4>Why The Industry Hasn't Done It</h4>
                 <p>Cross-machine determinism is openly listed as unsolved across the industry. Most tooling settles for identical builds, not identical behaviour. Floating point is not associative and every machine rounds differently. Here, rounding is a contract instead of an accident.</p>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="carousel-controls">
-          <button class="carousel-arrow" onclick="carouselMove('carousel-3', -1)" aria-label="Previous">&#8592;</button>
-          <div class="carousel-dots" id="dots-carousel-3"></div>
-          <button class="carousel-arrow" onclick="carouselMove('carousel-3', 1)" aria-label="Next">&#8594;</button>
-        </div>
       </div>
     </div>
   </section>
@@ -375,34 +360,19 @@
       <h3>Introducing Sanguis</h3>
       <p>Sanguis is a self-hosting programming language. Instead of objects, you write organs: self-contained structures that hold their own state, fire when their conditions are met, and pass signals to each other along routes. No classes, no inheritance. A program becomes a grid of switches and wires that settles at once, and that settled state is your output. The compiler is written in Sanguis and compiles itself, so every artifact a user ships is Sanguis-built and Sanguis-linked.</p>
       
-      <div class="carousel" id="carousel-1">
-        <div class="carousel-viewport">
-          <div class="carousel-track">
-            <div class="carousel-slide">
-              <div class="card">
+      <div class="panel-grid">
+        <div class="card">
                 <h4>Organs, Not Objects</h4>
                 <p>You write organs: structs with fields and methods that compile into wiring. No classes, no inheritance. An organ holds its own state on the GPU, and its methods run as part of the grid.</p>
               </div>
-            </div>
-            <div class="carousel-slide">
-              <div class="card">
+        <div class="card">
                 <h4>No Steps, Just Signals</h4>
                 <p>A normal program runs one line at a time. Sanguis is different: your whole program turns into a circuit that runs everywhere at once. Values flow through the circuit until every part of it stops changing. That stable end state is your program's output.</p>
               </div>
-            </div>
-            <div class="carousel-slide">
-              <div class="card">
+        <div class="card">
                 <h4>A Core Is a File</h4>
                 <p>A running Sanguis program can be written to a small package (its wiring, its learned weights, its clock), and resumed in a fresh process, bit-identical to the one that was running before. The same program, unplugged and picked back up, exactly where it was.</p>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="carousel-controls">
-          <button class="carousel-arrow" onclick="carouselMove('carousel-1', -1)" aria-label="Previous">&#8592;</button>
-          <div class="carousel-dots" id="dots-carousel-1"></div>
-          <button class="carousel-arrow" onclick="carouselMove('carousel-1', 1)" aria-label="Next">&#8594;</button>
-        </div>
       </div>
 
     </div>
@@ -414,34 +384,19 @@
       <h3>BloodCode</h3>
       <p class="vana-body">Every Sanguis program compiles to BloodCode: a frozen instruction set, 29 slots with fixed numbers and spellings, asserted when the compiler builds itself. BloodCode is what runs. Sanguis is the notation you write; BloodCode is the machine. The same artifact runs unchanged on a graphics card, a just-in-time executor, and the self-compiling compiler, and produces the same bytes on each.</p>
       
-      <div class="carousel" id="carousel-2">
-        <div class="carousel-viewport">
-          <div class="carousel-track">
-            <div class="carousel-slide">
-              <div class="card">
+      <div class="panel-grid">
+        <div class="card">
                 <h4>No Instruction Pointer</h4>
                 <p>VANA doesn't step through your code one line at a time. Your whole program becomes a grid of switches and wires that runs all at once on the GPU. Signals flow until every part of the grid stabilizes, and that stable state is your answer.</p>
               </div>
-            </div>
-            <div class="carousel-slide">
-              <div class="card">
+        <div class="card">
                 <h4>Same Machine, Different Programs</h4>
                 <p>Every Sanguis program compiles down to the same shape: a pattern of switches, wires, and signal timings. The GPU kernel that runs that pattern is fixed. It never changes, no matter what you write. That means the same program pattern runs on any hardware that has this kernel, from a gaming GPU to a datacenter card to custom silicon.</p>
               </div>
-            </div>
-            <div class="carousel-slide">
-              <div class="card">
+        <div class="card">
                 <h4>It Runs at Human Speed</h4>
                 <p>One full pass over the whole web takes about 4.5 milliseconds on a consumer card, the same register as a single neural event. A complete settled answer takes about a quarter of a second, the same as a human reaction. It runs continuously, unattended, for as long as you leave it.</p>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="carousel-controls">
-          <button class="carousel-arrow" onclick="carouselMove('carousel-2', -1)" aria-label="Previous">&#8592;</button>
-          <div class="carousel-dots" id="dots-carousel-2"></div>
-          <button class="carousel-arrow" onclick="carouselMove('carousel-2', 1)" aria-label="Next">&#8594;</button>
-        </div>
       </div>
 
       <div style="text-align: center; margin-top: 32px;">
@@ -471,82 +426,6 @@
     Business and private inquiries: <a href="mailto:volkanadev@volkanadev.com">volkanadev@volkanadev.com</a>
   </footer>
 
-  <script>
-    // Carousel logic - one card at a time, auto-rotate, arrows + dots
-    var carouselStates = {};
-    function initCarousel(id) {
-      var c = document.getElementById(id);
-      if (!c) return;
-      var track = c.querySelector('.carousel-track');
-      var slides = c.querySelectorAll('.carousel-slide');
-      var dotsContainer = c.querySelector('.carousel-dots');
-      var count = slides.length;
-      carouselStates[id] = { track: track, count: count, current: 0, timer: null };
-
-      // Build dots
-      for (var i = 0; i < count; i++) {
-        (function(idx) {
-          var dot = document.createElement('button');
-          dot.className = 'carousel-dot' + (idx === 0 ? ' active' : '');
-          dot.setAttribute('aria-label', 'Slide ' + (idx + 1));
-          dot.onclick = function() { carouselGoTo(id, idx); };
-          dotsContainer.appendChild(dot);
-        })(i);
-      }
-
-      // Start auto-rotate
-      carouselAutoStart(id);
-    }
-
-    function carouselGoTo(id, idx) {
-      var s = carouselStates[id];
-      if (!s) return;
-      s.current = ((idx % s.count) + s.count) % s.count;
-      s.track.style.transform = 'translateX(-' + (s.current * 100) + '%)';
-      var dots = document.getElementById('dots-' + id).children;
-      for (var i = 0; i < dots.length; i++) {
-        dots[i].className = 'carousel-dot' + (i === s.current ? ' active' : '');
-      }
-      // Reset auto-rotate timer
-      carouselAutoStart(id);
-    }
-
-    function carouselMove(id, dir) {
-      var s = carouselStates[id];
-      if (!s) return;
-      carouselGoTo(id, s.current + dir);
-    }
-
-    function carouselAutoStart(id) {
-      var s = carouselStates[id];
-      if (!s) return;
-      if (s.timer) clearInterval(s.timer);
-      s.timer = setInterval(function() {
-        carouselGoTo(id, s.current + 1);
-      }, 120000);
-    }
-
-    // Touch swipe support for mobile
-    var touchStartX = {};
-    document.querySelectorAll('.carousel').forEach(function(c) {
-      var id = c.id;
-      c.addEventListener('touchstart', function(e) {
-        touchStartX[id] = e.touches[0].clientX;
-      }, { passive: true });
-      c.addEventListener('touchend', function(e) {
-        if (touchStartX[id] === undefined) return;
-        var dx = e.changedTouches[0].clientX - touchStartX[id];
-        if (Math.abs(dx) > 40) {
-          carouselMove(id, dx < 0 ? 1 : -1);
-        }
-        touchStartX[id] = undefined;
-      }, { passive: true });
-    });
-
-    // Initialize all carousels
-    initCarousel('carousel-1');
-    initCarousel('carousel-2');
-    initCarousel('carousel-3');
-  </script>
+  
 </body>
 </html>

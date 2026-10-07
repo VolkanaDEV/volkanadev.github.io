@@ -558,19 +558,22 @@
       <div class="chart-card">
         <h4>How close is "identical"?</h4>
         <p class="chart-sub">Agreement across executors, on a log scale. Smaller is better; 1e-14 is far below float rounding noise.</p>
-        <svg class="svg-chart" viewBox="0 0 700 190" preserveAspectRatio="none" role="img" aria-label="log-scale agreement">
-          <line class="grid" x1="60" y1="20"  x2="680" y2="20"/>
-          <line class="grid" x1="60" y1="60"  x2="680" y2="60"/>
-          <line class="grid" x1="60" y1="100" x2="680" y2="100"/>
-          <line class="grid" x1="60" y1="140" x2="680" y2="140"/>
-          <text x="10" y="24">1e-9</text><text x="10" y="64">1e-10</text>
-          <text x="10" y="104">1e-12</text><text x="10" y="144">1e-14</text>
-          <circle class="pt" cx="600" cy="18"  r="6"/><text class="lbl" x="612" y="22">attention 1e-9</text>
-          <circle class="pt" cx="420" cy="76"  r="6"/><text class="lbl" x="432" y="80">fixed-w 1.9e-10</text>
-          <circle class="pt" cx="200" cy="150" r="7"/><text class="lbl" x="212" y="154">softmax ~1e-14</text>
-          <circle class="pt" cx="150" cy="166" r="7"/><text class="lbl" x="162" y="170">exp 6.2e-14</text>
-          <line class="line" x1="60" y1="178" x2="680" y2="178" stroke-dasharray="4 4"/>
-          <text x="600" y="176">float noise floor</text>
+                <svg class="svg-chart" viewBox="0 0 700 210" preserveAspectRatio="none" role="img" aria-label="log-scale agreement across executors">
+          <line class="grid" x1="80" y1="30"  x2="660" y2="30"/>
+          <line class="grid" x1="80" y1="70"  x2="660" y2="70"/>
+          <line class="grid" x1="80" y1="110" x2="660" y2="110"/>
+          <line class="grid" x1="80" y1="150" x2="660" y2="150"/>
+          <text x="16" y="34">1e-9</text>
+          <text x="16" y="74">1e-11</text>
+          <text x="16" y="114">1e-13</text>
+          <text x="16" y="154">1e-15</text>
+          <line class="axis" x1="80" y1="10" x2="80" y2="185"/>
+          <circle class="pt" cx="300" cy="30"  r="6"/><text class="lbl" x="314" y="34">attention 1e-9</text>
+          <circle class="pt" cx="300" cy="58"  r="6"/><text class="lbl" x="314" y="62">fixed-weight 1.9e-10</text>
+          <circle class="pt" cx="300" cy="128" r="7"/><text class="lbl" x="314" y="132">6.2e-14  (exponential)</text>
+          <circle class="pt" cx="300" cy="150" r="7"/><text class="lbl" x="314" y="154">~1e-14  (softmax)</text>
+          <line class="line" x1="80" y1="185" x2="660" y2="185" stroke-dasharray="5 4"/>
+          <text x="600" y="180">noise floor</text>
         </svg>
       </div>
       <p class="middle-text" style="margin-top: 20px;">The instruction set is frozen: 29 slots with fixed numbers and spellings, asserted when the compiler builds itself. Any new executor is admitted by passing one public per-operation suite.</p>

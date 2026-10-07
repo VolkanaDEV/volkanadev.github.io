@@ -1011,3 +1011,30 @@ footer { padding-top: 46px !important; padding-bottom: 40px !important; }
 @media (min-width: 901px) and (max-width: 1023px) {
   .arena-grid { grid-template-columns: repeat(2, 1fr) !important; }
 }
+
+
+/* ============================================================
+   3.0 LAYER 38 — card stats: real font, no clipping.
+   (was: monospace + white-space:nowrap -> ugly + clipped "checksum")
+   ============================================================ */
+.arena-stat span:last-child {
+  font-family: inherit !important;          /* match the page, not typewriter */
+  font-weight: 600 !important;
+  white-space: normal !important;          /* allow wrap instead of clipping */
+  overflow-wrap: anywhere !important;
+  text-align: right !important;
+  flex: 0 1 auto !important;                /* can shrink so it wraps rather than clips */
+  min-width: 0 !important;
+}
+.arena-stat { gap: 12px !important; }
+.arena-stat span:first-child { flex: 0 0 auto !important; }
+/* and give the numbers a tabular treatment so they stay tidy without the mono face */
+.arena-stat span:last-child { font-variant-numeric: tabular-nums; }
+
+
+/* ── LAYER 39 — the dot-plot: proper SVG axis + readable type ── */
+.svg-chart .axis { stroke: rgba(255,255,255,0.22); stroke-width: 1; }
+.svg-chart { height: auto; max-height: 260px; }
+.svg-chart .lbl { fill: #e8e6e3; font-size: 12px; font-family: inherit; }
+.svg-chart text { font-family: inherit; font-size: 11px; }
+.svg-chart .pt { fill: #c62a2a; }

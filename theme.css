@@ -295,3 +295,39 @@ body::after {
 
 /* ── the old sidebar brand is superseded by the floating wordmark: hide on desktop ── */
 @media (min-width: 901px) { nav .brand { display: none !important; } }
+
+
+/* ============================================================
+   3.0 LAYER 3 — cards: no border, soft shadow, hover brings to front
+   ============================================================ */
+.card, .doc-card, .doc-grid > a, .arena-card, .note-box {
+  border: none !important;
+  box-shadow:
+    0 10px 26px rgba(0, 0, 0, 0.42),
+    0 2px 8px rgba(0, 0, 0, 0.30),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  transition:
+    transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 0.28s ease,
+    background 0.28s ease !important;
+  position: relative;
+  z-index: 1;
+}
+/* the lift: shadow deepens and spreads, the card rises and firms up */
+.card:hover, .doc-card:hover, .doc-grid > a:hover, .arena-card:hover, .note-box:hover {
+  transform: translateY(-5px) scale(1.012) !important;
+  border: none !important;
+  background: rgba(27, 27, 30, 0.66) !important;
+  box-shadow:
+    0 28px 62px rgba(0, 0, 0, 0.66),
+    0 8px 20px rgba(0, 0, 0, 0.46),
+    0 0 36px rgba(175, 0, 0, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+  z-index: 6;
+}
+@media (prefers-reduced-motion: reduce) {
+  .card, .doc-card, .doc-grid > a, .arena-card, .note-box { transition: none !important; }
+  .card:hover, .doc-card:hover, .doc-grid > a:hover, .arena-card:hover, .note-box:hover {
+    transform: none !important;
+  }
+}

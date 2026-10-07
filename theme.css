@@ -1814,3 +1814,17 @@ blockquote.creator-quote > cite { text-align: center !important; }
 @media (max-width: 900px) {
   .section .wrap > blockquote.creator-quote, blockquote.creator-quote { max-width: 100% !important; }
 }
+
+
+/* ── LAYER 71 — the Lorax quote's line break, responsive.
+      Desktop: wide enough for the whole quote on ONE line.
+      Phone: "It's not." drops to its own line as a block, so the break is
+      always clean (a mid-sentence hyphen-style wrap looked bad). ── */
+.section .wrap > blockquote.creator-quote,
+.wrap > blockquote.creator-quote,
+blockquote.creator-quote { max-width: 860px !important; }
+.creator-quote p { text-wrap: normal !important; }
+.creator-quote .q-end { display: inline; }
+@media (max-width: 900px) {
+  .creator-quote .q-end { display: block; }
+}

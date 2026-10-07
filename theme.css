@@ -907,3 +907,25 @@ footer { padding-top: 46px !important; padding-bottom: 40px !important; }
   /* footer breathing room */
   footer { padding-top: 46px !important; padding-bottom: 40px !important; }
 }
+
+
+/* ============================================================
+   3.0 LAYER 33 — ONE left edge. (headings were 268, tables 296,
+   paragraphs 336 -- three gutters = the ragged look.)
+   Every block is now 100% of one column. One edge. Done.
+   ============================================================ */
+@media (min-width: 901px) {
+  body { padding-left: var(--sidebar-w) !important; }
+  body.nav-hidden { padding-left: 0 !important; }
+  /* the single content column */
+  .wrap, .header-block { max-width: 960px !important; margin-left: auto !important; margin-right: auto !important; padding: 0 30px !important; }
+  /* every block fills that column exactly: headings, cards, tables, charts, prose */
+  .wrap h2, .wrap h3, .wrap p, .wrap .middle-text, .wrap .one-line, .wrap .one-sub,
+  .wrap .master-table, .wrap .arena-grid, .wrap .chart-card, .wrap .panel-grid,
+  .wrap table, .wrap .stat-band, .wrap .doc-layout, .wrap .note-wrapper {
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  footer { padding-top: 46px !important; padding-bottom: 40px !important; }
+}

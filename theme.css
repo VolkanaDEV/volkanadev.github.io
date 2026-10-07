@@ -453,3 +453,50 @@ body::after {
   background-position: 0px 0px, 40px 70px, 90px 20px !important;
   background-repeat: repeat !important;
 }
+
+
+/* ============================================================
+   3.0 LAYER 9 — unlit traces INVISIBLE. The board is dark until the
+   pulse lights it; all you see is the lit sweep + its trailing
+   gradient moving through the dark. (supersedes the visible base)
+   ============================================================ */
+body::before { opacity: 0 !important; }   /* unlit circuit: not visible at all */
+
+/* the pulse is now the ONLY light. Give the crest a touch more presence
+   and deepen the tail so it reads as a comet, not a flat band. */
+body::after {
+  -webkit-mask-image: linear-gradient(to bottom,
+      transparent 0%, rgba(0,0,0,0.015) 14%, rgba(0,0,0,0.06) 32%,
+      rgba(0,0,0,0.18) 50%, rgba(0,0,0,0.42) 66%, rgba(0,0,0,0.75) 76%,
+      #000 82%, rgba(0,0,0,0.30) 90%, transparent 100%) !important;
+  mask-image: linear-gradient(to bottom,
+      transparent 0%, rgba(0,0,0,0.015) 14%, rgba(0,0,0,0.06) 32%,
+      rgba(0,0,0,0.18) 50%, rgba(0,0,0,0.42) 66%, rgba(0,0,0,0.75) 76%,
+      #000 82%, rgba(0,0,0,0.30) 90%, transparent 100%) !important;
+}
+
+
+/* ============================================================
+   3.0 LAYER 10 — narrow the lit band: a sharper crest with a long
+   thin tail, so it reads as light CRAWLING THE TRACES, not a sheet
+   ============================================================ */
+body::after {
+  -webkit-mask-size: 100% 300px !important;
+  mask-size: 100% 300px !important;
+  -webkit-mask-image: linear-gradient(to bottom,
+      transparent 0%, rgba(0,0,0,0.0) 22%,
+      rgba(0,0,0,0.04) 40%, rgba(0,0,0,0.13) 56%,
+      rgba(0,0,0,0.34) 68%, rgba(0,0,0,0.68) 78%,
+      #000 88%, rgba(0,0,0,0.22) 94%, transparent 100%) !important;
+  mask-image: linear-gradient(to bottom,
+      transparent 0%, rgba(0,0,0,0.0) 22%,
+      rgba(0,0,0,0.04) 40%, rgba(0,0,0,0.13) 56%,
+      rgba(0,0,0,0.34) 68%, rgba(0,0,0,0.68) 78%,
+      #000 88%, rgba(0,0,0,0.22) 94%, transparent 100%) !important;
+  animation: hexHeartbeatFlow 16s linear infinite !important;
+}
+@keyframes hexHeartbeatFlow {
+  0%   { -webkit-mask-position: 0 -300px; mask-position: 0 -300px; }
+  62%  { -webkit-mask-position: 0 100vh;  mask-position: 0 100vh; }
+  100% { -webkit-mask-position: 0 100vh;  mask-position: 0 100vh; }
+}

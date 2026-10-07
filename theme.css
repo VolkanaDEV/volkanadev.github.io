@@ -790,3 +790,28 @@ body.docs-sanguis .doc-sidebar a.active { color: #38bdf8 !important; }
 .hero { padding: 56px 20px 8px !important; }
 .hero h2 { font-size: clamp(2.4rem, 7vw, 4.2rem) !important; letter-spacing: -0.035em !important; line-height: 1.05 !important; }
 .hero p { font-size: clamp(1.05rem, 2.2vw, 1.25rem) !important; }
+
+
+/* ============================================================
+   3.0 LAYER 18 — the sidebar needs a right edge: a faint hairline so
+   it reads as a distinct slab (and so the pull-tab has something to bite)
+   ============================================================ */
+@media (min-width: 901px) {
+  nav {
+    /* the hairline lives as an inset shadow on the RIGHT edge only --
+       no full border, so it still reads as glass, not a box */
+    box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.10),
+                inset -1px 0 12px -6px rgba(175, 0, 0, 0.35) !important;
+  }
+  body.docs-sanguis nav {
+    box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.10),
+                inset -1px 0 12px -6px rgba(56, 189, 248, 0.35) !important;
+  }
+  /* the tab: give it a matching edge and join it visually to the slab */
+  .nav-tab {
+    border-left: 1px solid rgba(255, 255, 255, 0.10) !important;
+    box-shadow: 2px 0 14px rgba(0,0,0,0.45),
+                inset 0 0 0 1px rgba(255,255,255,0.03) !important;
+  }
+  body.nav-hidden nav { box-shadow: none !important; }
+}

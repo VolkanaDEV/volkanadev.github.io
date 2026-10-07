@@ -372,3 +372,35 @@ body::after {
 @media (prefers-reduced-motion: reduce) {
   body::after { animation: none !important; -webkit-mask-position: 0 30%; mask-position: 0 30%; }
 }
+
+
+/* ============================================================
+   3.0 LAYER 5 — pulse tuning: slower, dimmer, with a quiet gap,
+   and a long trailing gradient so the crest fades smoothly
+   (supersedes LAYER 4)
+   ============================================================ */
+
+/* the travelling band: long tail ABOVE the crest (what the eye
+   reads as the trail), quick fall below it */
+body::after {
+  background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http:%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2784%27%20height%3D%2749%27%20viewBox%3D%270%200%2084%2049%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23e03030%27%20stroke-opacity%3D%270.30%27%20stroke-width%3D%271.15%27%3E%3Cpath%20d%3D%27M56%200.5%20L70%2024.5%20L56%2048.5%20L28%2048.5%20L14%2024.5%20L28%200.5%20Z%27%2F%3E%3Cpath%20d%3D%27M0%2024.5%20L14%2024.5%27%2F%3E%3Cpath%20d%3D%27M70%2024.5%20L84%2024.5%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E') !important;
+  -webkit-mask-image: linear-gradient(to bottom,
+      transparent 0%, rgba(0,0,0,0.03) 16%, rgba(0,0,0,0.10) 34%,
+      rgba(0,0,0,0.26) 52%, rgba(0,0,0,0.55) 68%, #000 78%,
+      rgba(0,0,0,0.42) 87%, transparent 100%) !important;
+  mask-image: linear-gradient(to bottom,
+      transparent 0%, rgba(0,0,0,0.03) 16%, rgba(0,0,0,0.10) 34%,
+      rgba(0,0,0,0.26) 52%, rgba(0,0,0,0.55) 68%, #000 78%,
+      rgba(0,0,0,0.42) 87%, transparent 100%) !important;
+  -webkit-mask-size: 100% 420px !important;
+  mask-size: 100% 420px !important;
+  animation: hexHeartbeatFlow 16s linear infinite !important;
+}
+@keyframes hexHeartbeatFlow {
+  0%   { -webkit-mask-position: 0 -420px; mask-position: 0 -420px; }
+  62%  { -webkit-mask-position: 0 100vh;  mask-position: 0 100vh; }  /* sweep done */
+  100% { -webkit-mask-position: 0 100vh;  mask-position: 0 100vh; }  /* the quiet gap */
+}
+@media (prefers-reduced-motion: reduce) {
+  body::after { animation: none !important; -webkit-mask-position: 0 24%; mask-position: 0 24%; }
+}

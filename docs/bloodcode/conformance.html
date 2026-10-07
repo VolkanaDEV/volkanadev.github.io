@@ -180,9 +180,9 @@
       <h2>The gate</h2>
       <p>Any executor, whether another GPU, an FPGA, a microcontroller, or a JIT, is admitted by passing the per-operation suite: one test per op, checking that the machine produces the reference output. The reference implementation is the JIT; the suite is the contract.</p>
       <h2>Why a suite and not a spec</h2>
-      <p>A written spec drifts. A test suite cannot: it either passes on a new machine or it doesn't. Admission is operational, not aspirational.</p>
+      <p>A written spec drifts. A test suite cannot: it either passes on a new machine or it doesn't.</p>
       <h2>Portability</h2>
-      <p>Because admission is per-op, coverage grows without ever running wrong. An executor that handles 20 of the 29 ops serves those 20 and routes the rest to a CPU tier. No whole-program fallback.</p>
+      <p>Because admission is per-op, coverage grows without ever running wrong. An executor that handles 20 of the 29 ops serves those 20 and routes the rest to a CPU tier, so no program has to be abandoned.</p>
       <h2>Current coverage</h2>
       <p>The card path runs a growing subset. Strings on the card remain the known hard edge; the router turns that from a blocker into a routing decision.</p>
     </main>

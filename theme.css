@@ -1993,3 +1993,57 @@ blockquote.creator-quote { max-width: 860px !important; }
   a.card:hover { transform: none !important; box-shadow: none !important; }
   a.sang { border-left-color: rgba(56,189,248,0.45) !important; }
 }
+
+
+/* ── LAYER 76 — the countdown on mobile was CLIPPED: the four units plus
+      separators came to 321px inside a 292px track, and the box had
+      overflow:hidden, so "34" lost its 4 and "SECONDS" lost its S.
+      Fix: drop the box (the user asked), shrink the digits, and let the
+      units share the width evenly instead of overflowing. ── */
+@media (max-width: 900px) {
+  /* no box — the numbers stand on the page, like the rest of the flatten pass */
+  .ea-countdown, .timer-container {
+    background: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    padding: 8px 0 6px !important;
+    overflow: visible !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  /* four equal columns, no separators eating width */
+  .ea-timer, .timer-container {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 2px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+  }
+  .ea-sep, .timer-sep { display: none !important; }
+  .ea-unit, .timer-block {
+    width: auto !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+  .ea-num, .timer-val {
+    font-size: 1.55rem !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.02em !important;
+    display: block !important;
+    width: 100% !important;
+  }
+  .ea-cap, .timer-lbl {
+    display: block !important;
+    margin-top: 8px !important;
+    font-size: 0.54rem !important;
+    letter-spacing: 0.10em !important;
+    white-space: nowrap !important;
+  }
+  .ea-label { font-size: 0.66rem !important; letter-spacing: 0.14em !important; margin-bottom: 16px !important; }
+  .ea-date { margin-top: 16px !important; }
+}

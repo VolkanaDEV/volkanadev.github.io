@@ -1238,3 +1238,16 @@ footer {
 .ea-timer { margin-bottom: 16px !important; }
 .ea-num { font-size: clamp(2.1rem, 5vw, 3.15rem) !important; }
 .hero-actions { margin-top: 26px !important; }
+
+
+/* ── LAYER 49 — "Early Access begins" uses the wordmark's font (the one the boss loves) ── */
+.ea-label {
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.22em !important;
+  text-transform: uppercase !important;
+  font-size: 0.98rem !important;
+  color: var(--ink) !important;
+  text-shadow: 0 0 22px rgba(175,0,0,0.45) !important;
+  margin-bottom: 20px !important;
+}

@@ -1251,3 +1251,79 @@ footer {
   text-shadow: 0 0 22px rgba(175,0,0,0.45) !important;
   margin-bottom: 20px !important;
 }
+
+
+/* ============================================================
+   3.0 LAYER 50 — the sidebar spine label + relocated pull-tab.
+   Boss asked: tiny dulled "sidebar" word, mounted sideways (reading
+   bottom->top so letter-tops face the page), sitting between Benchmarks
+   and Docs, so the tab is discoverable without shouting.
+   Pure CSS via the tab's ::before (the tab already exists on every page).
+   ============================================================ */
+@media (min-width: 901px) {
+  /* move the pull-tab up out of mid-page and into the Benchmarks/Docs gap */
+  .nav-tab {
+    top: 199px !important;
+    transform: none !important;
+  }
+  /* the spine label, immediately left of the tab, inside the sidebar */
+  .nav-tab::before {
+    content: "Sidebar";
+    position: absolute;
+    right: calc(100% + 11px);
+    top: 50%;
+    transform: translateY(-50%) rotate(180deg);
+    writing-mode: vertical-rl;
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: rgba(232,230,227,0.30);       /* dulled: a hint, not a shout */
+    text-shadow: none;
+    pointer-events: none;
+    white-space: nowrap;
+    transition: color 0.25s ease;
+  }
+  /* it wakes up only when you reach for the tab */
+  .nav-tab:hover::before { color: rgba(232,230,227,0.62); }
+  body.nav-hidden .nav-tab::before { opacity: 0; }
+}
+@media (max-width: 900px) { .nav-tab::before { content: none !important; } }
+
+
+/* ── LAYER 51 — Patch Notes page ── */
+.pn-entry {
+  padding: 34px 0 30px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.pn-entry:first-of-type { border-top: none; padding-top: 0; }
+.pn-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 14px; }
+.pn-ver {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em;
+  color: var(--accent-soft,#b8403a);
+}
+.pn-name { font-size: 1.05rem; font-weight: 700; color: #fff; letter-spacing: -0.01em; }
+.pn-date { margin-left: auto; color: var(--muted-light); font-size: 0.82rem;
+           font-family: ui-monospace, Menlo, Consolas, monospace; }
+.pn-lede { color: var(--muted-light); font-size: 1rem; margin: 0 0 20px; max-width: 720px; }
+.pn-list { display: flex; flex-direction: column; gap: 12px; }
+.pn-item { display: grid; grid-template-columns: 66px 1fr; gap: 16px; align-items: start; }
+.pn-item > div { color: var(--text-light); font-size: 0.93rem; line-height: 1.6; }
+.pn-item strong { color: #fff; }
+.pn-tag {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.62rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+  text-align: center; padding: 3px 0; border-radius: 3px; margin-top: 3px;
+}
+.pn-tag.new { color: #c98d88; background: rgba(175,0,0,0.16); }
+.pn-tag.fix { color: #a3adb8; background: rgba(255,255,255,0.07); }
+.pn-note { margin-top: 34px; color: var(--muted-light); font-size: 0.88rem; }
+@media (max-width: 620px) { .pn-item { grid-template-columns: 52px 1fr; gap: 12px; } .pn-date { margin-left: 0; width: 100%; } }
+
+
+/* ── LAYER 52 — re-center the pull-tab on the gap (nav gained Patch Notes) ── */
+@media (min-width: 901px) {
+  .nav-tab { top: 204px !important; }   /* centers in the Benchmarks <-> Patch Notes gap */
+}

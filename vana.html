@@ -391,7 +391,7 @@
           <div class="pipeline-num">3</div>
           <div class="pipeline-body">
             <h4>Blood Bridge Loads It Onto the GPU</h4>
-            <p>The compiled program is uploaded to your GPU and starts running. It doesn't sync with the CPU every tick; it streams. The CPU does some very light work to feed data in, and then gets out of the way. The GPU is where the organism lives.</p>
+            <p>The compiled program is uploaded to your GPU and starts running. It doesn't sync with the CPU every tick; it streams. The CPU feeds data in and reads results out. The grid runs on the card.</p>
           </div>
         </div>
         <div class="pipeline-arrow">&darr;</div>
@@ -413,12 +413,12 @@
       </div>
 
       <h3><span class="label">Beyond the GPU</span>Hardware Independence</h3>
-      <p>A new CPU core asks how to make the same thing faster. VANA asks, what if the hardware did something different. Today the engine runs on the GPU you already own. Tomorrow it can run on custom firmware on a dedicated board. Eventually it can run on a SoC where the language and the chip share the same structure.</p>
-      <p>The hardware may change underneath, but the language, and support for older hardware, does not. VANA is not tied to any preset configuration in silicon, firmware, or software. It is meant to serve as the bridge between Sanguis coding language and native hardware support for GPU-based compiled programs, until custom SoC allows full native integration.</p>
+      <p>A new CPU core asks how to make the same thing faster. VANA asks, what if the hardware did something different. Today the engine runs on the GPU. Tomorrow it can run on custom firmware on a dedicated board. Eventually it can run on a SoC where the language and the chip share the same structure.</p>
+      <p>The hardware may change underneath, but the language, and support for older hardware, does not. VANA is not tied to any preset configuration in silicon, firmware, or software. It is the bridge between Sanguis and native hardware support for GPU-based compiled programs, until custom SoC allows full native integration.</p>
 
       <h3><span class="label">Where It Goes</span>Connectome Architectures</h3>
-      <p>VANA isn't just a faster runtime. It's a different way for hardware to compute. The wiring grid maps to the same kind of parallel structure your brain uses, not a single line of instructions.</p>
-      <p>This isn't a prototype. It's running today, executing real programs on real hardware that wasn't built for it.</p>
+      <p>VANA is a different way for hardware to compute. The wiring grid maps to the same kind of parallel structure your brain uses, not a single line of instructions.</p>
+      <p>It is running today, executing real programs on real hardware that was not built for it.</p>
 
       <div class="status-box">
         <strong>Current Status</strong>

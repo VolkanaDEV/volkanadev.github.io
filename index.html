@@ -312,9 +312,9 @@
 
   <div class="wrap">
     <section class="hero">
-      <p style="color: var(--accent); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; margin: 0 auto 18px; text-align: center;">Sanguis 3.0 &mdash; Iteration:Determinism</p>
+      <p style="color: var(--accent); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; margin: 0 auto 18px; text-align: center;">Sanguis 3.0, Iteration:Determinism</p>
       <h2>The same program.<br>The same bytes. Every machine.</h2>
-      <p>Sanguis is a self-hosting language whose programs produce bit-for-bit identical results on a graphics card, a just-in-time executor, and a compiler that compiles itself. Nobody else has that. It is the reason a Sanguis program is worth trusting, and it is where 3.0 begins.</p>
+      <p>Sanguis is a self-hosting language whose programs produce bit-for-bit identical results on a graphics card, a just-in-time executor, and a compiler that compiles itself. Nobody else has that. It is where 3.0 begins.</p>
 
       <div class="hero-actions">
         <a href="benchmark.html" class="btn">See the numbers</a>
@@ -322,7 +322,7 @@
         <a href="vana.html" class="btn ghost">Meet the engine</a>
       </div>
 
-      <p style="color: var(--muted-light); font-size: 0.95rem; font-style: italic; margin: 32px auto 0; text-align: center; max-width: 640px;">Programs you can check. A language that keeps its word, byte for byte, on any machine it runs on.</p>
+      <p style="color: var(--muted-light); font-size: 0.95rem; font-style: italic; margin: 32px auto 0; text-align: center; max-width: 640px;">Programs you can check. The same bytes, on every machine it runs on.</p>
 
     </section>
   </div>
@@ -345,13 +345,13 @@
             <div class="carousel-slide">
               <div class="card">
                 <h4>One Instruction Set, Many Machines</h4>
-                <p>The instruction set is frozen: 29 slots with fixed numbers and spellings, checked when the compiler builds itself. Any new executor &mdash; another GPU, a just-in-time engine, an FPGA, a microcontroller &mdash; is admitted by passing one public per-operation test suite. Adding a machine never splits the language.</p>
+                <p>The instruction set is frozen: 29 slots with fixed numbers and spellings, checked when the compiler builds itself. Any new executor (another GPU, a just-in-time engine, an FPGA, a microcontroller) is admitted by passing one public per-operation test suite. Adding a machine never splits the language.</p>
               </div>
             </div>
             <div class="carousel-slide">
               <div class="card">
-                <h4>Why This Is Rare</h4>
-                <p>Cross-machine determinism is openly listed as unsolved across the industry; most tooling settles for identical builds, not identical behaviour. Floating point is not associative and every machine rounds differently. We made rounding a contract instead of an accident.</p>
+                <h4>Why The Industry Hasn't Done It</h4>
+                <p>Cross-machine determinism is openly listed as unsolved across the industry. Most tooling settles for identical builds, not identical behaviour. Floating point is not associative and every machine rounds differently. Here, rounding is a contract instead of an accident.</p>
               </div>
             </div>
           </div>
@@ -369,7 +369,7 @@
     <div class="wrap">
       <div class="section-label">The Language</div>
       <h3>Introducing Sanguis</h3>
-      <p>Sanguis is a self-hosting programming language. Instead of objects, you write organs: self-contained structures that hold their own state, fire when their conditions are met, and pass signals to each other along routes. No classes, no inheritance. A program becomes a grid of switches and wires that settles at once, and that settled state is your output. The compiler is written in Sanguis and compiles itself &mdash; every artifact a user ships is Sanguis-built and Sanguis-linked.</p>
+      <p>Sanguis is a self-hosting programming language. Instead of objects, you write organs: self-contained structures that hold their own state, fire when their conditions are met, and pass signals to each other along routes. No classes, no inheritance. A program becomes a grid of switches and wires that settles at once, and that settled state is your output. The compiler is written in Sanguis and compiles itself, so every artifact a user ships is Sanguis-built and Sanguis-linked.</p>
       
       <div class="carousel" id="carousel-1">
         <div class="carousel-viewport">
@@ -383,13 +383,13 @@
             <div class="carousel-slide">
               <div class="card">
                 <h4>No Steps, Just Signals</h4>
-                <p>A normal program runs one line at a time. Sanguis is different: your whole program turns into a circuit that runs everywhere at once. Values flow through the circuit until every part of it stops changing. That stable end state is your program's output. Because nothing is stepped through, it runs fast and draws less power than the old way.</p>
+                <p>A normal program runs one line at a time. Sanguis is different: your whole program turns into a circuit that runs everywhere at once. Values flow through the circuit until every part of it stops changing. That stable end state is your program's output.</p>
               </div>
             </div>
             <div class="carousel-slide">
               <div class="card">
                 <h4>A Core Is a File</h4>
-                <p>A running Sanguis program can be written to a small package &mdash; its wiring, its learned weights, its clock &mdash; and resumed in a fresh process, bit-identical to the one that was running before. Not a screenshot. Not a save file. The same program, unplugged and picked back up, exactly where it was.</p>
+                <p>A running Sanguis program can be written to a small package (its wiring, its learned weights, its clock), and resumed in a fresh process, bit-identical to the one that was running before. The same program, unplugged and picked back up, exactly where it was.</p>
               </div>
             </div>
           </div>
@@ -408,7 +408,7 @@
     <div class="wrap">
       <div class="section-label">The Engine</div>
       <h3>What is a VANA?</h3>
-      <p class="vana-body">VANA stands for "Voltage Activated Neural Architecture." It is the runtime engine that executes your Sanguis programs. Instead of forcing data through a single processing line, VANA routes it across many paths simultaneously on the GPU you already own. The organism lives entirely on the GPU. The CPU hands it inputs and reads its outputs, and otherwise stays out of the way; there is no constant back-and-forth between the two. Your CPU does some very light work, and then gets out of the way.</p>
+      <p class="vana-body">VANA stands for "Voltage Activated Neural Architecture." It is the runtime engine that executes your Sanguis programs. Instead of forcing data through a single processing line, VANA routes it across many paths at once. The grid holds its state and runs on the card. The CPU hands it inputs and reads its outputs, and does nothing in between.</p>
       
       <div class="carousel" id="carousel-2">
         <div class="carousel-viewport">
@@ -428,7 +428,7 @@
             <div class="carousel-slide">
               <div class="card">
                 <h4>It Runs at Human Speed</h4>
-                <p>One full pass over the whole web takes about 4.5 milliseconds on a consumer card &mdash; the same register as a single neural event. A complete settled answer takes about a quarter of a second, the same as a human reaction. It runs continuously, unattended, for as long as you leave it.</p>
+                <p>One full pass over the whole web takes about 4.5 milliseconds on a consumer card, the same register as a single neural event. A complete settled answer takes about a quarter of a second, the same as a human reaction. It runs continuously, unattended, for as long as you leave it.</p>
               </div>
             </div>
           </div>

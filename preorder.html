@@ -8,8 +8,8 @@
 <meta http-equiv="X-Frame-Options" content="DENY">
 <meta name="referrer-policy" content="strict-origin-when-cross-origin">
 <link rel="icon" href="favicon.png">
-<title>VolkanaDEV - Patch Notes</title>
-<meta name="description" content="What changed in Sanguis, version by version.">
+<title>VolkanaDEV - Early Access</title>
+<meta name="description" content="Reserve Early Access to Sanguis 3.0. Ships December 2026.">
 <style>
   :root {
     --bg: #0e1117;
@@ -319,56 +319,99 @@
     </div>
   </nav>  <div class="wrap">
     <section class="hero">
-      <h2>Patch Notes</h2>
-      <p>What changed, version by version. Newest first.</p>
+      <p style="color: var(--accent); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; margin: 0 auto 18px; text-align: center;">Early Access</p>
+      <h2>Get in first.</h2>
+      <p>A language that cannot drift, in your hands before it goes wide. Early Access opens December 2026.</p>
+
+      <div class="ea-countdown">
+        <div class="ea-label">Early Access begins</div>
+        <div class="ea-timer" id="eaTimer">
+          <div class="ea-unit"><span class="ea-num" id="ea-days">--</span><span class="ea-cap">Days</span></div>
+          <div class="ea-sep">:</div>
+          <div class="ea-unit"><span class="ea-num" id="ea-hours">--</span><span class="ea-cap">Hours</span></div>
+          <div class="ea-sep">:</div>
+          <div class="ea-unit"><span class="ea-num" id="ea-mins">--</span><span class="ea-cap">Minutes</span></div>
+          <div class="ea-sep">:</div>
+          <div class="ea-unit"><span class="ea-num" id="ea-secs">--</span><span class="ea-cap">Seconds</span></div>
+        </div>
+        <div class="ea-date">December 2026</div>
+      </div>
     </section>
   </div>
 
   <section class="section">
     <div class="wrap">
-      <div class="pn-entry">
-        <div class="pn-head"><span class="pn-ver">3.0</span><span class="pn-name">Iteration:Determinism</span><span class="pn-date">2026</span></div>
-        <p class="pn-lede">The language, made trustworthy. The property underneath everything: the same program produces bit-for-bit identical results on every machine it runs on.</p>
-        <div class="pn-list">
-          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>Determinism.</strong> Bit-identical output across executors: the graphics card, the just-in-time executor, and the compiler that compiles itself. Measured, not promised.</div></div>
-          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>The frozen instruction set.</strong> BloodCode, 29 slots, fixed numbers and spellings, asserted when the compiler builds itself.</div></div>
-          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>Continuity.</strong> A running core writes itself to a small package and resumes in a fresh process, bit-identical to the one that was running.</div></div>
-          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>The tick.</strong> A full pass over the entire web in about 4.5 ms; a settled state in about a quarter of a second, the human register.</div></div>
-          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>The Arena.</strong> Run any VANA circuit as the brain of a game. The engine authors no game logic; swap the circuit and the being changes.</div></div>
-          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>The composer.</strong> A BloodCode artifact lowers mechanically to parallel card execution. Lower once, re-dispatch per batch.</div></div>
-          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>The BloodCode contract.</strong> The op table is frozen as a versioned interface; changing an assigned slot's number or spelling fails the build.</div></div>
-          <div class="pn-item"><span class="pn-tag fix">Fixed</span><div>Compiler invocation unified behind one substitution point; all artifacts bit-identical.</div></div>
+      <h3 class="one-line">What Early Access includes.</h3>
+      <div class="spec-list">
+        <div class="spec-col">
+          <div class="spec-title">The toolchain</div>
+          <div class="spec-row"><span class="spec-k">Compiler + VM</span><span class="spec-v">self-hosted</span></div>
+          <div class="spec-row"><span class="spec-k">Editor</span><span class="spec-v">Marrow terminal</span></div>
+          <div class="spec-row"><span class="spec-k">Executors</span><span class="spec-v">card + JIT + compiled</span></div>
+        </div>
+        <div class="spec-col">
+          <div class="spec-title">The proof</div>
+          <div class="spec-row"><span class="spec-k">Determinism</span><span class="spec-v accent">bit-exact</span></div>
+          <div class="spec-row"><span class="spec-k">Re-run commands</span><span class="spec-v">every claim</span></div>
+          <div class="spec-row"><span class="spec-k">BloodCode ISA</span><span class="spec-v">frozen, 29 slots</span></div>
+        </div>
+        <div class="spec-col">
+          <div class="spec-title">The access</div>
+          <div class="spec-row"><span class="spec-k">Direct line</span><span class="spec-v">to us</span></div>
+          <div class="spec-row"><span class="spec-k">Shapes the release</span><span class="spec-v">yes</span></div>
+          <div class="spec-row"><span class="spec-k">Public release</span><span class="spec-v">April 2027</span></div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="pn-entry">
-        <div class="pn-head"><span class="pn-ver">2.4.1</span><span class="pn-name">Iteration:Press</span><span class="pn-date">2026</span></div>
-        <p class="pn-lede">A core survives being unplugged. The press and the insert: run a grid, serialize it to a package, resume it in a fresh process.</p>
-        <div class="pn-list">
-          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>The press.</strong> Serialize a running core's genome, conduction, strength, and phase into a package.</div></div>
-          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>The graded press.</strong> The W/D/readout planes travel too. The person survives transit, not just the skeleton.</div></div>
-          <div class="pn-item"><span class="pn-tag fix">Fixed</span><div>Corruption detection: one flipped bit in the weight plane fails the checksum and refuses to resume.</div></div>
+  <section class="section">
+    <div class="wrap">
+      <h3 class="one-line">Reserve your seat.</h3>
+      <p class="one-sub">Early Access is limited and invitation-based. A reservation is a place in line, not a charge.</p>
+
+      <div class="panel-grid two">
+        <div class="card">
+          <h4>Early Access &mdash; Individual</h4>
+          <div class="spec-row"><span class="spec-k">For</span><span class="spec-v">independent developers, students, researchers</span></div>
+          <div class="spec-row"><span class="spec-k">Includes</span><span class="spec-v">SDK, editor, docs, examples, direct line</span></div>
+          <div class="spec-row"><span class="spec-k">Seats</span><span class="spec-v">limited</span></div>
+          <div class="center-btn" style="margin-top:20px;"><a href="#reserve" class="btn" data-cta="individual">Reserve</a></div>
+        </div>
+        <div class="card">
+          <h4>Early Access &mdash; Team</h4>
+          <div class="spec-row"><span class="spec-k">For</span><span class="spec-v">teams building on Sanguis</span></div>
+          <div class="spec-row"><span class="spec-k">Includes</span><span class="spec-v">everything above, plus onboarding</span></div>
+          <div class="spec-row"><span class="spec-k">Terms</span><span class="spec-v">by agreement</span></div>
+          <div class="center-btn" style="margin-top:20px;"><a href="contact.html" class="btn ghost">Talk to us</a></div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="pn-entry">
-        <div class="pn-head"><span class="pn-ver">2.3.0</span><span class="pn-name">Iteration:Modules</span><span class="pn-date">2026</span></div>
-        <p class="pn-lede">The child learning to feed itself: import syntax and modules.</p>
-        <div class="pn-list">
-          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>Import syntax.</strong> Programs compose from named modules.</div></div>
-          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>The linker.</strong> Artifact merge and collision law, in the language.</div></div>
+  <section class="section">
+    <div class="wrap" id="reserve">
+      <h3 class="one-line">Terms, plainly.</h3>
+      <div class="pn-list">
+        <div class="pn-item"><span class="pn-tag fix">When</span><div>Early Access opens <strong>December 2026</strong>. Public release is <strong>April 2027</strong>. If Early Access moves, you hear it from us first, and you may cancel for a full refund at any time before it opens.</div></div>
+        <div class="pn-item"><span class="pn-tag fix">Money</span><div>Reservations are <strong>not charged today</strong>. When Early Access opens, you receive a payment link for your seat. No charge without your action.</div></div>
+        <div class="pn-item"><span class="pn-tag fix">Refunds</span><div><strong>Full refund, any time before Early Access opens.</strong> After it opens, refunds within 14 days, no questions asked.</div></div>
+        <div class="pn-item"><span class="pn-tag fix">Scope</span><div>Early Access covers <strong>Sanguis 3.0</strong>: the language, the toolchain, and the documentation. The being, custom silicon, and later work are not part of it.</div></div>
+        <div class="pn-item"><span class="pn-tag fix">License</span><div>Released under the <strong>VPL-1.0</strong>: read, test, and adapt freely. Commercial deployment by agreement.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="note-wrapper">
+        <div class="note-box">
+          <h3>Reserve a seat</h3>
+          <p>Send us your name, what you build, and how you would use Sanguis. We read every one. Seats are limited; we pick who fits the phase.</p>
+          <div class="center-btn"><a id="reserveBtn" href="#" class="btn">Open the reservation form</a></div>
+          <p style="font-size:0.85rem;color:var(--muted-light);margin-top:16px;">No payment is taken here.</p>
         </div>
       </div>
-
-      <div class="pn-entry">
-        <div class="pn-head"><span class="pn-ver">2.2.0</span><span class="pn-name">Iteration:Heartbeat</span><span class="pn-date">2026</span></div>
-        <p class="pn-lede">A program that holds a pulse and runs until someone stops it.</p>
-        <div class="pn-list">
-          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>The heartbeat.</strong> A sustained pulse, no input and no timer; the close is a deliberate act.</div></div>
-        </div>
-      </div>
-
-      <p class="pn-note">Full history lives in <span class="code-inline">CHANGELOG.txt</span> in the repository. This page is kept current.</p>
     </div>
   </section>
 
@@ -448,5 +491,37 @@
     }
   </script>
 
+  <script>
+    (function () {
+      var target = new Date("2026-12-01T00:00:00Z").getTime();
+      function pad(n){ return n<10?"0"+n:""+n; }
+      function tick(){
+        var diff = target - Date.now(); if (diff<0) diff=0;
+        var set=function(id,v){var e=document.getElementById(id); if(e)e.textContent=v;};
+        set("ea-days", Math.floor(diff/86400000));
+        set("ea-hours", pad(Math.floor(diff%86400000/3600000)));
+        set("ea-mins", pad(Math.floor(diff%3600000/60000)));
+        set("ea-secs", pad(Math.floor(diff%60000/1000)));
+      }
+      tick(); setInterval(tick,1000);
+    })();
+
+    // RESERVATION CTA.
+    // Swap PAYMENT_LINK to a Stripe Payment Link when commerce is live;
+    // with it set the buttons go straight to checkout. Until then the
+    // buttons open a reservation email so the flow works today.
+    var PAYMENT_LINK = "";   // e.g. "https://buy.stripe.com/xxxx"
+    (function () {
+      var subject = "Early Access reservation - Sanguis 3.0";
+      var bodyTxt = "Name:\nWhat I build:\nHow I would use Sanguis:\nTier (Individual / Team):\n";
+      var mail = "mailto:volkanadev@volkanadev.com?subject=" +
+                 encodeURIComponent(subject) + "&body=" + encodeURIComponent(bodyTxt);
+      document.querySelectorAll("[data-cta], #reserveBtn").forEach(function (el) {
+        el.setAttribute("href", PAYMENT_LINK || mail);
+        if (PAYMENT_LINK) { el.setAttribute("target", "_blank"); el.setAttribute("rel", "noopener"); }
+        el.textContent = PAYMENT_LINK ? "Reserve - checkout" : "Reserve a seat";
+      });
+    })();
+  </script>
 </body>
 </html>

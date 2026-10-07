@@ -1327,3 +1327,20 @@ footer {
 @media (min-width: 901px) {
   .nav-tab { top: 204px !important; }   /* centers in the Benchmarks <-> Patch Notes gap */
 }
+
+
+/* ── LAYER 53 — Early Access: a nav accent + reservation polish ── */
+.nav-ea {
+  position: relative;
+}
+@media (min-width: 901px) {
+  nav .nav-links a.nav-ea {
+    color: #c98d88 !important;
+    background: rgba(175,0,0,0.10) !important;
+  }
+  nav .nav-links a.nav-ea:hover { background: rgba(175,0,0,0.20) !important; color: #fff !important; }
+  nav .nav-links a.nav-ea.active { background: rgba(175,0,0,0.24) !important; }
+}
+/* cards used as pricing: give them a little more presence */
+.panel-grid.two .card h4 { font-size: 1.12rem !important; margin-bottom: 16px !important; }
+.panel-grid.two .card .spec-row { padding: 5px 0; }

@@ -5,7 +5,7 @@
 <title>VolkanaDEV - Documentation</title>
 <meta name="description" content="Documentation for Sanguis and BloodCode.">
 <style>
-  :root { --bg:#101011; --ink:#e8e6e3; --muted:#9b9b9b; --blood:#af0000; --blue:#b8403a; }
+  :root { --bg:#101011; --ink:#e8e6e3; --muted:#9b9b9b; --blood:#af0000; --blue:#38bdf8; }
   * { box-sizing:border-box; }
   body { margin:0; background:#101011; color:var(--ink);
          font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; line-height:1.6; }
@@ -20,13 +20,16 @@
            box-shadow:0 10px 26px rgba(0,0,0,0.42), inset 0 1px 0 rgba(255,255,255,0.05);
            transition:transform .28s cubic-bezier(.22,.61,.36,1), box-shadow .28s ease; }
   a.card:hover { transform:translateY(-5px) scale(1.012); }
+  /* bare links on this page had NO colour rule, so they rendered default browser blue */
+  footer a { color:var(--blue); text-decoration:none; }
+  footer a:hover { color:#7dd3fc; }
   a.card h2 { font-size:1.35rem; margin:0 0 10px; letter-spacing:-0.01em; }
   a.card p { color:var(--muted); font-size:0.95rem; margin:0; }
-  a.sang h2 { color:var(--blue); } a.sang:hover { box-shadow:0 28px 62px rgba(0,0,0,.66), 0 0 36px rgba(175, 0, 0, .16); }
-  a.blood h2 { color:#e03030; } a.blood:hover { box-shadow:0 28px 62px rgba(0,0,0,.66), 0 0 36px rgba(175,0,0,.18); }
+  a.sang h2 { color:var(--blue); } a.sang:hover { box-shadow:0 28px 62px rgba(0,0,0,.66), 0 0 36px rgba(56, 189, 248, .16); }
+  a.blood h2 { color:#e03030; } a.blood:hover { box-shadow:0 28px 62px rgba(0,0,0,.66), 0 0 36px rgba(56, 189, 248, .18); }
   .back { display:inline-block; margin-bottom:40px; color:var(--muted); text-decoration:none; font-size:.9rem; }
   .back:hover { color:var(--ink); }
-  footer { position:relative; border-top:1px solid rgba(175,0,0,0.5); margin-top:64px; padding:46px 20px 40px; font-size:0.85rem; line-height:1.6; color:var(--muted); }
+  footer { position:relative; border-top:1px solid rgba(56, 189, 248, 0.5); margin-top:64px; padding:46px 20px 40px; font-size:0.85rem; line-height:1.6; color:var(--muted); }
   .footer-note { position:absolute; right:20px; bottom:40px; display:flex; align-items:center; gap:9px; font-size:0.78rem; color:rgba(232,230,227,0.42); }
   .footer-note .fn-ico { display:inline-flex; align-items:center; gap:3px; }
   .footer-note .fn-ico i { display:block; width:4px; height:4px; border-radius:1px; background:#af0000; animation:fnwave 1.6s ease-in-out infinite; }

@@ -1392,3 +1392,14 @@ footer {
   }
   body.nav-hidden .nav-tab::before { transform: translateX(-50%) rotate(180deg) !important; }
 }
+
+
+/* ── LAYER 57 — spine nudge: raise the SIDEBAR label, and pull the chevron
+      off the tab's right edge so the arrow reads centred. ── */
+@media (min-width: 901px) {
+  /* text further up (was bottom: calc(100% + 9px)) */
+  .nav-tab::before { bottom: calc(100% + 18px) !important; }
+  /* chevron ink measured 2px right of the tab centre (10.0 vs 8.0);
+     4px margin-right shifts the flex box 2px left to centre it. */
+  .nav-tab .chev { margin-right: 4px; }
+}

@@ -1038,3 +1038,87 @@ footer { padding-top: 46px !important; padding-bottom: 40px !important; }
 .svg-chart .lbl { fill: #e8e6e3; font-size: 12px; font-family: inherit; }
 .svg-chart text { font-family: inherit; font-size: 11px; }
 .svg-chart .pt { fill: #c62a2a; }
+
+
+/* ============================================================
+   3.0 LAYER 40 — ONE footer, ONE box style, everywhere.
+   (benchmark's footer was left-aligned; every other page centered.
+    And a dozen different box classes had drifted apart.)
+   ============================================================ */
+
+/* ── the footer: one style, aligned with the content column ── */
+footer {
+  text-align: left !important;
+  padding: 46px 0 40px !important;
+  border-top: 1px solid rgba(175,0,0,0.55) !important;
+  box-shadow: 0 -2px 20px -4px rgba(175,0,0,0.28) !important;
+}
+footer > div, footer > div > a { text-align: left !important; }
+footer a { color: var(--accent-soft,#b8403a) !important; text-decoration: none; }
+/* the footer sits in the same column as the content */
+footer { padding-left: 30px !important; padding-right: 30px !important;
+         max-width: 960px !important; margin-left: auto !important; margin-right: auto !important; }
+body.docs-sanguis footer { border-top-color: rgba(56,189,248,0.5) !important; }
+
+/* ── ONE box style for every card-ish thing on every page ── */
+.card, .arena-card, .chart-card, .legal-box, .note-box, .control-card,
+.milestone-card, .doc-card, .portal-grid > a, .cards > a, .card-desc {
+  background: rgba(20,20,22,0.55) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+  border: none !important;
+  border-radius: 6px !important;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.42), 0 2px 8px rgba(0,0,0,0.28),
+              inset 0 1px 0 rgba(255,255,255,0.05) !important;
+  padding: 24px 22px !important;
+  position: relative;
+  overflow: hidden;
+}
+/* the same top accent bar the panels already have */
+.card::after, .arena-card::after, .chart-card::after, .legal-box::after,
+.note-box::after, .control-card::after, .milestone-card::after, .doc-card::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, rgba(175,0,0,0), rgba(198,42,42,0.55), rgba(175,0,0,0));
+  opacity: 0.5; transition: opacity 0.3s ease;
+}
+.card:hover::after, .arena-card:hover::after, .chart-card:hover::after,
+.legal-box:hover::after, .control-card:hover::after, .milestone-card:hover::after {
+  opacity: 1;
+}
+
+
+/* ============================================================
+   3.0 LAYER 41 — spec-list: the card alternative. Same info, no boxes,
+   no borders, no clutter. Reads like a data sheet, not a dashboard.
+   ============================================================ */
+.spec-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin: 32px 0 8px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+@media (max-width: 900px) { .spec-list { grid-template-columns: 1fr; } }
+.spec-col {
+  padding: 22px 24px 18px;
+  border-right: 1px solid rgba(255,255,255,0.06);
+  box-shadow: none !important;
+  background: none !important;
+  border-radius: 0 !important;
+}
+.spec-col:last-child { border-right: none; }
+@media (max-width: 900px) {
+  .spec-col { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+}
+.spec-title {
+  color: var(--accent-soft,#b8403a); font-weight: 700; font-size: 0.95rem;
+  letter-spacing: -0.01em; margin-bottom: 14px;
+}
+.spec-row { display: flex; justify-content: space-between; gap: 14px; padding: 6px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.045); }
+.spec-row:last-child { border-bottom: none; }
+.spec-k { color: var(--muted-light); font-size: 0.84rem; }
+.spec-v { color: var(--text-light); font-size: 0.86rem; font-weight: 600; text-align: right;
+          font-variant-numeric: tabular-nums; }
+.spec-v.accent { color: #c98d88; font-weight: 700; }
+.spec-v.warn   { color: #e07070; font-weight: 700; }

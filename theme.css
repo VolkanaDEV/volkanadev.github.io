@@ -1270,7 +1270,7 @@ footer {
   .nav-tab::before {
     content: "Sidebar";
     position: absolute;
-    right: calc(100% + 11px);
+    left: calc(100% + 11px);
     top: 50%;
     transform: translateY(-50%) rotate(180deg);
     writing-mode: vertical-rl;
@@ -1287,7 +1287,6 @@ footer {
   }
   /* it wakes up only when you reach for the tab */
   .nav-tab:hover::before { color: rgba(232,230,227,0.62); }
-  body.nav-hidden .nav-tab::before { opacity: 0; }
 }
 @media (max-width: 900px) { .nav-tab::before { content: none !important; } }
 

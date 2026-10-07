@@ -580,3 +580,18 @@ body.docs-sanguis nav .nav-links a.active { background: rgba(56,189,248,0.16) !i
 body.docs-sanguis .nav-tab .chev { border-top-color:#38bdf8; border-right-color:#38bdf8; }
 /* and the background pulse reads blue in the Sanguis docs */
 body.docs-sanguis::after { filter: hue-rotate(150deg); }
+
+
+/* ── Sanguis docs: the blue must win over the global !important :root ── */
+html:root body.docs-sanguis, body.docs-sanguis {
+  --accent: #38bdf8 !important;
+  --accent-hover: #7dd3fc !important;
+  --blood: #38bdf8 !important;
+}
+/* and force the visible bits that hardcode blood */
+body.docs-sanguis .card h4,
+body.docs-sanguis .doc-card h4,
+body.docs-sanguis .section-label,
+body.docs-sanguis .doc-content h2 + p.subtitle,
+body.docs-sanguis .breadcrumb a { color: #38bdf8 !important; }
+body.docs-sanguis footer a { color: #38bdf8 !important; }

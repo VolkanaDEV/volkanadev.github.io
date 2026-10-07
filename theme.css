@@ -550,9 +550,9 @@ body::after {
    be deployed as separate sites.
    ============================================================ */
 body.docs-sanguis {
-  --accent: #38bdf8;
-  --accent-hover: #7dd3fc;
-  --blood: #38bdf8;
+  --accent: #b8403a;
+  --accent-hover: #d21c1c;
+  --blood: #b8403a;
 }
 body.docs-sanguis .card,
 body.docs-sanguis .doc-card,
@@ -564,37 +564,37 @@ body.docs-sanguis .card:hover,
 body.docs-sanguis .doc-card:hover,
 body.docs-sanguis .doc-grid > a:hover {
   box-shadow: 0 28px 62px rgba(0,0,0,0.66), 0 8px 20px rgba(0,0,0,0.46),
-              0 0 36px rgba(56,189,248,0.16), inset 0 1px 0 rgba(255,255,255,0.07) !important;
+              0 0 36px rgba(175, 0, 0, 0.16), inset 0 1px 0 rgba(255,255,255,0.07) !important;
 }
 /* the inner docs nav + rules pick up the blue */
 body.docs-sanguis .doc-nav a.active,
 body.docs-sanguis .doc-side a.active { color: var(--accent) !important; border-color: var(--accent) !important; }
-body.docs-sanguis .doc-content h2 { border-bottom: 1px solid rgba(56,189,248,0.35) !important; }
-body.docs-sanguis .doc-nav-bottom { border-top: 1px solid rgba(56,189,248,0.35) !important; }
-body.docs-sanguis ::selection { background: rgba(56,189,248,0.3) !important; }
-body.docs-sanguis ::-webkit-scrollbar-thumb { background: rgba(56,189,248,0.35) !important; }
-body.docs-sanguis .section { border-top: 1px solid rgba(56,189,248,0.28) !important; }
-body.docs-sanguis footer { border-top: 1px solid rgba(56,189,248,0.45) !important; box-shadow: 0 -2px 16px -2px rgba(56,189,248,0.22) !important; }
-body.docs-sanguis nav .nav-links a:hover { background: rgba(56,189,248,0.12) !important; }
-body.docs-sanguis nav .nav-links a.active { background: rgba(56,189,248,0.16) !important; }
-body.docs-sanguis .nav-tab .chev { border-top-color:#38bdf8; border-right-color:#38bdf8; }
+body.docs-sanguis .doc-content h2 { border-bottom: 1px solid rgba(175, 0, 0, 0.35) !important; }
+body.docs-sanguis .doc-nav-bottom { border-top: 1px solid rgba(175, 0, 0, 0.35) !important; }
+body.docs-sanguis ::selection { background: rgba(175, 0, 0, 0.3) !important; }
+body.docs-sanguis ::-webkit-scrollbar-thumb { background: rgba(175, 0, 0, 0.35) !important; }
+body.docs-sanguis .section { border-top: 1px solid rgba(175, 0, 0, 0.28) !important; }
+body.docs-sanguis footer { border-top: 1px solid rgba(175, 0, 0, 0.45) !important; box-shadow: 0 -2px 16px -2px rgba(175, 0, 0, 0.22) !important; }
+body.docs-sanguis nav .nav-links a:hover { background: rgba(175, 0, 0, 0.12) !important; }
+body.docs-sanguis nav .nav-links a.active { background: rgba(175, 0, 0, 0.16) !important; }
+body.docs-sanguis .nav-tab .chev { border-top-color:#b8403a; border-right-color:#b8403a; }
 /* and the background pulse reads blue in the Sanguis docs */
 body.docs-sanguis::after { filter: hue-rotate(150deg); }
 
 
 /* ── Sanguis docs: the blue must win over the global !important :root ── */
 html:root body.docs-sanguis, body.docs-sanguis {
-  --accent: #38bdf8 !important;
-  --accent-hover: #7dd3fc !important;
-  --blood: #38bdf8 !important;
+  --accent: #b8403a !important;
+  --accent-hover: #d21c1c !important;
+  --blood: #b8403a !important;
 }
 /* and force the visible bits that hardcode blood */
 body.docs-sanguis .card h4,
 body.docs-sanguis .doc-card h4,
 body.docs-sanguis .section-label,
 body.docs-sanguis .doc-content h2 + p.subtitle,
-body.docs-sanguis .breadcrumb a { color: #38bdf8 !important; }
-body.docs-sanguis footer a { color: #38bdf8 !important; }
+body.docs-sanguis .breadcrumb a { color: #b8403a !important; }
+body.docs-sanguis footer a { color: #b8403a !important; }
 
 
 /* ============================================================
@@ -606,9 +606,10 @@ body.docs-sanguis footer a { color: #38bdf8 !important; }
 .section-label, .doc-sidebar a.active, .doc-nav a.active,
 .doc-content a, .breadcrumb a, footer a, .back-link,
 .note-box p:last-child { color: var(--accent-soft) !important; }
+/* docs pages use the SAME accent as the rest of the site -- no blue links */
 body.docs-sanguis .card h4, body.docs-sanguis .section-label,
 body.docs-sanguis .doc-content a, body.docs-sanguis footer a,
-body.docs-sanguis .doc-sidebar a.active { color: #38bdf8 !important; }
+body.docs-sanguis .doc-sidebar a.active { color: var(--accent-soft) !important; }
 .btn:not(.ghost):not(.cream) { color: #c98d88 !important; }
 
 
@@ -805,7 +806,7 @@ body.docs-sanguis .doc-sidebar a.active { color: #38bdf8 !important; }
   }
   body.docs-sanguis nav {
     box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.10),
-                inset -1px 0 12px -6px rgba(56, 189, 248, 0.35) !important;
+                inset -1px 0 12px -6px rgba(175, 0, 0, 0.35) !important;
   }
   /* the tab: give it a matching edge and join it visually to the slab */
   .nav-tab {
@@ -865,8 +866,8 @@ body.docs-sanguis .doc-sidebar a.active { color: #38bdf8 !important; }
 footer { border-top: 1px solid rgba(175,0,0,0.55) !important;
          box-shadow: 0 -2px 20px -4px rgba(175,0,0,0.30) !important;
          padding-top: 26px !important; }
-body.docs-sanguis footer { border-top-color: rgba(56,189,248,0.55) !important;
-         box-shadow: 0 -2px 20px -4px rgba(56,189,248,0.28) !important; }
+body.docs-sanguis footer { border-top-color: rgba(175, 0, 0, 0.55) !important;
+         box-shadow: 0 -2px 20px -4px rgba(175, 0, 0, 0.28) !important; }
 @media (max-width: 700px) { .closing-band { padding: 48px 0 36px; } }
 
 
@@ -1041,7 +1042,7 @@ footer { padding-top: 46px !important; padding-bottom: 40px !important; }
 
 
 /* the footer sits in the same column as the content */
-body.docs-sanguis footer { border-top-color: rgba(56,189,248,0.5) !important; }
+body.docs-sanguis footer { border-top-color: rgba(175, 0, 0, 0.5) !important; }
 
 /* ── ONE box style for every card-ish thing on every page ── */
 .card, .arena-card, .chart-card, .legal-box, .note-box, .control-card,
@@ -1118,7 +1119,7 @@ footer {
   box-sizing: border-box !important;
   margin: 0 auto !important;
 }
-body.docs-sanguis footer { border-top-color: rgba(56,189,248,0.5) !important; }
+body.docs-sanguis footer { border-top-color: rgba(175, 0, 0, 0.5) !important; }
 footer > div, footer > div > a { text-align: left !important; }
 
 
@@ -1143,7 +1144,7 @@ footer {
   border-top: 1px solid rgba(175,0,0,0.55) !important;
   box-shadow: 0 -2px 20px -4px rgba(175,0,0,0.28) !important;
 }
-body.docs-sanguis footer { border-top-color: rgba(56,189,248,0.5) !important; }
+body.docs-sanguis footer { border-top-color: rgba(175, 0, 0, 0.5) !important; }
 footer > div, footer > div > a { text-align: left !important; }
 
 
@@ -1158,7 +1159,7 @@ footer {
   box-sizing: border-box !important;
   border-top: 1px solid rgba(175,0,0,0.55) !important;
 }
-body.docs-sanguis footer { border-top-color: rgba(56,189,248,0.5) !important; }
+body.docs-sanguis footer { border-top-color: rgba(175, 0, 0, 0.5) !important; }
 /* on plain pages the body is already padded for the nav, so the footer
    spans the usable area which equals the content column's outer box */
 
@@ -1483,8 +1484,8 @@ footer { position: relative; }
   .nav-links a.active { background: rgba(175,0,0,0.16) !important; color: var(--ink, #e8e6e3) !important; }
   .nav-links a.nav-ea { background: rgba(175,0,0,0.10) !important; color: #c98d88 !important; }
   .nav-links a.nav-ea.active { background: rgba(175,0,0,0.22) !important; color: #fff !important; }
-  body.docs-sanguis .nav-links a:hover { background: rgba(56,189,248,0.12) !important; }
-  body.docs-sanguis .nav-links a.active { background: rgba(56,189,248,0.16) !important; }
+  body.docs-sanguis .nav-links a:hover { background: rgba(175, 0, 0, 0.12) !important; }
+  body.docs-sanguis .nav-links a.active { background: rgba(175, 0, 0, 0.16) !important; }
   .nav-toggle span { background: var(--ink, #e8e6e3) !important; }
 }
 @keyframes mobNavIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
@@ -1520,8 +1521,8 @@ footer { position: relative; }
   nav .nav-links a.active { background: rgba(175,0,0,0.16) !important; color: var(--ink, #e8e6e3) !important; }
   nav .nav-links a.nav-ea { background: rgba(175,0,0,0.10) !important; color: #c98d88 !important; }
   nav .nav-links a.nav-ea.active { background: rgba(175,0,0,0.22) !important; color: #fff !important; }
-  body.docs-sanguis nav .nav-links a:hover { background: rgba(56,189,248,0.12) !important; }
-  body.docs-sanguis nav .nav-links a.active { background: rgba(56,189,248,0.16) !important; }
+  body.docs-sanguis nav .nav-links a:hover { background: rgba(175, 0, 0, 0.12) !important; }
+  body.docs-sanguis nav .nav-links a.active { background: rgba(175, 0, 0, 0.16) !important; }
 }
 
 
@@ -1568,8 +1569,8 @@ footer { position: relative; }
   nav .nav-links a.active { background: rgba(175,0,0,0.16) !important; color: var(--ink,#e8e6e3) !important; }
   nav .nav-links a.nav-ea { background: rgba(175,0,0,0.10) !important; color: #c98d88 !important; }
   nav .nav-links a.nav-ea.active { background: rgba(175,0,0,0.22) !important; color: #fff !important; }
-  body.docs-sanguis nav .nav-links a:hover { background: rgba(56,189,248,0.12) !important; }
-  body.docs-sanguis nav .nav-links a.active { background: rgba(56,189,248,0.16) !important; }
+  body.docs-sanguis nav .nav-links a:hover { background: rgba(175, 0, 0, 0.12) !important; }
+  body.docs-sanguis nav .nav-links a.active { background: rgba(175, 0, 0, 0.16) !important; }
 
   /* hamburger is gone — the pull-tab is the affordance now */
   .nav-toggle { display: none !important; }
@@ -1596,7 +1597,7 @@ footer { position: relative; }
   }
   body.nav-hidden .nav-tab { left: 0 !important; }
   body.nav-hidden .nav-tab .chev { transform: rotate(45deg) !important; }
-  body.docs-sanguis .nav-tab .chev { border-top-color:#38bdf8 !important; border-right-color:#38bdf8 !important; }
+  body.docs-sanguis .nav-tab .chev { border-top-color:#b8403a !important; border-right-color:#b8403a !important; }
 }
 
 
@@ -1698,7 +1699,7 @@ footer { position: relative; }
   }
   body.docs-sanguis nav {
     box-shadow: inset -1px 0 0 rgba(255,255,255,0.10),
-                inset -1px 0 12px -6px rgba(56,189,248,0.35),
+                inset -1px 0 12px -6px rgba(175, 0, 0, 0.35),
                 12px 0 40px -12px rgba(0,0,0,0.7) !important;
   }
 }

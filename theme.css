@@ -1759,3 +1759,31 @@ footer { position: relative; }
       colour (they predate the theme work), so they rendered black-on-white.
       These pages carry no body class, so they are targeted by href. ── */
 body { background: var(--bg, #101011) !important; color: var(--ink, #e8e6e3); }
+
+
+/* ── LAYER 69 — the creator's closing quote, below the Note From The Creator ── */
+.creator-quote {
+  margin: 0 auto;
+  max-width: 620px;
+  text-align: center;
+  padding: 8px 0 4px;
+  border: none;
+}
+.creator-quote p {
+  font-size: 1.12rem;
+  line-height: 1.65;
+  font-style: italic;
+  color: rgba(232,230,227,0.72);
+  margin: 0 0 14px;
+}
+.creator-quote cite {
+  display: block;
+  font-style: normal;
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+  color: rgba(232,230,227,0.40);
+}
+@media (max-width: 900px) {
+  .creator-quote { max-width: none; padding: 4px 0; }
+  .creator-quote p { font-size: 1.02rem; }
+}

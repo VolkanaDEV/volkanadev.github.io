@@ -1374,3 +1374,21 @@ footer {
 .roles { margin-top: 4px; }
 .panel-grid.three .card h4 { font-size: 1rem !important; margin-bottom: 6px !important; }
 .panel-grid.three .card .role-meta { margin-bottom: 10px; }
+
+
+/* ── LAYER 56 — finishing touches on the spine.
+      tab back to the sidebar's vertical middle; the SIDEBAR label stacked
+      directly ABOVE it in the same column; label flips with the toggle,
+      exactly mirroring the chevron (base = open, nav-hidden = flipped). ── */
+@media (min-width: 901px) {
+  .nav-tab { top: 50% !important; transform: translateY(-50%) !important; }
+  .nav-tab::before {
+    left: 50% !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: calc(100% + 9px) !important;
+    transform: translateX(-50%) rotate(0deg) !important;
+    transition: color 0.25s ease, transform 0.42s cubic-bezier(0.22,0.61,0.36,1);
+  }
+  body.nav-hidden .nav-tab::before { transform: translateX(-50%) rotate(180deg) !important; }
+}

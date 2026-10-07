@@ -1845,3 +1845,151 @@ blockquote.creator-quote { max-width: 860px !important; }
   .panel-grid + p, .panel-grid + .one-sub, .panel-grid + .middle-text,
   .panel-grid + blockquote.creator-quote { margin-top: 28px !important; }
 }
+
+
+/* ============================================================
+   LAYER 73 — MOBILE READABILITY PASS.
+   Cards work on desktop because there is width to spare. On a phone
+   they box the copy in, force extra line breaks, and pad away the
+   already-narrow column. On mobile: flatten them to text with a left
+   accent rule (grouping survives, the box does not), left-align the
+   body copy, and give the countdown room to breathe. Desktop is
+   untouched by every rule in this block.
+   ============================================================ */
+@media (max-width: 900px) {
+
+  /* ── 1. CARDS BECOME TEXT ─────────────────────────────────
+     No fill, no border, no radius, no shadow, no box padding.
+     A 2px accent rule on the left keeps the grouping readable. */
+  .card, .doc-card, .arena-card, .note-box,
+  .panel-grid .card, .panel-grid.two .card, .panel-grid.three .card {
+    background: none !important;
+    border: none !important;
+    border-left: 2px solid rgba(175,0,0,0.42) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    padding: 2px 0 2px 16px !important;
+    min-height: 0 !important;
+    margin: 0 0 26px 0 !important;
+  }
+  body.docs-sanguis .card, body.docs-sanguis .doc-card,
+  body.docs-sanguis .panel-grid .card {
+    border-left-color: rgba(56,189,248,0.42) !important;
+  }
+  /* the grid itself no longer needs card gutters */
+  .panel-grid, .panel-grid.two, .panel-grid.three {
+    gap: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* ── 2. BODY COPY READS LEFT, NOT CENTER ──────────────────
+     Centered prose on a narrow column makes every line start at a
+     different x; the eye tracks the ragged edge instead of the words. */
+  .section p, .section .middle-text, .section .one-sub,
+  .section li, .card p, .note-box p, .doc-content p,
+  .middle-text, .one-sub, .spec-row, .role p, .role li {
+    text-align: left !important;
+  }
+  .section p, .middle-text, .one-sub { line-height: 1.72 !important; }
+  /* keep the hero centered — it earns it */
+  .hero p, .hero h2, .hero-note, .ea-countdown, .center-btn { text-align: center !important; }
+
+  /* ── 3. COUNTDOWN: STOP CHOKING IT ────────────────────────*/
+  .ea-countdown, .timer-container {
+    padding: 26px 16px 24px !important;
+    gap: 12px !important;
+  }
+  .ea-timer, .timer-container { gap: 10px !important; }
+  .ea-unit, .timer-block { padding: 6px 4px !important; }
+  .ea-num, .timer-val { font-size: 1.75rem !important; line-height: 1 !important; }
+  .ea-cap, .timer-lbl {
+    margin-top: 10px !important;
+    letter-spacing: 0.14em !important;
+    font-size: 0.62rem !important;
+  }
+  .ea-label { margin-bottom: 18px !important; }
+  .ea-date { margin-top: 18px !important; }
+
+  /* ── 4. STAT BAND: EVEN PADDING ───────────────────────────*/
+  .stat { padding: 20px 0 20px 16px !important; border-left: 2px solid rgba(175,0,0,0.42) !important; }
+  .stat-band { gap: 0 !important; margin: 44px 0 8px !important; }
+  .stat-num { line-height: 1.15 !important; }
+  .stat-lbl { margin-top: 8px !important; }
+
+  /* ── 5. SPEC LIST / ROLES: FLATTEN THE SAME WAY ───────────*/
+  .spec-list, .roles { gap: 0 !important; }
+  .spec-col {
+    background: none !important; border: none !important;
+    border-left: 2px solid rgba(175,0,0,0.42) !important;
+    border-radius: 0 !important; padding: 2px 0 2px 16px !important;
+    margin: 0 0 26px 0 !important;
+  }
+  .spec-title { margin-bottom: 10px !important; }
+  .spec-row { padding: 5px 0 !important; display: block !important; }
+  .spec-k { display: block !important; font-size: 0.74rem !important; opacity: 0.72; margin-bottom: 2px; }
+  .spec-v { display: block !important; }
+
+  /* ── 6. SECTIONS + HEADINGS ───────────────────────────────*/
+  .section { padding: 48px 0 !important; }
+  .section h3, .one-line { line-height: 1.28 !important; margin-bottom: 16px !important; }
+
+  /* ── 7. THE GRAPH/TABLE CARDS KEEP A BOX (they need one) ──*/
+  .chart-card, .master-table, .doc-table, .legal-box, .form-box {
+    border-radius: 10px !important;
+  }
+}
+
+
+/* ── LAYER 74 — the stat blocks were still BOXES (I flattened .card last
+      pass but not .stat). Same treatment: fill/radius/shadow off, accent
+      rule on, so the stat band reads as a list, not four grey pills. ── */
+@media (max-width: 900px) {
+  .stat, .stat-band .stat {
+    background: none !important;
+    border: none !important;
+    border-left: 2px solid rgba(175,0,0,0.42) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 18px 0 18px 16px !important;
+    margin: 0 !important;
+  }
+  .stat-band { gap: 0 !important; }
+  /* a hairline between the stacked stats so they read as one list */
+  .stat + .stat { border-top: 1px solid rgba(255,255,255,0.05) !important; }
+}
+
+
+/* ── LAYER 75 — finish the mobile flatten pass.
+      .role (careers job cards) and the docs-hub tiles were missed.
+      The docs SUB-page tiles (doc-card) keep their box on purpose:
+      they are navigation targets whose hover/lift IS the affordance. ── */
+@media (max-width: 900px) {
+  .role, .roles .role {
+    background: none !important;
+    border: none !important;
+    border-left: 2px solid rgba(175,0,0,0.42) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 2px 0 2px 16px !important;
+    margin: 0 0 30px 0 !important;
+  }
+  .role h4 { margin-bottom: 6px !important; }
+  .role-meta { margin-bottom: 10px !important; }
+  .role ul { padding-left: 18px !important; }
+  .role .btn { margin-top: 12px !important; }
+
+  /* docs hub: the two big tiles become full-width text blocks */
+  a.card {
+    background: none !important;
+    border: none !important;
+    border-left: 2px solid rgba(175,0,0,0.42) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 2px 0 2px 16px !important;
+    transform: none !important;
+  }
+  a.card:hover { transform: none !important; box-shadow: none !important; }
+  a.sang { border-left-color: rgba(56,189,248,0.45) !important; }
+}

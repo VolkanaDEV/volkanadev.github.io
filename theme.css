@@ -1040,24 +1040,7 @@ footer { padding-top: 46px !important; padding-bottom: 40px !important; }
 .svg-chart .pt { fill: #c62a2a; }
 
 
-/* ============================================================
-   3.0 LAYER 40 — ONE footer, ONE box style, everywhere.
-   (benchmark's footer was left-aligned; every other page centered.
-    And a dozen different box classes had drifted apart.)
-   ============================================================ */
-
-/* ── the footer: one style, aligned with the content column ── */
-footer {
-  text-align: left !important;
-  padding: 46px 0 40px !important;
-  border-top: 1px solid rgba(175,0,0,0.55) !important;
-  box-shadow: 0 -2px 20px -4px rgba(175,0,0,0.28) !important;
-}
-footer > div, footer > div > a { text-align: left !important; }
-footer a { color: var(--accent-soft,#b8403a) !important; text-decoration: none; }
 /* the footer sits in the same column as the content */
-footer { padding-left: 30px !important; padding-right: 30px !important;
-         max-width: 960px !important; margin-left: auto !important; margin-right: auto !important; }
 body.docs-sanguis footer { border-top-color: rgba(56,189,248,0.5) !important; }
 
 /* ── ONE box style for every card-ish thing on every page ── */
@@ -1122,3 +1105,59 @@ body.docs-sanguis footer { border-top-color: rgba(56,189,248,0.5) !important; }
           font-variant-numeric: tabular-nums; }
 .spec-v.accent { color: #c98d88; font-weight: 700; }
 .spec-v.warn   { color: #e07070; font-weight: 700; }
+
+
+/* ── LAYER 42 — the footer line: FULL WIDTH of the content column, one edge ── */
+footer {
+  border-top: 1px solid rgba(175,0,0,0.55) !important;
+  box-shadow: 0 -2px 20px -4px rgba(175,0,0,0.28) !important;
+  text-align: left !important;
+  padding: 46px 30px 40px !important;
+  max-width: 960px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 0 auto !important;
+}
+body.docs-sanguis footer { border-top-color: rgba(56,189,248,0.5) !important; }
+footer > div, footer > div > a { text-align: left !important; }
+
+
+/* ── LAYER 43 — footer box = the content column exactly (border on the same edges) ── */
+footer {
+  max-width: 1020px !important;       /* 960 content + 2*30 padding = the same outer box */
+  padding-left: 30px !important; padding-right: 30px !important;
+  box-sizing: border-box !important;
+  margin: 0 auto !important;
+  width: 100% !important;
+}
+
+
+/* ── LAYER 44 — footer: same 960px column as the content, line spans it exactly ── */
+footer {
+  max-width: 960px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 0 auto !important;          /* centers the 960 box in the usable area */
+  padding: 46px 0 40px !important;     /* no side padding -> the line spans the box */
+  text-align: left !important;
+  border-top: 1px solid rgba(175,0,0,0.55) !important;
+  box-shadow: 0 -2px 20px -4px rgba(175,0,0,0.28) !important;
+}
+body.docs-sanguis footer { border-top-color: rgba(56,189,248,0.5) !important; }
+footer > div, footer > div > a { text-align: left !important; }
+
+
+/* ── LAYER 45 — footer matches whatever the page's layout box is (960 on
+   plain pages, the full usable area on docs pages with two sidebars). ── */
+footer {
+  max-width: none !important;
+  width: auto !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding: 46px 0 40px !important;
+  box-sizing: border-box !important;
+  border-top: 1px solid rgba(175,0,0,0.55) !important;
+}
+body.docs-sanguis footer { border-top-color: rgba(56,189,248,0.5) !important; }
+/* on plain pages the body is already padded for the nav, so the footer
+   spans the usable area which equals the content column's outer box */

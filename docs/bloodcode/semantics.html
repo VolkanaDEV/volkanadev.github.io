@@ -7,8 +7,8 @@
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <meta http-equiv="X-Frame-Options" content="DENY">
 <meta name="referrer-policy" content="strict-origin-when-cross-origin">
-<link rel="icon" href="../favicon.png">
-<title>Execution Model | VolkanaDEV Docs</title>
+<link rel="icon" href="../../favicon.png">
+<title>BloodCode — Semantics — VolkanaDEV</title>
 <style>
   :root{--bg:#0e1117;--panel:#fbfaf7;--panel-dark:#161b22;--border:#21262d;--border-light:#e1dad0;--text-light:#f3eedf;--text-dark:#1e222b;--muted-light:#8b949e;--muted-dark:#6e675d;--accent:#af0000;--accent-hover:#d21c1c;--code-bg:#0d1117;--code-border:#30363d}
   *{box-sizing:border-box}body{margin:0;padding:0;background-color:var(--bg);color:var(--text-light);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
@@ -129,9 +129,9 @@
   .doc-nav-bottom { border-top: 1px solid rgba(175, 0, 0, 0.4) !important; }
   /* === End Visual Enhancements === */
 </style>
-<link rel="stylesheet" href="../theme.css">
+<link rel="stylesheet" href="../../theme.css">
 </head>
-<body>
+<body class="docs-bloodcode">
 <button id="navTab" class="nav-tab" aria-label="Toggle navigation" onclick="document.body.classList.toggle('nav-hidden')"><span class="chev"></span></button>
 
 <div class="wordmark"><span>VolkanaDEV</span></div>
@@ -140,133 +140,54 @@
   <nav>
     <div class="wrap">
       <div class="nav-inner">
-        <a href="../index.html" class="brand" style="text-decoration:none"><img src="../favicon.png" class="brand-dot" alt="VolkanaDEV">VolkanaDEV</a>
+        <a href="../../index.html" class="brand" style="text-decoration:none"><img src="../../favicon.png" class="brand-dot" alt="VolkanaDEV">VolkanaDEV</a>
         <button class="nav-toggle" onclick="this.classList.toggle('open');document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu"><span></span><span></span><span></span></button>
         <div class="nav-links">
-          <a href="../index.html">Welcome</a>
-          <a href="../vana.html">Meet VANA</a>
-          <a href="../roadmap.html">Roadmap</a>
-          <a href="../benchmark.html">Benchmarks</a>
-          <a href="index.html" class="active">Docs</a>
-          <a href="../security.html">Safety &amp; Licenses</a>
-          <a href="../contact.html">Contact</a>
+          <a href="../../index.html">Welcome</a>
+          <a href="../../vana.html">Meet VANA</a>
+          <a href="../../roadmap.html">Roadmap</a>
+          <a href="../../benchmark.html">Benchmarks</a>
+          <a href="../index.html" class="active">Docs</a>
+          <a href="../../security.html">Safety &amp; Licenses</a>
+          <a href="../../contact.html">Contact</a>
         </div>
       </div>
     </div>
   </nav>
 
   <div class="doc-layout">
-    <aside class="doc-sidebar">
-      <h4>Sanguis Docs</h4>
+        <aside class="doc-sidebar">
+      <h4 style="color:#c62a2a">BloodCode Docs</h4>
       <ul><li>
         <a href="index.html">Overview</a>
-        <a href="getting-started.html">Getting Started</a>
-        <a href="language-reference.html">Language Reference</a>
-        <a href="builtins.html">Builtins</a>
-        <a href="execution-model.html" class="active">Execution Model</a>
-        <a href="examples.html">Examples</a>
-        <a href="compiler-pipeline.html">Compiler Pipeline</a>
-        <a href="marrow.html">Marrow Terminal</a>
+        <a href="isa.html">The ISA</a>
+        <a href="semantics.html">Semantics</a>
+        <a href="conformance.html">Conformance</a>
+        <a href="determinism.html">Determinism</a>
+        <a href="artifacts.html">Artifacts</a>
         <a href="glossary.html">Glossary</a>
       </li></ul>
     </aside>
     <main class="doc-content">
-      <div class="breadcrumb"><a href="index.html">Docs</a> / Execution Model</div>
+      <div class="breadcrumb"><a href="index.html">BloodCode</a> / Semantics</div>
 
-      <h1>Execution Model</h1>
-      <p class="subtitle">Tick cycle, parallel semantics, termination, and scalar formatting.</p>
 
-      <h2 id="tick-cycle">The Sweep</h2>
-      <p>The engine runs in sweeps. Each sweep:</p>
-      <p>1. <strong>Evaluate.</strong> Every switch computes its logic from its input wires, all at once.<br>
-      2. <strong>Propagate.</strong> Every wire picks up the state of the switch driving it. Wires with conduction delay hold their previous state and count down before latching.<br>
-      3. <strong>Check.</strong> If nothing changed, the grid has stabilized. That stable state is the program's output.</p>
-      <p>A program that holds a feedback loop never stabilizes: it oscillates. That is not an error. A sustained pulse is how a Sanguis program stays alive.</p>
-
-      <h2 id="parallel-semantics">Parallel Semantics</h2>
-      <p>All switches evaluate against the same snapshot: the wire states at the start of the sweep. So:</p>
-      <p>&bull; Switch A's change is <strong>NOT</strong> visible to switch B until the next sweep.<br>
-      &bull; Regions run many local sweeps between global synchronizations (block-Jacobi iteration).</p>
-      <div class="callout">
-        <p><strong>Deliberate.</strong> This is how hardware behaves. It is not a simulation of parallelism; it is parallelism.</p>
-      </div>
-
-      <h2 id="termination">Termination</h2>
-      <p>The engine stops when:</p>
-      <p>&bull; The grid stabilizes: no switch changed state in a sweep<br>
-      &bull; The maximum sweep count is reached, in which case the result is reported as oscillating rather than failed<br>
-      &bull; You close it. A running program that holds a pulse stops only when someone stops it, and the last state is kept.</p>
-
-      <h2 id="scalar-formatting">Scalar Formatting</h2>
-      <p>Scalars are formatted as <span class="code-inline">%.4f</span> (4 decimal places): <span class="code-inline">1.0000</span>, <span class="code-inline">3.5000</span>, <span class="code-inline">0.0000</span>.</p>
-
-      <h2 id="gpu-execution">GPU Execution</h2>
-      <p>The grid is uploaded to the GPU as buffer data. One fixed kernel evaluates switches and propagates wires: regions run many local sweeps between global synchronization barriers. The kernel is the same for every program; programs are data, never code. File I/O bridges to the CPU, the only operation that leaves the GPU.</p>
-
-      <h2 id="examples">Examples</h2>
-
-      <h3>Echo</h3>
-      <p>Read a file and print its contents:</p>
-      <div class="code-block"><pre>circuit echo;
-
-cell main() -> float {
-    let src = read_file("input.txt");
-    print(src);
-    emit 0.0;
-}</pre></div>
-
-      <h3>Character Scanner</h3>
-      <p>Iterate through text character by character:</p>
-      <div class="code-block"><pre>circuit scanner;
-
-cell main() -> float {
-    let src = "Hello VANA!";
-    let i = 0.0;
-    while i < len(src) {
-        print(char_at(src, i));
-        i = i + 1.0;
-    }
-    emit 0.0;
-}</pre></div>
-
-      <h3>Conditional Accumulator</h3>
-      <p>Add numbers until a limit is reached:</p>
-      <div class="code-block"><pre>circuit accumulator;
-
-cell main() -> float {
-    let total = 0.0;
-    let step = 1.0;
-    while total &lt; 10.0 {
-        total = total + step;
-    }
-    print(total);
-    emit 0.0;
-}</pre></div>
-      <div class="callout">
-        <p><strong>Note:</strong> Five operators: <span class="code-inline">&lt;</span>, <span class="code-inline">&gt;</span>, <span class="code-inline">=</span>, <span class="code-inline">&lt;=</span>, <span class="code-inline">&gt;=</span>.</p>
-      </div>
-
-      <h3>File Processor</h3>
-      <p>Read, transform, and write:</p>
-      <div class="code-block"><pre>circuit file_processor;
-
-cell main() -> float {
-    let input = read_file("data.txt");
-    let output = replace(input, "old", "new");
-    write_file("result.txt", output);
-    emit 0.0;
-}</pre></div>
-
-      <div class="doc-nav-bottom">
-        <a href="builtins.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Builtins</span></a>
-        <a href="examples.html" class="nav-right"><span class="nav-label">Next &rarr;</span><span class="nav-title">Examples</span></a>
-      </div>
+      <h1>Semantics</h1>
+      <p class="subtitle">How the ops move values, and how they lower to the grid.</p>
+      <h2>The stack</h2>
+      <p>BloodCode is a stack machine. <span class="code-inline">pulse</span> and <span class="code-inline">pulse_str</span> push values; ops consume from the top and push their result. Arithmetic (<span class="code-inline">combine</span>, <span class="code-inline">subtract</span>, <span class="code-inline">scale</span>, <span class="code-inline">divide</span>) takes two, leaves one.</p>
+      <h2>Organs and fields</h2>
+      <p><span class="code-inline">grow_organ</span> builds a structure with named fields; <span class="code-inline">read_field</span> and <span class="code-inline">write_field</span> move its state. On the grid, a field is a wire: writing it drives the wire, reading it senses the wire.</p>
+      <h2>Control</h2>
+      <p><span class="code-inline">route</span> jumps unconditionally (the label is a <span class="code-inline">junction</span>). <span class="code-inline">gate</span> jumps when the top of the stack is false. <span class="code-inline">dispatch</span> calls a cell and pushes its return value.</p>
+      <h2>Guards</h2>
+      <p><span class="code-inline">checktype</span> and <span class="code-inline">checkret</span> assert a value's type at a call boundary. On uncovered hardware they are the safety fence; on covered hardware they compile to nothing.</p>
     </main>
   </div>
 
   <footer>
     <div class="footer-links">
-      <a href="../terms.html">Terms of Use</a> | <a href="../privacy.html">Privacy Policy</a> | <a href="../careers.html">Careers</a>
+      <a href="../../terms.html">Terms of Use</a> | <a href="../../privacy.html">Privacy Policy</a> | <a href="../../careers.html">Careers</a>
     </div>
     Copyright &copy; 2026 VolkanaDEV Autonomous Systems, Inc.<br>
     VolkanaDEV, Sanguis, and VANA are intellectual property of VolkanaDEV Autonomous Systems, Inc.<br>

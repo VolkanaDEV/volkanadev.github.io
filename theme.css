@@ -542,3 +542,41 @@ body::after {
   body.nav-hidden .wordmark { left: 0; }
 }
 @media (max-width: 900px) { .nav-tab { display: none !important; } }
+
+
+/* ============================================================
+   3.0 LAYER 12 — Sanguis docs keep BLUE; BloodCode owns RED.
+   Scoped so the two doc sections are visually distinct and can
+   be deployed as separate sites.
+   ============================================================ */
+body.docs-sanguis {
+  --accent: #38bdf8;
+  --accent-hover: #7dd3fc;
+  --blood: #38bdf8;
+}
+body.docs-sanguis .card,
+body.docs-sanguis .doc-card,
+body.docs-sanguis .doc-grid > a {
+  border-color: transparent !important;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.42), 0 2px 8px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.05) !important;
+}
+body.docs-sanguis .card:hover,
+body.docs-sanguis .doc-card:hover,
+body.docs-sanguis .doc-grid > a:hover {
+  box-shadow: 0 28px 62px rgba(0,0,0,0.66), 0 8px 20px rgba(0,0,0,0.46),
+              0 0 36px rgba(56,189,248,0.16), inset 0 1px 0 rgba(255,255,255,0.07) !important;
+}
+/* the inner docs nav + rules pick up the blue */
+body.docs-sanguis .doc-nav a.active,
+body.docs-sanguis .doc-side a.active { color: var(--accent) !important; border-color: var(--accent) !important; }
+body.docs-sanguis .doc-content h2 { border-bottom: 1px solid rgba(56,189,248,0.35) !important; }
+body.docs-sanguis .doc-nav-bottom { border-top: 1px solid rgba(56,189,248,0.35) !important; }
+body.docs-sanguis ::selection { background: rgba(56,189,248,0.3) !important; }
+body.docs-sanguis ::-webkit-scrollbar-thumb { background: rgba(56,189,248,0.35) !important; }
+body.docs-sanguis .section { border-top: 1px solid rgba(56,189,248,0.28) !important; }
+body.docs-sanguis footer { border-top: 1px solid rgba(56,189,248,0.45) !important; box-shadow: 0 -2px 16px -2px rgba(56,189,248,0.22) !important; }
+body.docs-sanguis nav .nav-links a:hover { background: rgba(56,189,248,0.12) !important; }
+body.docs-sanguis nav .nav-links a.active { background: rgba(56,189,248,0.16) !important; }
+body.docs-sanguis .nav-tab .chev { border-top-color:#38bdf8; border-right-color:#38bdf8; }
+/* and the background pulse reads blue in the Sanguis docs */
+body.docs-sanguis::after { filter: hue-rotate(150deg); }

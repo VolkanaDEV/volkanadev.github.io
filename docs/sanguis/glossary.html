@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; frame-ancestors 'none';">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta name="referrer-policy" content="strict-origin-when-cross-origin">
+<link rel="icon" href="../../favicon.png">
+<title>Glossary | VolkanaDEV Docs</title>
+<style>
+  :root{--bg:#0e1117;--panel:#fbfaf7;--panel-dark:#161b22;--border:#21262d;--border-light:#e1dad0;--text-light:#f3eedf;--text-dark:#1e222b;--muted-light:#8b949e;--muted-dark:#6e675d;--accent:#af0000;--accent-hover:#d21c1c;--code-bg:#0d1117;--code-border:#30363d}
+  *{box-sizing:border-box}body{margin:0;padding:0;background-color:var(--bg);color:var(--text-light);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+  nav{border-bottom:1px solid var(--border);background:rgba(14,17,23,0.85);backdrop-filter:blur(12px);position:sticky;top:0;z-index:100}
+  nav .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 16px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.15rem;color:var(--text-light);letter-spacing:-0.02em}
+  .brand-dot{width:20px;height:20px;border-radius:4px;object-fit:contain}
+  .nav-links{display:flex;gap:24px}
+  .nav-links a{color:var(--muted-light);text-decoration:none;font-size:0.9rem;font-weight:500;transition:color 0.2s}
+  .nav-links a:hover,.nav-links a.active{color:var(--text-light)}
+  nav .wrap { max-width: 100%; padding: 0 16px; }
+  nav .brand { margin-left: 24px; }
+  .nav-links { margin-left: auto; margin-right: 16px; }
+  .nav-links a { position: relative; }
+  .nav-links a:not(:last-child)::after {
+    content: ''; position: absolute; right: -12px; top: 50%; transform: translateY(-50%);
+    width: 1px; height: 16px; background: #f3eedf; opacity: 0.25;
+  }
+  @media (max-width: 768px) { .nav-links a:not(:last-child)::after { display: none; } }
+  .nav-toggle{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+  .nav-toggle span{width:24px;height:2px;background:var(--text-light);border-radius:2px;transition:0.3s}
+  .nav-toggle.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+  .nav-toggle.open span:nth-child(2){opacity:0}
+  .nav-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+  .doc-layout{display:flex;gap:0;max-width:1200px;margin:0 auto}
+  .doc-sidebar{width:260px;flex-shrink:0;padding:40px 24px 60px 24px;border-right:1px solid var(--border);position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto}
+  .doc-sidebar h4{font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin:0 0 16px}
+  .doc-sidebar ul{list-style:none;padding:0;margin:0}
+  .doc-sidebar a{display:block;padding:8px 12px;border-radius:8px;color:var(--muted-light);text-decoration:none;font-size:0.88rem;font-weight:500;transition:0.15s;border-left:2px solid transparent}
+  .doc-sidebar a:hover{color:var(--text-light);background:var(--panel-dark)}
+  .doc-sidebar a.active{color:var(--accent);border-left-color:var(--accent);background:rgba(196,93,58,0.06)}
+  .doc-content{flex:1;min-width:0;padding:40px 48px 80px}
+  .breadcrumb{font-size:0.82rem;color:var(--muted-light);margin-bottom:24px}
+  .breadcrumb a{color:var(--accent);text-decoration:none}
+  .breadcrumb a:hover{text-decoration:underline}
+  .doc-content h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;color:#fff;margin:0 0 8px;letter-spacing:-0.03em;line-height:1.2}
+  .doc-content .subtitle{color:var(--muted-light);font-size:1rem;margin:0 0 40px;font-weight:400}
+  .doc-content h2{font-size:1.4rem;font-weight:700;color:var(--accent);margin:48px 0 16px;letter-spacing:-0.02em;padding-bottom:8px;border-bottom:1px solid var(--border)}
+  .doc-content h3{font-size:1.1rem;font-weight:700;color:var(--text-light);margin:32px 0 12px;letter-spacing:-0.01em}
+  .doc-content p{color:var(--text-light);font-size:0.96rem;margin:0 0 16px;max-width:780px}
+  .doc-content p+p{margin-top:12px}
+  .code-block{background:var(--code-bg);border:1px solid var(--code-border);border-radius:10px;padding:20px 24px;margin:20px 0;}
+  .code-block pre{margin:0;font-family:'JetBrains Mono','Fira Code','Consolas',monospace;font-size:0.85rem;line-height:1.6;color:#c9d1d9;white-space:pre-wrap}
+  .code-inline{background:var(--code-bg);border:1px solid var(--code-border);border-radius:4px;padding:2px 6px;font-family:monospace;font-size:0.85em;color:#c9d1d9}
+  .doc-table{width:100%;max-width:780px;border-collapse:collapse;margin:20px 0;font-size:0.88rem}
+  .doc-table th{text-align:left;padding:12px 16px;background:var(--panel-dark);color:var(--accent);font-weight:700;border-bottom:2px solid var(--border);font-size:0.82rem;text-transform:uppercase;letter-spacing:0.05em}
+  .doc-table td{padding:10px 16px;border-bottom:1px solid var(--border);color:var(--text-light)}
+  .doc-table tr:hover td{background:var(--panel-dark)}
+  .callout{background:var(--panel-dark);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:16px 20px;margin:20px 0}
+  .callout p{margin:0;color:var(--text-light)}
+  .callout strong{color:var(--accent)}
+  .doc-nav-bottom{display:flex;justify-content:space-between;margin-top:60px;padding-top:24px;border-top:1px solid var(--border);gap:16px}
+  .doc-nav-bottom a{display:flex;flex-direction:column;text-decoration:none;padding:16px 20px;border:1px solid var(--border);border-radius:10px;background:var(--panel-dark);transition:0.15s;max-width:48%}
+  .doc-nav-bottom a:hover{border-color:var(--accent)}
+  .doc-nav-bottom .nav-label{font-size:0.75rem;color:var(--muted-light);text-transform:uppercase;letter-spacing:0.05em}
+  .doc-nav-bottom .nav-title{font-size:0.95rem;color:var(--text-light);font-weight:600;margin-top:4px}
+  .doc-nav-bottom .nav-right{text-align:right;margin-left:auto}
+  footer{text-align:center;padding:40px 0;color:var(--muted-light);font-size:0.85rem;border-top:1px solid var(--border);margin-top:40px;background-color:var(--bg)}
+  footer a{color:var(--accent);text-decoration:none}
+  .footer-links{margin-bottom:8px}
+  .footer-links a{margin:0 8px}
+  @media(max-width:768px){.nav-toggle{display:flex}.nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--border);padding:8px 24px 16px;display:none;z-index:100}.nav-links.open{display:flex}.nav-links a{padding:12px 0;border-bottom:1px solid var(--border);font-size:0.95rem}.nav-links a:last-child{border-bottom:none}.doc-layout{flex-direction:column}.doc-sidebar{display:none}.doc-content{padding:24px 16px 60px}body::before{content:'';position:fixed;inset:0;z-index:-1;background-image:url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http:%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2784%27%20height%3D%2749%27%20viewBox%3D%270%200%2084%2049%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23af0000%27%20stroke-opacity%3D%270.025%27%20stroke-width%3D%271%27%3E%3Cpath%20d%3D%27M56%200.5%20L70%2024.5%20L56%2048.5%20L28%2048.5%20L14%2024.5%20L28%200.5%20Z%27%2F%3E%3Cpath%20d%3D%27M0%2024.5%20L14%2024.5%27%2F%3E%3Cpath%20d%3D%27M70%2024.5%20L84%2024.5%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');background-size:84px 49px;animation:hexHeartbeat 7s ease-in-out infinite}@keyframes hexHeartbeat{0%{opacity:.6}7%{opacity:1}14%{opacity:.65}21%{opacity:.9}35%{opacity:.6}100%{opacity:.6}}.wrap{padding:0 16px}}
+
+  /* === Visual Enhancements === */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 5px rgba(175, 0, 0, 0.15); }
+    50% { box-shadow: 0 0 15px rgba(175, 0, 0, 0.3); }
+  }
+  body { animation: fadeIn 0.4s ease-out; }
+  .card, .doc-card, .doc-grid > a, .arena-card {
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover, .doc-card:hover, .doc-grid > a:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 4px 20px rgba(175, 0, 0, 0.12);
+  }
+  .hero h2, .header-block h2 {
+    text-shadow: 0 0 30px rgba(175, 0, 0, 0.08);
+  }
+  .nav-links a {
+    transition: color 0.2s, text-shadow 0.2s;
+  }
+  .nav-links a:hover {
+    text-shadow: 0 0 10px rgba(175, 0, 0, 0.3);
+  }
+  a { transition: opacity 0.15s, text-shadow 0.15s; }
+  .btn, button {
+    transition: all 0.2s ease;
+  }
+  .btn:hover, button:hover {
+    box-shadow: 0 0 12px rgba(175, 0, 0, 0.2);
+  }
+  .back-link:hover, footer a:hover {
+    text-shadow: 0 0 8px rgba(175, 0, 0, 0.25);
+  }
+  .legal-box {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .legal-box:hover {
+    border-color: rgba(175, 0, 0, 0.25);
+    box-shadow: 0 0 25px rgba(175, 0, 0, 0.04);
+  }
+  ::selection {
+    background: rgba(175, 0, 0, 0.25);
+  }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(175, 0, 0, 0.3); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(175, 0, 0, 0.5); }
+  /* Separator line radiant glow */
+  nav { border-bottom: 1px solid rgba(175, 0, 0, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(175, 0, 0, 0.3); }
+  footer { border-top: 1px solid rgba(175, 0, 0, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(175, 0, 0, 0.3); }
+  .section { border-top: 1px solid rgba(175, 0, 0, 0.5) !important; }
+  .doc-content h2 { border-bottom: 1px solid rgba(175, 0, 0, 0.4) !important; }
+  .doc-nav-bottom { border-top: 1px solid rgba(175, 0, 0, 0.4) !important; }
+  /* === End Visual Enhancements === */
+</style>
+<link rel="stylesheet" href="../../theme.css">
+</head>
+<body class="docs-sanguis">
+<button id="navTab" class="nav-tab" aria-label="Toggle navigation" onclick="document.body.classList.toggle('nav-hidden')"><span class="chev"></span></button>
+
+<div class="wordmark"><span>VolkanaDEV</span></div>
+
+
+  <nav>
+    <div class="wrap">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand" style="text-decoration:none"><img src="../../favicon.png" class="brand-dot" alt="VolkanaDEV">VolkanaDEV</a>
+        <button class="nav-toggle" onclick="this.classList.toggle('open');document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        <div class="nav-links">
+          <a href="../../index.html">Welcome</a>
+          <a href="../../vana.html">Meet VANA</a>
+          <a href="../../roadmap.html">Roadmap</a>
+          <a href="../../benchmark.html">Benchmarks</a>
+          <a href="../index.html" class="active">Docs</a>
+          <a href="../../security.html">Safety &amp; Licenses</a>
+          <a href="../../contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="doc-layout">
+    <aside class="doc-sidebar">
+      <h4>Sanguis Docs</h4>
+      <ul><li>
+        <a href="index.html">Overview</a>
+        <a href="getting-started.html">Getting Started</a>
+        <a href="language-reference.html">Language Reference</a>
+        <a href="builtins.html">Builtins</a>
+        <a href="execution-model.html">Execution Model</a>
+        <a href="examples.html">Examples</a>
+        <a href="compiler-pipeline.html">Compiler Pipeline</a>
+        <a href="marrow.html">Marrow Terminal</a>
+        <a href="glossary.html" class="active">Glossary</a>
+      </li></ul>
+    </aside>
+    <main class="doc-content">
+      <div class="breadcrumb"><a href="index.html">Docs</a> / Glossary</div>
+
+      <h1>Glossary</h1>
+      <p class="subtitle">Terms and definitions</p>
+
+      <table class="doc-table">
+        <tr><th>Term</th><th>Meaning</th></tr>
+        <tr><td>Sanguis</td><td>The language</td></tr>
+        <tr><td>VANA</td><td>The engine/runtime ("Voltage Activated Neural Architecture")</td></tr>
+        <tr><td>Circuit</td><td>A body, a named scope of holds and routes</td></tr>
+        <tr><td>Hold</td><td>A named value (scalar or text)</td></tr>
+        <tr><td>Cell</td><td>A function. Inside an organ, a method</td></tr>
+        <tr><td>Tick</td><td>One execution cycle, all routes evaluated in parallel</td></tr>
+        <tr><td>Emit</td><td>Send a value to a target (hold or screen), replacing content</td></tr>
+        <tr><td>Append</td><td>Accumulate text into a text hold, concatenating</td></tr>
+        <tr><td>Through</td><td>Iterate through text one character per tick</td></tr>
+        <tr><td>Wire</td><td>Connectome link between circuits</td></tr>
+        <tr><td>Gate</td><td>A condition check that controls whether a route fires</td></tr>
+        <tr><td>BloodCode (.bc)</td><td>The compiled artifact: organ manifest plus program instructions, stored as readable text</td></tr>
+        <tr><td>Compiler</td><td>Compiles Sanguis source into BloodCode, the portable artifact (written in Sanguis itself)</td></tr>
+        <tr><td>Runtime (ad)</td><td>Presses BloodCode into the grid and settles it on the GPU</td></tr>
+      </table>
+
+      <div class="doc-nav-bottom">
+        <a href="compiler-pipeline.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Compiler Pipeline</span></a>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-links">
+      <a href="../../terms.html">Terms of Use</a> | <a href="../../privacy.html">Privacy Policy</a> | <a href="../../careers.html">Careers</a>
+    </div>
+    Copyright &copy; 2026 VolkanaDEV Autonomous Systems, Inc.<br>
+    VolkanaDEV, Sanguis, and VANA are intellectual property of VolkanaDEV Autonomous Systems, Inc.<br>
+    Business and private inquiries: <a href="mailto:volkanadev@volkanadev.com">volkanadev@volkanadev.com</a>
+  </footer>
+
+</body>
+</html>

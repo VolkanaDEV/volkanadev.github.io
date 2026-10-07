@@ -7,8 +7,8 @@
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <meta http-equiv="X-Frame-Options" content="DENY">
 <meta name="referrer-policy" content="strict-origin-when-cross-origin">
-<link rel="icon" href="../favicon.png">
-<title>Getting Started | VolkanaDEV Docs</title>
+<link rel="icon" href="../../favicon.png">
+<title>Examples | VolkanaDEV Docs</title>
 <style>
   :root{--bg:#0e1117;--panel:#fbfaf7;--panel-dark:#161b22;--border:#21262d;--border-light:#e1dad0;--text-light:#f3eedf;--text-dark:#1e222b;--muted-light:#8b949e;--muted-dark:#6e675d;--accent:#af0000;--accent-hover:#d21c1c;--code-bg:#0d1117;--code-border:#30363d}
   *{box-sizing:border-box}body{margin:0;padding:0;background-color:var(--bg);color:var(--text-light);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
@@ -129,9 +129,9 @@
   .doc-nav-bottom { border-top: 1px solid rgba(175, 0, 0, 0.4) !important; }
   /* === End Visual Enhancements === */
 </style>
-<link rel="stylesheet" href="../theme.css">
+<link rel="stylesheet" href="../../theme.css">
 </head>
-<body>
+<body class="docs-sanguis">
 <button id="navTab" class="nav-tab" aria-label="Toggle navigation" onclick="document.body.classList.toggle('nav-hidden')"><span class="chev"></span></button>
 
 <div class="wordmark"><span>VolkanaDEV</span></div>
@@ -140,16 +140,16 @@
   <nav>
     <div class="wrap">
       <div class="nav-inner">
-        <a href="../index.html" class="brand" style="text-decoration:none"><img src="../favicon.png" class="brand-dot" alt="VolkanaDEV">VolkanaDEV</a>
+        <a href="../../index.html" class="brand" style="text-decoration:none"><img src="../../favicon.png" class="brand-dot" alt="VolkanaDEV">VolkanaDEV</a>
         <button class="nav-toggle" onclick="this.classList.toggle('open');document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu"><span></span><span></span><span></span></button>
         <div class="nav-links">
-          <a href="../index.html">Welcome</a>
-          <a href="../vana.html">Meet VANA</a>
-          <a href="../roadmap.html">Roadmap</a>
-          <a href="../benchmark.html">Benchmarks</a>
-          <a href="index.html" class="active">Docs</a>
-          <a href="../security.html">Safety &amp; Licenses</a>
-          <a href="../contact.html">Contact</a>
+          <a href="../../index.html">Welcome</a>
+          <a href="../../vana.html">Meet VANA</a>
+          <a href="../../roadmap.html">Roadmap</a>
+          <a href="../../benchmark.html">Benchmarks</a>
+          <a href="../index.html" class="active">Docs</a>
+          <a href="../../security.html">Safety &amp; Licenses</a>
+          <a href="../../contact.html">Contact</a>
         </div>
       </div>
     </div>
@@ -160,82 +160,143 @@
       <h4>Sanguis Docs</h4>
       <ul><li>
         <a href="index.html">Overview</a>
-        <a href="getting-started.html" class="active">Getting Started</a>
+        <a href="getting-started.html">Getting Started</a>
         <a href="language-reference.html">Language Reference</a>
         <a href="builtins.html">Builtins</a>
         <a href="execution-model.html">Execution Model</a>
-        <a href="examples.html">Examples</a>
+        <a href="examples.html" class="active">Examples</a>
         <a href="compiler-pipeline.html">Compiler Pipeline</a>
         <a href="marrow.html">Marrow Terminal</a>
         <a href="glossary.html">Glossary</a>
       </li></ul>
     </aside>
     <main class="doc-content">
-      <div class="breadcrumb"><a href="index.html">Docs</a> / Getting Started</div>
+      <div class="breadcrumb"><a href="index.html">Docs</a> / Circuits</div>
 
-      <h1>Getting Started</h1>
-      <p class="subtitle">Run your first Sanguis program</p>
+      <h1>Circuits, Holds, Routes, Emits</h1>
+      <p class="subtitle">The building blocks of a Sanguis program.</p>
 
-      <h2 id="prerequisites">Prerequisites</h2>
-      <p>Windows 10 or later with Rust installed. A Vulkan-capable GPU is optional: with one, programs press into the grid and settle on the GPU. Without one, everything still runs on the CPU. Vulkan drivers come with your GPU drivers; nothing extra to install.</p>
-
-      <h2 id="install">Installation</h2>
-      <p>Clone and build:</p>
-      <div class="code-block"><pre>git clone https://github.com/VolkanaDEV/sanguis.git
-cd sanguis
-cargo build</pre></div>
-      <p>The build produces the language toolchain: <span class="code-inline">sanguis.exe</span>. The compiler and VM are written in Sanguis itself (<span class="code-inline">lib/compiler.sanguis</span>); Rust only bootstraps them.</p>
-      <div class="callout">
-        <p><strong>First run compiles the compiler.</strong> The toolchain hosts its own compiler written in Sanguis. The first <span class="code-inline">bleed</span> takes a few extra seconds while the bootstrap runs; after that it is fast.</p>
-      </div>
-
-      <h2 id="one-command">The Pipeline</h2>
-      <p>Two commands cover the whole toolchain. Write <span class="code-inline">.sanguis</span>, compile it, run it:</p>
-      <div class="code-block"><pre>target\debug\sanguis.exe bleed my_program.sanguis -o my_program.bc
-target\debug\sanguis.exe ad --target vulkan my_program.bc</pre></div>
-      <p><span class="code-inline">bleed</span> compiles source into BloodCode, the portable artifact. <span class="code-inline">ad</span> presses that artifact into the wiring grid and settles it on your GPU. The intermediate file is a text file you can open and read.</p>
-
-      <h2 id="hello-world">Hello World</h2>
-      <p>Create <span class="code-inline">hello.sanguis</span>:</p>
+      <h2 id="circuit">circuit</h2>
+      <p>Every program is a circuit: a named body containing cells.</p>
       <div class="code-block"><pre>circuit hello;
 
 cell main() -> float {
     print(99.0);
     emit 0.0;
 }</pre></div>
-      <p>Run it:</p>
-      <div class="code-block"><pre>target\debug\sanguis.exe drip hello.sanguis</pre></div>
-      <p>Output:</p>
-      <div class="code-block"><pre>99.0</pre></div>
-      <p><span class="code-inline">circuit</span> declares the program body. <span class="code-inline">cell</span> declares a function. <span class="code-inline">print</span> writes to the screen. <span class="code-inline">emit</span> returns the circuit's result. This source was compiled by the Sanguis-written compiler, which is why the language can host itself.</p>
+      <p>Run it: <span class="code-inline">sanguis drip hello.sanguis</span> prints <span class="code-inline">99.0</span>.</p>
 
-      <h2 id="arithmetic">Arithmetic</h2>
-      <div class="code-block"><pre>circuit add_test;
+      <h2 id="let">let</h2>
+      <p>Declare a variable. Types are inferred.</p>
+      <div class="code-block"><pre>circuit let_test;
 
 cell main() -> float {
-    let a = 1.0;
-    let b = 2.0;
-    let c = a + b;
-    print(c);
+    let n = 1.0;
+    emit n;
+}</pre></div>
+      <p>Emits <span class="code-inline">1.0</span>.</p>
+
+      <h2 id="cells">cells and functions</h2>
+      <p>Cells are functions. They take parameters and return values.</p>
+      <div class="code-block"><pre>circuit math_test;
+
+cell add(a: float, b: float) -> float {
+    return a + b;
+}
+
+cell main() -> float {
+    let x = add(1.0, 2.0);
+    let y = x * 4.0;
+    if y >= 10.0 {
+        emit y;
+    } else {
+        emit 0.0;
+    }
+}</pre></div>
+      <p>Emits <span class="code-inline">12.0</span>. Control flow (<span class="code-inline">if</span>/<span class="code-inline">else</span>, <span class="code-inline">while</span>) works inside cells.</p>
+
+      <h2 id="while">while</h2>
+      <div class="code-block"><pre>circuit control;
+
+cell main() -> float {
+    let counter = 0;
+    while counter &lt; 3 {
+        counter = counter + 1;
+        emit counter;
+    }
     emit 0.0;
 }</pre></div>
-      <p>Output:</p>
-      <div class="code-block"><pre>3.0</pre></div>
+      <p>Emits 1, 2, 3, then 0.</p>
 
-      <div class="callout">
-        <p><strong>Four operators.</strong> <span class="code-inline">+</span>, <span class="code-inline">-</span>, <span class="code-inline">*</span>, <span class="code-inline">/</span>. Division by zero returns 0.0. Evaluated left to right. Operands can be numbers, variables, or builtin results.</p>
-      </div>
+      <h2 id="organ">organ: state that persists</h2>
+      <p>An organ is a struct with fields and methods. It compiles into the grid: fields become wires that hold state, methods become inlined wiring.</p>
+      <div class="code-block"><pre>circuit counter_demo;
+
+organ Counter {
+    count: float;
+
+    cell new(start: float) -&gt; Counter {
+        let c = new Counter { count: start };
+        output c;
+    }
+
+    cell tick(self) -&gt; Counter {
+        self.count = self.count + 1.0;
+        output self;
+    }
+}
+
+cell main() -&gt; float {
+    let c = Counter.new(10.0);
+    c = c.tick();
+    c = c.tick();
+    c = c.tick();
+    signal(c.count);
+    output 1.0;
+}</pre></div>
+      <p>Three ticks on a Counter starting at 10. The compiled artifact declares the organ's layout up front, so the program runs without its source file.</p>
+
+      <h2 id="ext">ext: talking to the outside</h2>
+      <p><span class="code-inline">ext:name</span> reads an external input wire. This is how a program receives values from the world.</p>
+      <div class="code-block"><pre>circuit bool_and_test;
+
+cell main() -> float {
+    let a = ext:a;
+    let b = ext:b;
+    let result = a * b;
+    signal(result);
+    output 1.0;
+}</pre></div>
+      <p>After <span class="code-inline">bleed</span>, run it with <span class="code-inline">ad --target vulkan</span> and the truth table settles on your GPU.</p>
+
+      <h2 id="builtins">builtins</h2>
+      <p>String, file, and conversion builtins work inside cells.</p>
+      <div class="code-block"><pre>circuit builtin_test;
+
+cell main() -> float {
+    write_file("out.txt", "hello from sanguis");
+    let contents = read_file("out.txt");
+    print(contents);
+
+    let c = concat("abc", "def");
+    print(c);
+
+    let ch = char_at("voltage", 4.0);
+    print(ch);
+    emit 0.0;
+}</pre></div>
+      <p>Prints the file contents, <span class="code-inline">abcdef</span>, then <span class="code-inline">l</span>.</p>
 
       <div class="doc-nav-bottom">
-        <a href="index.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Overview</span></a>
-        <a href="language-reference.html" class="nav-right"><span class="nav-label">Next &rarr;</span><span class="nav-title">Language Reference</span></a>
+        <a href="execution-model.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Execution Model</span></a>
+        <a href="compiler-pipeline.html" class="nav-right"><span class="nav-label">Next &rarr;</span><span class="nav-title">Compiler Pipeline</span></a>
       </div>
     </main>
   </div>
 
   <footer>
     <div class="footer-links">
-      <a href="../terms.html">Terms of Use</a> | <a href="../privacy.html">Privacy Policy</a> | <a href="../careers.html">Careers</a>
+      <a href="../../terms.html">Terms of Use</a> | <a href="../../privacy.html">Privacy Policy</a> | <a href="../../careers.html">Careers</a>
     </div>
     Copyright &copy; 2026 VolkanaDEV Autonomous Systems, Inc.<br>
     VolkanaDEV, Sanguis, and VANA are intellectual property of VolkanaDEV Autonomous Systems, Inc.<br>

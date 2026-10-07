@@ -815,3 +815,30 @@ body.docs-sanguis .doc-sidebar a.active { color: #38bdf8 !important; }
   }
   body.nav-hidden nav { box-shadow: none !important; }
 }
+
+
+
+/* hero statement: sensational but scoped to what we actually do */
+
+
+
+
+
+
+
+
+
+
+
+
+/* ============================================================
+   3.0 LAYER 24 — content layout: MINIMAL. One rule only.
+   The pages already center themselves (.wrap has margin:0 auto).
+   The nav floats; the body gets padded for it. That is the whole model.
+   (All earlier centering experiments removed.)
+   ============================================================ */
+@media (min-width: 901px) {
+  body { padding-left: var(--sidebar-w) !important; }
+  body.nav-hidden { padding-left: 0 !important; }
+}
+/* no max-width overrides, no transforms, no extra padding. Let the page CSS win. */

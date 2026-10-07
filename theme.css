@@ -1161,3 +1161,12 @@ footer {
 body.docs-sanguis footer { border-top-color: rgba(56,189,248,0.5) !important; }
 /* on plain pages the body is already padded for the nav, so the footer
    spans the usable area which equals the content column's outer box */
+
+
+/* ── LAYER 46 — footer text: a small left inset so it breathes off the line.
+   (the border-top spans the full box regardless of padding, so the LINE
+   stays edge-to-edge and only the TEXT scoots in.) ── */
+footer {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}

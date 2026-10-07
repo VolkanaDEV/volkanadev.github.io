@@ -358,6 +358,20 @@
       <h2>AI that feels alive.</h2>
       <p>VolkanaDEV builds Sanguis: the deterministic foundation under AI that never forgets and never drifts.</p>
 
+      <div class="ea-countdown">
+        <div class="ea-label">Early Access begins</div>
+        <div class="ea-timer" id="eaTimer">
+          <div class="ea-unit"><span class="ea-num" id="ea-days">--</span><span class="ea-cap">Days</span></div>
+          <div class="ea-sep">:</div>
+          <div class="ea-unit"><span class="ea-num" id="ea-hours">--</span><span class="ea-cap">Hours</span></div>
+          <div class="ea-sep">:</div>
+          <div class="ea-unit"><span class="ea-num" id="ea-mins">--</span><span class="ea-cap">Minutes</span></div>
+          <div class="ea-sep">:</div>
+          <div class="ea-unit"><span class="ea-num" id="ea-secs">--</span><span class="ea-cap">Seconds</span></div>
+        </div>
+        <div class="ea-date">December 2026</div>
+      </div>
+
       <div class="hero-actions">
         <a href="docs/index.html" class="btn">Read the docs</a>
         <a href="benchmark.html" class="btn ghost">See the numbers</a>
@@ -474,5 +488,24 @@
   </footer>
 
   
+  <script>
+    // Early Access countdown -> December 1, 2026
+    (function () {
+      var target = new Date("2026-12-01T00:00:00Z").getTime();
+      function pad(n) { return n < 10 ? "0" + n : "" + n; }
+      function tick() {
+        var diff = target - Date.now();
+        if (diff < 0) diff = 0;
+        var d = Math.floor(diff / 86400000);
+        var h = Math.floor(diff % 86400000 / 3600000);
+        var m = Math.floor(diff % 3600000 / 60000);
+        var sec = Math.floor(diff % 60000 / 1000);
+        var set = function (id, v) { var e = document.getElementById(id); if (e) e.textContent = v; };
+        set("ea-days", d); set("ea-hours", pad(h)); set("ea-mins", pad(m)); set("ea-secs", pad(sec));
+      }
+      tick();
+      setInterval(tick, 1000);
+    })();
+  </script>
 </body>
 </html>

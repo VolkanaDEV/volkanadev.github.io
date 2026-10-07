@@ -868,3 +868,11 @@ footer { border-top: 1px solid rgba(175,0,0,0.55) !important;
 body.docs-sanguis footer { border-top-color: rgba(56,189,248,0.55) !important;
          box-shadow: 0 -2px 20px -4px rgba(56,189,248,0.28) !important; }
 @media (max-width: 700px) { .closing-band { padding: 48px 0 36px; } }
+
+
+/* ── LAYER 26 — restore the hero breathing room lost in the terafab pass ── */
+.hero { padding: 64px 20px 44px !important; }
+.hero h2 { margin-bottom: 22px !important; }
+.hero .hero-actions { margin-top: 34px; }
+.hero > p:last-child { margin-top: 30px !important; }
+.stat-band { margin-top: 52px !important; }

@@ -1598,3 +1598,33 @@ footer { position: relative; }
   body.nav-hidden .nav-tab .chev { transform: rotate(45deg) !important; }
   body.docs-sanguis .nav-tab .chev { border-top-color:#38bdf8 !important; border-right-color:#38bdf8 !important; }
 }
+
+
+/* ── LAYER 62 — the SIDEBAR label on mobile too. LAYER 50 switched the
+      ::before label off below 900px, so the mobile tab had no word on it —
+      and a 16px handle is easy to miss on a phone. Same treatment as the
+      desktop spine: stacked above the tab, uppercase, dulled, flipping
+      with the drawer state. ── */
+@media (max-width: 900px) {
+  .nav-tab::before {
+    content: "Sidebar" !important;
+    position: absolute !important;
+    left: 50% !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: calc(100% + 14px) !important;
+    transform: translateX(-50%) rotate(0deg) !important;
+    writing-mode: vertical-rl;
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 0.30em;
+    text-transform: uppercase;
+    color: rgba(232,230,227,0.34);
+    pointer-events: none;
+    white-space: nowrap;
+    transition: color 0.25s ease, transform 0.42s cubic-bezier(0.22,0.61,0.36,1);
+  }
+  body.nav-hidden .nav-tab::before { transform: translateX(-50%) rotate(180deg) !important; }
+  .nav-tab:hover::before { color: rgba(232,230,227,0.62); }
+}

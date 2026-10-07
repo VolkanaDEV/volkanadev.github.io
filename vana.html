@@ -365,8 +365,10 @@
       <p>When you write Sanguis code, it doesn't get interpreted line by line. It gets compiled into a wiring grid: switches, wires, and signal timings, stored in a single text file. VANA owns execution from there. Signals flow through the grid in parallel on the GPU until every part of it stabilizes. No instruction pointer. No sequential step-through. The stable state is the computation.</p>
       <p>Today, that surface is the GPU. VANA does not emulate a CPU on the GPU. It does not translate instructions. It treats the GPU as the processor and maps the computation to what the silicon can actually do. The CPU does not sync every tick. It observes.</p>
 
+      <p>And VANA does not drift. Because the settle is deterministic, the same program produces the same bytes on every executor it runs on &mdash; the graphics card, the just-in-time executor, and the self-compiling compiler. That is what makes a running core a thing you can <em>check</em>: it can be written to a small package and resumed bit-identical, and any behaviour can be replayed exactly, years later.</p>
+
       <h3><span class="label">The Pipeline</span>From Source to Silicon</h3>
-      <p>Every Sanguis program follows the same path from your keyboard to the GPU. Here's what happens at each stage:</p>
+      <p>Every Sanguis program follows the same path from your keyboard to the hardware. Here's what happens at each stage:</p>
 
       <div class="pipeline">
         <div class="pipeline-step">
@@ -380,7 +382,7 @@
         <div class="pipeline-step">
           <div class="pipeline-num">2</div>
           <div class="pipeline-body">
-            <h4>Transposer Builds the Connectome</h4>
+            <h4>The Compiler Builds the Artifact</h4>
             <p>The compiler reads your .sanguis file and builds the compiled artifact: the organ manifest, switches, wires, gates, and output mappings, all in one text file. VANA loads it and takes over from there.</p>
           </div>
         </div>

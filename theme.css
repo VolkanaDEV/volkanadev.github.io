@@ -1344,3 +1344,12 @@ footer {
 /* cards used as pricing: give them a little more presence */
 .panel-grid.two .card h4 { font-size: 1.12rem !important; margin-bottom: 16px !important; }
 .panel-grid.two .card .spec-row { padding: 5px 0; }
+
+
+/* ── LAYER 54 — stat band: four across, benefit-first blurbs ── */
+.stat-band { grid-template-columns: repeat(4, 1fr) !important; max-width: 1040px !important; }
+@media (max-width: 1000px) { .stat-band { grid-template-columns: repeat(2, 1fr) !important; } }
+@media (max-width: 560px)  { .stat-band { grid-template-columns: 1fr !important; } }
+.stat { text-align: left; padding: 24px 20px; }
+.stat-num { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+.stat-lbl { color: var(--muted-light); font-size: 0.83rem; line-height: 1.5; margin-top: 10px; }

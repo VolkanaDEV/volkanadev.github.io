@@ -650,3 +650,84 @@ body.docs-sanguis .doc-sidebar a.active { color: #38bdf8 !important; }
 
 /* hide any leftover carousel chrome (dead CSS, but belt-and-braces) */
 .carousel, .carousel-controls { display: none !important; }
+
+
+/* ============================================================
+   3.0 LAYER 15 — buttons join the panel language: no borders,
+   squared 6px, defined by fill + shadow. Two variants, not three.
+   ============================================================ */
+.btn, .btn.ghost, .btn.cream {
+  border: none !important;
+  border-radius: 6px !important;
+  background: rgba(30, 30, 34, 0.72) !important;
+  color: var(--text-light) !important;
+  font-weight: 600 !important;
+  padding: 12px 26px !important;
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease !important;
+}
+.btn:hover, .btn.ghost:hover, .btn.cream:hover {
+  background: rgba(44, 44, 48, 0.85) !important;
+  transform: translateY(-2px) !important;
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+}
+/* the primary (first) button keeps the blood tint — same shape, warm fill */
+.btn:not(.ghost):not(.cream) {
+  background: rgba(175, 0, 0, 0.18) !important;
+  color: #c98d88 !important;
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.38),
+    0 0 22px rgba(175, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+.btn:not(.ghost):not(.cream):hover {
+  background: rgba(175, 0, 0, 0.28) !important;
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.5),
+    0 0 32px rgba(175, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+}
+
+
+/* ── LAYER 16 — buttons: corrected specificity (match the :not() chain) ── */
+.btn:not(.ghost):not(.cream),
+.btn.ghost, .btn.cream {
+  border: none !important;
+  border-radius: 6px !important;
+  background: rgba(30, 30, 34, 0.72) !important;
+  color: var(--text-light) !important;
+  font-weight: 600 !important;
+  padding: 12px 26px !important;
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease !important;
+}
+.btn:not(.ghost):not(.cream):hover,
+.btn.ghost:hover, .btn.cream:hover {
+  background: rgba(46, 46, 50, 0.88) !important;
+  transform: translateY(-2px) !important;
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+}
+/* primary keeps the warm blood fill, same shape */
+.btn:not(.ghost):not(.cream) {
+  background: rgba(175, 0, 0, 0.20) !important;
+  color: #c98d88 !important;
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.38),
+    0 0 22px rgba(175, 0, 0, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+.btn:not(.ghost):not(.cream):hover {
+  background: rgba(175, 0, 0, 0.30) !important;
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.5),
+    0 0 32px rgba(175, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+}

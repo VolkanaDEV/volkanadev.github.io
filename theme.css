@@ -881,41 +881,29 @@ body.docs-sanguis footer { border-top-color: rgba(56,189,248,0.55) !important;
 
 
 
-/* ============================================================
-   3.0 LAYER 29 — CENTERING, FINAL. Equal gaps.
-   With a fixed left sidebar you cannot be centered on the window AND have
-   equal gaps. The eye compares GAPS, so give equal gaps: the body pads for
-   the nav and the page's own .wrap (margin: 0 auto) centers in what remains.
-   That is what every fixed-sidebar docs site does. Nothing else.
-   ============================================================ */
-@media (min-width: 901px) {
-  body { padding-left: var(--sidebar-w) !important; }
-  body.nav-hidden { padding-left: 0 !important; }
-  .wrap, .header-block, .doc-layout, .note-wrapper {
-    max-width: min(1100px, 100%) !important;
-    margin-left: auto !important; margin-right: auto !important;
-    padding-left: 32px !important; padding-right: 32px !important;
-  }
-  /* footer: comfortable breathing room under the blood rule */
-  footer { padding-top: 38px !important; padding-bottom: 34px !important; }
-}
-
 
 /* ── LAYER 30 — footer: a touch more air (you flagged it; make it unambiguous) ── */
 footer { padding-top: 46px !important; padding-bottom: 40px !important; }
 
 
-/* ── LAYER 31 — chart rows: a real grid, consistent columns, honest bars ── */
-.bar-row {
-  display: grid !important;
-  grid-template-columns: 190px 1fr 96px !important;
-  align-items: center !important;
-  gap: 16px !important;
-  margin: 10px 0 !important;
+
+
+/* ============================================================
+   3.0 LAYER 32 — ONE content width, everything centered on it.
+   The misalignment was inconsistent widths: charts were 860,
+   tables and card grids 956. Same width, same center, every block.
+   ============================================================ */
+@media (min-width: 901px) {
+  body { padding-left: var(--sidebar-w) !important; }
+  body.nav-hidden { padding-left: 0 !important; }
+  /* one column width for every block type, centered in the usable area */
+  .wrap, .header-block, .doc-layout, .note-wrapper { max-width: 100% !important; padding: 0 32px !important; }
+  .master-table, .arena-grid, .chart-card, .panel-grid, table {
+    max-width: 900px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100% !important;
+  }
+  /* footer breathing room */
+  footer { padding-top: 46px !important; padding-bottom: 40px !important; }
 }
-.bar-label { text-align: right !important; color: var(--muted-light) !important; font-size: 0.84rem !important; }
-.bar-track { height: 16px !important; background: rgba(255,255,255,0.05) !important; border-radius: 3px !important; }
-.bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg,#6d0000,#c62a2a) !important; }
-.bar-fill.dim { background: rgba(255,255,255,0.16) !important; }   /* the reference rows, not ours */
-.bar-val { text-align: right !important; font-variant-numeric: tabular-nums; color: var(--text-light) !important; font-size: 0.82rem !important; }
-.chart-card { max-width: 860px !important; margin-left: auto !important; margin-right: auto !important; }

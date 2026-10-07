@@ -241,3 +241,57 @@ footer { background: transparent !important; }
 footer { border-top: 1px solid rgba(175,0,0,0.5) !important; box-shadow: 0 -2px 16px -2px rgba(175,0,0,0.25) !important; }
 .card:hover, .doc-card:hover, .doc-grid > a:hover { box-shadow: 0 4px 20px rgba(175,0,0,0.14) !important; }
 .btn:hover, button:hover { box-shadow: 0 0 12px rgba(175,0,0,0.25) !important; }
+
+
+/* ============================================================
+   3.0 LAYER 2 — flowing hexes (blood), glass carousels, no old brand
+   ============================================================ */
+
+/* ── brighter hexes, flowing DOWNWARD (was: pulsing) ── */
+body::before {
+  background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http:%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2784%27%20height%3D%2749%27%20viewBox%3D%270%200%2084%2049%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23c62a2a%27%20stroke-opacity%3D%270.13%27%20stroke-width%3D%271.1%27%3E%3Cpath%20d%3D%27M56%200.5%20L70%2024.5%20L56%2048.5%20L28%2048.5%20L14%2024.5%20L28%200.5%20Z%27%2F%3E%3Cpath%20d%3D%27M0%2024.5%20L14%2024.5%27%2F%3E%3Cpath%20d%3D%27M70%2024.5%20L84%2024.5%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E') !important;
+  background-size: 84px 49px !important;
+  animation: hexFlow 11s linear infinite !important;
+}
+/* a slow second layer for depth: same pattern, offset, softer — reads as flow, not a loop */
+body::after {
+  content: ''; position: fixed; inset: 0; z-index: -2; pointer-events: none;
+  background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http:%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2784%27%20height%3D%2749%27%20viewBox%3D%270%200%2084%2049%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23af0000%27%20stroke-opacity%3D%270.05%27%20stroke-width%3D%271%27%3E%3Cpath%20d%3D%27M56%200.5%20L70%2024.5%20L56%2048.5%20L28%2048.5%20L14%2024.5%20L28%200.5%20Z%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+  background-size: 168px 98px;
+  animation: hexFlowDeep 23s linear infinite;
+}
+@keyframes hexFlow { from { background-position: 0 0; } to { background-position: 0 49px; } }
+@keyframes hexFlowDeep { from { background-position: 0 0; } to { background-position: 0 98px; } }
+@media (prefers-reduced-motion: reduce) {
+  body::before, body::after { animation: none !important; }
+}
+
+/* ── carousels + cards: glass like the sidebar, with a slow sheen ── */
+.carousel { padding: 8px !important; }
+.carousel-viewport { overflow: visible !important; }
+.carousel-slide { padding: 8px !important; }
+.card, .doc-card, .doc-grid > a, .arena-card, .note-box {
+  background: rgba(20, 20, 22, 0.5) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(175, 0, 0, 0.22) !important;
+  border-radius: 16px !important;
+  color: var(--text-light) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+.card { position: relative; overflow: hidden; }
+.card::before {
+  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: linear-gradient(115deg, transparent 34%, rgba(198,42,42,0.09) 46%,
+              rgba(198,42,42,0.16) 50%, rgba(198,42,42,0.09) 54%, transparent 66%);
+  background-size: 280% 100%;
+  animation: cardSheen 11s linear infinite;
+}
+.card > * { position: relative; z-index: 1; }
+@keyframes cardSheen { from { background-position: 160% 0; } to { background-position: -60% 0; } }
+.card h4 { color: var(--accent) !important; }
+.card p { color: var(--muted-light) !important; }
+@media (prefers-reduced-motion: reduce) { .card::before { animation: none !important; } }
+
+/* ── the old sidebar brand is superseded by the floating wordmark: hide on desktop ── */
+@media (min-width: 901px) { nav .brand { display: none !important; } }

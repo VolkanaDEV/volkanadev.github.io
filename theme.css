@@ -1407,3 +1407,39 @@ footer {
   .nav-tab .chev { margin-left: 4px !important; margin-right: 0 !important; }
   body.nav-hidden .nav-tab .chev { margin-left: 0 !important; margin-right: 4px !important; }
 }
+
+
+/* ── LAYER 58 — footer note: 'Proudly ... open source models' bottom-right,
+      opposite the footer text, with a little animated three-dot wave. ── */
+footer { position: relative; }
+.footer-note {
+  position: absolute;
+  right: 20px;
+  bottom: 40px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  color: rgba(232,230,227,0.42);
+  text-align: left;
+}
+.footer-note .fn-ico { display: inline-flex; align-items: center; gap: 3px; }
+.footer-note .fn-ico i {
+  display: block;
+  width: 4px; height: 4px;
+  border-radius: 1px;
+  background: var(--accent, #af0000);
+  animation: fnwave 1.6s ease-in-out infinite;
+}
+.footer-note .fn-ico i:nth-child(2) { animation-delay: 0.2s; }
+.footer-note .fn-ico i:nth-child(3) { animation-delay: 0.4s; }
+@keyframes fnwave {
+  0%, 100% { opacity: 0.25; transform: translateY(0); }
+  50%      { opacity: 1;    transform: translateY(-2px); }
+}
+@media (prefers-reduced-motion: reduce) { .footer-note .fn-ico i { animation: none; opacity: 0.8; } }
+@media (max-width: 820px) {
+  .footer-note { position: static; margin-top: 16px; justify-content: flex-start; }
+}

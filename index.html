@@ -8,8 +8,8 @@
 <meta http-equiv="X-Frame-Options" content="DENY">
 <meta name="referrer-policy" content="strict-origin-when-cross-origin">
 <link rel="icon" href="favicon.png">
-<title>VolkanaDEV - Programming for Everyone</title>
-<meta name="description" content="A new way to program anything, anywhere. Built to help, never to hurt.">
+<title>VolkanaDEV — Sanguis 3.0: the same program, the same bytes, every machine</title>
+<meta name="description" content="Sanguis is a self-hosting language whose programs run bit-for-bit identically on any machine. Deterministic by contract. Built to help, never to hurt.">
 <style>
   :root {
     /* Core Volkanadev Palette */
@@ -312,35 +312,64 @@
 
   <div class="wrap">
     <section class="hero">
-      <h2>Your CPU turns 82 soon.<br>Ready to give it a rest?</h2>
-      <p>Sanguis routes data across many paths at once on the GPU you already own. Real-time, real hardware, real progress. Your laptop, home desktop, or data center can become the next step in technology.</p>
-
-      <div class="timer-container">
-        <div class="timer-block"><div class="timer-val" id="days">249</div><div class="timer-lbl">Days</div></div>
-        <div class="timer-block"><div class="timer-val" id="hours">06</div><div class="timer-lbl">Hours</div></div>
-        <div class="timer-block"><div class="timer-val" id="minutes">59</div><div class="timer-lbl">Mins</div></div>
-        <div class="timer-block"><div class="timer-val" id="seconds">55</div><div class="timer-lbl">Secs</div></div>
-      </div>
-
-      <p style="color: var(--muted-light); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin: 0 auto 32px; text-align: center; max-width: 500px;">until public code access</p>
+      <p style="color: var(--accent); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; margin: 0 auto 18px; text-align: center;">Sanguis 3.0 &mdash; Iteration:Determinism</p>
+      <h2>The same program.<br>The same bytes. Every machine.</h2>
+      <p>Sanguis is a self-hosting language whose programs produce bit-for-bit identical results on a graphics card, a just-in-time executor, and a compiler that compiles itself. Nobody else has that. It is the reason a Sanguis program is worth trusting, and it is where 3.0 begins.</p>
 
       <div class="hero-actions">
-        <a href="benchmark.html" class="btn">View Benchmarks</a>
-        <a href="roadmap.html" class="btn cream">View Our Roadmap</a>
-        <a href="contact.html" class="btn ghost">Reach Out To Us</a>
+        <a href="benchmark.html" class="btn">See the numbers</a>
+        <a href="docs.html" class="btn cream">Read the docs</a>
+        <a href="vana.html" class="btn ghost">Meet the engine</a>
       </div>
 
-      <p style="color: var(--accent); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin: 28px auto 0; text-align: center;">Welcome to VolkanaDEV</p>
-      <p style="color: var(--muted-light); font-size: 0.95rem; font-style: italic; margin: 12px auto 0; text-align: center; max-width: 600px;">Your CPU can finally retire, but your hardware won't have to.</p>
+      <p style="color: var(--muted-light); font-size: 0.95rem; font-style: italic; margin: 32px auto 0; text-align: center; max-width: 640px;">Programs you can check. A language that keeps its word, byte for byte, on any machine it runs on.</p>
 
     </section>
   </div>
 
   <section class="section">
     <div class="wrap">
+      <div class="section-label">The Flagship</div>
+      <h3>Bit-for-bit, on every machine</h3>
+      <p>Most software only agrees with itself on one machine. Results drift between a graphics card and a CPU, between one card and the next, between today and next year. Sanguis does not drift. The same program produces the same bytes on every executor it runs on, and every number below was measured, not promised.</p>
+
+      <div class="carousel" id="carousel-3">
+        <div class="carousel-viewport">
+          <div class="carousel-track">
+            <div class="carousel-slide">
+              <div class="card">
+                <h4>Measured, Not Claimed</h4>
+                <p>Across the graphics card, the just-in-time executor, and the self-compiling compiler: exponential agreement to 6.2e-14, softmax to about 1e-14, attention to 1e-9. The card's output was checked against an independent host computation, to the milli-unit. Identical, every run.</p>
+              </div>
+            </div>
+            <div class="carousel-slide">
+              <div class="card">
+                <h4>One Instruction Set, Many Machines</h4>
+                <p>The instruction set is frozen: 29 slots with fixed numbers and spellings, checked when the compiler builds itself. Any new executor &mdash; another GPU, a just-in-time engine, an FPGA, a microcontroller &mdash; is admitted by passing one public per-operation test suite. Adding a machine never splits the language.</p>
+              </div>
+            </div>
+            <div class="carousel-slide">
+              <div class="card">
+                <h4>Why This Is Rare</h4>
+                <p>Cross-machine determinism is openly listed as unsolved across the industry; most tooling settles for identical builds, not identical behaviour. Floating point is not associative and every machine rounds differently. We made rounding a contract instead of an accident.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-arrow" onclick="carouselMove('carousel-3', -1)" aria-label="Previous">&#8592;</button>
+          <div class="carousel-dots" id="dots-carousel-3"></div>
+          <button class="carousel-arrow" onclick="carouselMove('carousel-3', 1)" aria-label="Next">&#8594;</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
       <div class="section-label">The Language</div>
       <h3>Introducing Sanguis</h3>
-      <p>Sanguis is a self-hosting programming language. Instead of objects, you write organs, self-contained structures that hold their own state, fire when their conditions are met, and emit signals to each other through routes. No classes, no inheritance. When you write Sanguis code, it gets compiled into a wiring grid that runs on the GPU in parallel, in real-time. Signals flow through the grid until it stabilizes, and that stable state is your program's output. The compiler itself is written in Sanguis, and the language hosts itself.</p>
+      <p>Sanguis is a self-hosting programming language. Instead of objects, you write organs: self-contained structures that hold their own state, fire when their conditions are met, and pass signals to each other along routes. No classes, no inheritance. A program becomes a grid of switches and wires that settles at once, and that settled state is your output. The compiler is written in Sanguis and compiles itself &mdash; every artifact a user ships is Sanguis-built and Sanguis-linked.</p>
       
       <div class="carousel" id="carousel-1">
         <div class="carousel-viewport">
@@ -359,8 +388,8 @@
             </div>
             <div class="carousel-slide">
               <div class="card">
-                <h4>Your GPU Is Enough</h4>
-                <p>The same GPU running your games right now runs Sanguis. Your CPU does a little work and then gets out of the way. No data center, no special hardware. Not until you want it.</p>
+                <h4>A Core Is a File</h4>
+                <p>A running Sanguis program can be written to a small package &mdash; its wiring, its learned weights, its clock &mdash; and resumed in a fresh process, bit-identical to the one that was running before. Not a screenshot. Not a save file. The same program, unplugged and picked back up, exactly where it was.</p>
               </div>
             </div>
           </div>
@@ -398,8 +427,8 @@
             </div>
             <div class="carousel-slide">
               <div class="card">
-                <h4>It Runs Until You Close It</h4>
-                <p>Programs hold a heartbeat: a sustained pulse with no input and no timer. It runs until you close it, and the close is deliberate. The last state gets printed and kept. The reference run crossed two million computation cycles on a consumer GPU without drift, and the same code runs on every machine we've pointed it at.</p>
+                <h4>It Runs at Human Speed</h4>
+                <p>One full pass over the whole web takes about 4.5 milliseconds on a consumer card &mdash; the same register as a single neural event. A complete settled answer takes about a quarter of a second, the same as a human reaction. It runs continuously, unattended, for as long as you leave it.</p>
               </div>
             </div>
           </div>
@@ -439,25 +468,6 @@
   </footer>
 
   <script>
-    // Countdown to July 7, 2027
-    var targetDate = new Date("2027-07-07T00:00:00").getTime();
-    
-    function updateTimer() {
-      var now = new Date().getTime(); 
-      var diff = targetDate - now;
-      if (diff <= 0) { clearInterval(timerInterval); return; }
-      var d = Math.floor(diff / (1000 * 60 * 60 * 24)); 
-      var h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); 
-      var m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)); 
-      var s = Math.floor((diff % (1000 * 60)) / 1000);
-      document.getElementById('days').innerText = d < 10 ? '0' + d : d; 
-      document.getElementById('hours').innerText = h < 10 ? '0' + h : h; 
-      document.getElementById('minutes').innerText = m < 10 ? '0' + m : m; 
-      document.getElementById('seconds').innerText = s < 10 ? '0' + s : s;
-    }
-    var timerInterval = setInterval(updateTimer, 1000); 
-    updateTimer();
-
     // Carousel logic - one card at a time, auto-rotate, arrows + dots
     var carouselStates = {};
     function initCarousel(id) {
@@ -532,6 +542,7 @@
     // Initialize all carousels
     initCarousel('carousel-1');
     initCarousel('carousel-2');
+    initCarousel('carousel-3');
   </script>
 </body>
 </html>

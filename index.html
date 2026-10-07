@@ -303,7 +303,6 @@
         <button class="nav-toggle" onclick="this.classList.toggle('open');document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu"><span></span><span></span><span></span></button>
         <div class="nav-links">
           <a href="index.html" class="active">Welcome</a>
-          
           <a href="roadmap.html">Roadmap</a>
           <a href="benchmark.html">Benchmarks</a>
           <a href="docs/index.html">Docs</a>
@@ -317,92 +316,115 @@
   <div class="wrap">
     <section class="hero">
       <p style="color: var(--accent); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; margin: 0 auto 18px; text-align: center;">Sanguis 3.0 &mdash; Iteration:Determinism</p>
-      <h2>The same program.<br>The same bytes. Every machine.</h2>
-      <p>Sanguis compiles to BloodCode, a frozen instruction set, and runs it bit-for-bit identically on a graphics card, a just-in-time executor, and a compiler that compiles itself. Nobody else has that. It is where 3.0 begins.</p>
+      <h2>The same bytes.<br>Every machine.</h2>
+      <p>A language that cannot drift.</p>
 
       <div class="hero-actions">
-        <a href="benchmark.html" class="btn">See the numbers</a>
-        <a href="docs/index.html" class="btn cream">Read the docs</a>
-        <a href="docs/bloodcode/index.html" class="btn ghost">BloodCode</a>
+        <a href="docs/index.html" class="btn">Read the docs</a>
+        <a href="benchmark.html" class="btn ghost">See the numbers</a>
       </div>
+    </section>
 
-      <p style="color: var(--muted-light); font-size: 0.95rem; font-style: italic; margin: 32px auto 0; text-align: center; max-width: 640px;">Programs you can check. The same bytes, on every machine it runs on.</p>
-
+    <section class="stat-band">
+      <div class="stat"><div class="stat-num">6.2e-14</div><div class="stat-lbl">agreement across executors &mdash; measured, not promised</div></div>
+      <div class="stat"><div class="stat-num">4.5&nbsp;ms</div><div class="stat-lbl">one full pass over the entire web &mdash; one synaptic relay</div></div>
+      <div class="stat"><div class="stat-num">0.2&nbsp;s</div><div class="stat-lbl">one settled state &mdash; human reaction speed</div></div>
     </section>
   </div>
 
   <section class="section">
     <div class="wrap">
-      <div class="section-label">The Flagship</div>
-      <h3>Bit-for-bit, on every machine</h3>
-      <p>Most software only agrees with itself on one machine. Results drift between a graphics card and a CPU, between one card and the next, between today and next year. Sanguis does not drift. The same program produces the same bytes on every executor it runs on, and every number below was measured, not promised.</p>
-
-      <div class="panel-grid">
+      <h3 class="one-line">Every other language drifts. This one cannot.</h3>
+      <div class="panel-grid two">
         <div class="card">
-                <h4>Measured, Not Claimed</h4>
-                <p>Across the graphics card, the just-in-time executor, and the self-compiling compiler: exponential agreement to 6.2e-14, softmax to about 1e-14, attention to 1e-9. The card's output was checked against an independent host computation, to the milli-unit. Identical, every run.</p>
-              </div>
+          <h4>The field's answer</h4>
+          <p>Cross-machine determinism sits unsolved on every roadmap in the industry. Floating point rounds differently on every chip, so results drift the moment they move. Most tooling settles for identical builds, not identical behaviour.</p>
+        </div>
         <div class="card">
-                <h4>One Instruction Set, Many Machines</h4>
-                <p>The instruction set is frozen: 29 slots with fixed numbers and spellings, checked when the compiler builds itself. Any new executor (another GPU, a just-in-time engine, an FPGA, a microcontroller) is admitted by passing one public per-operation test suite. Adding a machine never splits the language.</p>
-              </div>
-        <div class="card">
-                <h4>Why The Industry Hasn't Done It</h4>
-                <p>Cross-machine determinism is openly listed as unsolved across the industry. Most tooling settles for identical builds, not identical behaviour. Floating point is not associative and every machine rounds differently. Here, rounding is a contract instead of an accident.</p>
-              </div>
+          <h4>Ours</h4>
+          <p>Rounding is a contract, not an accident. The same program produces the same bytes on the card, the just-in-time executor, and the compiler that compiles itself, and every number is a real run you can check.</p>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
-      <div class="section-label">The Language</div>
-      <h3>Introducing Sanguis</h3>
-      <p>Sanguis is a self-hosting programming language. Instead of objects, you write organs: self-contained structures that hold their own state, fire when their conditions are met, and pass signals to each other along routes. No classes, no inheritance. A program becomes a grid of switches and wires that settles at once, and that settled state is your output. The compiler is written in Sanguis and compiles itself, so every artifact a user ships is Sanguis-built and Sanguis-linked.</p>
-      
+      <h3 class="one-line">A frozen instruction set, asserted every time the compiler builds itself.</h3>
+      <p class="one-sub">BloodCode: 29 slots. Fixed numbers, fixed spellings, fixed semantics.</p>
       <div class="panel-grid">
         <div class="card">
-                <h4>Organs, Not Objects</h4>
-                <p>You write organs: structs with fields and methods that compile into wiring. No classes, no inheritance. An organ holds its own state on the GPU, and its methods run as part of the grid.</p>
-              </div>
+          <h4>Frozen forever</h4>
+          <p>Assigned slots never change. Deprecated ops keep their number. Changing a slot's spelling fails the build. A contract, not a convention.</p>
+        </div>
         <div class="card">
-                <h4>No Steps, Just Signals</h4>
-                <p>A normal program runs one line at a time. Sanguis is different: your whole program turns into a circuit that runs everywhere at once. Values flow through the circuit until every part of it stops changing. That stable end state is your program's output.</p>
-              </div>
+          <h4>Any machine can join</h4>
+          <p>A new executor (another GPU, an FPGA, a microcontroller) is admitted by passing one public per-operation test suite. Adding hardware never splits the language.</p>
+        </div>
         <div class="card">
-                <h4>A Core Is a File</h4>
-                <p>A running Sanguis program can be written to a small package (its wiring, its learned weights, its clock), and resumed in a fresh process, bit-identical to the one that was running before. The same program, unplugged and picked back up, exactly where it was.</p>
-              </div>
+          <h4>Readable down the instruction</h4>
+          <p>Artifacts are text. Open one in an editor and read exactly what your program became.</p>
+        </div>
       </div>
-
+      <div class="center-btn"><a href="docs/bloodcode/index.html" class="btn ghost">BloodCode docs</a></div>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
-      <div class="section-label">The Engine</div>
-      <h3>BloodCode</h3>
-      <p class="vana-body">Every Sanguis program compiles to BloodCode: a frozen instruction set, 29 slots with fixed numbers and spellings, asserted when the compiler builds itself. BloodCode is what runs. Sanguis is the notation you write; BloodCode is the machine. The same artifact runs unchanged on a graphics card, a just-in-time executor, and the self-compiling compiler, and produces the same bytes on each.</p>
-      
+      <h3 class="one-line">A running program is a file.</h3>
+      <p class="one-sub">Write it out. Pick it back up somewhere else. Bit-identical.</p>
       <div class="panel-grid">
         <div class="card">
-                <h4>No Instruction Pointer</h4>
-                <p>The runtime does not step through your code one line at a time. Your whole program becomes a grid of switches and wires that runs all at once on the GPU. Signals flow until every part of the grid stabilizes, and that stable state is your answer.</p>
-              </div>
+          <h4>Unplug it</h4>
+          <p>A core writes itself to a small package: its wiring, its weights, its clock. Insert it into a fresh process and it resumes where it was. Not a save file, the same program.</p>
+        </div>
         <div class="card">
-                <h4>Same Machine, Different Programs</h4>
-                <p>Every Sanguis program compiles down to the same shape: a pattern of switches, wires, and signal timings. The GPU kernel that runs that pattern is fixed. It never changes, no matter what you write. That means the same program pattern runs on any hardware that has this kernel, from a gaming GPU to a datacenter card to custom silicon.</p>
-              </div>
+          <h4>Replay it</h4>
+          <p>Because the settle is deterministic, any behaviour re-runs bit-for-bit years later, on hardware that didn't exist when it was written.</p>
+        </div>
         <div class="card">
-                <h4>It Runs at Human Speed</h4>
-                <p>One full pass over the whole web takes about 4.5 milliseconds on a consumer card, the same register as a single neural event. A complete settled answer takes about a quarter of a second, the same as a human reaction. It runs continuously, unattended, for as long as you leave it.</p>
-              </div>
+          <h4>Ask it why</h4>
+          <p>Every result has a computed cause. Debugging stops being an anecdote and becomes a measurement.</p>
+        </div>
       </div>
+    </div>
+  </section>
 
-      <div style="text-align: center; margin-top: 32px;">
-        <a href="docs/bloodcode/index.html" class="btn" style="display: inline-block; width: auto; padding: 12px 28px;">BloodCode docs</a>
+  <section class="section">
+    <div class="wrap">
+      <h3 class="one-line">Deterministic computing is the floor under anything you have to trust.</h3>
+      <div class="panel-grid">
+        <div class="card">
+          <h4>AI you can audit</h4>
+          <p>Every decision replays. "Why did it do that" has an answer you can verify, not a story you have to believe.</p>
+        </div>
+        <div class="card">
+          <h4>Software that can't drift</h4>
+          <p>What passed your tests last year passes them next year, on machines that didn't exist yet.</p>
+        </div>
+        <div class="card">
+          <h4>Cores that move</h4>
+          <p>The program is the file. Same being, desk to bench to rack, nothing lost in transit.</p>
+        </div>
       </div>
+    </div>
+  </section>
 
+  <section class="section">
+    <div class="wrap">
+      <h3 class="one-line">We could sell this to anyone. We wrote a license so we can't.</h3>
+      <div class="panel-grid two">
+        <div class="card">
+          <h4>VPL-1.0</h4>
+          <p>Autonomous weapons, mass surveillance, facial recognition without consent, tools built to exploit people. All forbidden. Break the rule and your license dies on the spot.</p>
+        </div>
+        <div class="card">
+          <h4>Read it, test it, build on it</h4>
+          <p>Open and inspectable for individuals, students, and researchers. Commercial deployment is a conversation, not a wall.</p>
+        </div>
+      </div>
+      <div class="center-btn"><a href="security.html" class="btn ghost">Safety &amp; licenses</a></div>
     </div>
   </section>
 

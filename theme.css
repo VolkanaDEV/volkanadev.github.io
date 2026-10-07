@@ -876,3 +876,26 @@ body.docs-sanguis footer { border-top-color: rgba(56,189,248,0.55) !important;
 .hero .hero-actions { margin-top: 34px; }
 .hero > p:last-child { margin-top: 30px !important; }
 .stat-band { margin-top: 52px !important; }
+
+
+
+
+
+/* ============================================================
+   3.0 LAYER 29 — CENTERING, FINAL. Equal gaps.
+   With a fixed left sidebar you cannot be centered on the window AND have
+   equal gaps. The eye compares GAPS, so give equal gaps: the body pads for
+   the nav and the page's own .wrap (margin: 0 auto) centers in what remains.
+   That is what every fixed-sidebar docs site does. Nothing else.
+   ============================================================ */
+@media (min-width: 901px) {
+  body { padding-left: var(--sidebar-w) !important; }
+  body.nav-hidden { padding-left: 0 !important; }
+  .wrap, .header-block, .doc-layout, .note-wrapper {
+    max-width: min(1100px, 100%) !important;
+    margin-left: auto !important; margin-right: auto !important;
+    padding-left: 32px !important; padding-right: 32px !important;
+  }
+  /* footer: comfortable breathing room under the blood rule */
+  footer { padding-top: 38px !important; padding-bottom: 34px !important; }
+}

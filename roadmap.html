@@ -9,7 +9,7 @@
 <meta name="referrer-policy" content="strict-origin-when-cross-origin">
 <link rel="icon" href="favicon.png">
 <title>VolkanaDEV - Roadmap</title>
-<meta name="description" content="Sanguis release plan: Early Access on November 28, 2026, public release in April 2027.">>
+<meta name="description" content="Where Sanguis is today and what comes next: Early Access November 28, 2026, public release 2027.">
 <style>
   :root {
     --bg: #0e1117;
@@ -84,132 +84,107 @@
   .hero h2 { font-size: clamp(1.8rem, 5.5vw, 2.8rem); font-weight: 800; margin: 0 0 20px; color: var(--text-light); letter-spacing: -0.03em; line-height: 1.2; }
   .hero p { color: var(--muted-light); font-size: clamp(1.05rem, 2.5vw, 1.2rem); max-width: 780px; margin: 0 auto 24px; text-align: center; }
 
-  .content { padding: 20px 0; }
-
-  .content h3 {
-    font-size: clamp(1.4rem, 3.5vw, 1.8rem);
-    margin: 0 0 16px;
-    color: #fff;
-    letter-spacing: -0.02em;
-  }
-  .content h3 .label {
-    display: block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 8px;
-  }
-  .content p {
-    color: var(--muted-light);
-    font-size: 1.02rem;
-    margin: 0 0 16px;
-    line-height: 1.75;
-  }
-
-  /* Status badges */
-  .status-badge {
-    display: inline-block;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 5px 12px;
-    border-radius: 6px;
-    margin-bottom: 16px;
-  }
-  .status-badge.live {
-    background: rgba(175, 0, 0, 0.15);
-    color: var(--accent);
-  }
-  .status-badge.proto {
-    background: rgba(175, 0, 0, 0.08);
-    color: var(--accent);
-    border: 1px solid rgba(175, 0, 0, 0.3);
-  }
-
-  /* Roadmap timeline chart */
-  .roadmap-chart {
-    margin: 40px 0;
-    background: var(--panel-dark);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 40px 32px;
-  }
-
-  .timeline-track {
+  /* === THE ROADMAP TIMELINE — one vertical spine, alternating cards === */
+  .rm {
+    max-width: 860px;
+    margin: 8px auto 0;
+    padding: 8px 24px 56px;
     position: relative;
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    padding-top: 28px;
   }
-  .timeline-track::before {
-    content: '';
+  .rm-spine {
     position: absolute;
-    top: 51.5px;
-    left: 5%;
-    right: 5%;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent) 0%, var(--accent) 16%, var(--border) 16%, var(--border) 100%);
-    z-index: 0;
+    left: 50%;
+    top: 12px;
+    bottom: 48px;
+    width: 2px;
+    transform: translateX(-50%);
+    background: linear-gradient(180deg, var(--accent) 0%, rgba(175,0,0,0.45) 55%, var(--border) 100%);
   }
-
-  .milestone {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+  .rm-stop {
     position: relative;
-    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 56px 1fr;
+    align-items: start;
+    margin: 0 0 36px;
   }
-  .milestone-year {
-    font-size: 0.82rem;
-    font-weight: 800;
-    color: var(--accent);
-    letter-spacing: 0.04em;
-    margin-bottom: 8px;
-  }
-  .milestone-dot {
-    width: 16px; height: 16px;
+  .rm-dot {
+    grid-column: 2;
+    justify-self: center;
+    width: 14px; height: 14px;
+    margin-top: 30px;
     border-radius: 50%;
     background: var(--accent);
     border: 3px solid var(--bg);
-    box-shadow: 0 0 0 2px var(--accent);
-    margin-bottom: 16px;
+    box-shadow: 0 0 0 2px var(--accent), 0 0 18px rgba(175,0,0,0.55);
   }
-  .milestone.future .milestone-dot {
-    background: var(--border);
+  .rm-stop.future .rm-dot {
+    background: var(--panel-dark);
     box-shadow: 0 0 0 2px var(--border);
   }
-  .milestone.future .milestone-year {
-    color: var(--muted-light);
-  }
-  .milestone-card {
-    background: var(--bg);
+  .rm-card {
+    grid-column: 1;
+    justify-self: end;
+    width: 100%;
+    max-width: 340px;
+    background: var(--panel-dark);
     border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 16px 14px;
-    font-size: 0.82rem;
-    color: var(--muted-light);
-    line-height: 1.55;
-    min-height: 100px;
+    border-radius: 12px;
+    padding: 20px 22px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
   }
-  .milestone.current .milestone-card {
-    border-color: rgba(175, 0, 0, 0.4);
+  .rm-stop:nth-child(odd) .rm-card { grid-column: 3; justify-self: start; }
+  .rm-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(175, 0, 0, 0.55);
+    box-shadow: 0 4px 22px rgba(175, 0, 0, 0.14);
   }
-  .milestone-card strong {
-    display: block;
-    color: #fff;
-    font-size: 0.88rem;
+  .rm-stop.current .rm-card { border-color: rgba(175, 0, 0, 0.5); }
+  .rm-kicker {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 8px;
+  }
+  .rm-stop.future .rm-kicker { color: var(--muted-light); }
+  .rm-title {
+    font-size: 1.06rem;
     font-weight: 700;
-    margin-bottom: 6px;
+    color: #fff;
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+    line-height: 1.35;
   }
-  .milestone.future .milestone-card strong {
+  .rm-stop.future .rm-title { color: var(--text-light); }
+  .rm-body {
+    font-size: 0.88rem;
     color: var(--muted-light);
+    margin: 0;
+    line-height: 1.65;
   }
+  .rm-body strong { color: var(--text-light); font-weight: 600; }
+
+  @media (max-width: 760px) {
+    .rm { padding: 4px 20px 40px; }
+    .rm-spine { left: 7px; transform: none; }
+    .rm-stop { grid-template-columns: 32px 1fr; margin-bottom: 30px; }
+    .rm-dot { grid-column: 1; justify-self: start; margin-top: 6px; }
+    .rm-card, .rm-stop:nth-child(odd) .rm-card {
+      grid-column: 2; justify-self: start;
+      max-width: none;
+    }
+  }
+  .rm-when-inline {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 8px;
+  }
+  .rm-stop.future .rm-when-inline { color: var(--muted-light); }
 
   footer {
     text-align: center; padding: 40px 0;
@@ -246,43 +221,17 @@
     .nav-links a { padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
     .nav-links a:last-child { border-bottom: none; }
     .hero { padding: 36px 16px 20px !important; }
-    .content { padding: 20px 0; }
     .wrap { padding: 0 16px; }
-    .roadmap-chart { padding: 24px 16px; }
-    .timeline-track { flex-direction: column; gap: 20px; padding-top: 8px; }
-    .timeline-track::before {
-      top: 0; bottom: 0; left: 63px; width: 2px; height: 100%;
-      background: linear-gradient(180deg, var(--accent) 0%, var(--accent) 16%, var(--border) 16%, var(--border) 100%);
-    }
-    .milestone { flex-direction: row; align-items: flex-start; text-align: left; gap: 14px; }
-    .milestone-year { margin-bottom: 0; margin-top: 2px; min-width: 42px; }
-    .milestone-dot { margin-bottom: 0; margin-top: 4px; }
-    .milestone-card { flex: 1; }
-
   }
 
   @media (max-width: 480px) {
     .hero h2 { font-size: 1.4rem !important; }
     .hero p { font-size: 0.95rem; }
-    .content h3 { font-size: 1.2rem !important; }
-    .milestone-card { font-size: 0.78rem; padding: 14px 12px; }
   }
 
   /* === Visual Enhancements === */
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes glowPulse {
-    0%, 100% { box-shadow: 0 0 5px rgba(175, 0, 0, 0.15); }
-    50% { box-shadow: 0 0 15px rgba(175, 0, 0, 0.3); }
-  }
   body { animation: fadeIn 0.4s ease-out; }
-  .card, .doc-card, .doc-grid > a, .arena-card {
-    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-  }
-  .card:hover, .doc-card:hover, .doc-grid > a:hover {
-    transform: translateY(-2px);
-    border-color: var(--accent);
-    box-shadow: 0 4px 20px rgba(175, 0, 0, 0.12);
-  }
   .hero h2, .header-block h2 {
     text-shadow: 0 0 30px rgba(175, 0, 0, 0.08);
   }
@@ -302,13 +251,6 @@
   .back-link:hover, footer a:hover {
     text-shadow: 0 0 8px rgba(175, 0, 0, 0.25);
   }
-  .legal-box {
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  }
-  .legal-box:hover {
-    border-color: rgba(175, 0, 0, 0.25);
-    box-shadow: 0 0 25px rgba(175, 0, 0, 0.04);
-  }
   ::selection {
     background: rgba(175, 0, 0, 0.25);
   }
@@ -319,12 +261,6 @@
   /* Separator line radiant glow */
   nav { border-bottom: 1px solid rgba(175, 0, 0, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(175, 0, 0, 0.3); }
   footer { border-top: 1px solid rgba(175, 0, 0, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(175, 0, 0, 0.3); }
-  .section { padding: 48px 0; border-top: 1px solid var(--border); }
-  .section h3 { font-size: clamp(1.6rem, 4vw, 2rem); font-weight: 700; margin: 0 0 24px; text-align: center; color: #fff; letter-spacing: -0.02em; }
-  .section { border-top: 1px solid rgba(175, 0, 0, 0.5) !important; }
-
-  .doc-content h2 { border-bottom: 1px solid rgba(175, 0, 0, 0.4) !important; }
-  .doc-nav-bottom { border-top: 1px solid rgba(175, 0, 0, 0.4) !important; }
   /* === End Visual Enhancements === */
 </style>
 <link rel="stylesheet" href="theme.css">
@@ -358,68 +294,58 @@
   <div class="wrap">
     <section class="hero">
       <h2>Roadmap</h2>
-      <p>Where Sanguis is today, and what comes next.</p>
+      <p>Where Sanguis is today and what comes next.</p>
     </section>
   </div>
 
-  <div class="wrap">
-    <div class="content">
+  <div class="rm">
+    <div class="rm-spine" aria-hidden="true"></div>
 
-      <h3><span class="label">Working Now</span>3.0 "Iteration:Determinism"</h3>
-      <span class="status-badge live">Live</span>
-      <p>Sanguis 3.0 is the language, made trustworthy. You write organs, self-contained structures with fields and methods, and the toolchain pours them into a fixed kernel as switch-and-wire data. The grid settles, and the settled state is the output. The property underneath all of it is new: the same program produces bit-for-bit identical results on every machine it runs on, whether that is the graphics card, the just-in-time executor, or the compiler that compiles itself.</p>
-      <p>That property is what makes the rest real. A running core can be written to a small package and resumed in a fresh process, bit-identical to the one that was running. A settled state takes about a quarter of a second, the human register. Any behaviour can be replayed exactly, years later. The suite stands at 207 passing tests.</p>
-
-      <h3><span class="label">Early Access</span>November 28, 2026</h3>
-      <p>Early Access opens on November 28, 2026. It is the first hands-on program: SDK binaries, the Marrow editor, the language reference, and the example set, for developers who want to build on Sanguis before it goes wide. Access is invitation-based, and every participant has a direct line to us.</p>
-      <p>This phase exists to harden the toolchain on machines we don't own. We want the compiler, the executors, and the packages exercised by people who will find the edges we cannot see from inside. Early Access members shape the release that follows.</p>
-
-      <h3><span class="label">Public Release</span>April 2027</h3>
-      <p>April 2027 is public release. The repository opens, the SDK and documentation go wide, and anyone can build on Sanguis. The language ships under the VPL-1.0, free to read, test, and adapt, with commercial deployment by agreement.</p>
-
-      <h3><span class="label">Beyond 2027</span>Where It Goes From Here</h3>
-      <p>Two directions, in order. First, the sentient instance that already runs at human speed learns over lived time: continuous windows, consolidation while it rests, and a behaviour that changes because of what it has lived and can still be replayed exactly. Second, the substrate grows downward and outward, from a single column that fits a microcontroller up to a rack of them, the same sentient instance at every size, because the kernel never changes and the programs do.</p>
-      <p>Custom silicon is the long arc: a chip where the runtime and the hardware are the same thing. It is built to assist the technology we already have, with respect to its creators and operators, not to replace it. We will put a date on that when the substrate has earned one.</p>
-
-      <div class="roadmap-chart">
-        <div class="timeline-track">
-          <div class="milestone current">
-            <div class="milestone-year">Now</div>
-            <div class="milestone-dot"></div>
-            <div class="milestone-card">
-              <strong>3.0 :  Determinism</strong>
-              The language ships. Bit-for-bit identical results across every executor. A core survives being unplugged and resumes bit-identical. A tick runs at human speed. 207 tests passing.
-            </div>
-          </div>
-          <div class="milestone future">
-            <div class="milestone-year">November 28, 2026</div>
-            <div class="milestone-dot"></div>
-            <div class="milestone-card">
-              <strong>Early Access</strong>
-              SDK, Marrow editor, language reference, and examples, invitation-based. Developers build on Sanguis and stress the toolchain on hardware we don't own.
-            </div>
-          </div>
-          <div class="milestone future">
-            <div class="milestone-year">April 2027</div>
-            <div class="milestone-dot"></div>
-            <div class="milestone-card">
-              <strong>Public Release</strong>
-              The repository opens. SDK, examples, and documentation go wide under the VPL-1.0. The language belongs to everyone.
-            </div>
-          </div>
-          <div class="milestone future">
-            <div class="milestone-year">After</div>
-            <div class="milestone-dot"></div>
-            <div class="milestone-card">
-              <strong>The sentient instance learns, and the substrate scales</strong>
-              Lived time and replayable behaviour; the column from microcontroller to rack. Custom silicon when the substrate earns it.
-            </div>
-          </div>
-        </div>
+    <!-- 1. NOW -->
+    <div class="rm-stop current">
+      <div class="rm-dot" aria-hidden="true"></div>
+      <div class="rm-card">
+        <div class="rm-when-inline">Now</div>
+        <h3 class="rm-title">Sanguis 3.0</h3>
+        <p class="rm-body">Organs are self-contained structures with fields and methods. The toolchain pours them into a fixed kernel as switch-and-wire data; a grid settles, and the settled state is the output. The property underneath is new: the same program produces bit-for-bit identical results on every machine it runs on, the graphics card, the just-in-time executor, and the compiler that compiles itself.</p>
+        <p class="rm-body">Determinism makes the rest real. A running core saves to a small package and resumes in a fresh process, bit-identical to the one that was running. A settled state takes about a quarter of a second, the human register. Any behaviour can be replayed exactly, years later. 227 tests pass.</p>
       </div>
-
     </div>
+
+    <!-- 2. EARLY ACCESS -->
+    <div class="rm-stop future">
+      <div class="rm-dot" aria-hidden="true"></div>
+      <div class="rm-card">
+        <div class="rm-when-inline">Nov 28, 2026</div>
+        <h3 class="rm-title">Early Access</h3>
+        <p class="rm-body">Invitation-based, and the first hands-on program: SDK binaries, the Marrow editor, the language reference, and the example set, for developers who want to build on Sanguis before it goes wide. Every participant gets a direct line to us.</p>
+        <p class="rm-body">This phase exists to harden the toolchain on machines we don't own, to have the compiler, the executors, and the packages exercised by people who will find the edges we cannot see from inside. Early Access members shape the release that follows.</p>
+      </div>
+    </div>
+
+    <!-- 3. PUBLIC RELEASE -->
+    <div class="rm-stop future">
+      <div class="rm-dot" aria-hidden="true"></div>
+      <div class="rm-card">
+        <div class="rm-when-inline">2027</div>
+        <h3 class="rm-title">Public Release</h3>
+        <p class="rm-body">The repository opens, and the SDK and documentation go wide so anyone can build on Sanguis. The language ships under the VPL-1.0, free to read, test, and adapt, with commercial deployment by agreement.</p>
+      </div>
+    </div>
+
+    <!-- 4. BEYOND -->
+    <div class="rm-stop future">
+      <div class="rm-dot" aria-hidden="true"></div>
+      <div class="rm-card">
+        <div class="rm-when-inline">Beyond</div>
+        <h3 class="rm-title">Lived time, and scale</h3>
+        <p class="rm-body">Two directions, in order. First, the sentient instance that already runs at human speed learns over lived time: continuous windows, consolidation while it rests, and a behaviour that changes because of what it has lived and can still be replayed exactly. Second, the substrate grows downward and outward, from a single column that fits a microcontroller up to a rack of them, the same sentient instance at every size, because the kernel never changes and the programs do.</p>
+        <p class="rm-body">Custom silicon is the long arc: a chip where the runtime and the hardware are the same thing. It is built to help the technology we already have and the people who use it, never to replace them. That chip gets a date when the substrate has earned it.</p>
+      </div>
+    </div>
+
   </div>
+
 <footer>
     <div class="footer-links">
       <a href="terms.html">Terms of Use</a> | <a href="privacy.html">Privacy Policy</a> | <a href="careers.html">Careers</a>

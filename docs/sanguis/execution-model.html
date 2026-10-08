@@ -179,7 +179,7 @@
       <h1>Execution Model</h1>
       <p class="subtitle">Tick cycle, parallel semantics, termination, and scalar formatting.</p>
 
-      <h2 id="tick-cycle">The Sweep</h2>
+      <h2 id="tick-cycle">Sweep</h2>
       <p>The engine runs in sweeps. Each sweep:</p>
       <p>1. <strong>Evaluate.</strong> Every switch computes its logic from its input wires, all at once.<br>
       2. <strong>Propagate.</strong> Every wire picks up the state of the switch driving it. Wires with conduction delay hold their previous state and count down before latching.<br>
@@ -191,7 +191,7 @@
       <p>&bull; Switch A's change is <strong>NOT</strong> visible to switch B until the next sweep.<br>
       &bull; Regions run many local sweeps between global synchronizations (block-Jacobi iteration).</p>
       <div class="callout">
-        <p><strong>Deliberate.</strong> This is how hardware behaves. It is not a simulation of parallelism; it is parallelism.</p>
+        <p><strong>Deliberate.</strong> This is how hardware behaves, and the grid evaluates that way for real: every region runs its own local sweeps on the same rules a chip would.</p>
       </div>
 
       <h2 id="termination">Termination</h2>

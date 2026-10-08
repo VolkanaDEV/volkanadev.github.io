@@ -107,6 +107,10 @@
     align-items: start;
     margin: 0 0 36px;
   }
+  /* both the dot and the card ride in row 1: without this, a card assigned to
+     column 1 AFTER the dot took column 2 cannot place backwards in the same
+     row and auto-wraps to row 2, pushing every left card 44px down */
+  .rm-stop > .rm-dot, .rm-stop > .rm-card { grid-row: 1; }
   .rm-dot {
     grid-column: 2;
     justify-self: center;

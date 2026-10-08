@@ -182,21 +182,21 @@
       <div class="breadcrumb"><a href="index.html">Docs</a> / Overview</div>
 
       <h1>Sanguis Documentation</h1>
-      <p class="subtitle">Parallel-First Programming</p>
+      <p class="subtitle">The language, and the machine it compiles to.</p>
 
-      <p>Sanguis is a parallel-first programming language. Programs are not sequences of instructions. They are collections of routes that fire simultaneously, settle against conditions, and produce output. There is no <span class="code-inline">main()</span>, no call stack, no sequential execution.</p>
+      <p>Sanguis is the language you write; BloodCode is the machine it compiles to. Programs are written as circuits of organs and cells, compile to a frozen instruction set, and run bit-for-bit identically on every machine.</p>
 
       <p>A Sanguis program describes:</p>
-      <p>&bull; <strong>Holds</strong>, named values (scalars or text)<br>
-      &bull; <strong>Routes</strong>, triggered blocks that check conditions and emit values<br>
-      &bull; <strong>Ticks</strong>, the engine advances one tick at a time, evaluating all routes in parallel</p>
+      <p>&bull; <strong>Organs</strong>, self-contained structures with fields and cells, lowered into the grid as switch-and-wire data<br>
+      &bull; <strong>Cells</strong>, functions that transform values; the whole grid evaluates in sweeps, not steps<br>
+      &bull; <strong>Sweeps</strong>, the engine advances one sweep at a time, evaluating every switch and wire simultaneously until the grid settles</p>
 
       <h2 id="design-principles">Design Principles</h2>
-      <p>&bull; <strong>Parallel by default.</strong> All routes evaluate every tick. There is no sequential ordering.<br>
-      &bull; <strong>Implicit control flow.</strong> No <span class="code-inline">if</span>, <span class="code-inline">for</span>, <span class="code-inline">while</span>, or <span class="code-inline">return</span>. Conditions gate routes. Routes loop by firing repeatedly until conditions fail.<br>
-      &bull; <strong>Two data types.</strong> Scalars (floating-point) and text (strings). No ints, no structs, no classes.<br>
-      &bull; <strong>Settling, not stepping.</strong> The programmer describes state and rules. The engine settles the system tick by tick until it reaches a terminal state.<br>
-      &bull; <strong>GPU-native.</strong> The runtime executes the entire organism on CUDA cores. The GPU is not an accelerator; it is the processor.</p>
+      <p>&bull; <strong>Parallel by default.</strong> Every switch and wire evaluates against the same snapshot each sweep. There is no sequential ordering inside a sweep.<br>
+      &bull; <strong>Familiar control flow.</strong> <span class="code-inline">if</span>/<span class="code-inline">else</span>, <span class="code-inline">while</span>, <span class="code-inline">for</span>/<span class="code-inline">in</span>, and <span class="code-inline">return</span> all work the way you expect. The parallel semantics apply underneath, not instead.<br>
+      &bull; <strong>Organs and cells.</strong> Fields hold state; cells transform values. Organs compile into the grid with their fields as declared state and their methods as wiring.<br>
+      &bull; <strong>Settling, not stepping.</strong> The programmer describes state and rules. The engine settles the grid sweep by sweep until it reaches a stable state.<br>
+      &bull; <strong>Deterministic.</strong> The same program produces bit-for-bit identical results on every machine: the graphics card, the just-in-time executor, and the compiler that compiles itself.</p>
 
       <div class="doc-card-grid">
         <a href="getting-started.html" class="doc-card">
@@ -205,7 +205,7 @@
         </a>
         <a href="language-reference.html" class="doc-card">
           <h3>Language Reference</h3>
-          <p>Nine keywords: circuit, hold, memory, when, but, emit, append, through, wire. Grammar, operators.</p>
+          <p>The keywords, grammar, condition operators, and comments. One page, current to the 3.0 surface.</p>
         </a>
         <a href="builtins.html" class="doc-card">
           <h3>Builtins</h3>
@@ -217,7 +217,7 @@
         </a>
         <a href="examples.html" class="doc-card">
           <h3>Examples</h3>
-          <p>Circuits, holds, routes, conditions, emit, append, through, and wire, with examples.</p>
+          <p>Circuits, organs, cells, control flow, and the builtin surface, with examples.</p>
         </a>
         <a href="compiler-pipeline.html" class="doc-card">
           <h3>Compiler Pipeline</h3>

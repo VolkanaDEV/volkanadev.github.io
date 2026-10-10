@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; frame-ancestors 'none';">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta name="referrer-policy" content="strict-origin-when-cross-origin">
+<link rel="icon" href="favicon.png">
+<title>VolkanaDEV - Research</title>
+<meta name="description" content="The published research behind Sanguis: three papers, their DOIs, and how the work is made.">
+<style>
+  * { box-sizing: border-box; }
+  .paper-t { font-weight: 700; color: var(--text-light); margin: 6px 0 10px; line-height: 1.45; }
+  .paper-meta { color: var(--muted-light); font-size: 0.82rem; margin: 12px 0 0; }
+  .paper-meta a { color: var(--accent); text-decoration: none; }
+  .paper-meta a:hover { text-decoration: underline; }
+  .read-note { color: var(--muted-light); font-size: 0.88rem; margin: 22px 0 0; text-align: center; }
+  .disclosure { max-width: 800px; margin: 0 auto; color: var(--muted-light); font-size: 0.98rem; line-height: 1.75; }
+  .disclosure p { margin: 0 0 18px; }
+  .disclosure .quote { color: var(--text-light); border-left: 2px solid rgba(175,0,0,0.5); padding-left: 18px; }
+</style>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body class="nav-hidden">
+<button id="navTab" class="nav-tab" aria-label="Toggle navigation" onclick="document.body.classList.toggle('nav-hidden')"><span class="chev"></span></button>
+
+<div class="wordmark"><span>VolkanaDEV</span></div>
+
+<nav>
+    <div class="wrap">
+      <div class="nav-inner">
+        <div class="brand"><img src="favicon.png" class="brand-dot" alt="VolkanaDEV">VolkanaDEV</div>
+        <button class="nav-toggle" onclick="this.classList.toggle('open');document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        <div class="nav-links">
+          <a href="index.html">Welcome</a>
+          <a href="roadmap.html">Roadmap</a>
+          <a href="benchmark.html">Benchmarks</a>
+          <a href="patchnotes.html">Patch Notes</a>
+          <a href="docs/index.html">Docs</a>
+          <a href="security.html">Safety &amp; Licenses</a>
+          <a href="research.html" class="active">Research</a>
+          <a href="about.html">Company</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <section class="header-block">
+      <h2>We publish the work behind every claim.</h2>
+      <p class="middle-text">
+        Three papers are live on Zenodo, each with a DOI, and every result in them was re-run on
+        the dates recorded inside. They read in order: the foundation, the core, then the
+        application.
+      </p>
+    </section>
+  </div>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-label">The papers</div>
+      <div class="panel-grid">
+        <div class="card">
+          <h4>1 &middot; Foundation</h4>
+          <p class="paper-t">Independent execution pipelines of one language agree bit-for-bit on chaotic workloads</p>
+          <p>Two separate ways of running the same Sanguis program produce byte-identical output, on workloads where a difference of one bit would explode. This is the floor the rest of the work stands on.</p>
+          <p class="paper-meta">Wolfe, A. &middot; 2026 &middot; <a href="https://doi.org/10.5281/zenodo.23277353">10.5281/zenodo.23277353</a></p>
+        </div>
+        <div class="card">
+          <h4>2 &middot; Core</h4>
+          <p class="paper-t">A pair-primary associative substrate with exact in-band episodic memory</p>
+          <p>The substrate itself: memory whose unit is a relation, reading back what it has lived exactly, with every condition stated in the paper.</p>
+          <p class="paper-meta">Wolfe, A. &middot; 2026 &middot; <a href="https://doi.org/10.5281/zenodo.23276767">10.5281/zenodo.23276767</a></p>
+        </div>
+        <div class="card">
+          <h4>3 &middot; Application</h4>
+          <p class="paper-t">A pair-primary associative substrate with route-unique composition</p>
+          <p>Composition over the substrate: each route seeded by its own pair, so composed output is pair-specific and verifiably free of leaks.</p>
+          <p class="paper-meta">Wolfe, A. &middot; 2026 &middot; <a href="https://doi.org/10.5281/zenodo.23277683">10.5281/zenodo.23277683</a></p>
+        </div>
+      </div>
+      <p class="read-note">Published under CC BY-NC-ND 4.0.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-label">How it's made</div>
+      <h3 class="one-line">Every paper says how it was made, and so does every record.</h3>
+      <div class="disclosure">
+        <p>This statement appears in all three papers, in the same words:</p>
+        <p class="quote">"The system and efforts producing the results of this document are the author's design, built and run over the past eight months. AI assistants contributed throughout: initial drafts of the prose, insight, suggested sources, and supervised code execution to detect and patch flaws during the experiments. Every cited source was independently checked before use, and all programs were verified running in a closed environment without AI assistance. Every result reproduces from the scripts and dates recorded in the paper."</p>
+        <p>The scripts behind the results are not included in the preprints. They release with the project.</p>
+      </div>
+      <div class="center-btn"><a href="benchmark.html" class="btn ghost">See the measured numbers</a></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-links">
+        <a href="terms.html">Terms of Use</a> | <a href="privacy.html">Privacy Policy</a> | <a href="careers.html">Careers</a>
+      </div>
+      Copyright &copy; 2026 VolkanaDEV Autonomous Systems, Inc.<br>
+      VolkanaDEV, Sanguis, and BloodCode are intellectual property of VolkanaDEV Autonomous Systems, Inc.<br>
+      Business and private inquiries: <a href="mailto:volkanadev@volkanadev.com">volkanadev@volkanadev.com</a>
+    </div>
+  
+    <div class="footer-note">
+      <span>Proudly designed and built with open source models.</span>
+      <span class="fn-ico" aria-hidden="true"><i></i><i></i><i></i></span>
+    </div>
+
+  </footer>
+
+</body>
+</html>

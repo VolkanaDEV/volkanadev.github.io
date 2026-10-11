@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; frame-ancestors 'none';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self' mailto:; frame-ancestors 'none';">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <meta http-equiv="X-Frame-Options" content="DENY">
-<meta name="referrer-policy" content="strict-origin-when-cross-origin">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="icon" href="favicon.png">
 <title>VolkanaDEV - Contact</title>
 <meta name="description" content="Contact VolkanaDEV for consumer, commercial, government, or general inquiries.">
@@ -292,9 +292,10 @@
   /* === End Visual Enhancements === */
 </style>
 <link rel="stylesheet" href="theme.css">
+<script src="site.js" defer></script>
 </head>
 <body class="nav-hidden">
-<button id="navTab" class="nav-tab" aria-label="Toggle navigation" onclick="document.body.classList.toggle('nav-hidden')"><span class="chev"></span></button>
+<button id="navTab" class="nav-tab" aria-label="Toggle navigation"><span class="chev"></span></button>
 
 <div class="wordmark"><span>VolkanaDEV</span></div>
 
@@ -303,7 +304,7 @@
     <div class="wrap">
       <div class="nav-inner">
         <div class="brand"><img src="favicon.png" class="brand-dot" alt="VolkanaDEV">VolkanaDEV</div>
-        <button class="nav-toggle" onclick="this.classList.toggle('open');document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
         <div class="nav-links">
           <a href="index.html">Welcome</a>
           <a href="roadmap.html">Roadmap</a>
@@ -332,7 +333,7 @@
 
       <div class="inquiry-box">
         <label for="inquiryType">Who Are You?</label>
-        <select id="inquiryType" onchange="toggleFields()">
+        <select id="inquiryType">
           <option value="">Select your category...</option>
           <option value="consumer">I am a public citizen or researcher and I want to use Sanguis for myself</option>
           <option value="corporate">I am a corporate or retail business interested in deployment</option>
@@ -341,7 +342,7 @@
         </select>
       </div>
 
-      <form id="contactForm" onsubmit="return buildEmail()">
+      <form id="contactForm">
         <input type="hidden" id="isPublic" name="is_public" value="n">
         <input type="hidden" id="isCorpo" name="is_corpo" value="n">
         <input type="hidden" id="isGov" name="is_gov" value="n">
@@ -484,72 +485,6 @@
 
   </footer>
 
-  <script>
-    function toggleFields() {
-      var type = document.getElementById('inquiryType').value;
-      document.getElementById('consumer-fields').classList.remove('active');
-      document.getElementById('corporate-fields').classList.remove('active');
-      document.getElementById('government-fields').classList.remove('active');
-      document.getElementById('general-fields').classList.remove('active');
-      if (type === 'consumer') document.getElementById('consumer-fields').classList.add('active');
-      if (type === 'corporate') document.getElementById('corporate-fields').classList.add('active');
-      if (type === 'government') document.getElementById('government-fields').classList.add('active');
-      if (type === 'general') document.getElementById('general-fields').classList.add('active');
-    }
-
-    function buildEmail() {
-      var type = document.getElementById('inquiryType').value;
-      if (!type) { alert('Please select a category first.'); return false; }
-
-      var isPublic = 'n', isCorpo = 'n', isGov = 'n';
-      var emailFrom = '';
-      var infoBox = '';
-      var extra = '';
-
-      if (type === 'consumer') {
-        isPublic = 'y';
-        emailFrom = document.getElementById('consumerEmail').value || 'not provided';
-        infoBox = document.getElementById('consumerUse').value || '';
-        extra = 'Name: ' + (document.getElementById('consumerName').value || 'not provided');
-      } else if (type === 'corporate') {
-        isCorpo = 'y';
-        emailFrom = document.getElementById('corpEmail').value || 'not provided';
-        infoBox = document.getElementById('corpUse').value || '';
-        extra = 'Company: ' + (document.getElementById('corpName').value || 'not provided') +
-                '\nRepresentative: ' + (document.getElementById('corpRep').value || 'not provided');
-      } else if (type === 'government') {
-        isGov = 'y';
-        emailFrom = document.getElementById('govEmail').value || 'not provided';
-        infoBox = document.getElementById('govScope').value || '';
-        extra = 'Entity: ' + (document.getElementById('govEntity').value || 'not provided') +
-                '\nRepresentative: ' + (document.getElementById('govRep').value || 'not provided') +
-                '\nAddress: ' + (document.getElementById('govAddress').value || 'not provided') +
-                '\nCarve-Out: ' + (document.getElementById('govCarveout').value || 'standard');
-      } else if (type === 'general') {
-        emailFrom = document.getElementById('generalEmail').value || 'not provided';
-        infoBox = document.getElementById('generalMessage').value || '';
-        extra = 'Name: ' + (document.getElementById('generalName').value || 'not provided');
-      }
-
-      var subject = 'VolkanaDEV Contact: ' + type.toUpperCase();
-      var body = 'Email from: ' + emailFrom +
-                 '\nIs public: ' + isPublic +
-                 '\nIs corpo: ' + isCorpo +
-                 '\nIs gov: ' + isGov +
-                 '\n\nInfo:\n' + (infoBox || 'No additional info provided') +
-                 '\n\nExtra:\n' + extra;
-
-      var targetEmail = {
-        consumer: 'volkanadev@protonmail.com',
-        corporate: 'volkanadev@protonmail.com',
-        government: 'volkanadev@protonmail.com',
-        general: 'volkanadev@protonmail.com'
-      }[type] || 'volkanadev@protonmail.com';
-      var mailto = 'mailto:' + targetEmail + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-      window.location.href = mailto;
-      return false;
-    }
-  </script>
 
 </body>
 </html>

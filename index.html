@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; frame-ancestors 'none';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self' mailto:; frame-ancestors 'none';">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <meta http-equiv="X-Frame-Options" content="DENY">
-<meta name="referrer-policy" content="strict-origin-when-cross-origin">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="icon" href="favicon.png">
 <title>VolkanaDEV - Sanguis</title>
 <meta name="description" content="VolkanaDEV is building AI that remembers everything it learns, and gives the same answer every time. It's written in Sanguis, the language we built for it.">
@@ -327,9 +327,10 @@
   }
 }
 </script>
+<script src="site.js" defer></script>
 </head>
 <body class="nav-hidden">
-<button id="navTab" class="nav-tab" aria-label="Toggle navigation" onclick="document.body.classList.toggle('nav-hidden')"><span class="chev"></span></button>
+<button id="navTab" class="nav-tab" aria-label="Toggle navigation"><span class="chev"></span></button>
 
 <div class="wordmark"><span>VolkanaDEV</span></div>
 
@@ -338,7 +339,7 @@
     <div class="wrap">
       <div class="nav-inner">
         <div class="brand"><img src="favicon.png" class="brand-dot" alt="VolkanaDEV">VolkanaDEV</div>
-        <button class="nav-toggle" onclick="this.classList.toggle('open');document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
         <div class="nav-links">
           <a href="index.html" class="active">Welcome</a>
           <a href="roadmap.html">Roadmap</a>
@@ -498,24 +499,5 @@
   </footer>
 
   
-  <script>
-    // Early Access countdown -> November 28, 2026 (opens that morning, local)
-    (function () {
-      var target = new Date("2026-11-28T05:00:00Z").getTime();
-      function pad(n) { return n < 10 ? "0" + n : "" + n; }
-      function tick() {
-        var diff = target - Date.now();
-        if (diff < 0) diff = 0;
-        var d = Math.floor(diff / 86400000);
-        var h = Math.floor(diff % 86400000 / 3600000);
-        var m = Math.floor(diff % 3600000 / 60000);
-        var sec = Math.floor(diff % 60000 / 1000);
-        var set = function (id, v) { var e = document.getElementById(id); if (e) e.textContent = v; };
-        set("ea-days", d); set("ea-hours", pad(h)); set("ea-mins", pad(m)); set("ea-secs", pad(sec));
-      }
-      tick();
-      setInterval(tick, 1000);
-    })();
-  </script>
 </body>
 </html>

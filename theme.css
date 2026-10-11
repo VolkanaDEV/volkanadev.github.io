@@ -2049,6 +2049,27 @@ blockquote.creator-quote { max-width: 860px !important; }
 }
 
 
+/* ── LAYER 78 — THE FOOTER TEXT SITS ON THE PAGE'S OWN COLUMN.
+      The footer is a full-bleed strip, so its legal text started at the WINDOW
+      edge while every page's content is a centred 960px column: at 1747px the
+      footer text began 400px left of the heading above it, and the credit line
+      ended 400px right of the column. Padding the footer to the column's own
+      inset fixes both with no markup change (31 pages carry this footer).
+      max(30px, ...) keeps the gutter once the window is narrower than the
+      column, and a footer that already wraps its content in .wrap (research,
+      careers) is excluded or it would inset the text twice.
+      Below 901px nothing is needed: the footer and .wrap both already use 22px. ── */
+@media (min-width: 901px) {
+  footer:not(:has(> .wrap)) {
+    padding-left:  max(30px, calc((100% - 960px) / 2 + 30px)) !important;
+    padding-right: max(30px, calc((100% - 960px) / 2 + 30px)) !important;
+  }
+  footer .footer-note {
+    right: max(30px, calc((100% - 960px) / 2 + 30px)) !important;
+  }
+}
+
+
 /* ── LAYER 77 — A SINGLE-COLUMN PAGE MUST CLEAR THE FOOTER RULE.
       The docs hub ended its card row FLUSH on the footer's top rule (the
       cards' own drop shadow spilled straight across the line) and left a

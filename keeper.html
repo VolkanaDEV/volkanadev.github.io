@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="favicon.png">
+<title>Keeper &middot; VolkanaDEV</title>
+<meta name="description" content="An announcement is coming from VolkanaDEV Autonomous Systems.">
+<style>
+  :root { --bg: #08090a; --ink: #e8e6e3; --dim: #6f7278; --blood: #af0000; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh; overflow: hidden;
+    background-image: radial-gradient(circle at 50% 42%, rgba(175,0,0,0.07), transparent 55%);
+  }
+  .stage { text-align: center; padding: 24px; animation: rise 1.6s ease-out both; }
+  .micro { font-size: 0.64rem; letter-spacing: 0.42em; text-indent: 0.42em; color: var(--dim); text-transform: uppercase; margin-bottom: 36px; }
+  h1 {
+    margin: 0; font-size: clamp(2.4rem, 11vw, 6rem); font-weight: 800;
+    letter-spacing: 0.34em; text-indent: 0.34em;
+    color: var(--ink); text-shadow: 0 0 44px rgba(175,0,0,0.22);
+  }
+  .line { width: min(320px, 62vw); height: 1px; background: var(--blood); opacity: 0.5; margin: 34px auto; }
+  .pulse { animation: beat 2.6s ease-in-out infinite; }
+  .sub { color: var(--dim); font-size: clamp(0.86rem, 2.4vw, 1.02rem); letter-spacing: 0.06em; margin: 0; }
+  .soon { margin-top: 48px; font-size: 0.64rem; letter-spacing: 0.42em; text-indent: 0.42em; text-transform: uppercase; color: var(--dim); }
+  .ob { margin-top: 18px; font-size: 0.64rem; letter-spacing: 0.34em; text-indent: 0.34em; text-transform: uppercase; color: var(--blood); opacity: 0.9; }
+  .home { position: fixed; bottom: 18px; left: 0; right: 0; text-align: center; font-size: 0.6rem; letter-spacing: 0.28em; text-indent: 0.28em; text-transform: uppercase; }
+  .home a { color: var(--dim); text-decoration: none; }
+  .home a:hover { color: var(--ink); }
+  @keyframes beat { 0%,100% { opacity: 0.35; } 12% { opacity: 0.85; } 24% { opacity: 0.45; } 36% { opacity: 0.7; } 60% { opacity: 0.35; } }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .pulse { animation: none; opacity: 0.7; } .stage { animation: none; } }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <div class="micro">VolkanaDEV Autonomous Systems</div>
+    <h1>KEEPER</h1>
+    <div class="line pulse"></div>
+    <p class="sub">The first of its kind.</p>
+    <div class="soon">Coming soon</div>
+    <div class="ob">Open beta begins April 2027</div>
+  </div>
+  <div class="home"><a href="index.html">volkanadev.com</a></div>
+</body>
+</html>

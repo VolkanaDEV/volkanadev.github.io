@@ -166,6 +166,7 @@
         <a href="getting-started.html">Getting Started</a>
         <a href="language-reference.html">Language Reference</a>
         <a href="builtins.html" class="active">Builtins</a>
+        <a href="whats-different.html">What's Different</a>
         <a href="execution-model.html">Execution Model</a>
         <a href="examples.html">Examples</a>
         <a href="compiler-pipeline.html">Compiler Pipeline</a>
@@ -174,49 +175,108 @@
       </li></ul>
     </aside>
     <main class="doc-content">
-      <div class="breadcrumb"><a href="index.html">Docs</a> / What's Different</div>
+      <div class="breadcrumb"><a href="index.html">Docs</a> / Builtins</div>
 
-      <h1>What's Different From Traditional Programming</h1>
-      <p class="subtitle">For programmers coming from C, Python, and everything else.</p>
+      <h1>Builtins</h1>
+      <p class="subtitle">The functions that come with the language.</p>
 
-      <p>If you've written code in C, Python, or most anything else, Sanguis works differently. Here is the honest comparison.</p>
+      <p>A builtin is a function the engine provides, so you call it inside any cell without declaring it. Every call on this page was run against the current toolchain before it was written down.</p>
 
-      <h2 id="what-changes">What changes coming from C or Python</h2>
-
-      <h3>Control flow</h3>
-      <p>Sanguis has the control flow you know: <span class="code-inline">if</span>/<span class="code-inline">else</span>, <span class="code-inline">while</span>, and cells are functions. What it doesn't have: <span class="code-inline">for</span> (use <span class="code-inline">while</span> with a counter), <span class="code-inline">switch</span> (chain <span class="code-inline">if</span>/<span class="code-inline">else</span>), <span class="code-inline">goto</span> (deliberately absent: a jump is a conditional in disguise).</p>
-
-      <h3>Data types</h3>
+      <h2 id="text">Text</h2>
       <table class="doc-table">
-        <tr><th>Traditional</th><th>Sanguis</th></tr>
-        <tr><td><span class="code-inline">int</span>, <span class="code-inline">float</span>, <span class="code-inline">double</span></td><td><span class="code-inline">float</span> (floating-point numbers)</td></tr>
-        <tr><td><span class="code-inline">string</span></td><td><span class="code-inline">string</span></td></tr>
-        <tr><td><span class="code-inline">bool</span></td><td>Use numbers (<span class="code-inline">0.0</span> false, <span class="code-inline">1.0</span> true), or boolean circuits</td></tr>
-        <tr><td><span class="code-inline">struct</span> with methods</td><td><span class="code-inline">organ</span> with fields and cells</td></tr>
-        <tr><td><span class="code-inline">int[]</span>, arrays</td><td><span class="code-inline">list</span> via <span class="code-inline">grow_list</span></td></tr>
+        <tr><th>Call</th><th>Returns</th><th>Does</th></tr>
+        <tr><td><span class="code-inline">concat(a, b)</span></td><td>text</td><td>Join two strings.</td></tr>
+        <tr><td><span class="code-inline">len(s)</span></td><td>number</td><td>Length of a string, or the count of a list.</td></tr>
+        <tr><td><span class="code-inline">char_at(s, n)</span></td><td>text</td><td>One character, counted from 0, so <span class="code-inline">char_at("voltage", 4)</span> gives "a".</td></tr>
+        <tr><td><span class="code-inline">ord(s)</span></td><td>number</td><td>Character code: <span class="code-inline">ord("A")</span> gives 65.</td></tr>
+        <tr><td><span class="code-inline">chr(n)</span></td><td>text</td><td>Character for a code: <span class="code-inline">chr(65)</span> gives "A".</td></tr>
       </table>
-      <p>Organs are the struct equivalent: declared fields, methods, and a manifest that travels with the compiled artifact.</p>
 
-      <h3>Assignment</h3>
-      <p>Inside cells, you assign directly: <span class="code-inline">let x = 5;</span> and <span class="code-inline">x = x + 1;</span>. On the GPU, an organ's field is a wire: writing it drives the wire, reading it senses the wire.</p>
-
-      <h2 id="parallel-by-default">Parallel by default</h2>
-      <p>In traditional languages, code runs sequentially. In Sanguis, the whole grid evaluates simultaneously: every switch, every wire, every pass.</p>
+      <h2 id="numbers">Numbers</h2>
       <table class="doc-table">
-        <tr><th>Traditional</th><th>Sanguis</th></tr>
-        <tr><td>Sequential execution</td><td>Parallel grid evaluation every sweep</td></tr>
-        <tr><td>Shared mutable state + locks</td><td>Snapshot semantics, no races</td></tr>
-        <tr><td>Threads, async, goroutines</td><td>Not needed: parallelism is the default</td></tr>
-        <tr><td>Manual synchronization</td><td>The engine handles it via sweep snapshots</td></tr>
+        <tr><th>Call</th><th>Returns</th><th>Does</th></tr>
+        <tr><td><span class="code-inline">abs(n)</span></td><td>number</td><td>Distance from zero.</td></tr>
+        <tr><td><span class="code-inline">floor(n)</span></td><td>number</td><td>Round down.</td></tr>
+        <tr><td><span class="code-inline">sqrt(n)</span></td><td>number</td><td>Square root.</td></tr>
+        <tr><td><span class="code-inline">max(a, b)</span></td><td>number</td><td>Larger of two.</td></tr>
+        <tr><td><span class="code-inline">min(a, b)</span></td><td>number</td><td>Smaller of two.</td></tr>
+        <tr><td><span class="code-inline">mod(a, b)</span></td><td>number</td><td>Remainder after division.</td></tr>
       </table>
-      <p>All switches see the same snapshot at the start of a sweep. One switch's change is not visible to another switch until the next sweep. Data races are eliminated by design.</p>
 
-      <h2 id="no-assignment">No interpreter, no JIT, no runtime library</h2>
-      <p>The program compiles into switch-and-wire data. The GPU kernel that runs it is fixed: the same kernel for every program. There is nothing to deploy alongside your program except the kernel itself.</p>
+      <h2 id="lists">Lists</h2>
+      <p>A list is written with square brackets, and <span class="code-inline">len()</span> counts its items.</p>
+      <div class="code-block"><pre>circuit f;
+cell main() -&gt; float {
+let xs = [1.0, 2.0, 3.0];
+print(len(xs));
+emit 0.0;
+}</pre></div>
+      <p>Prints 3.</p>
+
+      <h2 id="files">Files</h2>
+      <table class="doc-table">
+        <tr><th>Call</th><th>Returns</th><th>Does</th></tr>
+        <tr><td><span class="code-inline">read_file(path)</span></td><td>text</td><td>Whole file as one string.</td></tr>
+        <tr><td><span class="code-inline">write_file(path, text)</span></td><td>number</td><td>Writes the string. 1 on success.</td></tr>
+        <tr><td><span class="code-inline">read_bytes(path)</span></td><td>list</td><td>The file as a list of byte values.</td></tr>
+      </table>
+
+      <h2 id="screen">Screen</h2>
+      <p><span class="code-inline">print(value)</span> writes a value to the terminal. A whole number is written without a decimal point, so <span class="code-inline">print(1.0)</span> shows 1 and <span class="code-inline">print(3.5)</span> shows 3.5.</p>
+
+      <h2 id="time">Time</h2>
+      <p><span class="code-inline">now_ms</span> is the clock in milliseconds since the epoch, as a number.</p>
+
+      <h2 id="neural">Neural</h2>
+      <table class="doc-table">
+        <tr><th>Call</th><th>Returns</th><th>Does</th></tr>
+        <tr><td><span class="code-inline">nn_gelu(x)</span></td><td>number</td><td>GELU activation.</td></tr>
+        <tr><td><span class="code-inline">nn_softmax</span></td><td>list</td><td>Softmax over a list of scores.</td></tr>
+        <tr><td><span class="code-inline">nn_matvec</span></td><td>list</td><td>Matrix times vector.</td></tr>
+        <tr><td><span class="code-inline">nn_layernorm</span></td><td>list</td><td>Normalize a vector.</td></tr>
+        <tr><td><span class="code-inline">nn_argmax</span></td><td>number</td><td>Index of the largest value.</td></tr>
+      </table>
+
+      <h2 id="gpu">GPU</h2>
+      <table class="doc-table">
+        <tr><th>Call</th><th>Returns</th><th>Does</th></tr>
+        <tr><td><span class="code-inline">gpu_info</span></td><td>text</td><td>Name of the device the card path will use.</td></tr>
+        <tr><td><span class="code-inline">gpu_open</span></td><td>text</td><td>Opens the device and reports the plane layout.</td></tr>
+        <tr><td><span class="code-inline">gpu_load_file</span></td><td>number</td><td>Uploads a named file to the device. 1 on success.</td></tr>
+        <tr><td><span class="code-inline">gpu_matvec</span></td><td>list</td><td>Matrix times vector, run on the card, as in <span class="code-inline">nn_matvec</span>.</td></tr>
+        <tr><td><span class="code-inline">gpu_close</span></td><td>number</td><td>Releases the device.</td></tr>
+      </table>
+
+      <h2 id="framebuffer">Framebuffer</h2>
+      <p>Drawing calls, for a program that presents an image.</p>
+      <table class="doc-table">
+        <tr><th>Call</th><th>Does</th></tr>
+        <tr><td><span class="code-inline">fb_clear</span></td><td>Fill the target with one colour.</td></tr>
+        <tr><td><span class="code-inline">fb_pixel</span></td><td>Set one pixel: x, y, colour.</td></tr>
+        <tr><td><span class="code-inline">fb_line</span></td><td>Draw a line: x1, y1, x2, y2, colour.</td></tr>
+        <tr><td><span class="code-inline">fb_rect</span></td><td>Draw a rectangle: x, y, width, height, colour.</td></tr>
+        <tr><td><span class="code-inline">fb_text</span></td><td>Draw text: x, y, string, colour.</td></tr>
+        <tr><td><span class="code-inline">fb_get</span></td><td>Read one pixel: x, y.</td></tr>
+        <tr><td><span class="code-inline">fb_present</span></td><td>Show what has been drawn.</td></tr>
+      </table>
+
+      <h2 id="window">Window</h2>
+      <p>Calls for a program that opens its own window and reads the keyboard.</p>
+      <table class="doc-table">
+        <tr><th>Call</th><th>Does</th></tr>
+        <tr><td><span class="code-inline">win_open</span></td><td>Open a window: title, width, height.</td></tr>
+        <tr><td><span class="code-inline">win_poll</span></td><td>Pump messages, so the window stays responsive.</td></tr>
+        <tr><td><span class="code-inline">win_keycode</span></td><td>Last key pressed.</td></tr>
+        <tr><td><span class="code-inline">win_sleep_ms</span></td><td>Wait.</td></tr>
+        <tr><td><span class="code-inline">win_close</span></td><td>Close the window.</td></tr>
+      </table>
+
+      <h2 id="audio">Audio</h2>
+      <p><span class="code-inline">write_wav(path, samples)</span> writes a list of samples to a .wav file.</p>
 
       <div class="doc-nav-bottom">
         <a href="language-reference.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Language Reference</span></a>
-        <a href="execution-model.html" class="nav-right"><span class="nav-label">Next &rarr;</span><span class="nav-title">Execution Model</span></a>
+        <a href="whats-different.html" class="nav-right"><span class="nav-label">Next &rarr;</span><span class="nav-title">What&#39;s Different</span></a>
       </div>
     </main>
   </div>

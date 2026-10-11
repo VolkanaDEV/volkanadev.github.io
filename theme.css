@@ -2091,3 +2091,12 @@ body:has(> .wrap + footer) > .wrap {
 }
 body:has(> .wrap + footer) > .wrap > *:last-child { margin-bottom: 0 !important; }
 body:has(> .wrap + footer) > footer { margin-top: 0 !important; }
+
+
+/* ── LAYER 79 — A LINK IN DOC PROSE CARRIES THE SECTION ACCENT.
+      Every other anchor on a docs page has a rule (nav, sidebar, breadcrumb,
+      footer); a link inside a paragraph had none, so it fell through to the
+      browser default blue and read as an unfinished page. Scoped to the prose
+      so it cannot touch the chrome. ── */
+.doc-content p a, .doc-content li a { color: var(--accent); text-decoration: none; }
+.doc-content p a:hover, .doc-content li a:hover { text-decoration: underline; }

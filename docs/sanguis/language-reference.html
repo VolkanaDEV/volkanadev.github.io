@@ -166,6 +166,7 @@
         <a href="getting-started.html">Getting Started</a>
         <a href="language-reference.html" class="active">Language Reference</a>
         <a href="builtins.html">Builtins</a>
+        <a href="whats-different.html">What's Different</a>
         <a href="execution-model.html">Execution Model</a>
         <a href="examples.html">Examples</a>
         <a href="compiler-pipeline.html">Compiler Pipeline</a>
@@ -180,39 +181,40 @@
       <p class="subtitle">The language keywords, grammar, condition operators, and comments.</p>
 
       <h2 id="keywords">Keywords</h2>
-      <p>Sanguis 3.0 keywords:</p>
+      <p>The keywords the compiler recognises today:</p>
       <table class="doc-table">
         <tr><th>Keyword</th><th>Purpose</th></tr>
         <tr><td><span class="code-inline">circuit</span></td><td>Declare a program body</td></tr>
         <tr><td><span class="code-inline">organ</span></td><td>Declare an organ: fields plus methods</td></tr>
-        <tr><td><span class="code-inline">cell</span></td><td>Declare a function (a method inside an organ, or a free function)</td></tr>
-        <tr><td><span class="code-inline">let</span></td><td>Declare a variable</td></tr>
-        <tr><td><span class="code-inline">new</span></td><td>Construct an organ instance</td></tr>
-        <tr><td><span class="code-inline">if</span> / <span class="code-inline">else</span></td><td>Branching</td></tr>
-        <tr><td><span class="code-inline">while</span></td><td>Loops</td></tr>
-        <tr><td><span class="code-inline">for</span> / <span class="code-inline">in</span></td><td>Iteration over a range or list</td></tr>
-        <tr><td><span class="code-inline">gate</span> / <span class="code-inline">then</span></td><td>Conditional expression form</td></tr>
-        <tr><td><span class="code-inline">when</span></td><td>Conditional statement form</td></tr>
-        <tr><td><span class="code-inline">emit</span> / <span class="code-inline">return</span> / <span class="code-inline">output</span></td><td>Return a value from a cell or the program</td></tr>
         <tr><td><span class="code-inline">strain</span></td><td>Declare a typed variant</td></tr>
-        <tr><td><span class="code-inline">signal</span> / <span class="code-inline">print</span></td><td>Write to the screen</td></tr>
+        <tr><td><span class="code-inline">cell</span></td><td>Declare a function, a method inside an organ or a free function</td></tr>
+        <tr><td><span class="code-inline">let</span></td><td>Declare a variable. The type is inferred</td></tr>
+        <tr><td><span class="code-inline">new</span></td><td>Construct an organ instance</td></tr>
+        <tr><td><span class="code-inline">self</span></td><td>The instance a method was called on</td></tr>
+        <tr><td><span class="code-inline">if</span> / <span class="code-inline">else</span></td><td>Branching</td></tr>
+        <tr><td><span class="code-inline">while</span></td><td>Loops. This is the loop form in use today</td></tr>
+        <tr><td><span class="code-inline">when</span></td><td>Run a block if a condition holds</td></tr>
+        <tr><td><span class="code-inline">emit</span> / <span class="code-inline">return</span> / <span class="code-inline">output</span></td><td>Give a value back from a cell or the program</td></tr>
+        <tr><td><span class="code-inline">signal</span></td><td>Send a value to the screen</td></tr>
         <tr><td><span class="code-inline">true</span> / <span class="code-inline">false</span> / <span class="code-inline">nil</span></td><td>Literal values</td></tr>
       </table>
 
       <h2 id="grammar">Grammar</h2>
       <div class="code-block"><pre>program  := circuit*
 circuit  := "circuit" IDENT ";"
-          | "organ" IDENT "{" field* cell* "}"
+organ    := "organ" IDENT "{" field* cell* "}"
+strain   := "strain" IDENT "{" field* cell* "}"
 field    := IDENT ":" type ";"
 cell     := "cell" IDENT "(" params? ")" "->" type "{" statement* "}"
 statement:= "let" IDENT "=" expr ";"
+          | IDENT "=" expr ";"
           | "while" condition "{" statement* "}"
           | "if" condition "{" statement* "}" ("else" "{" statement* "}")?
           | "when" condition "{" statement* "}"
-          | expr ";"
           | "emit" expr ";"
           | "return" expr ";"
-          | "signal" "(" expr ")" ";"</pre></div>
+          | "output" expr ";"
+          | expr ";"</pre></div>
       <p>Organs compile into the grid with their fields as declared state and their methods as wiring. See the organ example on the Getting Started page.</p>
 
       <h2 id="condition-operators">Condition Operators</h2>
@@ -221,11 +223,11 @@ statement:= "let" IDENT "=" expr ";"
         <tr><th>Operator</th><th>Meaning</th></tr>
         <tr><td><span class="code-inline">&lt;</span></td><td>Less than</td></tr>
         <tr><td><span class="code-inline">&gt;</span></td><td>Greater than</td></tr>
-        <tr><td><span class="code-inline">=</span></td><td>Equal to</td></tr>
+        <tr><td><span class="code-inline">==</span></td><td>Equal to</td></tr>
         <tr><td><span class="code-inline">&lt;=</span></td><td>Less than or equal to</td></tr>
         <tr><td><span class="code-inline">&gt;=</span></td><td>Greater than or equal to</td></tr>
       </table>
-      <p>Operands are either a hold name and a number, or a hold name and another hold name:</p>
+      <p>Operands are a variable and a number, or two variables:</p>
       <div class="code-block"><pre>if x &lt; 5.0        // variable vs number
 if x &gt; y          // variable vs variable
 if x == 0.0       // variable vs number (equality)
@@ -233,82 +235,21 @@ if x &gt;= 3.0       // variable vs number (greater or equal)
 if x &lt;= 10.0      // variable vs number (less or equal)</pre></div>
 
       <h2 id="arithmetic">Arithmetic</h2>
-      <p>Arithmetic is supported inside emit expressions:</p>
-      <div class="code-block"><pre>emit a + b to sum        // addition
-emit a - b to diff       // subtraction
-emit a * b to prod       // multiplication
-emit a / b to quot       // division (returns 0.0 if b is 0)
-emit pos + 1.0 to pos    // increment</pre></div>
-      <p>Only <span class="code-inline">+</span>, <span class="code-inline">-</span>, <span class="code-inline">*</span>, and <span class="code-inline">/</span> are supported. Division by zero returns 0.0. Arithmetic is evaluated left to right. Operands can be numbers, hold names, or builtin results.</p>
+      <p>Arithmetic works anywhere an expression does:</p>
+      <div class="code-block"><pre>let sum  = a + b;       // addition
+let diff = a - b;       // subtraction
+let prod = a * b;       // multiplication
+let quot = a / b;       // division, 0.0 when b is 0.0
+let next = pos + 1.0;   // increment
+emit a + b;</pre></div>
+      <p>Only <span class="code-inline">+</span>, <span class="code-inline">-</span>, <span class="code-inline">*</span>, and <span class="code-inline">/</span> are supported. Division by zero returns 0.0. Arithmetic is evaluated left to right, and operands can be numbers, variables, or builtin results.</p>
 
       <h2 id="comments">Comments</h2>
       <div class="code-block"><pre>// Comments start with // and run to end of line.</pre></div>
       <p>Comments are ignored by the parser. Use them freely.</p>
 
       <h2 id="builtins">Builtins</h2>
-      <p>Sanguis provides 17 builtins for string manipulation, file I/O, comparison, and conversion. Builtins run on the GPU. Text operations happen in VRAM.</p>
-
-      <h3>String Builtins</h3>
-      <table class="doc-table">
-        <tr><th>Builtin</th><th>Signature</th><th>Returns</th><th>Description</th></tr>
-        <tr><td><span class="code-inline">concat</span></td><td><span class="code-inline">concat(a, b)</span></td><td>text</td><td>Concatenate two strings</td></tr>
-        <tr><td><span class="code-inline">len</span></td><td><span class="code-inline">len(s)</span></td><td>scalar</td><td>Length of string</td></tr>
-        <tr><td><span class="code-inline">extract</span></td><td><span class="code-inline">extract(s, start, end)</span></td><td>text</td><td>Substring from start to end</td></tr>
-        <tr><td><span class="code-inline">trim</span></td><td><span class="code-inline">trim(s)</span></td><td>text</td><td>Remove leading/trailing whitespace</td></tr>
-        <tr><td><span class="code-inline">replace</span></td><td><span class="code-inline">replace(s, old, new)</span></td><td>text</td><td>Replace all occurrences of old with new</td></tr>
-        <tr><td><span class="code-inline">split</span></td><td><span class="code-inline">split(s, delim)</span></td><td>text</td><td>Split on delimiter, return first field</td></tr>
-        <tr><td><span class="code-inline">split_at</span></td><td><span class="code-inline">split_at(s, delim, n)</span></td><td>text</td><td>Split on delimiter, return nth field (0-indexed)</td></tr>
-        <tr><td><span class="code-inline">crop</span></td><td><span class="code-inline">crop(s)</span></td><td>text</td><td>Return text after first <span class="code-inline">|</span> character</td></tr>
-        <tr><td><span class="code-inline">join</span></td><td><span class="code-inline">join(template, arg1, ...)</span></td><td>text</td><td>Fill <span class="code-inline">{}</span> placeholders in template with args</td></tr>
-        <tr><td><span class="code-inline">starts_with</span></td><td><span class="code-inline">starts_with(s, prefix)</span></td><td>text</td><td>Returns <span class="code-inline">"true"</span> or <span class="code-inline">"false"</span></td></tr>
-      </table>
-
-      <h3>Comparison Builtins</h3>
-      <table class="doc-table">
-        <tr><th>Builtin</th><th>Signature</th><th>Returns</th><th>Description</th></tr>
-        <tr><td><span class="code-inline">match</span></td><td><span class="code-inline">match(a, b)</span></td><td><span class="code-inline">"1"</span> or <span class="code-inline">"0"</span></td><td>Exact string equality</td></tr>
-        <tr><td><span class="code-inline">contains</span></td><td><span class="code-inline">contains(haystack, needle)</span></td><td><span class="code-inline">"true"</span> or <span class="code-inline">"false"</span></td><td>Substring check</td></tr>
-      </table>
-
-      <h3>Conversion Builtins</h3>
-      <table class="doc-table">
-        <tr><th>Builtin</th><th>Signature</th><th>Returns</th><th>Description</th></tr>
-        <tr><td><span class="code-inline">to_number</span></td><td><span class="code-inline">to_number(s)</span></td><td>scalar</td><td>Parse string to number</td></tr>
-        <tr><td><span class="code-inline">to_text</span></td><td><span class="code-inline">to_text(n)</span></td><td>text</td><td>Format number as string</td></tr>
-      </table>
-
-      <h3>File I/O Builtins</h3>
-      <table class="doc-table">
-        <tr><th>Builtin</th><th>Signature</th><th>Returns</th><th>Description</th></tr>
-        <tr><td><span class="code-inline">read_file</span></td><td><span class="code-inline">read_file(path)</span></td><td>text</td><td>Read file contents as text</td></tr>
-        <tr><td><span class="code-inline">write_file</span></td><td><span class="code-inline">write_file(path, content)</span></td><td><span class="code-inline">"1"</span> or <span class="code-inline">"0"</span></td><td>Write text to file</td></tr>
-      </table>
-
-      <h3>Output Builtins</h3>
-      <table class="doc-table">
-        <tr><th>Builtin</th><th>Signature</th><th>Returns</th><th>Description</th></tr>
-        <tr><td><span class="code-inline">print</span></td><td><span class="code-inline">print(s)</span></td><td>text</td><td>Pass-through (prints to screen)</td></tr>
-      </table>
-
-      <h3 id="builtin-examples">Builtin Examples</h3>
-      <div class="code-block"><pre>emit concat("Hello", " World!") to screen         // "Hello World!"
-emit len("hello") to screen                        // 5.0000
-emit extract("hello", 0, 3) to screen              // "hel"
-emit trim("  hi  ") to screen                      // "hi"
-emit replace("a.b.c", ".", "_") to screen          // "a_b_c"
-emit match("abc", "abc") to screen                 // "1"
-emit contains("hello world", "world") to screen    // "true"
-emit starts_with("hello", "he") to screen          // "true"
-emit split_at("a,b,c", ",", 1) to screen           // "b"
-emit join("{} + {} = {}", "1", "2", "3") to screen // "1 + 2 = 3"
-emit read_file("input.txt") to buffer              // file contents
-emit write_file("out.txt", "data") to result       // "1" on success</pre></div>
-
-      <h3 id="nested-builtins">Nested Builtin Calls</h3>
-      <p>Builtins can be nested:</p>
-      <div class="code-block"><pre>emit concat(genome, concat("BODY|", concat(trim(name), "\n"))) to genome
-emit match(extract(line, 0, 4), "body") to f_body</pre></div>
-      <p>Arguments are evaluated recursively. Up to 8 arguments per call are supported.</p>
+      <p>A builtin is a function the engine provides. Builtins are not keywords, and you call them from inside any cell without declaring them. The full list, grouped by what each one does, is on the <a href="builtins.html">Builtins</a> page of this manual.</p>
 
       <div class="doc-nav-bottom">
         <a href="getting-started.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Getting Started</span></a>

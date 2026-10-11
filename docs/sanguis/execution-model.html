@@ -166,6 +166,7 @@
         <a href="getting-started.html">Getting Started</a>
         <a href="language-reference.html">Language Reference</a>
         <a href="builtins.html">Builtins</a>
+        <a href="whats-different.html">What's Different</a>
         <a href="execution-model.html" class="active">Execution Model</a>
         <a href="examples.html">Examples</a>
         <a href="compiler-pipeline.html">Compiler Pipeline</a>
@@ -177,9 +178,9 @@
       <div class="breadcrumb"><a href="index.html">Docs</a> / Execution Model</div>
 
       <h1>Execution Model</h1>
-      <p class="subtitle">Tick cycle, parallel semantics, termination, and scalar formatting.</p>
+      <p class="subtitle">Sweep cycle, parallel semantics, termination, and scalar formatting.</p>
 
-      <h2 id="tick-cycle">Sweep</h2>
+      <h2 id="sweep">Sweep</h2>
       <p>The engine runs in sweeps. Each sweep:</p>
       <p>1. <strong>Evaluate.</strong> Every switch computes its logic from its input wires, all at once.<br>
       2. <strong>Propagate.</strong> Every wire picks up the state of the switch driving it. Wires with conduction delay hold their previous state and count down before latching.<br>
@@ -201,7 +202,7 @@
       &bull; You close it. A running program that holds a pulse stops only when someone stops it, and the last state is kept.</p>
 
       <h2 id="scalar-formatting">Scalar Formatting</h2>
-      <p>Scalars are formatted as <span class="code-inline">%.4f</span> (4 decimal places): <span class="code-inline">1.0000</span>, <span class="code-inline">3.5000</span>, <span class="code-inline">0.0000</span>.</p>
+      <p>A whole number is written without a decimal point: <span class="code-inline">1</span>, <span class="code-inline">0</span>, <span class="code-inline">100</span>. Anything with a fraction keeps its decimals: <span class="code-inline">3.5</span>, <span class="code-inline">100.25</span>. Values are held as 32-bit floats, so a long decimal comes back rounded, as in <span class="code-inline">1.2345599999</span>.</p>
 
       <h2 id="gpu-execution">GPU Execution</h2>
       <p>The grid is uploaded to the GPU as buffer data. One fixed kernel evaluates switches and propagates wires: regions run many local sweeps between global synchronization barriers. The kernel is the same for every program; programs are data, never code. File I/O bridges to the CPU, the only operation that leaves the GPU.</p>
@@ -255,8 +256,8 @@ cell main() -> float {
 
 cell main() -> float {
     let input = read_file("data.txt");
-    let output = replace(input, "old", "new");
-    write_file("result.txt", output);
+    let stamped = concat(input, "\nprocessed");
+    write_file("result.txt", stamped);
     emit 0.0;
 }</pre></div>
 

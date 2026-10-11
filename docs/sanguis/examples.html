@@ -166,6 +166,7 @@
         <a href="getting-started.html">Getting Started</a>
         <a href="language-reference.html">Language Reference</a>
         <a href="builtins.html">Builtins</a>
+        <a href="whats-different.html">What's Different</a>
         <a href="execution-model.html">Execution Model</a>
         <a href="examples.html" class="active">Examples</a>
         <a href="compiler-pipeline.html">Compiler Pipeline</a>
@@ -176,7 +177,7 @@
     <main class="doc-content">
       <div class="breadcrumb"><a href="index.html">Docs</a> / Circuits</div>
 
-      <h1>Circuits, Holds, Routes, Emits</h1>
+      <h1>Circuits, Organs, Cells, Emits</h1>
       <p class="subtitle">The building blocks of a Sanguis program.</p>
 
       <h2 id="circuit">circuit</h2>
@@ -187,7 +188,7 @@ cell main() -> float {
     print(99.0);
     emit 0.0;
 }</pre></div>
-      <p>Run it: <span class="code-inline">sanguis drip hello.sanguis</span> prints <span class="code-inline">99.0</span>.</p>
+      <p>Run it: <span class="code-inline">sanguis drip hello.sanguis</span> prints <span class="code-inline">99</span>.</p>
 
       <h2 id="let">let</h2>
       <p>Declare a variable. Types are inferred.</p>
@@ -197,7 +198,7 @@ cell main() -> float {
     let n = 1.0;
     emit n;
 }</pre></div>
-      <p>Emits <span class="code-inline">1.0</span>.</p>
+      <p>Emits <span class="code-inline">1</span>.</p>
 
       <h2 id="cells">cells and functions</h2>
       <p>Cells are functions. They take parameters and return values.</p>
@@ -216,7 +217,7 @@ cell main() -> float {
         emit 0.0;
     }
 }</pre></div>
-      <p>Emits <span class="code-inline">12.0</span>. Control flow (<span class="code-inline">if</span>/<span class="code-inline">else</span>, <span class="code-inline">while</span>) works inside cells.</p>
+      <p>Emits <span class="code-inline">12</span>. Control flow (<span class="code-inline">if</span>/<span class="code-inline">else</span>, <span class="code-inline">while</span>) works inside cells.</p>
 
       <h2 id="while">while</h2>
       <div class="code-block"><pre>circuit control;
@@ -225,11 +226,11 @@ cell main() -> float {
     let counter = 0;
     while counter &lt; 3 {
         counter = counter + 1;
-        emit counter;
+        print(counter);
     }
     emit 0.0;
 }</pre></div>
-      <p>Emits 1, 2, 3, then 0.</p>
+      <p>Prints 1, 2, 3, then the 0 it emitted. Use <span class="code-inline">print</span> inside a loop: <span class="code-inline">emit</span> gives its value back straight away and ends the cell.</p>
 
       <h2 id="organ">organ: state that persists</h2>
       <p>An organ is a struct with fields and methods. It compiles into the grid: fields become wires that hold state, methods become inlined wiring.</p>
@@ -257,7 +258,7 @@ cell main() -&gt; float {
     signal(c.count);
     output 1.0;
 }</pre></div>
-      <p>Three ticks on a Counter starting at 10. The compiled artifact declares the organ's layout up front, so the program runs without its source file.</p>
+      <p>Three calls to <span class="code-inline">tick</span> on a Counter starting at 10. The compiled artifact declares the organ's layout up front, so the program runs without its source file.</p>
 
       <h2 id="ext">ext: talking to the outside</h2>
       <p><span class="code-inline">ext:name</span> reads an external input wire. This is how a program receives values from the world.</p>
@@ -288,7 +289,7 @@ cell main() -> float {
     print(ch);
     emit 0.0;
 }</pre></div>
-      <p>Prints the file contents, <span class="code-inline">abcdef</span>, then <span class="code-inline">l</span>.</p>
+      <p>Prints the file contents, <span class="code-inline">abcdef</span>, then <span class="code-inline">a</span>.</p>
 
       <div class="doc-nav-bottom">
         <a href="execution-model.html"><span class="nav-label">&larr; Previous</span><span class="nav-title">Execution Model</span></a>

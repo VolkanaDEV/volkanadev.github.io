@@ -166,6 +166,7 @@
         <a href="getting-started.html">Getting Started</a>
         <a href="language-reference.html">Language Reference</a>
         <a href="builtins.html">Builtins</a>
+        <a href="whats-different.html">What's Different</a>
         <a href="execution-model.html">Execution Model</a>
         <a href="examples.html">Examples</a>
         <a href="compiler-pipeline.html">Compiler Pipeline</a>
@@ -182,19 +183,21 @@
       <table class="doc-table">
         <tr><th>Term</th><th>Meaning</th></tr>
         <tr><td>Sanguis</td><td>The language</td></tr>
-        <tr></tr>
-        <tr><td>Circuit</td><td>A body, a named scope of holds and routes</td></tr>
-        <tr><td>Hold</td><td>A named value (scalar or text)</td></tr>
+        <tr><td>Circuit</td><td>A program: a named body containing cells</td></tr>
+        <tr><td>Organ</td><td>A structure with declared fields and cells</td></tr>
+        <tr><td>Strain</td><td>A typed variant of an organ</td></tr>
+        <tr><td>Field</td><td>Declared state on an organ</td></tr>
         <tr><td>Cell</td><td>A function. Inside an organ, a method</td></tr>
-        <tr><td>Tick</td><td>One execution cycle, all routes evaluated in parallel</td></tr>
-        <tr><td>Emit</td><td>Send a value to a target (hold or screen), replacing content</td></tr>
-        <tr><td>Append</td><td>Accumulate text into a text hold, concatenating</td></tr>
-        <tr><td>Through</td><td>Iterate through text one character per tick</td></tr>
-        <tr><td>Wire</td><td>Connectome link between circuits</td></tr>
-        <tr><td>Gate</td><td>A condition check that controls whether a route fires</td></tr>
-        <tr><td>BloodCode (.bc)</td><td>The compiled artifact: organ manifest plus program instructions, stored as readable text</td></tr>
-        <tr><td>Compiler</td><td>Compiles Sanguis source into BloodCode, the portable artifact (written in Sanguis itself)</td></tr>
-        <tr><td>Runtime (ad)</td><td>Pours BloodCode into the grid and settles it on the GPU</td></tr>
+        <tr><td>Sweep</td><td>One pass of the engine. Every switch evaluates against the same snapshot</td></tr>
+        <tr><td>Settle</td><td>Run sweeps until nothing changes. That state is the answer</td></tr>
+        <tr><td>Emit / return / output</td><td>Give a value back from a cell. It ends the cell</td></tr>
+        <tr><td>Signal</td><td>Send a value to the screen</td></tr>
+        <tr><td>Builtin</td><td>A function the engine provides. See the Builtins page</td></tr>
+        <tr><td>Wire</td><td>What a field lowers to on the grid: writing drives it, reading senses it</td></tr>
+        <tr><td>Gate</td><td>A condition that controls whether a branch is taken</td></tr>
+        <tr><td>BloodCode (.bc)</td><td>The compiled artifact: organ manifest plus instructions, stored as readable text</td></tr>
+        <tr><td>Compiler (bleed)</td><td>Turns Sanguis source into BloodCode, the portable artifact</td></tr>
+        <tr><td>Runtime (ad)</td><td>Pours BloodCode into the grid and settles it</td></tr>
       </table>
 
       <div class="doc-nav-bottom">

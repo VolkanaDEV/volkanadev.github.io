@@ -163,7 +163,7 @@
       <h4 style="color:#b8403a">BloodCode Docs</h4>
       <ul><li>
         <a href="index.html">Overview</a>
-        <a href="isa.html">ISA</a>
+        <a href="isa.html" class="active">ISA</a>
         <a href="semantics.html">Semantics</a>
         <a href="conformance.html">Conformance</a>
         <a href="determinism.html">Determinism</a>
@@ -212,6 +212,7 @@
       </table>
       <h2 id="reserved">Reserved forever</h2>
       <p>Slot <span class="code-inline">15</span> was the old Return, merged into Output. It is reserved permanently and will never be reused. Assigning a new op to it is a build error, not a policy.</p>
+      <p>Slot <span class="code-inline">26</span> is reserved the same way: it was the old Ret, merged into Output. It keeps its number and is never reassigned.</p>
       <h2 id="freeze">The freeze</h2>
       <p>Five rules, enforced at compile time in the compiler's own source:</p>
       <p>&bull; Assigned slot numbers never change.<br>

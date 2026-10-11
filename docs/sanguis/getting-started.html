@@ -166,6 +166,7 @@
         <a href="getting-started.html" class="active">Getting Started</a>
         <a href="language-reference.html">Language Reference</a>
         <a href="builtins.html">Builtins</a>
+        <a href="whats-different.html">What's Different</a>
         <a href="execution-model.html">Execution Model</a>
         <a href="examples.html">Examples</a>
         <a href="compiler-pipeline.html">Compiler Pipeline</a>
@@ -209,8 +210,9 @@ cell main() -> float {
       <p>Run it:</p>
       <div class="code-block"><pre>sanguis drip hello.sanguis</pre></div>
       <p>Output:</p>
-      <div class="code-block"><pre>99.0</pre></div>
-      <p><span class="code-inline">circuit</span> declares the program body. <span class="code-inline">cell</span> declares a function. <span class="code-inline">print</span> writes to the screen. <span class="code-inline">emit</span> returns the circuit's result. This source was compiled by the Sanguis-written compiler, which is why the language can host itself.</p>
+      <div class="code-block"><pre>99
+0</pre></div>
+      <p><span class="code-inline">circuit</span> declares the program body. <span class="code-inline">cell</span> declares a function. <span class="code-inline">print</span> writes to the screen. <span class="code-inline">emit</span> returns the circuit's result. A run prints each printed value on its own line, then the emitted value on the last line. This source was compiled by the Sanguis-written compiler, which is why the language can host itself.</p>
 
       <h2 id="arithmetic">Arithmetic</h2>
       <div class="code-block"><pre>circuit add_test;
@@ -223,7 +225,8 @@ cell main() -> float {
     emit 0.0;
 }</pre></div>
       <p>Output:</p>
-      <div class="code-block"><pre>3.0</pre></div>
+      <div class="code-block"><pre>3
+0</pre></div>
 
       <div class="callout">
         <p><strong>Four operators.</strong> <span class="code-inline">+</span>, <span class="code-inline">-</span>, <span class="code-inline">*</span>, <span class="code-inline">/</span>. Division by zero returns 0.0. Evaluated left to right. Operands can be numbers, variables, or builtin results.</p>

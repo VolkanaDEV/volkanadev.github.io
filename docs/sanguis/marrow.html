@@ -129,6 +129,7 @@
         <a href="getting-started.html">Getting Started</a>
         <a href="language-reference.html">Language Reference</a>
         <a href="builtins.html">Builtins</a>
+        <a href="whats-different.html">What's Different</a>
         <a href="execution-model.html">Execution Model</a>
         <a href="examples.html">Examples</a>
         <a href="compiler-pipeline.html">Compiler Pipeline</a>
@@ -161,7 +162,7 @@
         <tr><td>Editor</td><td>Syntax-highlighted code editor for Sanguis files. Supports tabs, find, undo/redo.</td></tr>
         <tr><td>File tree</td><td>Browse, open, create, and delete files. Press F2 to toggle.</td></tr>
         <tr><td>Scope</td><td>Shows memory state and output from the last run. Press F3 to toggle.</td></tr>
-        <tr><td>Runtime</td><td>Displays organism output, errors, and diagnostics after a run.</td></tr>
+        <tr><td>Runtime</td><td>Displays organ output, errors, and diagnostics after a run.</td></tr>
       </table>
 
       <h2 id="pipeline">Pipeline</h2>
@@ -173,11 +174,8 @@
       3. Pour the result into the grid and settle it<br>
       4. Read the outputs and display them</p>
 
-      <p>Rust parses and runs only as a fallback when the SDK binaries are not found. Normal runs never touch it.</p>
+      <p>The compiler that reads your source is written in Sanguis, and the artifact it produces runs on the engine. Running from Marrow uses the same pipeline as the command line.</p>
 
-      <div class="callout">
-        <p><strong>Note.</strong> The awakening sequence (F9) still uses the bootstrap engine internally. It switches to the full Sanguis pipeline when tick-by-tick execution lands.</p>
-      </div>
 
       <h2 id="keybindings">Keybindings</h2>
 
@@ -191,7 +189,7 @@
         <tr><td>F6</td><td>New file</td></tr>
         <tr><td>F7</td><td>Save file</td></tr>
         <tr><td>F8</td><td>Reset organism (fresh boot)</td></tr>
-        <tr><td>F9</td><td>Awaken (tick-by-tick awareness watch)</td></tr>
+        <tr><td>F9</td><td>Awaken (step-through watch)</td></tr>
         <tr><td>Tab / Shift+Tab</td><td>Next / previous tab</td></tr>
         <tr><td>Ctrl+N</td><td>New tab</td></tr>
         <tr><td>Ctrl+W</td><td>Close tab</td></tr>
@@ -209,7 +207,7 @@
 
       <h2 id="graph">Organism Graph</h2>
 
-      <p>Press F4 to see a structural view of your program. The graph shows circuits, holds, routes, conditions, emits, and wires. It parses the source to build this view, so it updates as you type.</p>
+      <p>Press F4 to see a structural view of your program. The graph shows organs, cells, fields, conditions, and wires. It parses the source to build this view, so it updates as you type.</p>
 
       <div class="callout">
         <p><strong>Tip.</strong> Use F4 to verify your circuit structure before running. If the graph shows an error, the program will not compile.</p>

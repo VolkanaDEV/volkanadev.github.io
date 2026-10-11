@@ -53,7 +53,10 @@
   .wrap { max-width:1000px; margin:0 auto; padding:64px 28px 80px; }
   h1 { font-size:clamp(1.9rem,4vw,2.6rem); margin:0 0 10px; letter-spacing:-0.02em; color:#fff; }
   p.sub { color:var(--muted-light); max-width:640px; margin:0 0 48px; }
-  .split { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+  .split { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:22px; }
+  /* auto-fit keeps today's 2 cards exactly as they are (2 cards -> 2 tracks)
+     and lets a THIRD manual join the row instead of forcing a rebuild; under
+     580px the 280px minimum drops it to a single column on its own. */
   @media (max-width:760px){ .split{ grid-template-columns:1fr; } }
   a.card { display:block; text-decoration:none; border-radius:16px; padding:30px;
            background:rgba(22,27,34,0.62); -webkit-backdrop-filter:blur(16px) saturate(140%);

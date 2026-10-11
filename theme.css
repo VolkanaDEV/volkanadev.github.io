@@ -201,7 +201,7 @@ footer { background: transparent !important; }
   nav .nav-inner { display: block !important; padding: 0 !important; }
   nav .brand { margin: 0 0 22px !important; padding: 0 22px; font-size: 1.1rem; }
   nav .nav-links {
-    display: flex !important; flex-direction: column; gap: 2px;
+    display: flex !important; flex-direction: column; gap: 2px !important;
     margin: 0 !important; padding: 0 12px !important;
     position: static !important; background: none !important; border: none !important;
   }
@@ -2047,3 +2047,26 @@ blockquote.creator-quote { max-width: 860px !important; }
   .ea-label { font-size: 0.66rem !important; letter-spacing: 0.14em !important; margin-bottom: 16px !important; }
   .ea-date { margin-top: 16px !important; }
 }
+
+
+/* ── LAYER 77 — A SINGLE-COLUMN PAGE MUST CLEAR THE FOOTER RULE.
+      The docs hub ended its card row FLUSH on the footer's top rule (the
+      cards' own drop shadow spilled straight across the line) and left a
+      dead band under the footer on a tall window. Cause: an earlier layer
+      zeroes .wrap's vertical padding, so a page relies on a trailing
+      paragraph's margin for its bottom gap, and the docs hub ends on a grid.
+      Scoped with :has() on purpose: a body-wide flex column would kill
+      MARGIN COLLAPSING between the sibling <section>s that the long pages
+      are built from and shift every one of them. Only a body whose content
+      is a single .wrap directly followed by the footer is affected. ── */
+body:has(> .wrap + footer) {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+body:has(> .wrap + footer) > .wrap {
+  flex: 1 0 auto;
+  padding-bottom: 56px !important;
+}
+body:has(> .wrap + footer) > .wrap > *:last-child { margin-bottom: 0 !important; }
+body:has(> .wrap + footer) > footer { margin-top: 0 !important; }

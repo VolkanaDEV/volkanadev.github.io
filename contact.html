@@ -88,11 +88,14 @@
   .form-box {
     background: var(--panel-dark);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 28px;
-    margin: 16px 0;
+    border-top: 2px solid var(--accent);
+    border-radius: 14px;
+    padding: 36px 32px;
+    margin: 24px 0;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
   }
-  .form-box h3 { font-size: 1.15rem; font-weight: 700; margin: 0 0 6px; color: #fff; }
+  .form-box h3 { font-size: 1.25rem; font-weight: 700; margin: 0 0 6px; color: #fff; text-align: center; }
+  .form-box h3::after { content: ''; display: block; width: 44px; height: 2px; background: var(--accent); margin: 10px auto 0; }
   .form-box .form-desc { color: var(--muted-light); font-size: 0.9rem; margin: 0 0 20px; }
 
   .form-row { margin-bottom: 16px; }
@@ -324,21 +327,21 @@
     <section class="hero">
       <h2>Contact VolkanaDEV</h2>
       <p>Deploying any Sanguis based software or network architecture still requires a contract with VolkanaDEV.</p>
-      <p class="hero-sub">Tell us who you are and what you need. Pick your category below and we will respond directly.</p>
+      <p class="hero-sub">Tell us who you are and what you need. We reply directly.</p>
     </section>
 
     <div class="form-box">
       <h3>Get In Touch</h3>
-      <div class="form-desc">Select your category, fill in the relevant fields, and hit submit. Your email client will open with everything pre-filled to the right inbox.</div>
+      <div class="form-desc">Select your category, fill in the fields, submit. Your email client opens pre-filled to the right inbox.</div>
 
       <div class="inquiry-box">
-        <label for="inquiryType">Who Are You?</label>
+        <label for="inquiryType">What kind of inquiry?</label>
         <select id="inquiryType">
           <option value="">Select your category...</option>
-          <option value="consumer">I am a public citizen or researcher and I want to use Sanguis for myself</option>
-          <option value="corporate">I am a corporate or retail business interested in deployment</option>
-          <option value="government">I am with the government and I need a Cleave Clause Contract</option>
-          <option value="general">I have a general question or concern</option>
+          <option value="consumer">Personal / research use</option>
+          <option value="corporate">Corporate / retail deployment</option>
+          <option value="government">Government / defense (Cleave Clause)</option>
+          <option value="general">General question or concern</option>
         </select>
       </div>
 
@@ -411,7 +414,7 @@
           </div>
           <div class="boundary-notice">
             <strong>Carve-Out Notice</strong>
-            Any request requiring a write-out of the public or commerical restrictions in the VPL-1.0 is evaluated on a per-project basis and requires formal, separate contract execution carefully negotiated with VolkanaDEV. The VolkanaDEV Government Infrastructure Contract grants a private, perpetual, non-transferable, non-sublicensable license for the approved scope only.
+            Any request requiring a write-out of the public or commercial restrictions in the VPL-1.0 is evaluated on a per-project basis and requires formal, separate contract execution carefully negotiated with VolkanaDEV. The VolkanaDEV Government Infrastructure Contract grants a private, perpetual, non-transferable, non-sublicensable license for the approved scope only.
           </div>
           <p style="margin-top:10px; font-size:0.86rem;"><a href="platform.html">See the procurement terms (Master Government Contract)</a></p>
         </div>
@@ -437,7 +440,7 @@
 
     <div class="sidebar-box">
       <h4>General Questions &amp; Concerns</h4>
-      <p>Not sure where you fit? That is fine. Use the general category above and tell us what is on your mind. We read everything that comes in and we will point you in the right direction.</p>
+      <p>Not sure where you fit? That's okay! Use the general category above and tell us what is on your mind. We read everything that comes in and we will point you in the right direction.</p>
       <p style="margin-top: 12px;">We can help with questions about the language, documentation, licensing, deployment, or talk through what you are trying to build. Limited design help and technical support is available for projects that use Sanguis as part of your initial contract for free.</p>
     </div>
 

@@ -186,7 +186,7 @@
       <h2 id="what-changes">What changes coming from C or Python</h2>
 
       <h3>Control flow</h3>
-      <p>Sanguis has the control flow you know: <span class="code-inline">if</span>/<span class="code-inline">else</span>, <span class="code-inline">while</span>, and cells are functions. Loops are written with <span class="code-inline">while</span>: the front end knows the word <span class="code-inline">for</span>, but the compiler does not lower it yet, so it is not documented here as a working form. No <span class="code-inline">switch</span> (chain <span class="code-inline">if</span>/<span class="code-inline">else</span>), no <span class="code-inline">goto</span> (a jump is a conditional in disguise).</p>
+      <p>Sanguis has the control flow you know: <span class="code-inline">if</span>/<span class="code-inline">else</span>, <span class="code-inline">while</span>, and cells are functions. Loops are written with <span class="code-inline">while</span> and <span class="code-inline">for item in list</span>. Branches use <span class="code-inline">if</span>/<span class="code-inline">else</span> and <span class="code-inline">when</span>. No <span class="code-inline">switch</span> (chain <span class="code-inline">if</span>/<span class="code-inline">else</span>), no <span class="code-inline">goto</span> (a jump is a conditional in disguise). <span class="code-inline">strain</span> gives you tagged data, <span class="code-inline">break</span> exits a loop, <span class="code-inline">resume</span> continues it, and <span class="code-inline">close</span> ends a spawned task.</p>
 
       <h3>Data types</h3>
       <table class="doc-table">

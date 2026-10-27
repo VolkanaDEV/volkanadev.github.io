@@ -193,7 +193,13 @@
         <tr><td><span class="code-inline">new</span></td><td>Construct an organ instance</td></tr>
         <tr><td><span class="code-inline">self</span></td><td>The instance a method was called on</td></tr>
         <tr><td><span class="code-inline">if</span> / <span class="code-inline">else</span></td><td>Branching</td></tr>
-        <tr><td><span class="code-inline">while</span></td><td>Loops. This is the loop form in use today</td></tr>
+        <tr><td><span class="code-inline">for item in list</span></td><td>Loop over a list</td></tr>
+        <tr><td><span class="code-inline">while</span></td><td>Loops</td></tr>
+        <tr><td><span class="code-inline">break</span></td><td>Exit a loop</td></tr>
+        <tr><td><span class="code-inline">resume</span></td><td>Continue a loop</td></tr>
+        <tr><td><span class="code-inline">spawn</span></td><td>Start a task</td></tr>
+        <tr><td><span class="code-inline">yield</span></td><td>Hand the turn on</td></tr>
+        <tr><td><span class="code-inline">close</span></td><td>End the current task</td></tr>
         <tr><td><span class="code-inline">when</span></td><td>Run a block if a condition holds</td></tr>
         <tr><td><span class="code-inline">emit</span> / <span class="code-inline">return</span> / <span class="code-inline">output</span></td><td>Give a value back from a cell or the program</td></tr>
         <tr><td><span class="code-inline">signal</span></td><td>Send a value to the screen</td></tr>
@@ -209,7 +215,10 @@ field    := IDENT ":" type ";"
 cell     := "cell" IDENT "(" params? ")" "->" type "{" statement* "}"
 statement:= "let" IDENT "=" expr ";"
           | IDENT "=" expr ";"
+          | "for" IDENT "in" expr "{" statement* "}"
           | "while" condition "{" statement* "}"
+          | "break" ";"
+          | "resume" ";"
           | "if" condition "{" statement* "}" ("else" "{" statement* "}")?
           | "when" condition "{" statement* "}"
           | "emit" expr ";"

@@ -228,6 +228,17 @@ emit 0.0;
       <h2 id="time">Time</h2>
       <p><span class="code-inline">now_ms</span> is the clock in milliseconds since the epoch, as a number.</p>
 
+      <h2 id="program">Program</h2>
+      <table class="doc-table">
+        <tr><th>Call</th><th>Returns</th><th>Does</th></tr>
+        <tr><td><span class="code-inline">args()</span></td><td>list</td><td>Command-line arguments as a list of text.</td></tr>
+        <tr><td><span class="code-inline">task_spawn(f)</span></td><td>number</td><td>Start <span class="code-inline">f</span> as a task, returning its number.</td></tr>
+        <tr><td><span class="code-inline">task_run_all()</span></td><td>number</td><td>Run tasks until all have ended.</td></tr>
+        <tr><td><span class="code-inline">task_yield()</span></td><td>number</td><td>Hand the turn on.</td></tr>
+        <tr><td><span class="code-inline">task_close()</span></td><td>number</td><td>End the current task from anywhere inside it.</td></tr>
+        <tr><td><span class="code-inline">task_kill(id)</span></td><td>number</td><td>Stop a task from outside.</td></tr>
+      </table>
+
       <h2 id="neural">Neural</h2>
       <table class="doc-table">
         <tr><th>Call</th><th>Returns</th><th>Does</th></tr>

@@ -182,10 +182,10 @@
       <p class="subtitle">Run your first Sanguis program</p>
 
       <h2 id="prerequisites">Prerequisites</h2>
-      <p>Windows 10 or later with Rust installed. A Vulkan-capable GPU is optional: with one, programs pour into the grid and settle on the GPU. Without one, everything still runs on the CPU. Vulkan drivers come with your GPU drivers; nothing extra to install.</p>
+      <p>Windows 10 or later, or Linux. A Vulkan-capable GPU is optional: with one, programs pour into the grid and settle on the GPU. Without one, everything still runs on the CPU. Vulkan drivers come with your GPU drivers; nothing extra to install.</p>
 
       <h2 id="install">Installation</h2>
-      <p>Clone and build:</p>
+      <p>Download the 3.9.4 release: the Windows zip or installer <span class="code-inline">installer/SanguisSetup-3.9.4.exe</span>, or the Linux tarball <span class="code-inline">sanguis-3.9.4-linux-x64.tar.gz</span>, then open <span class="code-inline">START-HERE.md</span> first. No Rust required. To build from source instead:</p>
       <div class="code-block"><pre>git clone https://github.com/VolkanaDEV/sanguis.git
 cd sanguis
 cargo build</pre></div>
@@ -213,7 +213,7 @@ cell main() -> float {
       <p>Output:</p>
       <div class="code-block"><pre>99
 0</pre></div>
-      <p><span class="code-inline">circuit</span> declares the program body. <span class="code-inline">cell</span> declares a function. <span class="code-inline">print</span> writes to the screen. <span class="code-inline">emit</span> returns the circuit's result. A run prints each printed value on its own line, then the emitted value on the last line. This source was compiled by the Sanguis-written compiler, which is why the language can host itself.</p>
+      <p><span class="code-inline">circuit</span> declares the program body. <span class="code-inline">cell</span> declares a function. <span class="code-inline">print</span> writes to the screen. <span class="code-inline">emit</span> returns the circuit's result. A run prints each printed value on its own line, then the emitted value on the last line. Sanguis wrote this compiler; that is why the language can host itself.</p>
 
       <h2 id="arithmetic">Arithmetic</h2>
       <div class="code-block"><pre>circuit add_test;

@@ -187,4 +187,10 @@
     <priority>0.5</priority>
     <changefreq>yearly</changefreq>
   </url>
+  <url>
+    <loc>https://volkanadev.com/alife.html</loc>
+    <lastmod>2026-10-27</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>

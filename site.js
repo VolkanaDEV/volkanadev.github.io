@@ -115,4 +115,98 @@
     tick();
     setInterval(tick, 1000);
   }
+  /* ---- settle: stats roll in like reels, headings and cards settle into place ----
+     Text is in the page as written; this only animates it. Skipped entirely
+     for reduced motion or without IntersectionObserver. */
+  var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!still && 'IntersectionObserver' in window) {
+    var css = document.createElement('style');
+    css.textContent =
+      '.reel{display:inline-block;height:1.1em;line-height:1.1em;overflow:hidden;vertical-align:bottom}' +
+      '.reel>span{display:block;transform:translateY(0);transition:transform 1.3s cubic-bezier(.2,.85,.3,1.12)}' +
+      '.reel>span>i{display:block;height:1.1em;font-style:normal}' +
+      '.sw{white-space:nowrap}' +
+      '.sc{display:inline-block;opacity:0;transform:translateY(.35em);filter:blur(3px);color:var(--accent);' +
+        'transition:opacity .35s ease,transform .45s cubic-bezier(.2,.85,.3,1.1),filter .35s ease,color .6s ease .2s}' +
+      '.settled .sc{opacity:1;transform:none;filter:none;color:inherit}' +
+      '.rise{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .7s cubic-bezier(.2,.85,.3,1)}' +
+      '.rise.settled{opacity:1;transform:none}';
+    document.head.appendChild(css);
+
+    var seen = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var el = en.target;
+        seen.unobserve(el);
+        requestAnimationFrame(function () { requestAnimationFrame(function () {
+          el.classList.add('settled');
+          if (el.classList.contains('rise')) setTimeout(function () {
+            el.classList.remove('rise', 'settled'); el.style.transitionDelay = '';
+          }, 1600);
+          el.querySelectorAll('.reel>span').forEach(function (strip) {
+            strip.style.transform = 'translateY(-' + strip.getAttribute('data-to') + 'em)';
+          });
+        }); });
+      });
+    }, { threshold: 0.35 });
+
+    /* stats: every digit becomes a reel that spins down to its value */
+    document.querySelectorAll('.stat-num').forEach(function (num, n) {
+      var text = num.textContent;
+      num.setAttribute('aria-label', text);
+      num.textContent = '';
+      var k = 0;
+      for (var i = 0; i < text.length; i++) {
+        var ch = text[i];
+        if (ch < '0' || ch > '9') { num.appendChild(document.createTextNode(ch)); continue; }
+        var reel = document.createElement('span');
+        reel.className = 'reel';
+        reel.setAttribute('aria-hidden', 'true');
+        var strip = document.createElement('span');
+        var spins = 2 + k;
+        for (var r = 0; r <= spins; r++) for (var d = 0; d < 10; d++) {
+          var g = document.createElement('i'); g.textContent = d; strip.appendChild(g);
+        }
+        strip.setAttribute('data-to', (spins * 10 + (+ch)) * 1.1);
+        strip.style.transitionDelay = (n * 0.12 + k * 0.08) + 's';
+        reel.appendChild(strip);
+        num.appendChild(reel);
+        k++;
+      }
+      seen.observe(num);
+    });
+
+    /* headings: letters settle in one after another, red, then cool to white */
+    document.querySelectorAll('h3.one-line').forEach(function (h) {
+      var text = h.textContent;
+      h.setAttribute('aria-label', text);
+      h.textContent = '';
+      var idx = 0;
+      text.split(/(\s+)/).forEach(function (word) {
+        if (/^\s+$/.test(word) || !word) { h.appendChild(document.createTextNode(word)); return; }
+        var w = document.createElement('span');
+        w.className = 'sw';
+        w.setAttribute('aria-hidden', 'true');
+        for (var i = 0; i < word.length; i++) {
+          var c = document.createElement('span');
+          c.className = 'sc';
+          c.textContent = word[i];
+          c.style.transitionDelay = (idx++ * 0.018) + 's';
+          w.appendChild(c);
+        }
+        h.appendChild(w);
+      });
+      seen.observe(h);
+    });
+
+    /* cards rise in, one after another */
+    document.querySelectorAll('.panel-grid').forEach(function (grid) {
+      grid.querySelectorAll('.card').forEach(function (card, i) {
+        card.classList.add('rise');
+        card.style.transitionDelay = (0.25 + i * 0.12) + 's';
+        seen.observe(card);
+      });
+    });
+  }
+
 })();

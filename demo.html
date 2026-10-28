@@ -814,7 +814,7 @@ canvas.ring { width: 100%; max-width: 360px; aspect-ratio: 1; display: block; ju
     <h2><code style="font-family:var(--mono);font-size:.78em">while true {}</code> <em>cannot stop the world.</em></h2>
     <p>Five tasks share one machine. One of them, <code>runaway</code>, loops forever and never gives up its turn. In a cooperative runtime such as JavaScript promises or Python asyncio, a task that never awaits holds the loop until the process is stopped. In Sanguis a turn is 1,000 steps, and a step is a call or a loop going round, never time. Every task is switched out on schedule, and <code>watchdog</code> gets its turn to stop it.</p>
   </div>
-  <div class="controls"><button class="d-btn" id="taskRun" type="button">Start both</button></div>
+  <div class="controls"><button class="d-btn" id="taskRun" type="button">Start both</button><button class="d-btn d-ghost" id="taskStop" type="button">Stop</button></div>
   <div class="split">
     <div class="rig theirs">
       <div class="rig-top"><h3>Cooperative async loop</h3><span class="tag">a task runs until it awaits</span></div>

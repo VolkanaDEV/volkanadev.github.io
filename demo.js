@@ -264,6 +264,11 @@ async function runTasks() {
   await ours;
 }
 $("taskRun").addEventListener("click", runTasks);
+$("taskStop").addEventListener("click", () => {
+  if (!taskRun) return;
+  taskRun++;
+  addLine($("tTermA"), "stopped by you", "sys");
+});
 
 /* ---------- three machines ---------- */
 let trioRun = 0;

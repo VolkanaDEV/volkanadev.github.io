@@ -123,7 +123,7 @@
       if (ack) ack.parentNode.classList.remove('bad');
       window.location.href = 'mailto:volkanadev@protonmail.com' +
         '?subject=' + encodeURIComponent('Early Access sign-up') +
-        '&body=' + encodeURIComponent('Please add me to Early Access: ' + email + '\n\nI understand Early Access is a developer preview of the Sanguis SDK, not the final product. The full release is planned for April 2027.');
+        '&body=' + encodeURIComponent('Please add me to Early Access: ' + email + '\n\nI understand Early Access is a developer preview of the Sanguis and BloodCode SDK, not a final product.');
       if (note) note.textContent = 'Your email app should open. Hit send and you\'re on the list. Invites are sent November 28.';
     });
   }

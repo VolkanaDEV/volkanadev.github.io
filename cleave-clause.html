@@ -19,16 +19,16 @@
 <meta name="description" content="The Cleave Clause: government and defense licensing terms.">
 <style>
   :root {
-    --bg: #0e1117;
+    --bg: #0c0b0d;
     --panel: #fbfaf7;
-    --panel-dark: #161b22;
-    --border: #21262d;
+    --panel-dark: #141216;
+    --border: #2a2529;
     --border-light: #e1dad0;
-    --text-light: #f3eedf;
+    --text-light: #efe8dc;
     --text-dark: #1e222b;
-    --muted-light: #8b949e;
+    --muted-light: #9a918a;
     --muted-dark: #6e675d;
-    --accent: #af0000;
+    --accent: #c8202a;
   }
 
   * { box-sizing: border-box; }
@@ -36,14 +36,14 @@
     margin: 0; padding: 0;
     background-color: var(--bg);
     color: var(--text-light);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
   }
 
   body::before {
     content: ''; position: fixed; inset: 0; z-index: -1;
-    background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http:%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2784%27%20height%3D%2749%27%20viewBox%3D%270%200%2084%2049%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23af0000%27%20stroke-opacity%3D%270.025%27%20stroke-width%3D%271%27%3E%3Cpath%20d%3D%27M56%200.5%20L70%2024.5%20L56%2048.5%20L28%2048.5%20L14%2024.5%20L28%200.5%20Z%27%2F%3E%3Cpath%20d%3D%27M0%2024.5%20L14%2024.5%27%2F%3E%3Cpath%20d%3D%27M70%2024.5%20L84%2024.5%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+    background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http:%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2784%27%20height%3D%2749%27%20viewBox%3D%270%200%2084%2049%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23c8202a%27%20stroke-opacity%3D%270.025%27%20stroke-width%3D%271%27%3E%3Cpath%20d%3D%27M56%200.5%20L70%2024.5%20L56%2048.5%20L28%2048.5%20L14%2024.5%20L28%200.5%20Z%27%2F%3E%3Cpath%20d%3D%27M0%2024.5%20L14%2024.5%27%2F%3E%3Cpath%20d%3D%27M70%2024.5%20L84%2024.5%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
     background-size: 84px 49px;
     animation: hexHeartbeat 7s ease-in-out infinite;
   }
@@ -60,7 +60,7 @@
 
   nav {
     border-bottom: 1px solid var(--border);
-    background: rgba(14, 17, 23, 0.85);
+    background: rgba(12, 11, 13, 0.85);
     backdrop-filter: blur(12px);
     position: sticky; top: 0; z-index: 100;
   }
@@ -78,14 +78,14 @@
   .nav-links a { position: relative; }
   .nav-links a:not(:last-child)::after {
     content: ''; position: absolute; right: -12px; top: 50%; transform: translateY(-50%);
-    width: 1px; height: 16px; background: #f3eedf; opacity: 0.25;
+    width: 1px; height: 16px; background: #efe8dc; opacity: 0.25;
   }
   @media (max-width: 768px) { .nav-links a:not(:last-child)::after { display: none; } }
 
   .hero {
     text-align: center;
     padding: 48px 20px 24px;
-    background: radial-gradient(circle at 50% 0%, rgba(175, 0, 0, 0.08), transparent 60%);
+    background: radial-gradient(circle at 50% 0%, rgba(200, 32, 42, 0.08), transparent 60%);
   }
   .hero h2 { font-size: clamp(1.8rem, 5.5vw, 2.8rem); font-weight: 800; margin: 0 0 20px; color: var(--text-light); letter-spacing: -0.03em; line-height: 1.2; }
   .hero p { color: var(--muted-light); font-size: clamp(1.05rem, 2.5vw, 1.2rem); max-width: 780px; margin: 0 auto 24px; text-align: center; }
@@ -139,11 +139,11 @@
     padding: 28px;
     margin: 24px 0;
   }
-  .legal-title { font-family: monospace; font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 4px; letter-spacing: 0.04em; }
+  .legal-title { font-family: 'JetBrains Mono', monospace; font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 4px; letter-spacing: 0.04em; }
   .legal-subtitle { font-size: 0.78rem; color: var(--muted-light); margin-bottom: 20px; text-transform: uppercase; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
   .legal-text { font-size: 0.86rem; line-height: 1.7; color: #d0d7de; }
   .legal-text p { margin: 0 0 12px; }
-  .legal-text h5 { font-size: 0.88rem; font-weight: 700; color: #fff; margin: 20px 0 6px; font-family: monospace; }
+  .legal-text h5 { font-size: 0.88rem; font-weight: 700; color: #fff; margin: 20px 0 6px; font-family: 'JetBrains Mono', monospace; }
   .legal-text ul { padding-left: 18px; margin: 8px 0 12px; }
   .legal-text li { margin-bottom: 6px; }
 
@@ -211,8 +211,8 @@
   /* === Visual Enhancements === */
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   @keyframes glowPulse {
-    0%, 100% { box-shadow: 0 0 5px rgba(175, 0, 0, 0.15); }
-    50% { box-shadow: 0 0 15px rgba(175, 0, 0, 0.3); }
+    0%, 100% { box-shadow: 0 0 5px rgba(200, 32, 42, 0.15); }
+    50% { box-shadow: 0 0 15px rgba(200, 32, 42, 0.3); }
   }
   body { animation: fadeIn 0.4s ease-out; }
   .card, .doc-card, .doc-grid > a, .arena-card {
@@ -221,49 +221,49 @@
   .card:hover, .doc-card:hover, .doc-grid > a:hover {
     transform: translateY(-2px);
     border-color: var(--accent);
-    box-shadow: 0 4px 20px rgba(175, 0, 0, 0.12);
+    box-shadow: 0 4px 20px rgba(200, 32, 42, 0.12);
   }
   .hero h2, .header-block h2 {
-    text-shadow: 0 0 30px rgba(175, 0, 0, 0.08);
+    text-shadow: 0 0 30px rgba(200, 32, 42, 0.08);
   }
   .nav-links a {
     transition: color 0.2s, text-shadow 0.2s;
   }
   .nav-links a:hover {
-    text-shadow: 0 0 10px rgba(175, 0, 0, 0.3);
+    text-shadow: 0 0 10px rgba(200, 32, 42, 0.3);
   }
   a { transition: opacity 0.15s, text-shadow 0.15s; }
   .btn, button {
     transition: all 0.2s ease;
   }
   .btn:hover, button:hover {
-    box-shadow: 0 0 12px rgba(175, 0, 0, 0.2);
+    box-shadow: 0 0 12px rgba(200, 32, 42, 0.2);
   }
   .back-link:hover, footer a:hover {
-    text-shadow: 0 0 8px rgba(175, 0, 0, 0.25);
+    text-shadow: 0 0 8px rgba(200, 32, 42, 0.25);
   }
   .legal-box {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
   }
   .legal-box:hover {
-    border-color: rgba(175, 0, 0, 0.25);
-    box-shadow: 0 0 25px rgba(175, 0, 0, 0.04);
+    border-color: rgba(200, 32, 42, 0.25);
+    box-shadow: 0 0 25px rgba(200, 32, 42, 0.04);
   }
   ::selection {
-    background: rgba(175, 0, 0, 0.25);
+    background: rgba(200, 32, 42, 0.25);
   }
   ::-webkit-scrollbar { width: 8px; height: 8px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: rgba(175, 0, 0, 0.3); border-radius: 4px; }
-  ::-webkit-scrollbar-thumb:hover { background: rgba(175, 0, 0, 0.5); }
+  ::-webkit-scrollbar-thumb { background: rgba(200, 32, 42, 0.3); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(200, 32, 42, 0.5); }
   /* Separator line radiant glow */
-  nav { border-bottom: 1px solid rgba(175, 0, 0, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(175, 0, 0, 0.3); }
-  footer { border-top: 1px solid rgba(175, 0, 0, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(175, 0, 0, 0.3); }
+  nav { border-bottom: 1px solid rgba(200, 32, 42, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(200, 32, 42, 0.3); }
+  footer { border-top: 1px solid rgba(200, 32, 42, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(200, 32, 42, 0.3); }
   .section { padding: 48px 0; border-top: 1px solid var(--border); }
   .section h3 { font-size: clamp(1.6rem, 4vw, 2rem); font-weight: 700; margin: 0 0 24px; text-align: center; color: #fff; letter-spacing: -0.02em; }
-  .section { border-top: 1px solid rgba(175, 0, 0, 0.5) !important; }
-  .doc-content h2 { border-bottom: 1px solid rgba(175, 0, 0, 0.4) !important; }
-  .doc-nav-bottom { border-top: 1px solid rgba(175, 0, 0, 0.4) !important; }
+  .section { border-top: 1px solid rgba(200, 32, 42, 0.5) !important; }
+  .doc-content h2 { border-bottom: 1px solid rgba(200, 32, 42, 0.4) !important; }
+  .doc-nav-bottom { border-top: 1px solid rgba(200, 32, 42, 0.4) !important; }
   /* === End Visual Enhancements === */
 </style>
 <link rel="stylesheet" href="theme.css">
@@ -392,14 +392,14 @@
         <h5>13. EXHIBIT A - OPERATIONAL SCOPE</h5>
         <p>Exhibit A is a separate appendix attached to this Master Agreement and rewritten for each specific government project. It defines the Approved Scope of use, including specific deployment parameters, technical configurations, operational boundaries, and any project-specific compliance requirements. One agency may use Exhibit A for automated border missile intercept validation, while another may use it for submarine hull stress simulation. Exhibit A is negotiated and signed separately for each project.</p>
 
-        <div style="border-top: 1px dashed #af0000; margin: 28px 0; height: 0;"></div>
+        <div style="border-top: 1px dashed #c8202a; margin: 28px 0; height: 0;"></div>
 
         <h5 style="text-align: center; font-size: 1.1rem; letter-spacing: 0.08em;">BOILERPLATE NOTICE</h5>
         <p style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em;">THIS MASTER AGREEMENT FORMAT, INCLUDING THE PACKAGED HANDOFF AND CUSTODY TRANSFER IN SECTION 1, THE MAINTENANCE AND PATCH MANAGEMENT PROVISIONS IN SECTION 2, THE INDEMNIFICATION AND RISK ALLOCATION IN SECTION 3, THE BREACH AND TERMINATION MECHANICS IN SECTION 4, THE EXPORT CONTROL AND ITAR COMPLIANCE IN SECTION 5, THE DISTRIBUTION CONTROL IN SECTION 6, THE ACCEPTANCE MECHANISM IN SECTION 7, THE GOVERNING LAW AND VENUE IN SECTION 8, THE SEVERABILITY IN SECTION 9, THE ENTIRE AGREEMENT IN SECTION 10, THE ASSIGNMENT IN SECTION 11, THE NOTICES IN SECTION 12, AND THE EXHIBIT A OPERATIONAL SCOPE IN SECTION 13, IS A PRIVATE AGREEMENT BETWEEN VOLKANADEV AUTONOMOUS SYSTEMS, INC. AND THE LICENSEE IDENTIFIED IN EXHIBIT A.</p>
         <p style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em;">THIS MASTER AGREEMENT IS NOT DISTRIBUTED PUBLICLY AND IS NOT OPEN FOR ADOPTION BY THIRD PARTIES. IT SUPPLEMENTS BUT DOES NOT REPLACE THE VOLKANADEV PUBLIC LICENSE (VPL-1.0). IN THE EVENT OF ANY CONFLICT BETWEEN THIS MASTER AGREEMENT AND THE VPL-1.0, THIS MASTER AGREEMENT SHALL CONTROL SOLELY FOR THE SPECIFIC APPROVED SCOPE DEFINED IN EXHIBIT A. ALL OTHER DEPLOYMENTS REMAIN GOVERNED BY THE VPL-1.0 IN FULL.</p>
         <p style="text-transform: uppercase; font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.02em;">BY SIGNING THIS MASTER AGREEMENT, THE LICENSEE AGREES VOLKANADEV AUTONOMOUS SYSTEMS, INC. RETAINS ALL ORIGINAL RIGHTS, TITLE, AND INTEREST IN THE SOFTWARE. THE LICENSEE'S RIGHTS ARE LIMITED TO THE APPROVED SCOPE. UNAUTHORIZED USE, DISTRIBUTION, OR DEPLOYMENT OUTSIDE THE APPROVED SCOPE CONSTITUTES AN INCURABLE MATERIAL BREACH AND IMMEDIATE INFRINGEMENT OF LICENSOR'S INTELLECTUAL PROPERTY RIGHTS. THIS NOTICE MUST BE INCLUDED WITH THE SIGNED MASTER AGREEMENT.</p>
 
-        <div style="border-top: 1px dashed #af0000; margin: 28px 0; height: 0;"></div>
+        <div style="border-top: 1px dashed #c8202a; margin: 28px 0; height: 0;"></div>
 
         <h5 style="text-align: center; font-size: 1.1rem; letter-spacing: 0.08em;">SIGNATURE BLOCK</h5>
         <p style="font-size: 0.82rem; line-height: 1.8;">This Master Agreement is executed by the authorized representatives of both Parties on the dates set forth below.</p>
@@ -418,7 +418,7 @@
         Date:                 ____________________________<br>
         Signed electronically under ESIGN (15 U.S.C. 7001) and UETA (Ohio Rev. Code 1306.01-1306.23).</p>
 
-        <div style="border-top: 1px dashed #af0000; margin: 28px 0; height: 0;"></div>
+        <div style="border-top: 1px dashed #c8202a; margin: 28px 0; height: 0;"></div>
 
         <p style="font-size: 0.78rem; line-height: 1.7; color: var(--muted-light);">VolkanaDEV™. Programs Are Alive.</p>
       </div>

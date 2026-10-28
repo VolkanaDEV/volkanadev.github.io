@@ -18,13 +18,13 @@
 <meta name="twitter:card" content="summary">
 <meta name="description" content="Documentation for Sanguis and BloodCode.">
 <style>
-  :root{--bg:#0e1117;--panel:#fbfaf7;--panel-dark:#161b22;--border:#21262d;--border-light:#e1dad0;--text-light:#f3eedf;--text-dark:#1e222b;--muted-light:#8b949e;--muted-dark:#6e675d;--accent:#af0000;--accent-hover:#d21c1c}
+  :root{--bg:#0c0b0d;--panel:#fbfaf7;--panel-dark:#141216;--border:#2a2529;--border-light:#e1dad0;--text-light:#efe8dc;--text-dark:#1e222b;--muted-light:#9a918a;--muted-dark:#6e675d;--accent:#c8202a;--accent-hover:#e0343e}
   * { box-sizing:border-box; }
   body { margin:0; padding:0; background-color:var(--bg); color:var(--text-light);
-         font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; line-height:1.7; -webkit-font-smoothing:antialiased; }
+         font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,sans-serif; line-height:1.7; -webkit-font-smoothing:antialiased; }
   body::before {
     content: ''; position: fixed; inset: 0; z-index: -1;
-    background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http:%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2784%27%20height%3D%2749%27%20viewBox%3D%270%200%2084%2049%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23af0000%27%20stroke-opacity%3D%270.025%27%20stroke-width%3D%271%27%3E%3Cpath%20d%3D%27M56%200.5%20L70%2024.5%20L56%2048.5%20L28%2048.5%20L14%2024.5%20L28%200.5%20Z%27%2F%3E%3Cpath%20d%3D%27M0%2024.5%20L14%2024.5%27%2F%3E%3Cpath%20d%3D%27M70%2024.5%20L84%2024.5%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+    background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http:%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2784%27%20height%3D%2749%27%20viewBox%3D%270%200%2084%2049%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23c8202a%27%20stroke-opacity%3D%270.025%27%20stroke-width%3D%271%27%3E%3Cpath%20d%3D%27M56%200.5%20L70%2024.5%20L56%2048.5%20L28%2048.5%20L14%2024.5%20L28%200.5%20Z%27%2F%3E%3Cpath%20d%3D%27M0%2024.5%20L14%2024.5%27%2F%3E%3Cpath%20d%3D%27M70%2024.5%20L84%2024.5%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
     background-size: 84px 49px;
     animation: hexHeartbeat 7s ease-in-out infinite;
   }
@@ -32,7 +32,7 @@
 
   nav {
     border-bottom: 1px solid var(--border);
-    background: rgba(14, 17, 23, 0.85);
+    background: rgba(12, 11, 13, 0.85);
     backdrop-filter: blur(12px);
     position: sticky; top: 0; z-index: 100;
   }
@@ -48,7 +48,7 @@
   .nav-links a:hover, .nav-links a.active { color: var(--text-light); }
   .nav-links a:not(:last-child)::after {
     content: ''; position: absolute; right: -12px; top: 50%; transform: translateY(-50%);
-    width: 1px; height: 16px; background: #f3eedf; opacity: 0.25;
+    width: 1px; height: 16px; background: #efe8dc; opacity: 0.25;
   }
   @media (max-width: 768px) { .nav-links a:not(:last-child)::after { display: none; } }
   .nav-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; padding: 4px; }
@@ -90,7 +90,7 @@
   .footer-links a { margin:0 8px; }
   .footer-note { display:flex; align-items:center; justify-content:center; gap:9px; margin-top:16px; font-size:0.78rem; color:rgba(232,230,227,0.42); }
   .footer-note .fn-ico { display:inline-flex; align-items:center; gap:3px; }
-  .footer-note .fn-ico i { display:block; width:4px; height:4px; border-radius:1px; background:#af0000; animation:fnwave 1.6s ease-in-out infinite; }
+  .footer-note .fn-ico i { display:block; width:4px; height:4px; border-radius:1px; background:#c8202a; animation:fnwave 1.6s ease-in-out infinite; }
   .footer-note .fn-ico i:nth-child(2){ animation-delay:.2s; }
   .footer-note .fn-ico i:nth-child(3){ animation-delay:.4s; }
   @keyframes fnwave { 0%,100%{ opacity:.25; transform:translateY(0);} 50%{ opacity:1; transform:translateY(-2px);} }
@@ -153,7 +153,7 @@
         <p>The machine: the frozen 29-slot instruction set, semantics, conformance, determinism, and the artifact format.</p>
       </a>
     </div>
-    <p style="text-align: center; max-width: 760px; margin: 20px auto 0; color: var(--text-light); font-size: 0.95rem;">Marrow, the terminal that ships with the toolchain, runs in your command prompt: editor, file tree, and runtime panel in one window. Type <span style="font-family: monospace;">sanguis tui</span> and you are in.</p>
+    <p style="text-align: center; max-width: 760px; margin: 20px auto 0; color: var(--text-light); font-size: 0.95rem;">Marrow, the terminal that ships with the toolchain, runs in your command prompt: editor, file tree, and runtime panel in one window. Type <span style="font-family: 'JetBrains Mono', monospace;">sanguis tui</span> and you are in.</p>
   <p style="text-align: center; font-size: 0.8rem; color: var(--muted-light); margin: 60px 0 0;">Sanguis 3.9.4 &middot; Iteration:Turn</p>
   </div>
   <footer>

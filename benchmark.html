@@ -200,7 +200,7 @@
   /* Unified History Summary Grid Layout */
   .master-table-wrapper { overflow-x: auto; margin: 32px auto; max-width: 960px; border-radius: 14px; border: 1px solid var(--border); box-shadow: 0 8px 24px rgba(0,0,0,0.3); background: var(--panel-dark); }
   .master-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem; color: var(--text-light); }
-  .master-table th { padding: 14px 18px; font-weight: 700; background: #1f242c; border-bottom: 1px solid var(--border); }
+  .master-table th { padding: 14px 18px; font-weight: 700; background: #1a171b; border-bottom: 1px solid var(--border); }
   .master-table td { padding: 14px 18px; border-bottom: 1px solid var(--border); }
   .master-table tr:last-child td { border-bottom: none; }
 
@@ -613,6 +613,24 @@ the release, so you can repeat them on your own machine.
           <div class="spec-row"><span class="spec-k">Why</span><span class="spec-v">one flipped bit fails the checksum</span></div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-label">Language</div>
+      <h3>The language, on an ordinary desktop</h3>
+      <p class="middle-text">Sanguis 3.9.5 on an Intel 12th-gen desktop, against Python 3.11 doing the same work on the same machine. Sanguis times are measured inside the program, the median of seven runs; starting the process adds about 61 ms on top.</p>
+      <table class="master-table">
+        <thead><tr><th>Workload</th><th>Sanguis</th><th>Python</th><th>Read</th></tr></thead>
+        <tbody>
+          <tr><td>Add up 2 million numbers in a loop</td><td>8 ms</td><td>41 - 198 ms</td><td>5 - 24&times; faster, same answer</td></tr>
+          <tr><td>64 tasks taking turns, 1,000 steps each</td><td>6 ms</td><td>-</td><td>no Python baseline yet</td></tr>
+          <tr><td>Heat on a rod, 64 cells &times; 256 ticks, 2 to 4 threads</td><td>29 ms</td><td>1,084 ms on 8 threads</td><td>same bytes on every thread count</td></tr>
+          <tr><td>The same heat math as plain lists, one thread</td><td>-</td><td>4 ms</td><td>Python wins: no messages, no barrier</td></tr>
+        </tbody>
+      </table>
+      <p class="middle-text" style="margin-top: 20px;">Python's own time on the loop swings between runs on this machine, so we show its whole range. The last row isn't the same job: our fleets pass every value as a message and wait at a barrier each tick, which is what keeps the output identical on any thread count. Plain lists are our known soft spot.</p>
     </div>
   </section>
 

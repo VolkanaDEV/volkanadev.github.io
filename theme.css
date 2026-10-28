@@ -2147,3 +2147,4 @@ code, pre, kbd, .code-inline, .code-block, .stat-num, .ea-num, .section-label, .
 .status-badge.live, .live { animation-duration: 3s !important; }
 .footer-note .fn-ico i { animation-duration: 2s !important; }
 @media (max-width: 900px) { .nav-links { animation-duration: 0.35s !important; } }
+.pn-tag.meas { color: #e9b38f; background: rgba(255,122,61,0.12); }

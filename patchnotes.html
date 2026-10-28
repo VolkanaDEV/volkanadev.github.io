@@ -337,6 +337,16 @@
   <section class="section">
     <div class="wrap">
       <div class="pn-entry">
+        <div class="pn-head"><span class="pn-ver">3.9.5</span><span class="pn-name">Nightly</span><span class="pn-date">2026</span></div>
+        <p class="pn-lede">Loops got faster. The instruction set didn't change.</p>
+        <div class="pn-list">
+          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>Fused arithmetic.</strong> The two patterns every arithmetic loop is built from, <code>n = n + k</code> and <code>a = a + b</code>, now run as one machine add instead of a thirteen-step stack sequence. If any check fails, it falls back to the exact unfused path, so every executor still prints the same bytes.</div></div>
+          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>A benchmark suite.</strong> <code>bench/</code> times a scalar loop, task fan-out and fleets on 1 to 16 threads, runs Python baselines of the same work, and writes a receipt with the version, machine and settings.</div></div>
+          <div class="pn-item"><span class="pn-tag meas">Measured</span><div>A 2-million-step loop went from 20 ms to 8 ms. Task fan-out went from 8 ms to 6 ms.</div></div>
+          <div class="pn-item"><span class="pn-tag meas">Measured</span><div>452 tests pass, 0 fail. Fleets print identical output on 1, 2, 3, 4, 8 and 16 threads and on the C floor and metal, and the compiler still compiles itself to identical bytes.</div></div>
+        </div>
+      </div>
+      <div class="pn-entry">
         <div class="pn-head"><span class="pn-ver">3.9.4</span><span class="pn-name">Iteration:Turn</span><span class="pn-date">2026</span></div>
         <p class="pn-lede">Everyone takes turns. Tasks share the machine and switch at the same points on every executor, because a turn is counted in steps, never in time.</p>
         <div class="pn-list">
@@ -356,6 +366,26 @@
           <div class="pn-item"><span class="pn-tag new">New</span><div><strong>The language grows.</strong> <code>!x</code>, <code>for item in list</code>, <code>when</code>, <code>strain</code>, <code>break;</code>, <code>resume;</code>, <code>args()</code>, named <code>emit</code>, and <code>import str;</code>.</div></div>
           <div class="pn-item"><span class="pn-tag new">New</span><div><strong>Metal on Windows.</strong> <code>boot/bc_metal.exe</code>, the same C the kernel links, as a console program.</div></div>
           <div class="pn-item"><span class="pn-tag fix">Fixed</span><div>Metal reads every decimal exactly and prints numbers the PC's way: 0 differences on 3 million random strings and 14,753 rounding midpoints.</div></div>
+        </div>
+      </div>
+      <div class="pn-entry">
+        <div class="pn-head"><span class="pn-ver">3.9.1</span><span class="pn-name">Volundr</span><span class="pn-date">2026</span></div>
+        <p class="pn-lede">One instruction stream, many worlds at once.</p>
+        <div class="pn-list">
+          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>Lanes.</strong> Up to eight environments run through one instruction stream, one per lane. Eight worlds took 71 ms against 291 ms run one by one, 4.1&times; faster, and the output is byte-identical to running each on its own.</div></div>
+          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>A census.</strong> Every artifact is labeled by the path it actually took, vector or scalar, and anything refused says exactly what blocked it.</div></div>
+          <div class="pn-item"><span class="pn-tag fix">Fixed</span><div>An unknown instruction tag is now refused by name when it loads, on the JIT and the C floor, instead of running anyway.</div></div>
+        </div>
+      </div>
+      <div class="pn-entry">
+        <div class="pn-head"><span class="pn-ver">3.9.0</span><span class="pn-name">Iteration:Flow</span><span class="pn-date">2026</span></div>
+        <p class="pn-lede">The contract runs in plain C, and the compiler runs on it.</p>
+        <div class="pn-list">
+          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>The C floor.</strong> <code>boot/bc_exec.c</code> runs BloodCode with no JIT, no code generation and no Rust: 539 lines, standard I/O and math only. It reproduces all 30 conformance tests and matches the JIT byte for byte.</div></div>
+          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>The compiler runs on the floor.</strong> Given the same source, the C floor drives the compiler to the same output the JIT produces, with no Rust and no GPU in the path.</div></div>
+          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>A console.</strong> A page that shows a being's vitals, every number read from a file the core wrote. A missing value shows as a dash, never a zero.</div></div>
+          <div class="pn-item"><span class="pn-tag new">New</span><div><strong>The editor compiles.</strong> Compile and run takes 11 ms per edit, inside a 60 fps frame.</div></div>
+          <div class="pn-item"><span class="pn-tag fix">Fixed</span><div><code>read_file</code> stopped at the first NUL byte, string escapes weren't decoded, <code>push</code> took its arguments backwards, and <code>while</code> loops only ran forwards. All fixed.</div></div>
         </div>
       </div>
       <div class="pn-entry">

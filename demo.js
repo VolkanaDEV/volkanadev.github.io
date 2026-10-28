@@ -151,6 +151,8 @@ async function runRod(animate) {
     $("hash" + k).textContent = h.slice(0, 16);
     $("hash" + k).style.color = `hsl(${hueOf(h)} 75% 62%)`;
     $("runs" + k).textContent = s.runs; $("dist" + k).textContent = s.seen.size;
+    $("runs" + k).nextElementSibling.textContent = s.runs === 1 ? "run" : "runs";
+    $("dist" + k).nextElementSibling.textContent = s.seen.size === 1 ? "unique output" : "unique outputs";
     paintHist($("hist" + k), s.hist);
   }
   rodBusy = false;

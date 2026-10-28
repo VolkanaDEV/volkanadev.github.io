@@ -107,12 +107,12 @@
       var note = document.getElementById('eaNote');
       var email = input.value.trim();
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        input.classList.add('bad');
+        signup.classList.add('bad');
         if (note) note.textContent = 'That email doesn\'t look right. Try again?';
         input.focus();
         return;
       }
-      input.classList.remove('bad');
+      signup.classList.remove('bad');
       window.location.href = 'mailto:volkanadev@protonmail.com' +
         '?subject=' + encodeURIComponent('Early Access sign-up') +
         '&body=' + encodeURIComponent('Please add me to Early Access: ' + email);

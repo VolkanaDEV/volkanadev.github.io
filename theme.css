@@ -2125,3 +2125,14 @@ code, pre, kbd, .code-inline, .code-block, .stat-num, .ea-num, .section-label, .
 .ea-signup input:focus { border-bottom-color: #c8202a !important; outline: none; box-shadow: none !important; }
 .ea-signup button { border-radius: 2px !important; }
 .role { padding-bottom: 28px !important; }
+
+/* Countdown, calmer: no glow, quiet separators, room before the buttons */
+.ea-countdown { border-top: 0 !important; padding: 8px 0 0 !important; margin: 40px auto 0 !important; }
+.ea-num { text-shadow: none !important; color: #efe8dc !important; }
+.ea-sep { color: #6c645f !important; font-weight: 400 !important; opacity: 1 !important; text-shadow: none !important; animation: none !important; }
+.ea-sep::before, .ea-sep::after, .ea-unit::before, .ea-unit::after, .ea-num::before, .ea-num::after { display: none !important; }
+.ea-cap { color: #6c645f !important; }
+.ea-date { margin-top: 18px !important; font-family: var(--mono) !important; font-weight: 400 !important; font-size: 0.82rem !important; letter-spacing: 0.14em !important; text-transform: uppercase; color: #9a918a !important; }
+.hero-actions { margin-top: 48px !important; }
+.hero-note:empty { display: none !important; }
+.ea-signup::before, .ea-signup::after { display: none !important; } .ea-signup { border-top: 0 !important; }

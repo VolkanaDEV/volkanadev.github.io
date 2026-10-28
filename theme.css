@@ -2136,3 +2136,6 @@ code, pre, kbd, .code-inline, .code-block, .stat-num, .ea-num, .section-label, .
 .hero-actions { margin-top: 48px !important; }
 .hero-note:empty { display: none !important; }
 .ea-signup::before, .ea-signup::after { display: none !important; } .ea-signup { border-top: 0 !important; }
+/* Counter digits in the display face, like the hero */
+.ea-num { font-family: var(--display) !important; font-weight: 800 !important; font-variation-settings: "wdth" 112; font-variant-numeric: tabular-nums; letter-spacing: -0.01em !important; }
+.ea-sep { font-family: var(--display) !important; }

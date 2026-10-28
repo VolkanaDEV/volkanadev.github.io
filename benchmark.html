@@ -498,27 +498,9 @@
   <div class="wrap">
     <section class="header-block">
       <h2>Speed, measured.</h2>
-      <p class="middle-text">Every number here comes from a real run. The language numbers are Sanguis 3.9.5 on an Intel 12th-gen desktop. The graphics card numbers are from an NVIDIA RTX 3060 with 12&nbsp;GB, the kind of card a lot of people already own. The benchmark suite lives in the repo, so every number can be rerun.</p>
+      <p class="middle-text">Every number here comes from a real run. The desktop numbers are Sanguis 3.9.5 on an Intel 12th-gen PC. The graphics card numbers are from an NVIDIA RTX 3060 with 12&nbsp;GB, the kind of card a lot of people already own. The benchmark suite lives in the repo, so every number can be rerun.</p>
     </section>
   </div>
-
-  <section class="section">
-    <div class="wrap">
-      <div class="section-label">Language</div>
-      <h3>Against Python, on the same desktop</h3>
-      <p class="middle-text">Python 3.11 doing the same work on the same machine. Sanguis times are measured inside the program, the median of seven runs. Starting the process adds about 61 ms on top.</p>
-      <table class="master-table">
-        <thead><tr><th>Workload</th><th>Sanguis</th><th>Python</th><th>Read</th></tr></thead>
-        <tbody>
-          <tr><td>Add up 2 million numbers in a loop</td><td>8 ms</td><td>41 - 198 ms</td><td>5 - 24&times; faster, same answer</td></tr>
-          <tr><td>64 tasks taking turns, 1,000 steps each</td><td>6 ms</td><td>-</td><td>no Python baseline yet</td></tr>
-          <tr><td>Heat on a rod, 64 cells &times; 256 ticks, 2 to 4 threads</td><td>29 ms</td><td>1,084 ms on 8 threads</td><td>same bytes on every thread count</td></tr>
-          <tr><td>The same heat math as plain lists, one thread</td><td>-</td><td>4 ms</td><td>Python wins: no messages, no barrier</td></tr>
-        </tbody>
-      </table>
-      <p class="middle-text" style="margin-top: 20px;">Python's time on the loop swings between runs on this machine, so we show the whole range. The last row isn't the same job. Our fleets pass every value as a message and wait at a barrier each tick, and that's what keeps the output identical on any thread count. Plain lists are our known soft spot.</p>
-    </div>
-  </section>
 
   <section class="section">
     <div class="wrap">

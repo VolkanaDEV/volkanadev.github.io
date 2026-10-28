@@ -2148,3 +2148,8 @@ code, pre, kbd, .code-inline, .code-block, .stat-num, .ea-num, .section-label, .
 .footer-note .fn-ico i { animation-duration: 2s !important; }
 @media (max-width: 900px) { .nav-links { animation-duration: 0.35s !important; } }
 .pn-tag.meas { color: #e9b38f; background: rgba(255,122,61,0.12); }
+/* Roadmap: flat stops to match the cards, room between paragraphs */
+.rm-card { background: none !important; border: 0 !important; border-top: 1px solid #2a2529 !important; border-radius: 0 !important; box-shadow: none !important; padding: 22px 0 0 !important; }
+.rm-stop.current .rm-card { border-top-color: #c8202a !important; }
+.rm-card::before, .rm-card::after { display: none !important; }
+.rm-body + .rm-body { margin-top: 14px !important; }

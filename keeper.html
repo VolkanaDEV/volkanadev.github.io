@@ -12,22 +12,24 @@
 <title>Keeper &middot; VolkanaDEV</title>
 <meta name="description" content="Keeper, from VolkanaDEV Autonomous Systems. Coming spring 2027.">
 <style>
-  :root { --bg: #08090a; --ink: #e8e6e3; --dim: #6f7278; --blood: #af0000; }
+  @font-face { font-family: 'Archivo'; font-weight: 400 900; font-stretch: 62% 125%; font-display: swap; src: url('fonts/archivo-latin.woff2') format('woff2'); }
+  @font-face { font-family: 'JetBrains Mono'; font-weight: 400 700; font-display: swap; src: url('fonts/jetbrains-mono-latin.woff2') format('woff2'); }
+  :root { --bg: #08090a; --ink: #e8e6e3; --dim: #6f7278; --blood: #c8202a; }
   * { box-sizing: border-box; }
   html, body { height: 100%; }
   body {
     margin: 0; background: var(--bg); color: var(--ink);
-    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-family: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
     display: flex; align-items: center; justify-content: center;
     min-height: 100vh; overflow: hidden;
-    background-image: radial-gradient(circle at 50% 42%, rgba(175,0,0,0.07), transparent 55%);
+    background-image: radial-gradient(circle at 50% 42%, rgba(200, 32, 42,0.07), transparent 55%);
   }
   .stage { text-align: center; padding: 24px; animation: rise 1.6s ease-out both; }
   .micro { font-size: 0.64rem; letter-spacing: 0.42em; text-indent: 0.42em; color: var(--dim); text-transform: uppercase; margin-bottom: 36px; }
   h1 {
     margin: 0; font-size: clamp(2.4rem, 11vw, 6rem); font-weight: 800;
     letter-spacing: 0.34em; text-indent: 0.34em;
-    color: var(--ink); text-shadow: 0 0 44px rgba(175,0,0,0.22);
+    color: var(--ink); font-family: 'Archivo', sans-serif; font-variation-settings: "wdth" 125; font-weight: 900; text-shadow: 0 0 44px rgba(200, 32, 42,0.22);
   }
   .line { width: min(320px, 62vw); height: 1px; background: var(--blood); opacity: 0.5; margin: 34px auto; }
   .pulse { animation: beat 2.6s ease-in-out infinite; }

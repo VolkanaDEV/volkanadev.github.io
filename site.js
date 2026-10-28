@@ -113,9 +113,17 @@
         return;
       }
       signup.classList.remove('bad');
+      var ack = document.getElementById('eaAck');
+      if (ack && !ack.checked) {
+        ack.parentNode.classList.add('bad');
+        if (note) note.textContent = 'Please tick the box to confirm you understand this is a developer preview.';
+        ack.focus();
+        return;
+      }
+      if (ack) ack.parentNode.classList.remove('bad');
       window.location.href = 'mailto:volkanadev@protonmail.com' +
         '?subject=' + encodeURIComponent('Early Access sign-up') +
-        '&body=' + encodeURIComponent('Please add me to Early Access: ' + email);
+        '&body=' + encodeURIComponent('Please add me to Early Access: ' + email + '\n\nI understand Early Access is a developer preview of the Sanguis SDK, not the final product. The full release is planned for April 2027.');
       if (note) note.textContent = 'Your email app should open. Hit send and you\'re on the list. Invites are sent November 28.';
     });
   }

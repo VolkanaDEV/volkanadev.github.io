@@ -98,6 +98,28 @@
     });
   }
 
+  /* ---- Early Access sign-up: opens a pre-filled email, nothing is stored on the site ---- */
+  var signup = document.getElementById('eaSignup');
+  if (signup) {
+    signup.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var input = document.getElementById('eaEmail');
+      var note = document.getElementById('eaNote');
+      var email = input.value.trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        input.classList.add('bad');
+        if (note) note.textContent = 'That email doesn\'t look right. Try again?';
+        input.focus();
+        return;
+      }
+      input.classList.remove('bad');
+      window.location.href = 'mailto:volkanadev@protonmail.com' +
+        '?subject=' + encodeURIComponent('Early Access sign-up') +
+        '&body=' + encodeURIComponent('Please add me to Early Access: ' + email);
+      if (note) note.textContent = 'Your email app should open. Hit send and you\'re on the list. Invites are sent November 28.';
+    });
+  }
+
   /* ---- Early Access countdown: 28 November 2026, 00:00 EST ---- */
   var days = document.getElementById('ea-days');
   if (days) {

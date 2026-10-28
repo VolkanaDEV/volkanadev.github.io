@@ -153,13 +153,13 @@
     var css = document.createElement('style');
     css.textContent =
       '.reel{display:inline-block;height:1.1em;line-height:1.1em;overflow:hidden;vertical-align:bottom}' +
-      '.reel>span{display:block;transform:translateY(0);transition:transform 1.3s cubic-bezier(.2,.85,.3,1.12)}' +
+      '.reel>span{display:block;transform:translateY(0);transition:transform 1.625s cubic-bezier(.2,.85,.3,1.12)}' +
       '.reel>span>i{display:block;height:1.1em;font-style:normal}' +
       '.sw{white-space:nowrap}' +
       '.sc{display:inline-block;opacity:0;transform:translateY(.35em);filter:blur(3px);color:var(--accent);' +
-        'transition:opacity .35s ease,transform .45s cubic-bezier(.2,.85,.3,1.1),filter .35s ease,color .6s ease .2s}' +
+        'transition:opacity .4375s ease,transform .5625s cubic-bezier(.2,.85,.3,1.1),filter .4375s ease,color .75s ease .25s}' +
       '.settled .sc{opacity:1;transform:none;filter:none;color:inherit}' +
-      '.rise{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .7s cubic-bezier(.2,.85,.3,1)}' +
+      '.rise{opacity:0;transform:translateY(18px);transition:opacity .75s ease,transform .875s cubic-bezier(.2,.85,.3,1)}' +
       '.rise.settled{opacity:1;transform:none}';
     document.head.appendChild(css);
 
@@ -172,7 +172,7 @@
           el.classList.add('settled');
           if (el.classList.contains('rise')) setTimeout(function () {
             el.classList.remove('rise', 'settled'); el.style.transitionDelay = '';
-          }, 1600);
+          }, 2000);
           el.querySelectorAll('.reel>span').forEach(function (strip) {
             strip.style.transform = 'translateY(-' + strip.getAttribute('data-to') + 'em)';
           });
@@ -198,7 +198,7 @@
           var g = document.createElement('i'); g.textContent = d; strip.appendChild(g);
         }
         strip.setAttribute('data-to', (spins * 10 + (+ch)) * 1.1);
-        strip.style.transitionDelay = (n * 0.12 + k * 0.08) + 's';
+        strip.style.transitionDelay = (n * 0.15 + k * 0.1) + 's';
         reel.appendChild(strip);
         num.appendChild(reel);
         k++;
@@ -221,7 +221,7 @@
           var c = document.createElement('span');
           c.className = 'sc';
           c.textContent = word[i];
-          c.style.transitionDelay = (idx++ * 0.018) + 's';
+          c.style.transitionDelay = (idx++ * 0.0225) + 's';
           w.appendChild(c);
         }
         h.appendChild(w);
@@ -233,7 +233,7 @@
     document.querySelectorAll('.panel-grid').forEach(function (grid) {
       grid.querySelectorAll('.card').forEach(function (card, i) {
         card.classList.add('rise');
-        card.style.transitionDelay = (0.25 + i * 0.12) + 's';
+        card.style.transitionDelay = (0.3125 + i * 0.15) + 's';
         seen.observe(card);
       });
     });

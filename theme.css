@@ -2142,3 +2142,8 @@ code, pre, kbd, .code-inline, .code-block, .stat-num, .ea-num, .section-label, .
 .ea-label, .ea-cap, .ea-date { font-family: var(--display) !important; font-weight: 700 !important; font-variation-settings: "wdth" 112; }
 .ea-label { letter-spacing: 0.22em !important; }
 .ea-cap, .ea-date { letter-spacing: 0.16em !important; }
+
+/* Motion 25% slower (2026-10), background heartbeat unchanged */
+.status-badge.live, .live { animation-duration: 3s !important; }
+.footer-note .fn-ico i { animation-duration: 2s !important; }
+@media (max-width: 900px) { .nav-links { animation-duration: 0.35s !important; } }

@@ -812,7 +812,7 @@ canvas.ring { width: 100%; max-width: 360px; aspect-ratio: 1; display: block; ju
   <div class="exp-head">
     <div class="exp-no">Experiment 2 · tasks that take turns</div>
     <h2><code style="font-family:var(--mono);font-size:.78em">while true {}</code> <em>cannot stop the world.</em></h2>
-    <p>Five tasks share one machine. One of them, <code>victim</code>, loops forever and never gives up its turn. In a cooperative runtime such as JavaScript promises or Python asyncio, a task that never awaits holds the loop until the process is killed. In Sanguis a turn is 1,000 steps, and a step is a call or a loop going round, never time. Every task is switched out on schedule, and <code>killer</code> gets its turn to stop the runaway.</p>
+    <p>Five tasks share one machine. One of them, <code>runaway</code>, loops forever and never gives up its turn. In a cooperative runtime such as JavaScript promises or Python asyncio, a task that never awaits holds the loop until the process is stopped. In Sanguis a turn is 1,000 steps, and a step is a call or a loop going round, never time. Every task is switched out on schedule, and <code>watchdog</code> gets its turn to stop it.</p>
   </div>
   <div class="controls"><button class="d-btn" id="taskRun" type="button">Start both</button></div>
   <div class="split">
@@ -833,7 +833,7 @@ canvas.ring { width: 100%; max-width: 360px; aspect-ratio: 1; display: block; ju
       </div>
     </div>
   </div>
-  <p class="note"><b>What is real here.</b> The Sanguis column replays <code>tests/fixtures/spawn_tasks.expected</code> line for line, the output <code>tests/tasks.rs</code> checks on the bridge, the C floor and metal. The left column shows the order a cooperative loop would run the same tasks in. A watchdog also exists: <code>spawn f() limit 50000</code> stops a runaway by itself with <code>task 'name' went past its limit and was stopped</code>, while the others carry on.</p>
+  <p class="note"><b>What is real here.</b> The Sanguis column replays <code>tests/fixtures/spawn_tasks.expected</code> line for line, with two tasks renamed for this page. That's the output <code>tests/tasks.rs</code> checks on the bridge, the C floor and metal. The left column shows the order a cooperative loop would run the same tasks in. There's also a built-in limit: <code>spawn f() limit 50000</code> stops a runaway by itself with <code>task 'name' went past its limit and was stopped</code>, while the others carry on.</p>
   <details class="src"><summary>Show the Sanguis program (spawn_tasks.sanguis)</summary><pre><span class="kw">circuit</span> sp2;
 
 <span class="kw">cell</span> sq(x: float) -&gt; float { <span class="kw">output</span> x * x; }
@@ -866,9 +866,9 @@ canvas.ring { width: 100%; max-width: 360px; aspect-ratio: 1; display: block; ju
     <span class="kw">output</span> 0.0;
 }
 
-<span class="kw">cell</span> victim() -&gt; float {
+<span class="kw">cell</span> runaway() -&gt; float {
     <span class="kw">let</span> n = 0.0;
-    <span class="kw">while</span> true { n = n + 1.0; <span class="kw">gate</span> mod(n, 500.0) == 0.0 <span class="kw">then</span> { print(concat(&quot;victim &quot;, n)); } }
+    <span class="kw">while</span> true { n = n + 1.0; <span class="kw">gate</span> mod(n, 500.0) == 0.0 <span class="kw">then</span> { print(concat(&quot;runaway &quot;, n)); } }
     <span class="kw">output</span> 0.0;
 }
 
@@ -876,18 +876,18 @@ canvas.ring { width: 100%; max-width: 360px; aspect-ratio: 1; display: block; ju
     <span class="kw">spawn</span> worker(&quot;w1&quot;, 900.0, 150.0);
     <span class="kw">spawn</span> worker(&quot;w2&quot;, 600.0, 200.0);
     <span class="kw">spawn</span> parent();
-    <span class="kw">let</span> v = <span class="kw">spawn</span> victim();
-    <span class="kw">spawn</span> killer(v);
+    <span class="kw">let</span> v = <span class="kw">spawn</span> runaway();
+    <span class="kw">spawn</span> watchdog(v);
     <span class="kw">run_all</span>();
     print(last);
     print(&quot;done&quot;);
     <span class="kw">output</span> 0.0;
 }
 
-<span class="kw">cell</span> killer(id: float) -&gt; float {
+<span class="kw">cell</span> watchdog(id: float) -&gt; float {
     <span class="kw">let</span> j = 0.0;
     <span class="kw">while</span> j &lt; 2500.0 { j = j + 1.0; }
-    print(&quot;killer strikes&quot;);
+    print(&quot;watchdog steps in&quot;);
     <span class="kw">kill</span>(id);
     <span class="kw">output</span> 0.0;
 }

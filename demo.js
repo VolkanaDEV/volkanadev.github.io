@@ -1,6 +1,6 @@
 /* Sanguis live demo: experiments that replay the repo fixtures */
 const ROD_EXPECTED = "rod of 16 cells, 32 ticks\nt7 cell 0 heat 100\nt7 cell 1 heat 60.723876953125\nt7 cell 2 heat 30.17578125\nt7 cell 3 heat 11.846923828125\nt7 cell 4 heat 3.515625\nt7 cell 5 heat 0.738525390625\nt7 cell 6 heat 0.09765625\nt7 cell 7 heat 0.006103515625\nt7 cell 8 heat 0\nt7 cell 9 heat 0\nt7 cell 10 heat 0\nt7 cell 11 heat 0\nt7 cell 12 heat 0\nt7 cell 13 heat 0\nt7 cell 14 heat 0\nt7 cell 15 heat 0\nt15 cell 0 heat 100\nt15 cell 1 heat 72.0100131817162\nt15 cell 2 heat 47.312965989112854\nt15 cell 3 heat 28.104151505976915\nt15 cell 4 heat 14.961278438568115\nt15 cell 5 heat 7.075554598122835\nt15 cell 6 heat 2.9449373483657837\nt15 cell 7 heat 1.0673840530216694\nt15 cell 8 heat 0.3326892852783203\nt15 cell 9 heat 0.08779102936387062\nt15 cell 10 heat 0.019219517707824707\nt15 cell 11 heat 0.00339532271027565\nt15 cell 12 heat 0.0004649162292480469\nt15 cell 13 heat 0.00004628673195838928\nt15 cell 14 heat 0.0000029802322387695313\nt15 cell 15 heat 0.00000009313225746154785\nt23 cell 0 heat 100\nt23 cell 1 heat 77.08669945730264\nt23 cell 2 heat 56.006462958021075\nt23 cell 3 heat 38.169339766321286\nt23 cell 4 heat 24.296021728332562\nt23 cell 5 heat 14.386508844054902\nt23 cell 6 heat 7.894069368148848\nt23 cell 7 heat 3.9986056826052163\nt23 cell 8 heat 1.862383661502065\nt23 cell 9 heat 0.7942726510165699\nt23 cell 10 heat 0.3087676477562695\nt23 cell 11 heat 0.10885384529473185\nt23 cell 12 heat 0.03460039215070765\nt23 cell 13 heat 0.009851336470489969\nt23 cell 14 heat 0.0025081200490717492\nt23 cell 15 heat 0.0006610533418438536\nt31 cell 0 heat 100\nt31 cell 1 heat 80.13064925040662\nt31 cell 2 heat 61.46550157654622\nt31 cell 3 heat 44.99625362902315\nt31 cell 4 heat 31.350305329659108\nt31 cell 5 heat 20.736789985851658\nt31 cell 6 heat 12.991792303894822\nt31 cell 7 heat 7.692583374597639\nt31 cell 8 heat 4.295654650055652\nt31 cell 9 heat 2.257497878153664\nt31 cell 10 heat 1.1141441236990097\nt31 cell 11 heat 0.5152564392003935\nt31 cell 12 heat 0.2228277483216251\nt31 cell 13 heat 0.09010631307526638\nt31 cell 14 heat 0.03478323724666872\nt31 cell 15 heat 0.015466153762574052\ncooled\n0\n";
-const TASK_EXPECTED = "w1 at 0 sum 0\nw1 at 150 sum 1136275\nw2 at 0 sum 0\nw2 at 200 sum 2686700\nparent spawns a child\nparent 0\nvictim 500\nvictim 1000\nchild at 0 sum 0\nchild at 100 sum 338350\nchild at 200 sum 2686700\nw1 at 300 sum 9045050\nw1 at 450 sum 30476325\nw2 at 400 sum 21413400\nparent 1\nvictim 1500\nvictim 2000\nw1 at 600 sum 72180100\nparent 2\nvictim 2500\nvictim 3000\nkiller strikes\nw1 at 750 sum 140906375\nw1 finished\ndone\n0\n";
+const TASK_EXPECTED = "w1 at 0 sum 0\nw1 at 150 sum 1136275\nw2 at 0 sum 0\nw2 at 200 sum 2686700\nparent spawns a child\nparent 0\nrunaway 500\nrunaway 1000\nchild at 0 sum 0\nchild at 100 sum 338350\nchild at 200 sum 2686700\nw1 at 300 sum 9045050\nw1 at 450 sum 30476325\nw2 at 400 sum 21413400\nparent 1\nrunaway 1500\nrunaway 2000\nw1 at 600 sum 72180100\nparent 2\nrunaway 2500\nrunaway 3000\nwatchdog steps in\nw1 at 750 sum 140906375\nw1 finished\ndone\n0\n";
 const RM = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 const $ = (id) => document.getElementById(id);
 const sleep = (ms) => new Promise(r => setTimeout(r, RM ? 0 : ms));
@@ -168,15 +168,15 @@ $("rodAuto").addEventListener("click", (e) => {
 document.querySelectorAll(".seg button").forEach(b => b.addEventListener("click", () => { setThreads(+b.dataset.t); runRod(true); }));
 
 /* ---------- tasks ---------- */
-const TASKS = ["w1", "w2", "parent", "child", "victim", "killer"];
+const TASKS = ["w1", "w2", "parent", "child", "runaway", "watchdog"];
 const taskLines = TASK_EXPECTED.trimEnd().split("\n");
 function ownerOf(line) {
   if (line.startsWith("w1 at")) return "w1";
   if (line.startsWith("w2 at")) return "w2";
   if (line.startsWith("parent")) return "parent";
   if (line.startsWith("child")) return "child";
-  if (line.startsWith("victim")) return "victim";
-  if (line.startsWith("killer")) return "killer";
+  if (line.startsWith("runaway")) return "runaway";
+  if (line.startsWith("watchdog")) return "watchdog";
   return null;
 }
 function buildLanes(el) {
@@ -205,8 +205,8 @@ const progressOf = {
   w2: (l) => { const m = l.match(/at (\d+)/); return m ? (+m[1] + 1) / 600 * 100 : null; },
   child: (l) => { const m = l.match(/at (\d+)/); return m ? (+m[1] + 1) / 300 * 100 : null; },
   parent: (l) => { const m = l.match(/parent (\d)/); return m ? (+m[1] + 1) / 3 * 100 : 8; },
-  victim: (l) => { const m = l.match(/(\d+)/); return m ? Math.min(100, +m[1] / 3000 * 100) : null; },
-  killer: () => 100,
+  runaway: (l) => { const m = l.match(/(\d+)/); return m ? Math.min(100, +m[1] / 3000 * 100) : null; },
+  watchdog: () => 100,
 };
 
 let taskRun = 0;
@@ -220,10 +220,10 @@ async function runTasks() {
     for (const line of taskLines) {
       if (my !== taskRun) return;
       const who = ownerOf(line);
-      if (who) lane(B, who, progressOf[who](line), who === "victim" ? "spinning" : "turn");
-      if (line === "killer strikes") { lane(B, "killer", 100, "done", "done"); lane(B, "victim", null, "killed", "dead"); }
+      if (who) lane(B, who, progressOf[who](line), who === "runaway" ? "spinning" : "turn");
+      if (line === "watchdog steps in") { lane(B, "watchdog", 100, "done", "done"); lane(B, "runaway", null, "stopped", "dead"); }
       if (line === "w1 finished") { lane(B, "w1", 100, "done", "done"); }
-      addLine($("tTermB"), line, line === "killer strikes" ? "err" : (line === "done" || line === "0" ? "sys" : null));
+      addLine($("tTermB"), line, line === "watchdog steps in" ? "err" : (line === "done" || line === "0" ? "sys" : null));
       await sleep(260);
     }
     for (const t of ["w2", "parent", "child"]) lane(B, t, 100, "done", "done");
@@ -231,7 +231,7 @@ async function runTasks() {
     $("stampB").innerHTML = `<div class="stamp ok">run_all() returned · done</div>`;
   })();
 
-  // Cooperative loop: each task runs until it awaits. victim never does.
+  // Cooperative loop: each task runs until it awaits. runaway never does.
   const theirs = (async () => {
     const seq = [];
     for (const l of taskLines) if (l.startsWith("w1 at")) seq.push(l);
@@ -248,14 +248,14 @@ async function runTasks() {
       await sleep(260);
     }
     lane(A, "parent", null, "awaiting");
-    const vbar = A.victim.querySelector("i"); vbar.style.width = "100%"; vbar.classList.add("spin");
-    lane(A, "victim", null, "holds loop");
-    for (const t of ["parent", "child", "killer"]) { A[t].classList.add("frozen"); A[t].querySelector(".st8").textContent = "never runs"; }
+    const vbar = A.runaway.querySelector("i"); vbar.style.width = "100%"; vbar.classList.add("spin");
+    lane(A, "runaway", null, "holds loop");
+    for (const t of ["parent", "child", "watchdog"]) { A[t].classList.add("frozen"); A[t].querySelector(".st8").textContent = "never runs"; }
     A.parent.querySelector(".st8").textContent = "never resumes";
     $("stampA").innerHTML = `<div class="stamp frozen">Event loop blocked</div>`;
     let n = 0;
     while (my === taskRun) {
-      n += 500; addLine($("tTermA"), "victim " + n, "hot");
+      n += 500; addLine($("tTermA"), "runaway " + n, "hot");
       if ($("tTermA").childElementCount > 200) $("tTermA").firstChild.remove();
       await sleep(RM ? 400 : 90);
       if (RM && n > 5000) break;
@@ -277,7 +277,7 @@ async function runTrio() {
     await sleep(k * 380);
     for (const line of taskLines) {
       if (my !== trioRun) return null;
-      addLine(term, line, line === "killer strikes" ? "err" : null);
+      addLine(term, line, line === "watchdog steps in" ? "err" : null);
       await sleep(80 + k * 22);
     }
     const h = await sha(TASK_EXPECTED);
@@ -364,14 +364,14 @@ setThreads(8);
   await runRod(false);
   // tasks: show final Sanguis state immediately
   const B = buildLanes($("lanesB")); buildLanes($("lanesA"));
-  taskLines.forEach(l => addLine($("tTermB"), l, l === "killer strikes" ? "err" : null));
-  for (const t of TASKS) lane(B, t, 100, t === "victim" ? "killed" : "done", t === "victim" ? "dead" : "done");
+  taskLines.forEach(l => addLine($("tTermB"), l, l === "watchdog steps in" ? "err" : null));
+  for (const t of TASKS) lane(B, t, 100, t === "runaway" ? "stopped" : "done", t === "runaway" ? "dead" : "done");
   Object.values(B).forEach(x => x.classList.remove("active"));
   $("stampB").innerHTML = `<div class="stamp ok">run_all() returned · done</div>`;
   addLine($("tTermA"), "press Start both", "sys");
   // trio: show identical results at rest
   const h = await sha(TASK_EXPECTED);
-  [0, 1, 2].forEach(k => { const m = $("m" + k); taskLines.forEach(l => addLine(m.querySelector(".term"), l, l === "killer strikes" ? "err" : null)); m.querySelector("footer b").textContent = h.slice(0, 16); m.classList.add("match"); });
+  [0, 1, 2].forEach(k => { const m = $("m" + k); taskLines.forEach(l => addLine(m.querySelector(".term"), l, l === "watchdog steps in" ? "err" : null)); m.querySelector("footer b").textContent = h.slice(0, 16); m.classList.add("match"); });
   $("verdict").className = "verdict on"; $("verdict").innerHTML = `Three machines. <em>One fingerprint.</em> ${TASK_EXPECTED.length} bytes, identical.`;
   if (RM) { ringTyped = [HASH.length, HASH.length, HASH.length]; ringGen = 3; [0,1,2].forEach(typeGen); drawRing(); }
   else requestAnimationFrame(tick);

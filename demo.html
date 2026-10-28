@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self' mailto:; frame-ancestors 'none';">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="favicon.png">
+<title>VolkanaDEV - Live Demo</title>
+<link rel="canonical" href="https://volkanadev.com/demo.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VolkanaDEV">
+<meta property="og:title" content="VolkanaDEV - Live Demo">
+<meta property="og:description" content="Run Sanguis experiments in your browser and watch the same program give the same bytes on any thread count.">
+<meta property="og:url" content="https://volkanadev.com/demo.html">
+<meta name="description" content="Run Sanguis experiments in your browser and watch the same program give the same bytes on any thread count.">
+<style>
+  :root {
+    /* Core Volkanadev Palette */
+    --bg: #0c0b0d;                  /* Slate-Onyx Blue Page Canvas */
+    --panel: #fbfaf7;               /* Classic Volkanadev Cream Panel */
+    --panel-dark: #141216;          /* Secondary Dark Container Layer */
+    --border: #2a2529;              /* Clean Dark Framing lines */
+    --border-light: #e1dad0;        /* Gentle Cream Framing lines */
+    
+    /* Text Channels */
+    --text-light: #efe8dc;          /* Readable Off-Cream for Dark Areas */
+    --text-dark: #1e222b;           /* Rich Charcoal-Onyx for Light Panels */
+    --muted-light: #9a918a;         /* Dimmed Text for Dark Areas */
+    --muted-dark: #6e675d;          /* Dimmed Text for Light Panels */
+    
+    /* Accents */
+    --accent: #c8202a;              /* BoneMarrow blood */
+    --accent-hover: #e0343e;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    background-color: var(--bg);
+    color: var(--text-light);
+    font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: ''; position: fixed; inset: 0; z-index: -1;
+    background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http:%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2784%27%20height%3D%2749%27%20viewBox%3D%270%200%2084%2049%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23c8202a%27%20stroke-opacity%3D%270.025%27%20stroke-width%3D%271%27%3E%3Cpath%20d%3D%27M56%200.5%20L70%2024.5%20L56%2048.5%20L28%2048.5%20L14%2024.5%20L28%200.5%20Z%27%2F%3E%3Cpath%20d%3D%27M0%2024.5%20L14%2024.5%27%2F%3E%3Cpath%20d%3D%27M70%2024.5%20L84%2024.5%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+    background-size: 84px 49px;
+    animation: hexHeartbeat 7s ease-in-out infinite;
+  }
+  @keyframes hexHeartbeat {
+    0%   { opacity: 0.6; }
+    7%   { opacity: 1.2; }
+    14%  { opacity: 0.65; }
+    21%  { opacity: 0.9; }
+    35%  { opacity: 0.6; }
+    100% { opacity: 0.6; }
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  nav .wrap { max-width: 100%; padding: 0 16px; }
+
+  /* Navigation Bar */
+  nav {
+    border-bottom: 1px solid var(--border);
+    background: rgba(12, 11, 13, 0.85);
+    backdrop-filter: blur(12px);
+    position: sticky; top: 0; z-index: 100;
+  }
+  nav .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 0;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.15rem; color: var(--text-light); letter-spacing: -0.02em; }
+  .brand-dot { width: 20px; height: 20px; border-radius: 4px; object-fit: contain; }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { color: var(--muted-light); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--text-light); }
+  nav .brand { margin-left: 24px; }
+  .nav-links { margin-left: auto; margin-right: 16px; }
+  .nav-links a { position: relative; }
+  .nav-links a:not(:last-child)::after {
+    content: ''; position: absolute; right: -12px; top: 50%; transform: translateY(-50%);
+    width: 1px; height: 16px; background: #efe8dc; opacity: 0.25;
+  }
+  @media (max-width: 768px) { .nav-links a:not(:last-child)::after { display: none; } }
+
+  /* Header Section */
+  .header-block { text-align: center; padding: 48px 20px 24px; background: radial-gradient(circle at 50% 0%, rgba(200, 32, 42, 0.08), transparent 60%); }
+  .header-block h2 { font-size: clamp(1.8rem, 5.5vw, 2.8rem); font-weight: 800; margin: 0 0 20px; line-height: 1.2; letter-spacing: -0.03em; color: var(--text-light); }
+  .header-block p { color: var(--muted-light); font-size: clamp(1.05rem, 2.5vw, 1.2rem); max-width: 780px; margin: 0 auto 24px; text-align: center; }
+  
+  .selector-box {
+    margin: 20px auto;
+    max-width: 400px;
+    background: var(--panel-dark);
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+  }
+  .selector-box label { font-size: 0.75rem; text-transform: uppercase; color: var(--muted-light); letter-spacing: 0.05em; font-weight: 700; }
+  .selector-box select {
+    background: var(--bg);
+    color: var(--text-light);
+    border: 1px solid var(--border);
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    cursor: pointer;
+    outline: none;
+  }
+
+  /* Main Performance Grid */
+  .arena-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin: 30px 0; }
+  @media (min-width: 768px) { .arena-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .arena-grid { grid-template-columns: repeat(4, 1fr); } }
+
+  .arena-card {
+    background: var(--panel);
+    border: 1px solid var(--border-light);
+    color: var(--text-dark);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    min-height: 340px; /* Keep uniform height across all cards */
+  }
+  
+  .arena-card.blocked { 
+    background: var(--panel-dark); 
+    border-color: var(--border); 
+    color: var(--text-light);
+  }
+
+  .card-top { margin-bottom: 20px; }
+  .arena-title { font-weight: 700; font-size: 1.25rem; margin: 0 0 4px; color: inherit; }
+  .arena-card:not(.blocked) .arena-title { color: var(--text-dark); }
+  .arena-card.blocked .arena-title { color: #e05d44; }
+  .arena-subtitle { font-size: 0.82rem; color: var(--muted-dark); margin-bottom: 14px; }
+  .arena-card.blocked .arena-subtitle { color: var(--muted-light); }
+  
+  .badge-status {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em;
+    padding: 6px 12px; border-radius: 8px; display: inline-block;
+    margin-bottom: 10px;
+  }
+  .badge-status.fail { background: rgba(224, 93, 68, 0.15); color: #e05d44; }
+  .badge-status.success { background: rgba(200, 32, 42, 0.15); color: var(--accent); }
+
+  /* Elegant Latency Status Tags (Replacing the weird deceptive progress bars) */
+  .latency-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted-dark);
+    border: 1px dashed var(--border-light);
+    padding: 4px 10px;
+    border-radius: 6px;
+    display: inline-block;
+    margin: 12px 0;
+    background: rgba(0,0,0,0.02);
+  }
+  .arena-card.blocked .latency-tag {
+    color: var(--muted-light);
+    border-color: var(--border);
+    background: rgba(0,0,0,0.2);
+  }
+
+  /* Structural Metric Table Rows with strict alignment logic */
+  .arena-stats { display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
+  .arena-stat { display: flex; justify-content: space-between; align-items: center; font-size: 0.88rem; padding-bottom: 6px; border-bottom: 1px solid #ede8de; }
+  .arena-card.blocked .arena-stat { border-bottom-color: #2a2529; }
+  .arena-stat:last-child { border-bottom: none; padding-bottom: 0; }
+  
+  .arena-stat span:first-child { color: var(--muted-dark); flex: 1; text-align: left; }
+  .arena-card.blocked .arena-stat span:first-child { color: var(--muted-light); }
+  .arena-stat span:last-child { font-weight: 600; font-family: 'JetBrains Mono', monospace; flex: 0 0 auto; text-align: right; white-space: nowrap; }
+
+  /* Speed Multiplier Output Text */
+  .badge-multiplier {
+    font-size: 1.35rem; font-weight: 800; text-align: center; margin-top: 20px;
+    padding-top: 14px; border-top: 1px solid #ede8de; letter-spacing: -0.01em;
+    color: var(--accent);
+  }
+  .arena-card.blocked .badge-multiplier { border-top-color: #2a2529; color: var(--muted-light); }
+
+  .middle-text { text-align: center; color: var(--muted-light); font-size: 1.05rem; max-width: 820px; margin: 48px auto; line-height: 1.6; }
+
+  /* Unified History Summary Grid Layout */
+  .master-table-wrapper { overflow-x: auto; margin: 32px auto; max-width: 960px; border-radius: 14px; border: 1px solid var(--border); box-shadow: 0 8px 24px rgba(0,0,0,0.3); background: var(--panel-dark); }
+  .master-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem; color: var(--text-light); }
+  .master-table th { padding: 14px 18px; font-weight: 700; background: #1a171b; border-bottom: 1px solid var(--border); }
+  .master-table td { padding: 14px 18px; border-bottom: 1px solid var(--border); }
+  .master-table tr:last-child td { border-bottom: none; }
+
+  /* Terminal Session Log Window */
+  .console-panel {
+    background: var(--panel-dark); border: 1px solid var(--border); border-radius: 14px; padding: 24px;
+    font-family: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace; font-size: 0.85rem; line-height: 1.6; max-width: 960px; margin: 0 auto;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  }
+  .console-header {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 16px;
+    padding-bottom: 12px; border-bottom: 1px solid var(--border); color: var(--muted-light); font-size: 0.75rem; text-transform: uppercase;
+  }
+  .console-dot-ui { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .console-log { overflow-x: auto; white-space: pre-wrap; color: var(--text-light); }
+  
+  .c-timestamp { color: #484f58; margin-right: 10px; }
+  .c-alert { color: #f85149; font-weight: 600; }
+  .c-success { color: #56d364; font-weight: 600; }
+  .c-info { color: #e3b341; }
+
+  /* Speed Comparison Bar Chart */
+  .speed-chart {
+    margin: 32px 0;
+    background: var(--panel-dark);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+  }
+  .speed-chart-title {
+    font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--accent); margin-bottom: 20px;
+  }
+  .speed-bar-row {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+  }
+  .speed-bar-row:last-child { margin-bottom: 0; }
+  .speed-bar-label {
+    flex: 0 0 130px; font-size: 0.82rem; font-weight: 600; color: var(--text-light);
+    text-align: right;
+  }
+  .speed-bar-track {
+    flex: 1; height: 26px; background: rgba(255,255,255,0.03);
+    border-radius: 6px; overflow: hidden; position: relative;
+  }
+  .speed-bar-fill {
+    height: 100%; border-radius: 6px;
+    transition: width 0.6s ease; display: flex; align-items: center;
+    justify-content: flex-end; padding-right: 10px;
+    font-size: 0.75rem; font-weight: 700; color: #fff; white-space: nowrap;
+  }
+  .speed-bar-fill.cpu { background: #e05d44; }
+  .speed-bar-fill.base { background: #d1a13d; }
+  .speed-bar-fill.region { background: #529467; }
+  .speed-bar-fill.sparse { background: var(--accent); }
+  .speed-bar-fill.blocked { background: rgba(224, 93, 68, 0.2); border: 1px dashed #e05d44; color: #e05d44; }
+
+  /* Frequency Vertical Bar Chart */
+  .watt-chart {
+    margin: 32px 0;
+    background: var(--panel-dark);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+  }
+  .watt-chart-title {
+    font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--accent); margin-bottom: 24px;
+  }
+  .watt-svg { width: 100%; height: 320px; display: block; }
+  .watt-x-labels { display: none; }
+
+  /* Joule Usage Line Graph */
+  .joule-chart {
+    margin: 32px 0;
+    background: var(--panel-dark);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+  }
+  .joule-chart-title {
+    font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--accent); margin-bottom: 24px;
+  }
+  .joule-svg { width: 100%; height: 320px; display: block; }
+  .joule-x-labels { display: none; }
+  .joule-legend {
+    display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;
+    margin-top: 16px; font-size: 0.78rem; color: var(--muted-light);
+  }
+  .joule-legend-item { display: flex; align-items: center; gap: 6px; }
+  .joule-legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  /* Fine-Print Disclaimer Text */
+  .disclaimer-box { max-width: 960px; margin: 40px auto 0; font-size: 0.82rem; color: var(--muted-light); line-height: 1.5; border-top: 1px dashed var(--border); padding-top: 20px; text-align: center; }
+
+  /* Mobile Navigation */
+  .nav-toggle {
+    display: none;
+    background: none; border: none; cursor: pointer;
+    flex-direction: column; gap: 5px; padding: 4px;
+  }
+  .nav-toggle span {
+    width: 24px; height: 2px; background: var(--text-light); border-radius: 2px;
+    transition: 0.3s;
+  }
+  .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+  @media (max-width: 768px) {
+    .nav-toggle { display: flex; }
+    .nav-links {
+      position: absolute; top: 100%; left: 0; right: 0;
+      flex-direction: column; gap: 0;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      padding: 8px 24px 16px; display: none; z-index: 100;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
+    .nav-links a:last-child { border-bottom: none; }
+    .hero { padding: 36px 16px 20px !important; }
+    .section { padding: 48px 0 !important; }
+    .wrap { padding: 0 16px; }
+    .card { padding: 20px; }
+    .note-box { padding: 24px 20px; }
+    .legal-box { padding: 20px 16px; }
+    .form-box { padding: 20px 16px; }
+    .sidebar-box { padding: 16px; }
+    .console-panel { padding: 16px; font-size: 0.78rem; }
+    .toc { padding: 16px; }
+    .arena-card { min-height: auto; padding: 20px; }
+    .master-table { font-size: 0.78rem; }
+    .master-table th, .master-table td { padding: 10px 12px; }
+    .speed-chart { padding: 18px 14px; }
+    .speed-bar-label { flex: 0 0 90px; font-size: 0.72rem; }
+    .speed-bar-fill { font-size: 0.68rem; }
+    .watt-chart { padding: 18px 14px; }
+    .watt-svg { height: 220px; }
+    .watt-x-labels { font-size: 0.6rem; padding: 6px 8px 0; gap: 4px; }
+    .joule-chart { padding: 18px 14px; }
+    .joule-svg { height: 220px; }
+    .joule-x-labels { font-size: 0.6rem; padding: 6px 8px 0; gap: 4px; }
+    .joule-legend { gap: 12px; font-size: 0.7rem; }
+    .timer-val { font-size: 1.5rem; }
+    .timer-block { padding: 10px 8px; }
+    .timer-container { gap: 8px; }
+    .header-block { padding: 40px 0 20px; }
+    .header-block h2 { font-size: 1.5rem !important; }
+    .disclaimer-box { padding: 16px; font-size: 0.75rem; }
+    .content { padding: 20px 0; }
+  }
+
+  @media (max-width: 480px) {
+    .hero h2 { font-size: 1.4rem !important; }
+    .hero p { font-size: 0.95rem; }
+    .btn { padding: 10px 18px; font-size: 0.88rem; }
+    .content h3 { font-size: 1.2rem !important; }
+    .middle-text { font-size: 0.92rem; margin: 32px auto; }
+    .section h3 { font-size: clamp(1.6rem, 4vw, 2rem); font-weight: 700; margin: 0 0 24px; text-align: center; color: #fff; letter-spacing: -0.02em; }
+    .section h3 { font-size: 1.3rem !important; }
+    .timer-val { font-size: 1.3rem; }
+    .timer-lbl { font-size: 0.65rem; }
+  }
+
+
+  /* === Visual Enhancements === */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 5px rgba(200, 32, 42, 0.15); }
+    50% { box-shadow: 0 0 15px rgba(200, 32, 42, 0.3); }
+  }
+  body { animation: fadeIn 0.4s ease-out; }
+  .card, .doc-card, .doc-grid > a, .arena-card {
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover, .doc-card:hover, .doc-grid > a:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 4px 20px rgba(200, 32, 42, 0.12);
+  }
+  .hero h2, .header-block h2 {
+    text-shadow: 0 0 30px rgba(200, 32, 42, 0.08);
+  }
+  .nav-links a {
+    transition: color 0.2s, text-shadow 0.2s;
+  }
+  .nav-links a:hover {
+    text-shadow: 0 0 10px rgba(200, 32, 42, 0.3);
+  }
+  a { transition: opacity 0.15s, text-shadow 0.15s; }
+  .btn, button {
+    transition: all 0.2s ease;
+  }
+  .btn:hover, button:hover {
+    box-shadow: 0 0 12px rgba(200, 32, 42, 0.2);
+  }
+  .back-link:hover, footer a:hover {
+    text-shadow: 0 0 8px rgba(200, 32, 42, 0.25);
+  }
+  .legal-box {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .legal-box:hover {
+    border-color: rgba(200, 32, 42, 0.25);
+    box-shadow: 0 0 25px rgba(200, 32, 42, 0.04);
+  }
+  ::selection {
+    background: rgba(200, 32, 42, 0.25);
+  }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(200, 32, 42, 0.3); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(200, 32, 42, 0.5); }
+  /* Separator line radiant glow */
+  nav { border-bottom: 1px solid rgba(200, 32, 42, 0.8) !important; box-shadow: 0 2px 16px -2px rgba(200, 32, 42, 0.3); }
+  footer { border-top: 1px solid rgba(200, 32, 42, 0.8) !important; box-shadow: 0 -2px 16px -2px rgba(200, 32, 42, 0.3); }
+  .section { border-top: 1px solid rgba(200, 32, 42, 0.5) !important; }
+  .doc-content h2 { border-bottom: 1px solid rgba(200, 32, 42, 0.4) !important; }
+  .doc-nav-bottom { border-top: 1px solid rgba(200, 32, 42, 0.4) !important; }
+  /* === End Visual Enhancements === */
+  .section-label {
+    text-align: center; color: var(--accent); font-size: 0.8rem; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 10px;
+  }
+  .section h3 { text-align: center; font-size: clamp(1.5rem, 3.6vw, 1.9rem); margin: 0 0 22px; color: #fff; letter-spacing: -0.02em; }
+  .master-table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 0.92rem; }
+  .master-table th { text-align: left; color: var(--muted-light); font-weight: 600; padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  .master-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--text-light); }
+
+  /* ── charts (rebuilt for 3.0) ── */
+  .chart-card {
+    background: var(--surface, rgba(20,20,22,0.5)); border-radius: 6px;
+    padding: 26px 24px 18px; margin: 30px auto; max-width: 960px;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.42), inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+  .chart-card h4 { color: var(--accent-soft,#b8403a); font-size: 1rem; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .chart-card .chart-sub { color: var(--muted-light); font-size: 0.82rem; margin: 0 0 20px; }
+  .bar-row { display: grid; grid-template-columns: 150px 1fr 92px; align-items: center; gap: 12px; margin: 9px 0; }
+  .bar-label { color: var(--muted-light); font-size: 0.84rem; text-align: right; }
+  .bar-track { height: 14px; background: rgba(255,255,255,0.045); border-radius: 3px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #6d0000, #c62a2a); transition: width 0.8s cubic-bezier(0.22,0.61,0.36,1); }
+  .bar-val { color: var(--text-light); font-size: 0.82rem; font-variant-numeric: tabular-nums; }
+  .axis-note { color: var(--muted-light); font-size: 0.74rem; margin-top: 14px; }
+
+  /* timeline (dot plot) */
+  .tl { position: relative; height: 88px; margin: 34px 8px 8px; }
+  .tl-axis { position: absolute; left: 0; right: 0; top: 44px; height: 1px; background: rgba(255,255,255,0.12); }
+  .tl-axis::after { content: "time →"; position: absolute; right: 0; top: 10px; color: var(--muted-light); font-size: 0.7rem; }
+  .tl-dot { position: absolute; top: 37px; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%;
+            background: #c62a2a; box-shadow: 0 0 14px rgba(198,42,42,0.5); }
+  .tl-dot.gold { background: #e03030; width: 18px; height: 18px; top: 35px; margin-left: -9px; }
+  .tl-lab { position: absolute; top: 62px; transform: translateX(-50%); color: var(--muted-light); font-size: 0.72rem; white-space: nowrap; }
+
+  /* log-scale scale-invariance plot */
+  .svg-chart { width: 100%; height: auto; display: block; }
+  .svg-chart .grid { stroke: rgba(255,255,255,0.07); }
+  .svg-chart text { fill: #9b9b9b; font-size: 11px; font-family: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace; }
+  .svg-chart .pt { fill: #c62a2a; }
+  .svg-chart .line { stroke: #c62a2a; stroke-width: 2; }
+  .svg-chart .lbl { fill: #e8e6e3; }
+
+</style>
+<style>
+/* Live demo, scoped under .demo */
+
+/* Layout: one long dark lab bench. Each experiment is a split "their world / our world" rig, run live, side by side. */
+:root {
+  --bg: #0c0b0d;
+  --panel: #141216;
+  --panel-2: #1b181d;
+  --line: #2a2529;
+  --ink: #efe8dc;
+  --muted: #9a918a;
+  --dim: #6c645f;
+  --blood: #c8202a;
+  --ember: #ff7a3d;
+  --bone: #fff4e2;
+  --glitch: #f2c14e;
+  --cold: #7f93a6;
+  --display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  color-scheme: dark;
+}
+.demo * { box-sizing: border-box; }
+.demo { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.55; overflow-x: hidden; }
+.d-wrap { max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.demo a { color: var(--ember); }
+.demo code, .demo .mono { font-family: var(--mono); }
+.demo h1, .demo h2, .demo h3 { font-family: var(--display); text-wrap: balance; margin: 0; }
+.demo p { margin: 0; }
+
+/* VolkanaDEV site backdrop: faint hex lattice with a heartbeat, red vein band, top glow */
+@keyframes hexHeartbeat { 0% { opacity: .6; } 7% { opacity: 1; } 14% { opacity: .65; } 21% { opacity: .9; } 35%, 100% { opacity: .6; } }
+.d-hero { position: relative; overflow: hidden; background: radial-gradient(ellipse at 50% 0%, rgba(200,32,42,.16), transparent 62%); }
+.d-hero .d-wrap { position: relative; }
+canvas.veins { position: absolute; left: 0; top: 0; width: 100%; height: 150px; pointer-events: none; -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent); animation: veinBeat 7s ease-in-out infinite; }
+@keyframes veinBeat { 0% { opacity: .75; } 7% { opacity: 1; } 14% { opacity: .8; } 21% { opacity: .95; } 35%, 100% { opacity: .75; } }
+section.exp, .closer, .foot { position: relative; background: rgba(12,11,13,.55); }
+
+/* top strip */
+.pulse-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--blood); margin-right: 8px; box-shadow: 0 0 0 0 var(--blood); animation: pulse 1.6s infinite; vertical-align: 1px; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(200,32,42,.6); } 70% { box-shadow: 0 0 0 10px rgba(200,32,42,0); } 100% { box-shadow: 0 0 0 0 rgba(200,32,42,0); } }
+
+/* hero */
+.d-hero .d-wrap { padding-block: 56px 28px; display: grid; gap: 22px; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--blood); }
+.d-hero h1 { font-size: clamp(44px, 9vw, 118px); line-height: .9; font-weight: 900; font-variation-settings: "wdth" 125; letter-spacing: -.02em; text-transform: uppercase; }
+.d-hero h1 .twice { color: var(--blood); }
+.d-hero .lede { max-width: 62ch; color: var(--muted); font-size: clamp(16px, 2vw, 19px); }
+.d-hero .lede b { color: var(--ink); font-weight: 600; }
+
+/* experiment rigs */
+section.exp { border-top: 1px solid var(--line); }
+section.exp > .d-wrap { padding-block: 48px; display: grid; gap: 26px; }
+.exp-head { display: grid; gap: 10px; max-width: 760px; }
+.exp-no { font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); }
+.exp-head h2 { font-size: clamp(30px, 4.6vw, 54px); line-height: 1; font-weight: 800; font-variation-settings: "wdth" 112; letter-spacing: -.01em; }
+.exp-head h2 em { font-style: normal; color: var(--blood); }
+.exp-head p { color: var(--muted); max-width: 64ch; }
+
+.controls { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; }
+.d-btn { font-family: var(--display); font-variation-settings: "wdth" 110; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; font-size: 15px; padding: 12px 20px; border: 1px solid var(--blood); background: var(--blood); color: var(--bone); cursor: pointer; border-radius: 2px; }
+.d-btn:hover { background: #a8161f; }
+.d-btn.d-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.d-btn.d-ghost:hover { border-color: var(--muted); }
+.d-btn:focus-visible, .seg button:focus-visible { outline: 2px solid var(--ember); outline-offset: 2px; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 2px; }
+.seg span { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); padding: 0 10px; align-self: center; }
+.seg button { font-family: var(--mono); font-size: 13px; background: transparent; color: var(--muted); border: 0; border-left: 1px solid var(--line); padding: 9px 12px; cursor: pointer; min-width: 40px; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); font-weight: 700; }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
+.rig { background: var(--panel); border: 1px solid var(--line); min-width: 0; display: grid; grid-template-rows: auto 1fr; }
+.rig.ours { border-color: #4a1c20; box-shadow: 0 0 0 1px rgba(200,32,42,.15), 0 30px 80px -40px rgba(200,32,42,.45); }
+.rig-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 14px 16px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.rig-top h3 { font-size: 18px; font-weight: 800; font-variation-settings: "wdth" 105; text-transform: uppercase; letter-spacing: .04em; }
+.rig.theirs .rig-top h3 { color: var(--cold); }
+.rig.ours .rig-top h3 { color: var(--ember); }
+.rig-top .tag { font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing: .06em; }
+.rig-body { padding: 16px; display: grid; gap: 14px; min-width: 0; align-content: start; }
+
+/* heat rod */
+.heat-wrap { display: grid; grid-template-columns: auto 1fr; gap: 8px; min-width: 0; }
+.axis-y { font-family: var(--mono); font-size: 10px; color: var(--dim); writing-mode: vertical-rl; transform: rotate(180deg); text-align: center; letter-spacing: .12em; text-transform: uppercase; }
+canvas.heat { width: 100%; aspect-ratio: 16 / 13; display: block; background: #050405; image-rendering: pixelated; max-width: 100%; }
+.threads { display: grid; grid-template-columns: repeat(16, 1fr); gap: 2px; }
+.threads i { height: 10px; display: block; opacity: .9; transition: background .2s; }
+.thread-cap { font-family: var(--mono); font-size: 11px; color: var(--dim); display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+
+.term { background: #070608; border: 1px solid var(--line); font-family: var(--mono); font-size: 12px; line-height: 1.6; height: 188px; overflow: auto; padding: 10px 12px; color: #cfc6b8; white-space: pre; }
+.term .l { display: block; }
+.term .bad { color: var(--glitch); background: rgba(242,193,78,.08); }
+.term .bad::after { content: "  ≠ last run"; color: var(--dim); }
+.term .sys { color: var(--dim); }
+.term .hot { color: var(--ember); }
+.term .err { color: #ff5a5a; }
+
+.fp { display: grid; gap: 8px; }
+.fp-row { display: flex; align-items: center; gap: 10px; justify-content: space-between; flex-wrap: wrap; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.fp-row .hash { color: var(--ink); font-weight: 700; letter-spacing: .04em; }
+.history { display: grid; grid-template-columns: repeat(24, 1fr); gap: 3px; height: 26px; }
+.history i { display: block; background: var(--panel-2); border-radius: 1px; }
+.score { display: flex; gap: 22px; flex-wrap: wrap; }
+.score div { display: grid; }
+.score b { font-family: var(--display); font-variation-settings: "wdth" 120; font-weight: 900; font-size: 40px; line-height: 1; font-variant-numeric: tabular-nums; }
+.score span { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
+.rig.theirs .score b { color: var(--glitch); }
+.rig.ours .score b { color: var(--ember); }
+
+.note { font-size: 13px; color: var(--dim); max-width: 80ch; }
+.note b { color: var(--muted); font-weight: 600; }
+
+/* code */
+details.src { border: 1px solid var(--line); background: var(--panel); }
+details.src summary { cursor: pointer; padding: 10px 14px; font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: .06em; }
+details.src pre { margin: 0; padding: 14px; border-top: 1px solid var(--line); overflow-x: auto; font-family: var(--mono); font-size: 12.5px; line-height: 1.55; color: #d9d0c2; }
+.kw { color: var(--ember); } .cm { color: var(--dim); } .st { color: #e3b78a; }
+
+/* task lanes */
+.lanes { display: grid; gap: 6px; }
+.lane { display: grid; grid-template-columns: 64px 1fr 92px; gap: 10px; align-items: center; font-family: var(--mono); font-size: 12px; }
+.lane .name { color: var(--muted); }
+.lane .bar { height: 14px; background: var(--panel-2); position: relative; overflow: hidden; }
+.lane .bar i { position: absolute; inset: 0 auto 0 0; width: 0%; background: var(--ember); transition: width .15s linear; }
+.rig.theirs .lane .bar i { background: var(--cold); }
+.lane .bar i.spin { background: repeating-linear-gradient(90deg, var(--glitch) 0 8px, #8a6d22 8px 16px); animation: spin .5s linear infinite; background-size: 32px 100%; }
+@keyframes spin { to { background-position: 32px 0; } }
+.lane .st8 { text-align: right; color: var(--dim); font-size: 11px; }
+.lane.active .name { color: var(--ink); }
+.lane.dead .bar i { background: #3b1114 !important; }
+.lane.dead .st8 { color: #ff5a5a; }
+.lane.done .st8 { color: var(--ember); }
+.lane.frozen .st8 { color: var(--glitch); }
+.turn-meter { font-family: var(--mono); font-size: 11px; color: var(--dim); display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.stamp { font-family: var(--display); font-variation-settings: "wdth" 125; font-weight: 900; font-size: 22px; text-transform: uppercase; letter-spacing: .04em; padding: 6px 12px; border: 2px solid currentColor; justify-self: start; }
+.stamp.frozen { color: var(--glitch); transform: rotate(-2deg); }
+.stamp.ok { color: var(--ember); }
+
+/* three machines */
+.trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+@media (max-width: 860px) { .trio { grid-template-columns: 1fr; } }
+.machine { background: var(--panel); border: 1px solid var(--line); min-width: 0; display: grid; }
+.machine header { padding: 12px 14px; border-bottom: 1px solid var(--line); display: grid; gap: 2px; }
+.machine header b { font-family: var(--display); font-variation-settings: "wdth" 110; font-weight: 800; text-transform: uppercase; font-size: 16px; letter-spacing: .04em; }
+.machine header span { font-family: var(--mono); font-size: 11px; color: var(--dim); }
+.machine .term { height: 220px; border: 0; border-bottom: 1px solid var(--line); }
+.machine footer { padding: 10px 14px; font-family: var(--mono); font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; gap: 8px; }
+.machine footer b { color: var(--ink); }
+.machine.match footer b { color: var(--ember); }
+.verdict { font-family: var(--display); font-variation-settings: "wdth" 120; font-weight: 900; text-transform: uppercase; font-size: clamp(22px, 3.4vw, 34px); color: var(--dim); letter-spacing: .01em; }
+.verdict.on { color: var(--ink); }
+.verdict.on em { color: var(--blood); font-style: normal; }
+
+/* tables */
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--line); }
+table { border-collapse: collapse; width: 100%; font-size: 13px; min-width: 560px; }
+th, td { padding: 9px 12px; border-bottom: 1px solid var(--line); text-align: right; font-variant-numeric: tabular-nums; font-family: var(--mono); }
+th { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); font-weight: 500; background: var(--panel); }
+th:first-child, td:first-child { text-align: left; }
+td.yes { color: var(--ember); font-weight: 700; }
+tr:last-child td { border-bottom: 0; }
+
+/* ouroboros */
+.ouro { display: grid; grid-template-columns: minmax(0, 360px) 1fr; gap: 28px; align-items: center; }
+@media (max-width: 860px) { .ouro { grid-template-columns: 1fr; } }
+canvas.ring { width: 100%; max-width: 360px; aspect-ratio: 1; display: block; justify-self: center; }
+.gen { display: grid; gap: 10px; min-width: 0; }
+.gen-row { display: grid; grid-template-columns: 120px 1fr; gap: 12px; align-items: baseline; font-family: var(--mono); font-size: 12px; min-width: 0; }
+.gen-row span { color: var(--dim); letter-spacing: .08em; text-transform: uppercase; font-size: 11px; }
+.gen-row code { color: var(--ink); word-break: break-all; }
+.gen-row code .m { color: var(--ember); }
+
+/* numbers */
+.nums { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+@media (max-width: 860px) { .nums { grid-template-columns: 1fr; } }
+.d-card { background: var(--panel); border: 1px solid var(--line); padding: 18px; display: grid; gap: 14px; align-content: start; min-width: 0; }
+.d-card h3 { font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; font-variation-settings: "wdth" 108; color: var(--muted); }
+.big { font-family: var(--display); font-variation-settings: "wdth" 125; font-weight: 900; font-size: clamp(56px, 8vw, 92px); line-height: .9; color: var(--ember); letter-spacing: -.02em; }
+.big small { font-size: .38em; color: var(--muted); font-weight: 700; letter-spacing: 0; margin-left: 6px; }
+.hbar { display: grid; grid-template-columns: 74px 1fr; gap: 10px; align-items: center; font-family: var(--mono); font-size: 12px; }
+.hbar .track { height: 22px; position: relative; }
+.hbar .fill { position: absolute; inset: 0 auto 0 0; background: var(--cold); display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; color: var(--bg); font-weight: 700; min-width: 2px; }
+.hbar .fill.us { background: var(--ember); }
+.hbar .hlabel { position: absolute; top: 0; bottom: 0; display: flex; align-items: center; font-style: normal; color: var(--ink); font-weight: 700; white-space: nowrap; }
+.hbar span { color: var(--muted); }
+.scale-chart { display: grid; gap: 8px; }
+.scale-row { display: grid; grid-template-columns: 74px 1fr 56px; gap: 10px; align-items: center; font-family: var(--mono); font-size: 12px; }
+.scale-row .track { height: 22px; background: var(--panel-2); position: relative; }
+.scale-row .fill { position: absolute; inset: 0 auto 0 0; background: var(--ember); }
+.scale-row .ideal { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--muted); opacity: .6; }
+.scale-row b { text-align: right; font-variant-numeric: tabular-nums; }
+.legend { font-family: var(--mono); font-size: 11px; color: var(--dim); }
+.mini { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+@media (max-width: 560px) { .mini { grid-template-columns: 1fr; } }
+.mini div { border-top: 1px solid var(--line); padding-top: 10px; display: grid; gap: 2px; }
+.mini b { font-family: var(--display); font-variation-settings: "wdth" 120; font-weight: 900; font-size: 30px; color: var(--ink); }
+.mini span { font-size: 13px; color: var(--muted); }
+
+/* closer */
+.closer .d-wrap { padding-block: 64px 80px; display: grid; gap: 18px; }
+.closer h2 { font-size: clamp(34px, 6vw, 76px); font-weight: 900; font-variation-settings: "wdth" 125; line-height: .95; text-transform: uppercase; letter-spacing: -.01em; }
+.closer h2 em { font-style: normal; color: var(--blood); }
+.closer p { color: var(--muted); max-width: 62ch; }
+.foot { border-top: 1px solid var(--line); }
+.foot .d-wrap { padding-block: 18px; font-family: var(--mono); font-size: 11px; color: var(--dim); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-dot, .lane .bar i.spin, .hexfx, canvas.veins { animation: none; }
+}
+
+</style>
+
+<link rel="preload" href="fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="theme.css">
+<script src="site.js" defer></script>
+<script src="demo.js" defer></script>
+</head>
+<body class="nav-hidden">
+<button id="navTab" class="nav-tab" aria-label="Toggle navigation"><span class="chev"></span></button>
+
+<div class="wordmark"><span>VolkanaDEV</span></div>
+
+<nav>
+    <div class="wrap">
+      <div class="nav-inner">
+        <div class="brand"><img src="favicon.png" class="brand-dot" alt="VolkanaDEV">VolkanaDEV</div>
+        <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        <div class="nav-links">
+          <a href="index.html">Welcome</a>
+          <a href="roadmap.html">Roadmap</a>
+          <a href="benchmark.html">Benchmarks</a>
+          <a href="demo.html" class="active">Demo</a>
+          <a href="patchnotes.html">Patch Notes</a>
+          <a href="docs/index.html">Docs</a>
+          <a href="security.html">Safety &amp; Licenses</a>
+          <a href="research.html">Research</a>
+          <a href="about.html">Company</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+<main class="demo">
+<header class="d-hero"><canvas class="veins" id="veins" aria-hidden="true"></canvas><div class="d-wrap">
+  <div class="eyebrow">Live demo · runs in your browser</div>
+  <h1>Run it <span class="twice">twice.</span><br>Get the same world.</h1>
+  <p class="lede">Life only becomes science when you can replay it. Most languages hand you a slightly different answer every time threads race. <b>Sanguis gives the same bytes</b> on one thread or sixteen, on a PC, a C floor or bare metal. Push the buttons below and watch both worlds run.</p>
+</div></header>
+
+<!-- EXPERIMENT 1 -->
+<section class="exp" id="rod"><div class="d-wrap">
+  <div class="exp-head">
+    <div class="exp-no">Experiment 1 · fleets and crosstalk</div>
+    <h2>Sixteen cells share heat. <em>Only one world agrees with itself.</em></h2>
+    <p>A rod of 16 living cells. Cell 0 is held at 100 degrees. Every tick each cell sends its heat to its neighbours and to itself, then reads its inbox. Spread the cells over worker threads the usual way and messages land in whatever order the threads finish. Sanguis delivers them at a barrier, in sender order, so the result is the same on any thread count.</p>
+  </div>
+
+  <div class="controls">
+    <button class="d-btn" id="rodRun" type="button">Run both again</button>
+    <button class="d-btn d-ghost" id="rodAuto" type="button" aria-pressed="false">Auto-run: off</button>
+    <div class="seg" role="group" aria-label="Threads"><span>Threads</span>
+      <button type="button" data-t="1" id="t1" aria-pressed="false">1</button>
+      <button type="button" data-t="2" id="t2" aria-pressed="false">2</button>
+      <button type="button" data-t="4" id="t4" aria-pressed="false">4</button>
+      <button type="button" data-t="8" id="t8" aria-pressed="true">8</button>
+      <button type="button" data-t="16" id="t16" aria-pressed="false">16</button>
+    </div>
+  </div>
+
+  <div class="split">
+    <div class="rig theirs">
+      <div class="rig-top"><h3>Typical threaded runtime</h3><span class="tag">worker pool · shared queue</span></div>
+      <div class="rig-body">
+        <div class="heat-wrap"><div class="axis-y">tick 0 → 31</div><canvas class="heat" id="heatA" width="160" height="130" aria-label="Heat map of the rod over 32 ticks, threaded runtime"></canvas></div>
+        <div class="threads" id="thrA"></div>
+        <div class="thread-cap"><span>cell 0</span><span id="thrCapA">colour = thread</span><span>cell 15</span></div>
+        <div class="term" id="termA" aria-live="off"></div>
+        <div class="fp">
+          <div class="fp-row"><span>output fingerprint</span><span class="hash" id="hashA">…</span></div>
+          <div class="history" id="histA"></div>
+        </div>
+        <div class="score"><div><b id="runsA">0</b><span>runs</span></div><div><b id="distA">0</b><span>different outputs</span></div></div>
+      </div>
+    </div>
+    <div class="rig ours">
+      <div class="rig-top"><h3>Sanguis fleet</h3><span class="tag">fleet rod cells 16 ticks 32;</span></div>
+      <div class="rig-body">
+        <div class="heat-wrap"><div class="axis-y">tick 0 → 31</div><canvas class="heat" id="heatB" width="160" height="130" aria-label="Heat map of the rod over 32 ticks, Sanguis fleet"></canvas></div>
+        <div class="threads" id="thrB"></div>
+        <div class="thread-cap"><span>cell 0</span><span id="thrCapB">colour = thread</span><span>cell 15</span></div>
+        <div class="term" id="termB" aria-live="off"></div>
+        <div class="fp">
+          <div class="fp-row"><span>output fingerprint</span><span class="hash" id="hashB">…</span></div>
+          <div class="history" id="histB"></div>
+        </div>
+        <div class="score"><div><b id="runsB">0</b><span>runs</span></div><div><b id="distB">0</b><span>different outputs</span></div></div>
+      </div>
+    </div>
+  </div>
+  <p class="note"><b>What is real here.</b> The Sanguis column prints the exact bytes of <code>tests/fixtures/fleet_heat.expected</code> from the 3.9.5 repo, which the test suite checks on every thread count and on the C floor and metal. The heat map is the same arithmetic recomputed in your browser. The left column is a simulation of the same program on an ordinary worker pool, where each inbox arrives in finishing order. Yellow lines differ from that side's previous run. With 1 thread it stops racing, which is the point: the usual fix for a race is to give up the threads.</p>
+  <details class="src"><summary>Show the Sanguis program (fleet_heat.sanguis)</summary><pre><span class="kw">circuit</span> fleet_heat;
+
+<span class="cm">// FLEETS (3.9.5): sixteen <span class="kw">cells</span> on a rod. Each keeps its own heat by sending</span>
+<span class="cm">// it to itself and shares it with its two neighbours; <span class="kw">cell</span> 0 is held at 100.</span>
+<span class="cm">// Messages arrive <span class="kw">in</span> sender order, so a <span class="kw">cell</span>&#x27;s own value sits right after its</span>
+<span class="cm">// left neighbour&#x27;s.</span>
+<span class="kw">cell</span> rod(id: float, tick: float) -&gt; float {
+    <span class="kw">let</span> got = <span class="kw">inbox</span>();
+    <span class="kw">let</span> mine = 0.0;
+    <span class="kw">gate</span> id == 0.0 <span class="kw">then</span> { mine = 100.0; }
+    <span class="kw">let</span> near = 0.0;
+    <span class="kw">let</span> count = 0.0;
+    <span class="kw">gate</span> tick &gt; 0.0 <span class="kw">then</span> {
+        <span class="kw">let</span> me_at = 1.0;
+        <span class="kw">gate</span> id == 0.0 <span class="kw">then</span> { me_at = 0.0; }
+        <span class="kw">let</span> k = 0.0;
+        <span class="kw">for</span> v <span class="kw">in</span> got {
+            <span class="kw">gate</span> k == me_at <span class="kw">then</span> { mine = v; } <span class="kw">else</span> { near = near + v; count = count + 1.0; }
+            k = k + 1.0;
+        }
+    }
+    <span class="kw">gate</span> id == 0.0 <span class="kw">then</span> { mine = 100.0; } <span class="kw">else</span> { mine = mine + 0.25 * (near - count * mine); }
+    <span class="kw">gate</span> id &gt; 0.0 <span class="kw">then</span> { <span class="kw">send</span>(id - 1.0, mine); }
+    <span class="kw">send</span>(id, mine);
+    <span class="kw">gate</span> id &lt; 15.0 <span class="kw">then</span> { <span class="kw">send</span>(id + 1.0, mine); }
+    <span class="kw">let</span> words = [];
+    <span class="kw">gate</span> mod(tick, 8.0) == 7.0 <span class="kw">then</span> {
+        words = push(words, concat(&quot;t&quot;, tick));
+        words = push(words, concat(&quot;<span class="kw">cell</span> &quot;, id));
+        print(concat(concat(words[0.0], &quot; &quot;), concat(words[1.0], concat(&quot; heat &quot;, mine))));
+    }
+}
+
+<span class="kw">cell</span> main() -&gt; float {
+    print(&quot;rod of 16 <span class="kw">cells</span>, 32 <span class="kw">ticks</span>&quot;);
+    <span class="kw">fleet</span> rod <span class="kw">cells</span> 16 <span class="kw">ticks</span> 32;
+    print(&quot;cooled&quot;);
+    <span class="kw">output</span> 0.0;
+}
+</pre></details>
+</div></section>
+
+<!-- EXPERIMENT 2 -->
+<section class="exp" id="tasks"><div class="d-wrap">
+  <div class="exp-head">
+    <div class="exp-no">Experiment 2 · tasks that take turns</div>
+    <h2><code style="font-family:var(--mono);font-size:.78em">while true {}</code> <em>cannot stop the world.</em></h2>
+    <p>Five tasks share one machine. One of them, <code>victim</code>, loops forever and never gives up its turn. In a cooperative runtime such as JavaScript promises or Python asyncio, a task that never awaits holds the loop until the process is killed. In Sanguis a turn is 1,000 steps, and a step is a call or a loop going round, never time. Every task is switched out on schedule, and <code>killer</code> gets its turn to stop the runaway.</p>
+  </div>
+  <div class="controls"><button class="d-btn" id="taskRun" type="button">Start both</button></div>
+  <div class="split">
+    <div class="rig theirs">
+      <div class="rig-top"><h3>Cooperative async loop</h3><span class="tag">a task runs until it awaits</span></div>
+      <div class="rig-body">
+        <div class="lanes" id="lanesA"></div>
+        <div class="term" id="tTermA"></div>
+        <div id="stampA"></div>
+      </div>
+    </div>
+    <div class="rig ours">
+      <div class="rig-top"><h3>Sanguis tasks</h3><span class="tag">turn = 1,000 steps</span></div>
+      <div class="rig-body">
+        <div class="lanes" id="lanesB"></div>
+        <div class="term" id="tTermB"></div>
+        <div id="stampB"></div>
+      </div>
+    </div>
+  </div>
+  <p class="note"><b>What is real here.</b> The Sanguis column replays <code>tests/fixtures/spawn_tasks.expected</code> line for line, the output <code>tests/tasks.rs</code> checks on the bridge, the C floor and metal. The left column shows the order a cooperative loop would run the same tasks in. A watchdog also exists: <code>spawn f() limit 50000</code> stops a runaway by itself with <code>task 'name' went past its limit and was stopped</code>, while the others carry on.</p>
+  <details class="src"><summary>Show the Sanguis program (spawn_tasks.sanguis)</summary><pre><span class="kw">circuit</span> sp2;
+
+<span class="kw">cell</span> sq(x: float) -&gt; float { <span class="kw">output</span> x * x; }
+
+<span class="kw">cell</span> worker(tag: string, steps: float, every: float) -&gt; string {
+    <span class="kw">let</span> i = 0.0;
+    <span class="kw">let</span> acc = [];
+    <span class="kw">while</span> i &lt; steps {
+        acc = push(acc, sq(i));
+        <span class="kw">gate</span> mod(i, every) == 0.0 <span class="kw">then</span> {
+            print(concat(tag, concat(&quot; at &quot;, concat(i, concat(&quot; sum &quot;, total(acc))))));
+        }
+        i = i + 1.0;
+    }
+    <span class="kw">let</span> last = concat(tag, &quot; finished&quot;);
+    <span class="kw">emit</span> last;
+}
+
+<span class="kw">cell</span> total(xs: list) -&gt; float {
+    <span class="kw">let</span> s = 0.0;
+    <span class="kw">for</span> x <span class="kw">in</span> xs { s = s + x; }
+    <span class="kw">output</span> s;
+}
+
+<span class="kw">cell</span> parent() -&gt; float {
+    print(&quot;parent spawns a child&quot;);
+    <span class="kw">spawn</span> worker(&quot;child&quot;, 300.0, 100.0);
+    <span class="kw">let</span> k = 0.0;
+    <span class="kw">while</span> k &lt; 3.0 { print(concat(&quot;parent &quot;, k)); k = k + 1.0; <span class="kw">yield</span>; }
+    <span class="kw">output</span> 0.0;
+}
+
+<span class="kw">cell</span> victim() -&gt; float {
+    <span class="kw">let</span> n = 0.0;
+    <span class="kw">while</span> true { n = n + 1.0; <span class="kw">gate</span> mod(n, 500.0) == 0.0 <span class="kw">then</span> { print(concat(&quot;victim &quot;, n)); } }
+    <span class="kw">output</span> 0.0;
+}
+
+<span class="kw">cell</span> main() -&gt; float {
+    <span class="kw">spawn</span> worker(&quot;w1&quot;, 900.0, 150.0);
+    <span class="kw">spawn</span> worker(&quot;w2&quot;, 600.0, 200.0);
+    <span class="kw">spawn</span> parent();
+    <span class="kw">let</span> v = <span class="kw">spawn</span> victim();
+    <span class="kw">spawn</span> killer(v);
+    <span class="kw">run_all</span>();
+    print(last);
+    print(&quot;done&quot;);
+    <span class="kw">output</span> 0.0;
+}
+
+<span class="kw">cell</span> killer(id: float) -&gt; float {
+    <span class="kw">let</span> j = 0.0;
+    <span class="kw">while</span> j &lt; 2500.0 { j = j + 1.0; }
+    print(&quot;killer strikes&quot;);
+    <span class="kw">kill</span>(id);
+    <span class="kw">output</span> 0.0;
+}
+</pre></details>
+</div></section>
+
+<!-- EXPERIMENT 3 -->
+<section class="exp" id="machines"><div class="d-wrap">
+  <div class="exp-head">
+    <div class="exp-no">Experiment 3 · three executors</div>
+    <h2>A JIT, a C interpreter and bare metal. <em>One output.</em></h2>
+    <p>The same compiled BloodCode runs on three completely different executors: the bridge compiles it to machine code on the PC, the C floor interprets it, and the metal executor runs it with no operating system underneath. Task switches happen at the same step on all three, so the bytes match exactly.</p>
+  </div>
+  <div class="controls"><button class="d-btn" id="trioRun" type="button">Run on all three</button></div>
+  <div class="trio">
+    <div class="machine" id="m0"><header><b>Bridge</b><span>JIT to x86-64 machine code</span></header><div class="term"></div><footer><span>fingerprint</span><b>…</b></footer></div>
+    <div class="machine" id="m1"><header><b>C floor</b><span>boot/bc_exec.c interpreter</span></header><div class="term"></div><footer><span>fingerprint</span><b>…</b></footer></div>
+    <div class="machine" id="m2"><header><b>Bare metal</b><span>freestanding, no OS</span></header><div class="term"></div><footer><span>fingerprint</span><b>…</b></footer></div>
+  </div>
+  <div class="verdict" id="verdict">Waiting for three outputs</div>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Program (benchmark v3, 3.9.4)</th><th>Bridge ms</th><th>C floor ms</th><th>Metal ms</th><th>Identical</th></tr></thead>
+    <tbody>
+      <tr><td>fib_25 · 242,785 calls</td><td>137.84</td><td>152.60</td><td>85.23</td><td class="yes">yes</td></tr>
+      <tr><td>loop_1m · 1,000,000 iterations</td><td>76.79</td><td>519.69</td><td>245.74</td><td class="yes">yes</td></tr>
+      <tr><td>tasks_4x250k · 4 tasks taking turns</td><td>76.70</td><td>513.61</td><td>263.16</td><td class="yes">yes</td></tr>
+      <tr><td>tasks_spawn_demo</td><td>76.26</td><td>13.30</td><td>23.00</td><td class="yes">yes</td></tr>
+      <tr><td>exp_80pts</td><td>76.22</td><td>6.78</td><td>21.19</td><td class="yes">yes</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note"><b>From the 3.9.4 benchmark</b> (Windows 11, Intel 12th gen, median of 5 runs, process start included). Bridge times carry about 61 ms of process start; take that off and the million-iteration loop runs in about 16 ms, and so does the same work split over four tasks taking turns.</p>
+</div></section>
+
+<!-- EXPERIMENT 4 -->
+<section class="exp" id="self"><div class="d-wrap">
+  <div class="exp-head">
+    <div class="exp-no">Experiment 4 · the compiler eats its own tail</div>
+    <h2>It compiles itself <em>to the same bytes.</em></h2>
+    <p>The Sanguis compiler is written in Sanguis. Feed its source to the compiled compiler and it rebuilds itself, bit for bit, in both tiers. A self-hosting compiler that reproduces itself exactly is a proof that nothing in the toolchain drifts.</p>
+  </div>
+  <div class="ouro">
+    <canvas class="ring" id="ring" width="720" height="720" aria-label="Animated loop: compiler source to compiled compiler and back"></canvas>
+    <div class="gen">
+      <div class="gen-row"><span>source</span><code>lib/compiler.sanguis · 3,181 lines</code></div>
+      <div class="gen-row"><span>generation 1</span><code id="g1">9fbca034b41df05b93780079e9d325744e7932955bb9b92514cf47b04649ada9</code></div>
+      <div class="gen-row"><span>generation 2</span><code id="g2"></code></div>
+      <div class="gen-row"><span>generation 3</span><code id="g3"></code></div>
+      <p class="note">SHA-256 of the shipped <code>lib/compiler.bc</code> in the 3.9.5 repo. Each rebuild of the compiler by itself gives this file back; the lines below fill in as the loop comes round, matching character by character.</p>
+      <div class="controls"><button class="d-btn d-ghost" id="ringRun" type="button">Rebuild again</button></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- NUMBERS -->
+<section class="exp" id="numbers"><div class="d-wrap">
+  <div class="exp-head">
+    <div class="exp-no">The measured numbers</div>
+    <h2>Fast as well as <em>exact.</em></h2>
+  </div>
+  <div class="nums">
+    <div class="d-card">
+      <h3>Compiling the 17,000-line linker</h3>
+      <div class="big">18<small>× faster</small></div>
+      <div class="hbar"><span>v2.5</span><div class="track"><div class="fill" style="width:100%">15,505 ms</div></div></div>
+      <div class="hbar"><span>v3.9.4</span><div class="track"><div class="fill us" style="width:5.44%"></div><em class="hlabel" style="left:calc(5.44% + 8px)">843 ms</em></div></div>
+      <p class="legend">Benchmark v3, 2026-10-27, median of 1 run for the linker compile. Bars to scale.</p>
+    </div>
+    <div class="d-card">
+      <h3>Fleets: more threads, same bytes</h3>
+      <div class="scale-chart">
+        <div class="scale-row"><span>1 thread</span><div class="track"><div class="fill" style="width:20%"></div></div><b>1.0×</b></div>
+        <div class="scale-row"><span>2 threads</span><div class="track"><div class="fill" style="width:38%"></div></div><b>1.9×</b></div>
+        <div class="scale-row"><span>4 threads</span><div class="track"><div class="fill" style="width:66%"></div></div><b>3.3×</b></div>
+        <div class="scale-row"><span>8 threads</span><div class="track"><div class="fill" style="width:82%"></div></div><b>4.1×</b></div>
+        <div class="scale-row"><span>20 threads</span><div class="track"><div class="fill" style="width:96%"></div></div><b>4.8×</b></div>
+      </div>
+      <p class="legend">3.9.5 on our Intel 12th-gen PC, 64 cells, speed-up over 1 thread; bars run 0 to 5×. Every run printed the same bytes, and so did the C floor and metal. Past 8 threads the gain flattens on this chip's slower efficiency cores. A separate 4-core run measured 1.90× on 2 and 3.01× on 4.</p>
+    </div>
+    <div class="d-card" style="grid-column: 1 / -1">
+      <div class="mini">
+        <div><b>452 / 0</b><span>tests passed / failed in 3.9.5, including the self-host check</span></div>
+        <div><b>4.4e-15</b><span>median relative error of the pure-Sanguis <code>exp</code> over 80 points, same bytes on all three executors</span></div>
+        <div><b>29</b><span>frozen BloodCode instructions. Tasks and fleets added no new ones.</span></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<section class="closer"><div class="d-wrap">
+  <div class="eyebrow">Why an artificial life company built a language</div>
+  <h2>A living thing you can <em>rewind.</em></h2>
+  <p>We grow beings that live in time, many cells at once, talking to each other every tick. If the same life lived twice comes out different, nothing about it can be checked. Sanguis makes every tick replayable on every machine.</p>
+</div></section>
+</main>
+
+<footer>
+    <div style="margin-bottom: 8px;"><a href="terms.html" style="color: var(--accent); text-decoration: none;">Terms of Use</a> | <a href="privacy.html" style="color: var(--accent); text-decoration: none;">Privacy Policy</a> | <a href="careers.html" style="color: var(--accent); text-decoration: none;">Careers</a></div>
+    Copyright &copy; 2026 VolkanaDEV Autonomous Systems, Inc.<br>
+    VolkanaDEV, Sanguis, and BloodCode are intellectual property of VolkanaDEV Autonomous Systems, Inc.<br>
+    Business and private inquiries: <a href="mailto:volkanadev@protonmail.com">volkanadev@protonmail.com</a>
+  
+    <div class="footer-note">
+      <span>Proudly designed and built with open source models.</span>
+      <span class="fn-ico" aria-hidden="true"><i></i><i></i><i></i></span>
+    </div>
+
+  </footer>
+</body>
+</html>

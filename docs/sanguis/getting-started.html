@@ -185,13 +185,19 @@
       <p>Windows 10 or later, or Linux. A Vulkan-capable GPU is optional: with one, programs pour into the grid and settle on the GPU. Without one, everything still runs on the CPU. Vulkan drivers come with your GPU drivers; nothing extra to install.</p>
 
       <h2 id="install">Installation</h2>
-      <p>Download the 3.9.4 release: the Windows zip or installer <span class="code-inline">installer/SanguisSetup-3.9.4.exe</span>, or the Linux tarball <span class="code-inline">sanguis-3.9.4-linux-x64.tar.gz</span>, then open <span class="code-inline">START-HERE.md</span> first. No Rust required. To build from source instead:</p>
+      <p>Download the 3.9.4 release, then open <span class="code-inline">START-HERE.md</span>:</p>
+      <ul>
+        <li>Windows: the zip, or the installer <span class="code-inline">SanguisSetup-3.9.4.exe</span></li>
+        <li>Linux: <span class="code-inline">sanguis-3.9.4-linux-x64.tar.gz</span></li>
+      </ul>
+      <p>The release runs as is. You don't need Rust.</p>
+      <p>Rust is only needed if you build the toolchain from source:</p>
       <div class="code-block"><pre>git clone https://github.com/VolkanaDEV/sanguis.git
 cd sanguis
 cargo build</pre></div>
-      <p>The build produces the language toolchain: <span class="code-inline">sanguis.exe</span> (release builds land in <span class="code-inline">target\release\</span>). The compiler and VM are written in Sanguis itself (<span class="code-inline">lib/compiler.sanguis</span>); Rust only bootstraps them.</p>
+      <p>This builds <span class="code-inline">sanguis.exe</span> (release builds go to <span class="code-inline">target\release\</span>). Rust only starts the toolchain. The compiler itself is written in Sanguis (<span class="code-inline">lib/compiler.sanguis</span>).</p>
       <div class="callout">
-        <p><strong>First run compiles the compiler.</strong> The toolchain hosts its own compiler written in Sanguis. The first <span class="code-inline">bleed</span> takes a few extra seconds while the bootstrap runs; after that it is fast.</p>
+        <p><strong>The first compile is slower.</strong> The first <span class="code-inline">bleed</span> takes a few extra seconds while the compiler builds itself. After that, it's fast.</p>
       </div>
 
       <h2 id="one-command">Pipeline</h2>
